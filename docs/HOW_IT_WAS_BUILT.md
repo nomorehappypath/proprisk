@@ -7,7 +7,7 @@ agents, a rulebook, a 26-step path from idea to release, and controls that make 
 
 Others give you an AI developer. NoMoreHappyPath gives you the software company.
 
-<p align="center"><a href="media/proprisk-built-by-nomorehappypath.mp4"><img src="media/proprisk-video-poster.png" width="640" alt="Watch: how NoMoreHappyPath built PropRisk"></a></p>
+<p align="center"><a href="https://nomorehappypath.com/assets/proprisk-demo.mp4"><img src="media/proprisk-video-poster.png" width="640" alt="Watch: how NoMoreHappyPath built PropRisk"></a></p>
 
 ## The team
 

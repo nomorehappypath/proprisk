@@ -16,7 +16,7 @@ nearby schools and businesses, demographics, and aerial photos back to 1981, fro
 >
 > *Others give you an AI developer. NoMoreHappyPath gives you the software company.*
 
-<p align="center"><a href="docs/media/proprisk-built-by-nomorehappypath.mp4"><img src="docs/media/proprisk-video-poster.png" width="720" alt="Watch: how NoMoreHappyPath built PropRisk (2 minutes 40 seconds, with sound)"></a></p>
+<p align="center"><a href="https://nomorehappypath.com/assets/proprisk-demo.mp4"><img src="docs/media/proprisk-video-poster.png" width="720" alt="Watch: how NoMoreHappyPath built PropRisk (2 minutes 40 seconds, with sound)"></a></p>
 
 | A lookup | Every finding is a card |
 |---|---|
