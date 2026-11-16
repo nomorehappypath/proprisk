@@ -1,0 +1,1255 @@
+{
+ "source_id": "txdot_extended",
+ "recorded_at": "2026-08-01T21:07:29.591964+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [
+   "Austin"
+  ],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "post_parcel",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "txdot_extended",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "source": "TxDOT extended public-data synthesis",
+   "radius_miles": 5.0,
+   "input_status": {
+    "txdot_aadt": "reused",
+    "txdot_projects": "reused",
+    "txdot_roadway": "reused",
+    "txdot_bridges": "reused"
+   },
+   "traffic_exposure": {
+    "top_aadt": {
+     "road_name": "IH 35",
+     "aadt": 181493,
+     "year": "2024",
+     "source": "TxDOT Roadway Inventory",
+     "is_frontage": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.73,
+        30.278514
+       ],
+       [
+        -97.729922,
+        30.278658
+       ]
+      ]
+     },
+     "lat": 30.278586,
+     "lng": -97.729961,
+     "distance_mi": 0.6
+    },
+    "traffic_counts_considered": 3,
+    "aadt_band": "very_high",
+    "high_volume_roads": [
+     {
+      "road_name": "IH 35",
+      "aadt": 181493,
+      "year": "2024",
+      "source": "TxDOT Roadway Inventory",
+      "is_frontage": false,
+      "map_geometry": {
+       "type": "LineString",
+       "coordinates": [
+        [
+         -97.73,
+         30.278514
+        ],
+        [
+         -97.729922,
+         30.278658
+        ]
+       ]
+      },
+      "lat": 30.278586,
+      "lng": -97.729961,
+      "distance_mi": 0.6
+     },
+     {
+      "road_name": "SL 343",
+      "aadt": 37049,
+      "year": "2026",
+      "source": "TxDOT AADT",
+      "is_frontage": false,
+      "map_geometry": {
+       "type": "LineString",
+       "coordinates": [
+        [
+         -97.758524,
+         30.260877
+        ],
+        [
+         -97.758331,
+         30.261451
+        ],
+        [
+         -97.757769,
+         30.262959
+        ],
+        [
+         -97.757165,
+         30.264418
+        ],
+        [
+         -97.756957,
+         30.264809
+        ],
+        [
+         -97.756266,
+         30.266513
+        ],
+        [
+         -97.756221,
+         30.266664
+        ]
+       ]
+      },
+      "lat": 30.263955857142857,
+      "lng": -97.75731900000001,
+      "distance_mi": 1.36
+     }
+    ],
+    "read": "Top mapped traffic count is 181,493 AADT on IH 35."
+   },
+   "roadway_context": {
+    "primary_roadway": {
+     "road_name": "IH 35",
+     "distance_mi": 0.602,
+     "functional_class": 1,
+     "speed_limit": 55,
+     "num_lanes": 8,
+     "surface_type": 6,
+     "median_type": 7,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.729929,
+        30.278491
+       ],
+       [
+        -97.729909,
+        30.278532
+       ]
+      ]
+     },
+     "row_width": 310,
+     "row_width_ft": 310,
+     "row_width_source_field": "ROW_MIN",
+     "lane_width_ft": 12,
+     "median_type_code": 7,
+     "median_type_label": "Positive barrier - rigid",
+     "median_width_ft": 3,
+     "access_control_code": 1,
+     "access_control_label": "Full access control",
+     "accel_decel_lane_code": 0,
+     "accel_decel_lane_label": "No acceleration / deceleration lane reported",
+     "right_turn_lane_code": null,
+     "right_turn_lane_label": null,
+     "left_turn_lane_code": null,
+     "left_turn_lane_label": null,
+     "crossover_regulation": "full_access_control_screened_indicator",
+     "crossover_regulation_label": "Full access control; driveway/crossover movements are likely restricted.",
+     "turn_lane_presence": "turns_permitted_no_exclusive_lane_reported",
+     "turn_lane_presence_label": "No acceleration / deceleration lane reported",
+     "stacking_length_ft": "manual_verification_required",
+     "stacking_length_status": "not_in_txdot_inventory; requires TIA/site plan/as-built or field measurement",
+     "engineering_detail_status": {
+      "row_width": "txdot_inventory_screened_fact",
+      "crossover_regulation": "txdot_inventory_screened_indicator",
+      "turn_lane_presence": "txdot_inventory_screened_indicator",
+      "stacking_length_ft": "manual_verification_required"
+     },
+     "manual_access_fields": [
+      "stacking_length_ft"
+     ],
+     "functional_class_label": "Interstate"
+    },
+    "roadways": [
+     {
+      "road_name": "IH 35",
+      "distance_mi": 0.602,
+      "functional_class": 1,
+      "speed_limit": 55,
+      "num_lanes": 8,
+      "surface_type": 6,
+      "median_type": 7,
+      "map_geometry": {
+       "type": "LineString",
+       "coordinates": [
+        [
+         -97.729929,
+         30.278491
+        ],
+        [
+         -97.729909,
+         30.278532
+        ]
+       ]
+      },
+      "row_width": 310,
+      "row_width_ft": 310,
+      "row_width_source_field": "ROW_MIN",
+      "lane_width_ft": 12,
+      "median_type_code": 7,
+      "median_type_label": "Positive barrier - rigid",
+      "median_width_ft": 3,
+      "access_control_code": 1,
+      "access_control_label": "Full access control",
+      "accel_decel_lane_code": 0,
+      "accel_decel_lane_label": "No acceleration / deceleration lane reported",
+      "right_turn_lane_code": null,
+      "right_turn_lane_label": null,
+      "left_turn_lane_code": null,
+      "left_turn_lane_label": null,
+      "crossover_regulation": "full_access_control_screened_indicator",
+      "crossover_regulation_label": "Full access control; driveway/crossover movements are likely restricted.",
+      "turn_lane_presence": "turns_permitted_no_exclusive_lane_reported",
+      "turn_lane_presence_label": "No acceleration / deceleration lane reported",
+      "stacking_length_ft": "manual_verification_required",
+      "stacking_length_status": "not_in_txdot_inventory; requires TIA/site plan/as-built or field measurement",
+      "engineering_detail_status": {
+       "row_width": "txdot_inventory_screened_fact",
+       "crossover_regulation": "txdot_inventory_screened_indicator",
+       "turn_lane_presence": "txdot_inventory_screened_indicator",
+       "stacking_length_ft": "manual_verification_required"
+      },
+      "manual_access_fields": [
+       "stacking_length_ft"
+      ],
+      "functional_class_label": "Interstate"
+     }
+    ],
+    "roadway_count": 1,
+    "highest_speed_mph": 55,
+    "largest_lane_count": 8,
+    "engineering_details": {
+     "source": "TxDOT Roadway Inventory",
+     "source_fields": [
+      "ROW_MIN",
+      "MED_TYPE",
+      "MED_WID",
+      "ACES_CTRL",
+      "ACCEL_DECEL_LANE",
+      "RT_TURN_LANE",
+      "LT_TURN_LANE",
+      "LANE_WIDTH"
+     ],
+     "primary": {
+      "road_name": "IH 35",
+      "row_width_ft": 310,
+      "lane_width_ft": 12,
+      "median_type_label": "Positive barrier - rigid",
+      "median_width_ft": 3,
+      "access_control_label": "Full access control",
+      "crossover_regulation": "full_access_control_screened_indicator",
+      "crossover_regulation_label": "Full access control; driveway/crossover movements are likely restricted.",
+      "turn_lane_presence": "turns_permitted_no_exclusive_lane_reported",
+      "turn_lane_presence_label": "No acceleration / deceleration lane reported",
+      "stacking_length_status": "not_in_txdot_inventory; requires TIA/site plan/as-built or field measurement"
+     },
+     "resolved_fields": [
+      "row_width",
+      "crossover_regulation",
+      "turn_lane_presence"
+     ],
+     "fields_requiring_verification": [
+      "stacking_length_ft"
+     ],
+     "confidence": "screened_indicator",
+     "read": "ROW/median/access-control/turn-lane signals are screened from TxDOT inventory where populated; stacking/storage length and site driveway approval still need TIA/site-plan/as-built or field evidence."
+    },
+    "access_fields_requiring_field_verification": [
+     "stacking_length_ft"
+    ],
+    "read": "Primary screened roadway is IH 35 at 55 mph. ROW/median/access-control/turn-lane signals are screened from TxDOT inventory where populated; stacking/storage length and site driveway approval still need TIA/site-plan/as-built or field evidence."
+   },
+   "project_pipeline": {
+    "count_within_radius": 90,
+    "items": [
+     {
+      "csj": "001513423",
+      "description": "IH 35 \u2014 Widen Freeway (51st St. to Martin Luther King Blvd.)",
+      "phase": "Construction begins within 4 years",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "51st St.",
+      "limits_to": "Martin Luther King Blvd.",
+      "estimated_let_date": "2029-01",
+      "scheduled_let_date": "2029-01-01",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 1502285712.5,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00141188",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 2.435,
+      "mpo": "Capital Area",
+      "distance_mi": 1.3,
+      "lat": 30.288990181818182,
+      "lng": -97.72337118181818,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:46.738966+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513442",
+      "description": "IH 35 \u2014 Widen Freeway (Martin Luther King Jr. Blvd to Holly Street)",
+      "phase": "Construction begins within 4 years",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "Martin Luther King Jr. Blvd",
+      "limits_to": "Holly Street",
+      "estimated_let_date": "2030-01",
+      "scheduled_let_date": "2030-01-01",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 1198805428.91,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00193768",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 1.53,
+      "mpo": "Capital Area",
+      "distance_mi": 0.74,
+      "lat": 30.26694785714286,
+      "lng": -97.73412957142857,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:46.799420+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513428",
+      "description": "IH 35 \u2014 Widen Freeway (Holly Street to US 290W / SH 71)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "Holly Street",
+      "limits_to": "US 290W / SH 71",
+      "estimated_let_date": "2024-09",
+      "scheduled_let_date": "2024-09-05",
+      "actual_let_date": null,
+      "commission_award_date": "2024-09-26",
+      "estimated_cost_usd": 476620158.95,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00183200",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.046,
+      "mpo": "Capital Area",
+      "distance_mi": 2.44,
+      "lat": 30.24119882352941,
+      "lng": -97.73876182352942,
+      "geometry_basis": "public_project_geometry_center",
+      "addenda": [
+       {
+        "number": "1",
+        "date": null,
+        "changes": [],
+        "summary": "Official addendum posted",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_1_D224093201.pdf"
+       },
+       {
+        "number": "2",
+        "date": null,
+        "changes": [],
+        "summary": "Official addendum posted",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_2_D324093201.pdf"
+       },
+       {
+        "number": "3",
+        "date": null,
+        "changes": [
+         "BID ITEM 496-6012 changed",
+         "BID ITEM 496-6010 changed",
+         "BID ITEM 465-6006 changed"
+        ],
+        "summary": "BID ITEM 496-6012 changed; BID ITEM 496-6010 changed; BID ITEM 465-6006 changed",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_3_D424095002.pdf"
+       }
+      ],
+      "documents": [
+       {
+        "kind": "proposal",
+        "label": "TxDOT project proposal",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/proposal/preprod/14/A00183200/PR_A00183200.pdf",
+        "status": "verified_direct_pdf"
+       },
+       {
+        "kind": "addendum",
+        "label": "TxDOT addendum 1",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_1_D224093201.pdf",
+        "status": "verified_direct_pdf"
+       },
+       {
+        "kind": "addendum",
+        "label": "TxDOT addendum 2",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_2_D324093201.pdf",
+        "status": "verified_direct_pdf"
+       },
+       {
+        "kind": "addendum",
+        "label": "TxDOT addendum 3",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_3_D424095002.pdf",
+        "status": "verified_direct_pdf"
+       }
+      ],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:46.493271+00:00",
+       "direct_document_count": 4,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513437",
+      "description": "IH 35 \u2014 Intersection & Operational Imprv (Martin Luther King Jr Blvd to Holly Street)",
+      "phase": "Construction begins within 4 years",
+      "work_type": "Highway/Railroad Improvement",
+      "limits_from": "Martin Luther King Jr Blvd",
+      "limits_to": "Holly Street",
+      "estimated_let_date": "2026-09",
+      "scheduled_let_date": "2026-09-02",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 387000000.0,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00191327",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 1.53,
+      "mpo": "Capital Area",
+      "distance_mi": 0.74,
+      "lat": 30.26694785714286,
+      "lng": -97.73412957142857,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:47.739815+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513389",
+      "description": "IH 35 \u2014 Widen Freeway (FM 1825 to US 290E)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "FM 1825",
+      "limits_to": "US 290E",
+      "estimated_let_date": "2022-08",
+      "scheduled_let_date": "2022-08-03",
+      "actual_let_date": null,
+      "commission_award_date": "2022-08-30",
+      "estimated_cost_usd": 330161555.7,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00006359",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 8.306,
+      "mpo": "Capital Area",
+      "distance_mi": 7.94,
+      "lat": 30.37970290243903,
+      "lng": -97.68128109756098,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:42.290026+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513432",
+      "description": "IH 35 \u2014 Widen Freeway (US 290 E to Martin Luther King Jr Blvd)",
+      "phase": "Construction begins within 4 years",
+      "work_type": "Highway Improvement",
+      "limits_from": "US 290 E",
+      "limits_to": "Martin Luther King Jr Blvd",
+      "estimated_let_date": "2026-07",
+      "scheduled_let_date": "2026-07-01",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 254000000.0,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00184974",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.329,
+      "mpo": "Capital Area",
+      "distance_mi": 2.22,
+      "lat": 30.301269904761906,
+      "lng": -97.71608633333332,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:47.135787+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513077",
+      "description": "IH 35 \u2014 Widen Freeway (US 290W/SH 71 to LP 275-SLAUGHTER LANE)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "US 290W/SH 71",
+      "limits_to": "LP 275-SLAUGHTER LANE",
+      "estimated_let_date": "2022-05",
+      "scheduled_let_date": "2022-05-01",
+      "actual_let_date": null,
+      "commission_award_date": "2022-05-26",
+      "estimated_cost_usd": 226442446.23,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00006973",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.989,
+      "mpo": "Capital Area",
+      "distance_mi": 5.64,
+      "lat": 30.19779376923077,
+      "lng": -97.76455515384616,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:43.551871+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513433",
+      "description": "IH 35 \u2014 Culvert & Storm Drainage Work (Martin Luther King Jr Blvd to Holly Street)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Drainage Improvements",
+      "limits_from": "Martin Luther King Jr Blvd",
+      "limits_to": "Holly Street",
+      "estimated_let_date": "2024-12",
+      "scheduled_let_date": "2024-12-03",
+      "actual_let_date": null,
+      "commission_award_date": "2024-12-17",
+      "estimated_cost_usd": 205674130.38,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00185024",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.897,
+      "mpo": "Capital Area",
+      "distance_mi": 0.68,
+      "lat": 30.27847413043478,
+      "lng": -97.72862186956522,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:47.208452+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "015201086",
+      "description": "US 183 \u2014 Intersection & Operational Imprv (SH 71 to SH 130)",
+      "phase": "Construction begins in 5 to 10 years",
+      "work_type": "Construct New Roadway Lanes",
+      "limits_from": "SH 71",
+      "limits_to": "SH 130",
+      "estimated_let_date": "2035-12",
+      "scheduled_let_date": "2035-12-01",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 171000000.0,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00129149",
+      "project_stage": "PE",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 9.066,
+      "mpo": "Capital Area",
+      "distance_mi": 8.45,
+      "lat": 30.161546789473686,
+      "lng": -97.69169431578948,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:42.741722+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513460",
+      "description": "IH 35 \u2014 Transportation Non-Roadway (Cesar Chavez to 4th Street)",
+      "phase": "Construction begins in 5 to 10 years",
+      "work_type": "Highway Improvement",
+      "limits_from": "Cesar Chavez",
+      "limits_to": "4th Street",
+      "estimated_let_date": "2035-09",
+      "scheduled_let_date": "2035-09-01",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 149566964.29,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00214047",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 0.199,
+      "mpo": "Capital Area",
+      "distance_mi": 0.99,
+      "lat": 30.26254725,
+      "lng": -97.73583275,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:48.457619+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     }
+    ],
+    "largest_project": {
+     "csj": "001513423",
+     "description": "IH 35 \u2014 Widen Freeway (51st St. to Martin Luther King Blvd.)",
+     "phase": "Construction begins within 4 years",
+     "work_type": "Widen Road - Add Lanes",
+     "limits_from": "51st St.",
+     "limits_to": "Martin Luther King Blvd.",
+     "estimated_let_date": "2029-01",
+     "scheduled_let_date": "2029-01-01",
+     "actual_let_date": null,
+     "commission_award_date": null,
+     "estimated_cost_usd": 1502285712.5,
+     "district": "Austin",
+     "district_number": 14,
+     "county": "Travis",
+     "project_id": "A00141188",
+     "project_stage": "PS&E",
+     "project_status": "Active",
+     "let_type": "Statewide Let",
+     "project_length_mi": 2.435,
+     "mpo": "Capital Area",
+     "distance_mi": 1.3,
+     "lat": 30.288990181818182,
+     "lng": -97.72337118181818,
+     "geometry_basis": "public_project_geometry_center",
+     "documents": [],
+     "official_lookup_links": [
+      {
+       "kind": "project_tracker",
+       "label": "TxDOT Project Tracker",
+       "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+      },
+      {
+       "kind": "plans_online",
+       "label": "TxDOT Plans Online",
+       "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+      }
+     ],
+     "document_lookup": {
+      "checked_at": "2026-08-01T21:06:46.738966+00:00",
+      "direct_document_count": 0,
+      "direct_plan_status": "not_found_in_automatic_public_lookup",
+      "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+     }
+    },
+    "near_term_projects": [
+     {
+      "csj": "001513428",
+      "description": "IH 35 \u2014 Widen Freeway (Holly Street to US 290W / SH 71)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "Holly Street",
+      "limits_to": "US 290W / SH 71",
+      "estimated_let_date": "2024-09",
+      "scheduled_let_date": "2024-09-05",
+      "actual_let_date": null,
+      "commission_award_date": "2024-09-26",
+      "estimated_cost_usd": 476620158.95,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00183200",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.046,
+      "mpo": "Capital Area",
+      "distance_mi": 2.44,
+      "lat": 30.24119882352941,
+      "lng": -97.73876182352942,
+      "geometry_basis": "public_project_geometry_center",
+      "addenda": [
+       {
+        "number": "1",
+        "date": null,
+        "changes": [],
+        "summary": "Official addendum posted",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_1_D224093201.pdf"
+       },
+       {
+        "number": "2",
+        "date": null,
+        "changes": [],
+        "summary": "Official addendum posted",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_2_D324093201.pdf"
+       },
+       {
+        "number": "3",
+        "date": null,
+        "changes": [
+         "BID ITEM 496-6012 changed",
+         "BID ITEM 496-6010 changed",
+         "BID ITEM 465-6006 changed"
+        ],
+        "summary": "BID ITEM 496-6012 changed; BID ITEM 496-6010 changed; BID ITEM 465-6006 changed",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_3_D424095002.pdf"
+       }
+      ],
+      "documents": [
+       {
+        "kind": "proposal",
+        "label": "TxDOT project proposal",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/proposal/preprod/14/A00183200/PR_A00183200.pdf",
+        "status": "verified_direct_pdf"
+       },
+       {
+        "kind": "addendum",
+        "label": "TxDOT addendum 1",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_1_D224093201.pdf",
+        "status": "verified_direct_pdf"
+       },
+       {
+        "kind": "addendum",
+        "label": "TxDOT addendum 2",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_2_D324093201.pdf",
+        "status": "verified_direct_pdf"
+       },
+       {
+        "kind": "addendum",
+        "label": "TxDOT addendum 3",
+        "url": "https://ftp.txdot.gov/pub/txdot-info/cmd/txctesttxdotgov/addendum/preprod/14/A00183200/AD_A00183200_3_D424095002.pdf",
+        "status": "verified_direct_pdf"
+       }
+      ],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:46.493271+00:00",
+       "direct_document_count": 4,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513437",
+      "description": "IH 35 \u2014 Intersection & Operational Imprv (Martin Luther King Jr Blvd to Holly Street)",
+      "phase": "Construction begins within 4 years",
+      "work_type": "Highway/Railroad Improvement",
+      "limits_from": "Martin Luther King Jr Blvd",
+      "limits_to": "Holly Street",
+      "estimated_let_date": "2026-09",
+      "scheduled_let_date": "2026-09-02",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 387000000.0,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00191327",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 1.53,
+      "mpo": "Capital Area",
+      "distance_mi": 0.74,
+      "lat": 30.26694785714286,
+      "lng": -97.73412957142857,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:47.739815+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513389",
+      "description": "IH 35 \u2014 Widen Freeway (FM 1825 to US 290E)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "FM 1825",
+      "limits_to": "US 290E",
+      "estimated_let_date": "2022-08",
+      "scheduled_let_date": "2022-08-03",
+      "actual_let_date": null,
+      "commission_award_date": "2022-08-30",
+      "estimated_cost_usd": 330161555.7,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00006359",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 8.306,
+      "mpo": "Capital Area",
+      "distance_mi": 7.94,
+      "lat": 30.37970290243903,
+      "lng": -97.68128109756098,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:42.290026+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513432",
+      "description": "IH 35 \u2014 Widen Freeway (US 290 E to Martin Luther King Jr Blvd)",
+      "phase": "Construction begins within 4 years",
+      "work_type": "Highway Improvement",
+      "limits_from": "US 290 E",
+      "limits_to": "Martin Luther King Jr Blvd",
+      "estimated_let_date": "2026-07",
+      "scheduled_let_date": "2026-07-01",
+      "actual_let_date": null,
+      "commission_award_date": null,
+      "estimated_cost_usd": 254000000.0,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00184974",
+      "project_stage": "PS&E",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.329,
+      "mpo": "Capital Area",
+      "distance_mi": 2.22,
+      "lat": 30.301269904761906,
+      "lng": -97.71608633333332,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:47.135787+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     },
+     {
+      "csj": "001513077",
+      "description": "IH 35 \u2014 Widen Freeway (US 290W/SH 71 to LP 275-SLAUGHTER LANE)",
+      "phase": "Construction underway or begins soon",
+      "work_type": "Widen Road - Add Lanes",
+      "limits_from": "US 290W/SH 71",
+      "limits_to": "LP 275-SLAUGHTER LANE",
+      "estimated_let_date": "2022-05",
+      "scheduled_let_date": "2022-05-01",
+      "actual_let_date": null,
+      "commission_award_date": "2022-05-26",
+      "estimated_cost_usd": 226442446.23,
+      "district": "Austin",
+      "district_number": 14,
+      "county": "Travis",
+      "project_id": "A00006973",
+      "project_stage": "Construction",
+      "project_status": "Active",
+      "let_type": "Statewide Let",
+      "project_length_mi": 3.989,
+      "mpo": "Capital Area",
+      "distance_mi": 5.64,
+      "lat": 30.19779376923077,
+      "lng": -97.76455515384616,
+      "geometry_basis": "public_project_geometry_center",
+      "documents": [],
+      "official_lookup_links": [
+       {
+        "kind": "project_tracker",
+        "label": "TxDOT Project Tracker",
+        "url": "https://apps3.txdot.gov/apps-cq/project_tracker/"
+       },
+       {
+        "kind": "plans_online",
+        "label": "TxDOT Plans Online",
+        "url": "https://www.txdot.gov/business/plans-online-bid-lettings.html"
+       }
+      ],
+      "document_lookup": {
+       "checked_at": "2026-08-01T21:06:43.551871+00:00",
+       "direct_document_count": 0,
+       "direct_plan_status": "not_found_in_automatic_public_lookup",
+       "direct_plan_advisory": "No direct plan-sheet or schematic URL was found by the automatic public lookup. TxDOT Plans Online may still hold a plan set; search by CSJ."
+      }
+     }
+    ],
+    "read": "90 TxDOT project(s) are mapped within the screened radius; largest visible estimate is $1,502,285,712."
+   },
+   "bridge_constraints": {
+    "count_within_radius": 50,
+    "nearest_distance_mi": 0.5,
+    "posted_bridge_count": 0,
+    "low_condition_bridge_count": 0,
+    "items": [
+     {
+      "bridge_id": "142270001513346",
+      "name": "Steel box girder bridge (part-through box girders)  on concrete substructure (variable skew)",
+      "carries": "IH35SB EXIT234C RP",
+      "intersects": "IH 35 SB ENTRANCE RAMP",
+      "year_built": "1976",
+      "deck_cond": "6",
+      "super_cond": "5",
+      "sub_cond": "6",
+      "worst_cond_rtg": 5,
+      "posted_weight_us_tons": null,
+      "inventory_rating_us_tons": 40.8,
+      "load_restriction": "N",
+      "distance_mi": 0.5
+     },
+     {
+      "bridge_id": "142270001513188",
+      "name": "6 - Simple Span PS Concrete Girder Bridge on Concrete Caps & Columns @ No Skew",
+      "carries": "IH 35",
+      "intersects": "E 15TH ST",
+      "year_built": "1962",
+      "deck_cond": "7",
+      "super_cond": "7",
+      "sub_cond": "6",
+      "worst_cond_rtg": 6,
+      "posted_weight_us_tons": null,
+      "inventory_rating_us_tons": 49.6,
+      "load_restriction": "N",
+      "distance_mi": 0.51
+     },
+     {
+      "bridge_id": "142270001513189",
+      "name": "4 span continuous prestressed concrete girder bridge (20\u00b0 LF skew)",
+      "carries": "EAST 12TH ST",
+      "intersects": "IH 35",
+      "year_built": "1962",
+      "deck_cond": "6",
+      "super_cond": "5",
+      "sub_cond": "7",
+      "worst_cond_rtg": 5,
+      "posted_weight_us_tons": null,
+      "inventory_rating_us_tons": 24.3,
+      "load_restriction": "N",
+      "distance_mi": 0.53
+     },
+     {
+      "bridge_id": "142270001513344",
+      "name": "2 simple span prestressed concrete beam bridge",
+      "carries": "IH 35 NB ON-RAMP",
+      "intersects": "SOUTH T/A AT 15TH ST",
+      "year_built": "1976",
+      "deck_cond": "7",
+      "super_cond": "8",
+      "sub_cond": "7",
+      "worst_cond_rtg": 7,
+      "posted_weight_us_tons": null,
+      "inventory_rating_us_tons": 39.7,
+      "load_restriction": "N",
+      "distance_mi": 0.53
+     },
+     {
+      "bridge_id": "142270001513345",
+      "name": "Steel box girder bridge (part-through box girders)  on concrete substructure (variable skew)",
+      "carries": "IH 35 NB ENT RAMP",
+      "intersects": "IH 35 NB EXIT RAMP",
+      "year_built": "1976",
+      "deck_cond": "6",
+      "super_cond": "5",
+      "sub_cond": "6",
+      "worst_cond_rtg": 5,
+      "posted_weight_us_tons": null,
+      "inventory_rating_us_tons": 35.3,
+      "load_restriction": "N",
+      "distance_mi": 0.53
+     },
+     {
+      "bridge_id": "142270001513190",
+      "name": "4 Span Continuous Prestressed Concrete Girder Bridge on Concrete Caps & Cols @ No Skew",
+      "carries": "EAST 11TH ST",
+      "intersects": "IH 35",
+      "year_built": "1962",
+      "deck_cond": "6",
+      "super_cond": "6",
+      "sub_cond": "7",
+      "worst_cond_rtg": 6,
+      "posted_weight_us_tons": null,
+      "inventory_rating_us_tons": 17.6,
+      "load_restriction": "N",
+      "distance_mi": 0.57
+     }
+    ],
+    "constraint_level": "no_posted_bridge_constraint_in_screened_set",
+    "read": "No posted-weight bridge constraint appears in the screened TxDOT bridge set."
+   },
+   "crash_data": {
+    "source": "TxDOT CRIS",
+    "access_mode": "credentialed_public_extract",
+    "integration_status": "credentials_not_configured",
+    "available_in_this_run": false,
+    "is_zero_crash_result": false,
+    "official_access_url": "https://cris.dot.state.tx.us/",
+    "extract_guide_url": "https://www.txdot.gov/content/dam/docs/division/trf/crash-records/cris-guide.pdf",
+    "metrics_when_configured": [
+     "3-5 year crash count within radius",
+     "fatal and suspected-serious injury crashes",
+     "intersection/frontage-road related crash share",
+     "pedestrian/cyclist crash indicators",
+     "crash rate normalized against AADT where segment matching is available"
+    ],
+    "read": "Crash records require authorized TxDOT CRIS public-extract ingestion. This run does not contain crash metrics and must not be read as a zero-crash result."
+   },
+   "broker_read": "PropDesk combined the public TxDOT transportation layers: top traffic exposure 181,493 AADT on IH 35; 90 mapped TxDOT project(s); 50 nearby TxDOT bridge record(s).",
+   "why_it_matters": "TxDOT exposure, planned construction, and bridge/access constraints shape driveway feasibility, truck routing, timing risk, and whether a traffic study is likely to be worth buying.",
+   "next_step": "Use this as the automated transportation screen. If crash severity is material to the decision, configure authorized TxDOT CRIS public-extract ingestion so PropDesk can compute crash metrics from the official extract instead of treating safety as unknown."
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:29.591964Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

@@ -1,0 +1,62 @@
+{
+ "source_id": "broadband_intel",
+ "recorded_at": "2026-08-01T21:07:23.882161+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "broadband_intel",
+  "source_access_status": "HTML_OR_PDF_ONLY",
+  "data_confidence_status": "manual_verification_required",
+  "coverage_status": "manual_verification_required",
+  "normalized_facts": {
+   "status": "manual_verification_required",
+   "fcc_nbm_search_url": "https://broadbandmap.fcc.gov/location-summary/fixed",
+   "fcc_nbm_bulk_download_url": "https://broadbandmap.fcc.gov/data-download/nationwide-data",
+   "parcel_lat": 30.276513,
+   "parcel_lng": -97.739758,
+   "parcel_address": "1100 Congress Ave, Austin, TX 78701",
+   "advisory": "FCC blocks programmatic access to the National Broadband Map AND its lat/lng \u2192 location_id lookup, so the only honest path is: open the FCC NBM search page, paste the parcel address (or lat/lng), and the viewer will return the official Location Summary \u2014 every fixed broadband provider + advertised speeds the FCC has on file. For office / life-science / data-center deals where broadband is a hard underwriting factor, also email the carriers directly to confirm building service + actual delivered speeds.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:23.882161Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "FCC blocks programmatic access to the National Broadband Map AND its lat/lng \u2192 location_id lookup, so the only honest path is: open the FCC NBM search page, paste the parcel address (or lat/lng), and the viewer will return the official Location Summary \u2014 every fixed broadband provider + advertised speeds the FCC has on file. For office / life-science / data-center deals where broadband is a hard underwriting factor, also email the carriers directly to confirm building service + actual delivered speeds."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "FCC NBM Location Summary screenshot",
+    "FCC NBM Location Summary PDF export",
+    "carrier service availability email",
+    "fiber-route map (per-carrier)"
+   ],
+   "reason": "Broadband data is available publicly via FCC NBM but the lat/lng \u2192 location_id lookup isn't open. Open https://broadbandmap.fcc.gov/location-summary/fixed, paste the parcel address, then screenshot / export the Location Summary PDF."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

@@ -1,0 +1,108 @@
+{
+  "id": "pd-cancelpart",
+  "address": "9200 FM 1826, Austin",
+  "parcel_id": null,
+  "county": "Hays",
+  "lat": 30.18,
+  "lng": -97.9,
+  "anchor_kind": "geocode",
+  "anchor_quality": "provisional",
+  "status": "cancelled",
+  "error_code": null,
+  "failure_reason": null,
+  "mode": "check",
+  "created_at": "2026-07-30T17:00:00Z",
+  "started_at": "2026-07-30T17:00:05Z",
+  "finished_at": "2026-07-30T17:02:00Z",
+  "progress": {
+    "stage": "cancelled",
+    "status": "cancelled",
+    "message": null,
+    "completed_sources": 14,
+    "total_sources": 35,
+    "failed_sources_count": 0,
+    "elapsed_seconds": 115,
+    "updated_at": "2026-07-30T17:02:00Z"
+  },
+  "cards": {
+    "groups": [
+      {
+        "key": "flood",
+        "title": "Flood & water",
+        "cards": [
+          {
+            "card_key": "fema_nfhl",
+            "title": "Flood",
+            "status": "ok",
+            "takeaway": "Partly inside a mapped flood zone (Zone AE along the creek).",
+            "facts": [
+              {
+                "label": "Flood zone",
+                "value": "Zone AE along the south edge"
+              }
+            ],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "fema_nfhl",
+                "source_name": "FEMA flood maps",
+                "source_url": null,
+                "checked_at": "2026-07-30T17:01:30Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-07-30T17:01:30Z",
+            "narrative": null,
+            "retryable": false,
+            "icon": "🌊",
+            "order": 2,
+            "summary": "Partly inside a mapped flood zone (Zone AE along the creek)",
+            "confidence": "verified public fact",
+            "hero": null
+          }
+        ]
+      },
+      {
+        "key": "zoning",
+        "title": "Zoning & permissions",
+        "cards": [
+          {
+            "card_key": "austin_zoning",
+            "title": "Zoning / jurisdiction",
+            "status": "not_checked",
+            "takeaway": "Not checked — the lookup was cancelled before this source.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "austin_zoning",
+                "source_name": "City zoning records",
+                "source_url": null,
+                "checked_at": null,
+                "from_cache": false
+              }
+            ],
+            "checked_at": null,
+            "narrative": null,
+            "retryable": false,
+            "icon": "🏛",
+            "order": 3,
+            "summary": "Not checked — the lookup was cancelled before this source",
+            "confidence": "unknown",
+            "hero": null
+          }
+        ]
+      }
+    ],
+    "bottom_line": {
+      "text": "",
+      "kind": "deterministic",
+      "checked_at": "2026-07-30T17:01:30Z"
+    },
+    "manual_checks": [],
+    "anchor_note": null
+  },
+  "retryable_failed_sources": [],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

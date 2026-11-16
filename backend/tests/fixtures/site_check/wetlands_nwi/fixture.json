@@ -1,0 +1,58 @@
+{
+ "source_id": "wetlands_nwi",
+ "recorded_at": "2026-08-01T21:07:10.808273+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 2,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "wetlands_nwi",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "result_schema_version": 2,
+   "status": "clear",
+   "wetland_features": [],
+   "wetland_types_seen": [],
+   "envelope_radius_m": 300,
+   "geometry_type": "radius_envelope",
+   "parcel_specific": false,
+   "wetlands_map_geometry": null,
+   "wetlands_intersection_acres": null,
+   "source_warning": null,
+   "advisory": "No mapped wetland indicator found in screened NWI layers; delineation not performed.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:10.808273Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "No mapped wetland indicator found in screened NWI layers; delineation not performed."
+  ],
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

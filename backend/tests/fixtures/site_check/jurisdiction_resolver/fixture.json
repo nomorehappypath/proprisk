@@ -1,0 +1,56 @@
+{
+ "source_id": "jurisdiction_resolver",
+ "recorded_at": "2026-08-01T21:06:24.805444+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 1,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "jurisdiction_resolver",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "verified_public_fact",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "county": "travis",
+   "source": "Travis County GIS (Municipal Jurisdictions)",
+   "source_url": "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Municipal_Jurisdictions_Annexations/MapServer",
+   "jurisdiction_kind": "full_purpose_city",
+   "city": "Austin",
+   "confidence": "authoritative",
+   "advisories": [
+    "limited_purpose_not_checked"
+   ],
+   "broker_summary": "PropDesk verified this point is inside Austin city limits using Travis County GIS (Municipal Jurisdictions). City zoning and city development rules may apply."
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:06:24.805444Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "PropDesk verified this point is inside Austin city limits using Travis County GIS (Municipal Jurisdictions). City zoning and city development rules may apply."
+  ],
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

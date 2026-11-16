@@ -1,0 +1,160 @@
+# Kyle, TX — Code of Ordinances (Zoning)
+# Source: https://www.cityofkyle.com/planning
+# Last verified: 2026-05-02
+#
+# Coverage: 6 broker-grade districts.
+#   AG, R-1-1, R-1-3, R-3, RC, IC
+
+city: kyle
+state: TX
+udc_version: "Kyle Code of Ordinances - Title XV Zoning"
+udc_source_url: "https://www.cityofkyle.com/planning"
+last_verified: "2026-05-02"
+
+districts:
+
+  AG:
+    full_name: "Agricultural"
+    code_section: "ZO §AG"
+    permitted_uses:
+      - {use_id: agricultural, code_ref: "ZO §AG"}
+      - {use_id: ag_exempt, code_ref: "ZO §AG"}
+      - {use_id: single_family_detached, code_ref: "ZO §AG", notes: "1 du / 5 acres."}
+    conditional_uses:
+      - {use_id: solar_farm, code_ref: "ZO §AG"}
+    prohibited_uses:
+      - {use_id: multifamily_residential, code_ref: "ZO §AG"}
+      - {use_id: general_retail, code_ref: "ZO §AG"}
+    dimensional_standards:
+      max_density: {value: 0.2, unit: "units_per_acre", code_ref: "ZO §AG"}
+      max_height: {value: 35, unit: "feet", code_ref: "ZO §AG"}
+      min_lot_size: {value: 217800, unit: "square_feet", code_ref: "ZO §AG"}
+      front_setback: {value: 50, unit: "feet", code_ref: "ZO §AG"}
+      side_setback: {value: 25, unit: "feet", code_ref: "ZO §AG"}
+      rear_setback: {value: 50, unit: "feet", code_ref: "ZO §AG"}
+      max_impervious_cover: {value: 25, unit: "percent", code_ref: "ZO §AG"}
+    parking:
+      - {use_id: single_family_detached, rate: 2.0, unit: "spaces_per_unit", code_ref: "ZO §Parking"}
+
+  R-1-1:
+    full_name: "Single Family - Estate"
+    code_section: "ZO §R-1-1"
+    permitted_uses:
+      - {use_id: single_family_detached, code_ref: "ZO §R-1-1"}
+      - {use_id: church, code_ref: "ZO §R-1-1"}
+      - {use_id: school_public, code_ref: "ZO §R-1-1"}
+    conditional_uses:
+      - {use_id: childcare, code_ref: "ZO §R-1-1"}
+    prohibited_uses:
+      - {use_id: multifamily_residential, code_ref: "ZO §R-1-1"}
+    dimensional_standards:
+      max_density: {value: 1.0, unit: "units_per_acre", code_ref: "ZO §R-1-1"}
+      max_height: {value: 35, unit: "feet", code_ref: "ZO §R-1-1"}
+      min_lot_size: {value: 43560, unit: "square_feet", code_ref: "ZO §R-1-1"}
+      front_setback: {value: 35, unit: "feet", code_ref: "ZO §R-1-1"}
+      side_setback: {value: 15, unit: "feet", code_ref: "ZO §R-1-1"}
+      rear_setback: {value: 25, unit: "feet", code_ref: "ZO §R-1-1"}
+      max_impervious_cover: {value: 35, unit: "percent", code_ref: "ZO §R-1-1"}
+    parking:
+      - {use_id: single_family_detached, rate: 2.0, unit: "spaces_per_unit", code_ref: "ZO §Parking"}
+
+  R-1-3:
+    full_name: "Single Family - Standard"
+    code_section: "ZO §R-1-3"
+    permitted_uses:
+      - {use_id: single_family_detached, code_ref: "ZO §R-1-3"}
+      - {use_id: church, code_ref: "ZO §R-1-3"}
+      - {use_id: school_public, code_ref: "ZO §R-1-3"}
+    conditional_uses:
+      - {use_id: childcare, code_ref: "ZO §R-1-3"}
+      - {use_id: accessory_dwelling_unit, code_ref: "ZO §R-1-3"}
+    prohibited_uses:
+      - {use_id: duplex, code_ref: "ZO §R-1-3"}
+      - {use_id: multifamily_residential, code_ref: "ZO §R-1-3"}
+    dimensional_standards:
+      max_density: {value: 5.0, unit: "units_per_acre", code_ref: "ZO §R-1-3"}
+      max_height: {value: 35, unit: "feet", code_ref: "ZO §R-1-3"}
+      min_lot_size: {value: 7000, unit: "square_feet", code_ref: "ZO §R-1-3"}
+      front_setback: {value: 25, unit: "feet", code_ref: "ZO §R-1-3"}
+      side_setback: {value: 5, unit: "feet", code_ref: "ZO §R-1-3"}
+      rear_setback: {value: 20, unit: "feet", code_ref: "ZO §R-1-3"}
+      max_impervious_cover: {value: 50, unit: "percent", code_ref: "ZO §R-1-3"}
+    parking:
+      - {use_id: single_family_detached, rate: 2.0, unit: "spaces_per_unit", code_ref: "ZO §Parking"}
+
+  R-3:
+    full_name: "Multifamily"
+    code_section: "ZO §R-3"
+    permitted_uses:
+      - {use_id: townhouse, code_ref: "ZO §R-3"}
+      - {use_id: multifamily_residential, code_ref: "ZO §R-3"}
+      - {use_id: condominium, code_ref: "ZO §R-3"}
+      - {use_id: senior_living, code_ref: "ZO §R-3"}
+    conditional_uses:
+      - {use_id: assisted_living, code_ref: "ZO §R-3"}
+      - {use_id: childcare, code_ref: "ZO §R-3"}
+    dimensional_standards:
+      max_density: {value: 18, unit: "units_per_acre", code_ref: "ZO §R-3"}
+      max_height: {value: 40, unit: "feet", code_ref: "ZO §R-3"}
+      min_lot_size: {value: 8000, unit: "square_feet", code_ref: "ZO §R-3"}
+      front_setback: {value: 25, unit: "feet", code_ref: "ZO §R-3"}
+      side_setback: {value: 15, unit: "feet", code_ref: "ZO §R-3"}
+      rear_setback: {value: 25, unit: "feet", code_ref: "ZO §R-3"}
+      max_impervious_cover: {value: 65, unit: "percent", code_ref: "ZO §R-3"}
+    parking:
+      - {use_id: multifamily_residential, rate: 1.5, unit: "spaces_per_unit", code_ref: "ZO §Parking"}
+
+  RC:
+    full_name: "Retail Commercial"
+    code_section: "ZO §RC"
+    permitted_uses:
+      - {use_id: general_retail, code_ref: "ZO §RC"}
+      - {use_id: convenience_store, code_ref: "ZO §RC"}
+      - {use_id: restaurant, code_ref: "ZO §RC"}
+      - {use_id: office_general, code_ref: "ZO §RC"}
+      - {use_id: office_medical, code_ref: "ZO §RC"}
+      - {use_id: bank_or_financial, code_ref: "ZO §RC"}
+      - {use_id: hotel, code_ref: "ZO §RC"}
+      - {use_id: gas_station, code_ref: "ZO §RC"}
+      - {use_id: car_wash, code_ref: "ZO §RC"}
+      - {use_id: drive_through, code_ref: "ZO §RC"}
+      - {use_id: auto_service, code_ref: "ZO §RC"}
+      - {use_id: self_storage, code_ref: "ZO §RC"}
+    conditional_uses:
+      - {use_id: bar_or_lounge, code_ref: "ZO §RC"}
+      - {use_id: outdoor_storage, code_ref: "ZO §RC"}
+    dimensional_standards:
+      max_height: {value: 50, unit: "feet", code_ref: "ZO §RC"}
+      front_setback: {value: 25, unit: "feet", code_ref: "ZO §RC"}
+      side_setback: {value: 10, unit: "feet", code_ref: "ZO §RC"}
+      rear_setback: {value: 25, unit: "feet", code_ref: "ZO §RC"}
+      max_impervious_cover: {value: 85, unit: "percent", code_ref: "ZO §RC"}
+    parking:
+      - {use_id: general_retail, rate: 4.0, unit: "spaces_per_1000_sf", code_ref: "ZO §Parking"}
+      - {use_id: hotel, rate: 1.0, unit: "spaces_per_unit", code_ref: "ZO §Parking"}
+      - {use_id: office_general, rate: 3.5, unit: "spaces_per_1000_sf", code_ref: "ZO §Parking"}
+
+  IC:
+    full_name: "Industrial Commerce"
+    code_section: "ZO §IC"
+    permitted_uses:
+      - {use_id: warehouse, code_ref: "ZO §IC"}
+      - {use_id: light_industrial, code_ref: "ZO §IC"}
+      - {use_id: manufacturing, code_ref: "ZO §IC"}
+      - {use_id: self_storage, code_ref: "ZO §IC"}
+      - {use_id: data_center, code_ref: "ZO §IC"}
+      - {use_id: auto_service, code_ref: "ZO §IC"}
+    conditional_uses:
+      - {use_id: heavy_industrial, code_ref: "ZO §IC"}
+      - {use_id: outdoor_storage, code_ref: "ZO §IC"}
+    prohibited_uses:
+      - {use_id: multifamily_residential, code_ref: "ZO §IC"}
+    dimensional_standards:
+      max_height: {value: 50, unit: "feet", code_ref: "ZO §IC"}
+      front_setback: {value: 30, unit: "feet", code_ref: "ZO §IC"}
+      side_setback: {value: 15, unit: "feet", code_ref: "ZO §IC"}
+      rear_setback: {value: 30, unit: "feet", code_ref: "ZO §IC"}
+      max_impervious_cover: {value: 75, unit: "percent", code_ref: "ZO §IC"}
+    parking:
+      - {use_id: warehouse, rate: 1.0, unit: "spaces_per_2000_sf", code_ref: "ZO §Parking"}
+      - {use_id: light_industrial, rate: 1.0, unit: "spaces_per_1000_sf", code_ref: "ZO §Parking"}

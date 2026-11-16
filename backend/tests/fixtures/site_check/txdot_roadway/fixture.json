@@ -1,0 +1,129 @@
+{
+ "source_id": "txdot_roadway",
+ "recorded_at": "2026-08-01T21:06:50.427862+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 1,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "txdot_roadway",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "verified_public_fact",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "roadways": [
+    {
+     "road_name": "IH 35",
+     "distance_mi": 0.602,
+     "functional_class": 1,
+     "speed_limit": 55,
+     "num_lanes": 8,
+     "surface_type": 6,
+     "median_type": 7,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.729929,
+        30.278491
+       ],
+       [
+        -97.729909,
+        30.278532
+       ]
+      ]
+     },
+     "row_width": 310,
+     "row_width_ft": 310,
+     "row_width_source_field": "ROW_MIN",
+     "lane_width_ft": 12,
+     "median_type_code": 7,
+     "median_type_label": "Positive barrier - rigid",
+     "median_width_ft": 3,
+     "access_control_code": 1,
+     "access_control_label": "Full access control",
+     "accel_decel_lane_code": 0,
+     "accel_decel_lane_label": "No acceleration / deceleration lane reported",
+     "right_turn_lane_code": null,
+     "right_turn_lane_label": null,
+     "left_turn_lane_code": null,
+     "left_turn_lane_label": null,
+     "crossover_regulation": "full_access_control_screened_indicator",
+     "crossover_regulation_label": "Full access control; driveway/crossover movements are likely restricted.",
+     "turn_lane_presence": "turns_permitted_no_exclusive_lane_reported",
+     "turn_lane_presence_label": "No acceleration / deceleration lane reported",
+     "stacking_length_ft": "manual_verification_required",
+     "stacking_length_status": "not_in_txdot_inventory; requires TIA/site plan/as-built or field measurement",
+     "engineering_detail_status": {
+      "row_width": "txdot_inventory_screened_fact",
+      "crossover_regulation": "txdot_inventory_screened_indicator",
+      "turn_lane_presence": "txdot_inventory_screened_indicator",
+      "stacking_length_ft": "manual_verification_required"
+     },
+     "manual_access_fields": [
+      "stacking_length_ft"
+     ]
+    }
+   ],
+   "engineering_details": {
+    "source": "TxDOT Roadway Inventory",
+    "source_fields": [
+     "ROW_MIN",
+     "MED_TYPE",
+     "MED_WID",
+     "ACES_CTRL",
+     "ACCEL_DECEL_LANE",
+     "RT_TURN_LANE",
+     "LT_TURN_LANE",
+     "LANE_WIDTH"
+    ],
+    "resolved_counts": {
+     "row_width": 1,
+     "crossover_regulation": 1,
+     "turn_lane_presence": 1
+    },
+    "unresolved_counts": {
+     "row_width": 0,
+     "crossover_regulation": 0,
+     "turn_lane_presence": 0
+    },
+    "still_requires_plan_or_field_verification": [
+     "stacking_length_ft",
+     "turn_lane_storage_length",
+     "site_specific_driveway_spacing_and_movements",
+     "final TxDOT/local access approval"
+    ],
+    "read": "TxDOT Roadway Inventory can screen ROW width, median/access-control, lane width, and turn-lane presence where populated. It does not provide stacking/storage length or approve site-specific driveway movements."
+   },
+   "source": "TxDOT Roadway Inventory"
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:06:50.427862Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

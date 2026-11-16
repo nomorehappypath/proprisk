@@ -1,0 +1,118 @@
+{
+ "source_id": "fire_district",
+ "recorded_at": "2026-08-01T21:07:21.439859+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "fire_district",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "county": "travis",
+   "search_radius_mi": 5.0,
+   "stations_count": 26,
+   "nearest_station": {
+    "name": "FS0002",
+    "address": "506 W MARTIN LUTHER KING BLVD",
+    "department": "AFD",
+    "station_number": "2",
+    "distance_mi": 0.48,
+    "lat": 30.28255502221074,
+    "lng": -97.74380473503489
+   },
+   "stations": [
+    {
+     "name": "FS0002",
+     "address": "506 W MARTIN LUTHER KING BLVD",
+     "department": "AFD",
+     "station_number": "2",
+     "distance_mi": 0.48,
+     "lat": 30.28255502221074,
+     "lng": -97.74380473503489
+    },
+    {
+     "name": "FS0001",
+     "address": "401 E 5TH ST",
+     "department": "AFD",
+     "station_number": "1",
+     "distance_mi": 0.74,
+     "lat": 30.26581026345608,
+     "lng": -97.73937697902242
+    },
+    {
+     "name": "FS0004",
+     "address": "1000 BLANCO ST",
+     "department": "AFD",
+     "station_number": "4",
+     "distance_mi": 0.9,
+     "lat": 30.276616173185875,
+     "lng": -97.75491109729869
+    },
+    {
+     "name": "FS0003",
+     "address": "201 W 30TH ST",
+     "department": "AFD",
+     "station_number": "3",
+     "distance_mi": 1.25,
+     "lat": 30.29462886696149,
+     "lng": -97.73865309520333
+    },
+    {
+     "name": "FSINVT",
+     "address": "3002 GUADALUPE ST",
+     "department": "AFD",
+     "station_number": "INVST",
+     "distance_mi": 1.43,
+     "lat": 30.29708239251795,
+     "lng": -97.74207151130247
+    }
+   ],
+   "iso_rating_lookup_url": "https://www.isomitigation.com/ppc/lookup/",
+   "fire_flow_status": "manual_verification_required",
+   "advisory": "Nearest fire station: FS0002 (Station #2) \u2014 0.48 mi straight-line, AFD, 506 W MARTIN LUTHER KING BLVD. Other stations within 5 mi: FS0001 (0.74 mi), FS0004 (0.9 mi). Distance is straight-line, not driving. ISO Suppression Rating + fire-flow capacity at the nearest hydrant remain manual lookups.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:21.439859Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "Nearest fire station: FS0002 (Station #2) \u2014 0.48 mi straight-line, AFD, 506 W MARTIN LUTHER KING BLVD. Other stations within 5 mi: FS0001 (0.74 mi), FS0004 (0.9 mi). Distance is straight-line, not driving. ISO Suppression Rating + fire-flow capacity at the nearest hydrant remain manual lookups."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "ISO Fire Suppression Rating letter",
+    "fire-flow test report",
+    "fire marshal letter",
+    "fire department capacity confirmation"
+   ],
+   "reason": "Distance to the nearest fire station screens for response-time risk; the binding answers (ISO Fire Suppression Rating, fire-flow capacity at the nearest hydrant, written response-time commitments) require manual verification. Look up the ISO rating at https://www.isomitigation.com/ppc/lookup/ (search by community / fire department), then upload the rating letter + a fire-flow test report from the serving department."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

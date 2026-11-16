@@ -1,0 +1,31 @@
+{
+  "id": "pd-failed",
+  "address": "asdf asdf",
+  "parcel_id": null,
+  "county": null,
+  "lat": null,
+  "lng": null,
+  "anchor_kind": null,
+  "anchor_quality": null,
+  "status": "failed",
+  "error_code": "geocode_failed",
+  "failure_reason": "We couldn't find this address — check the spelling or add the city.",
+  "mode": "check",
+  "created_at": "2026-07-30T19:00:00Z",
+  "started_at": "2026-07-30T19:00:02Z",
+  "finished_at": "2026-07-30T19:00:10Z",
+  "progress": {
+    "stage": "failed",
+    "status": "failed",
+    "message": null,
+    "completed_sources": 0,
+    "total_sources": 35,
+    "failed_sources_count": 0,
+    "elapsed_seconds": 8,
+    "updated_at": "2026-07-30T19:00:10Z"
+  },
+  "cards": null,
+  "retryable_failed_sources": [],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

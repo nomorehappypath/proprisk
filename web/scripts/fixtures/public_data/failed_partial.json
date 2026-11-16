@@ -1,0 +1,108 @@
+{
+  "id": "pd-failedpart",
+  "address": "7500 Burnet Rd, Austin",
+  "parcel_id": null,
+  "county": "Travis",
+  "lat": 30.35,
+  "lng": -97.74,
+  "anchor_kind": "geocode",
+  "anchor_quality": "provisional",
+  "status": "failed",
+  "error_code": "worker_lost",
+  "failure_reason": "The lookup stopped unexpectedly. Run it again.",
+  "mode": "check",
+  "created_at": "2026-07-30T20:00:00Z",
+  "started_at": "2026-07-30T20:00:05Z",
+  "finished_at": "2026-07-30T20:04:00Z",
+  "progress": {
+    "stage": "failed",
+    "status": "failed",
+    "message": null,
+    "completed_sources": 20,
+    "total_sources": 35,
+    "failed_sources_count": 0,
+    "elapsed_seconds": 235,
+    "updated_at": "2026-07-30T20:04:00Z"
+  },
+  "cards": {
+    "groups": [
+      {
+        "key": "flood",
+        "title": "Flood & water",
+        "cards": [
+          {
+            "card_key": "fema_nfhl",
+            "title": "Flood",
+            "status": "ok",
+            "takeaway": "Outside the mapped flood zones (Zone X — minimal risk).",
+            "facts": [
+              {
+                "label": "Flood zone",
+                "value": "Zone X — minimal risk"
+              }
+            ],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "fema_nfhl",
+                "source_name": "FEMA flood maps",
+                "source_url": null,
+                "checked_at": "2026-07-30T20:02:00Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-07-30T20:02:00Z",
+            "narrative": null,
+            "retryable": false,
+            "icon": "🌊",
+            "order": 2,
+            "summary": "Outside the mapped flood zones (Zone X — minimal risk)",
+            "confidence": "verified public fact",
+            "hero": null
+          }
+        ]
+      },
+      {
+        "key": "utilities",
+        "title": "Utilities & services",
+        "cards": [
+          {
+            "card_key": "twdb_ccn",
+            "title": "Utilities (TWDB CCN)",
+            "status": "not_checked",
+            "takeaway": "Not checked — the lookup stopped before this source.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "twdb_ccn",
+                "source_name": "Water and sewer service areas",
+                "source_url": null,
+                "checked_at": null,
+                "from_cache": false
+              }
+            ],
+            "checked_at": null,
+            "narrative": null,
+            "retryable": false,
+            "icon": "💧",
+            "order": 14,
+            "summary": "Not checked — the lookup stopped before this source",
+            "confidence": "unknown",
+            "hero": null
+          }
+        ]
+      }
+    ],
+    "bottom_line": {
+      "text": "",
+      "kind": "deterministic",
+      "checked_at": "2026-07-30T20:02:00Z"
+    },
+    "manual_checks": [],
+    "anchor_note": null
+  },
+  "retryable_failed_sources": [],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

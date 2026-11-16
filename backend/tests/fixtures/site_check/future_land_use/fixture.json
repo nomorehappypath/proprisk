@@ -1,0 +1,60 @@
+{
+ "source_id": "future_land_use",
+ "recorded_at": "2026-08-01T21:07:31.986228+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [
+   "Austin"
+  ],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "post_parcel",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "future_land_use",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "unknown",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "unknown",
+   "jurisdiction": "austin",
+   "designations": [],
+   "advisory": "No future land use designation found for this point in Austin's comp plan. Verify with the planning department or upload a comp-plan excerpt.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:31.986228Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "No future land use designation found for this point in Austin's comp plan. Verify with the planning department or upload a comp-plan excerpt."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "future land use map screenshot",
+    "comp-plan excerpt",
+    "planner email"
+   ],
+   "reason": "Future land use is planning intent, not a zoning entitlement. Upload a comp-plan excerpt or a planner email to confirm the current designation."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

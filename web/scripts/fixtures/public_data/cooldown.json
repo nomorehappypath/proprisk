@@ -1,0 +1,84 @@
+{
+  "id": "pd-cooldown",
+  "address": "1100 S Congress Ave, Austin",
+  "parcel_id": null,
+  "county": "Travis",
+  "lat": 30.25,
+  "lng": -97.75,
+  "anchor_kind": "geocode",
+  "anchor_quality": "provisional",
+  "status": "completed",
+  "error_code": null,
+  "failure_reason": null,
+  "mode": "check",
+  "created_at": "2026-08-01T14:00:00Z",
+  "started_at": "2026-08-01T14:00:05Z",
+  "finished_at": "2026-08-01T14:06:00Z",
+  "progress": {
+    "stage": "done",
+    "status": "succeeded",
+    "message": null,
+    "completed_sources": 35,
+    "total_sources": 35,
+    "failed_sources_count": 1,
+    "elapsed_seconds": 355,
+    "updated_at": "2026-08-01T14:06:00Z"
+  },
+  "cards": {
+    "groups": [
+      {
+        "key": "environment",
+        "title": "Environment & history",
+        "cards": [
+          {
+            "card_key": "environmental_screening",
+            "title": "Environmental Screening",
+            "status": "issue",
+            "takeaway": "We couldn't get a full answer from Environmental records.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "environmental_screening",
+                "source_name": "Environmental records",
+                "source_url": null,
+                "checked_at": null,
+                "from_cache": false
+              }
+            ],
+            "checked_at": null,
+            "narrative": null,
+            "retryable": true,
+            "icon": "⚗",
+            "order": 17,
+            "summary": "We couldn't get a full answer from Environmental records",
+            "confidence": "warning",
+            "hero": null
+          }
+        ]
+      }
+    ],
+    "bottom_line": {
+      "text": "Most of the picture is in — one source needs another try.",
+      "kind": "deterministic",
+      "checked_at": "2026-08-01T14:05:00Z"
+    },
+    "manual_checks": [],
+    "anchor_note": null
+  },
+  "retryable_failed_sources": [
+    {
+      "source_id": "environmental_screening",
+      "source_label": "Environmental records",
+      "cause": "The source asked us to slow down.",
+      "error_detail": "The environmental-records service asked us to slow down.",
+      "last_failed_at": "2026-08-01T14:05:30Z",
+      "retry_status": "cooldown",
+      "retry_disabled_until": null,
+      "retry_after_seconds": 3,
+      "retry_message": "This source asked us to slow down — you can try again shortly."
+    }
+  ],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

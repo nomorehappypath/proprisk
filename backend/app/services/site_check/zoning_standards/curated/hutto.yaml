@@ -1,0 +1,602 @@
+# Hutto, TX — Unified Development Code (UDC)
+# Source: https://www.huttotx.gov/DocumentCenter/View/3779/UDC-Updated-through-March-2024
+# Last verified: 2026-05-02
+#
+# Coverage: 9 broker-grade districts seeded.
+#   AG, SF-1, SF-2, MF-1, MF-2, GR, GC, LI, MU
+#
+# Hutto's UDC is reorganized periodically; current sections
+# referenced are based on the March 2024 update. Numeric
+# standards captured below reflect base district rules and do
+# NOT include PUD-modified parcels (Hutto has many master-
+# planned PUDs that supersede base district rules — those
+# parcels need parcel-specific PUD documents uploaded).
+
+city: hutto
+state: TX
+udc_version: "Hutto Unified Development Code (UDC, March 2024)"
+udc_source_url: "https://www.huttotx.gov/DocumentCenter/View/3779/UDC-Updated-through-March-2024"
+last_verified: "2026-05-02"
+
+districts:
+
+  # ── AG: Agricultural ────────────────────────────────────────
+  AG:
+    full_name: "Agricultural District"
+    code_section: "UDC §3.2"
+    purpose: "Holding district for unimproved or agricultural land."
+    permitted_uses:
+      - use_id: agricultural
+        code_ref: "UDC §3.2.B"
+      - use_id: ag_exempt
+        code_ref: "UDC §3.2.B"
+      - use_id: single_family_detached
+        code_ref: "UDC §3.2.B"
+        notes: "One single-family per 5 acres."
+    conditional_uses:
+      - use_id: solar_farm
+        code_ref: "UDC §3.2.C"
+      - use_id: telecom_tower
+        code_ref: "UDC §3.2.C"
+    prohibited_uses:
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.2.D"
+      - use_id: general_retail
+        code_ref: "UDC §3.2.D"
+    dimensional_standards:
+      max_density:
+        value: 0.2
+        unit: "units_per_acre"
+        code_ref: "UDC §3.2.E"
+        notes: "1 du / 5 acres."
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "UDC §3.2.E"
+      min_lot_size:
+        value: 217800
+        unit: "square_feet"
+        code_ref: "UDC §3.2.E"
+        notes: "5 acres minimum."
+      front_setback:
+        value: 50
+        unit: "feet"
+        code_ref: "UDC §3.2.E"
+      side_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.2.E"
+      rear_setback:
+        value: 50
+        unit: "feet"
+        code_ref: "UDC §3.2.E"
+      max_impervious_cover:
+        value: 25
+        unit: "percent"
+        code_ref: "UDC §3.2.E"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+
+  # ── SF-1: Single Family - Estate ────────────────────────────
+  SF-1:
+    full_name: "Single Family Estate"
+    code_section: "UDC §3.3"
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "UDC §3.3.B"
+      - use_id: church
+        code_ref: "UDC §3.3.B"
+      - use_id: school_public
+        code_ref: "UDC §3.3.B"
+      - use_id: park
+        code_ref: "UDC §3.3.B"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "UDC §3.3.C"
+      - use_id: bed_and_breakfast
+        code_ref: "UDC §3.3.C"
+    prohibited_uses:
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.3.D"
+      - use_id: manufactured_housing
+        code_ref: "UDC §3.3.D"
+      - use_id: general_retail
+        code_ref: "UDC §3.3.D"
+    dimensional_standards:
+      max_density:
+        value: 1.0
+        unit: "units_per_acre"
+        code_ref: "UDC §3.3.E"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "UDC §3.3.E"
+      min_lot_size:
+        value: 43560
+        unit: "square_feet"
+        code_ref: "UDC §3.3.E"
+        notes: "1 acre minimum."
+      min_lot_width:
+        value: 100
+        unit: "feet"
+        code_ref: "UDC §3.3.E"
+      front_setback:
+        value: 35
+        unit: "feet"
+        code_ref: "UDC §3.3.E"
+      side_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "UDC §3.3.E"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.3.E"
+      max_impervious_cover:
+        value: 35
+        unit: "percent"
+        code_ref: "UDC §3.3.E"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+
+  # ── SF-2: Single Family - Standard ──────────────────────────
+  SF-2:
+    full_name: "Single Family Standard"
+    code_section: "UDC §3.4"
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "UDC §3.4.B"
+      - use_id: church
+        code_ref: "UDC §3.4.B"
+      - use_id: school_public
+        code_ref: "UDC §3.4.B"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "UDC §3.4.C"
+      - use_id: accessory_dwelling_unit
+        code_ref: "UDC §3.4.C"
+    prohibited_uses:
+      - use_id: duplex
+        code_ref: "UDC §3.4.D"
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.4.D"
+    dimensional_standards:
+      max_density:
+        value: 6.0
+        unit: "units_per_acre"
+        code_ref: "UDC §3.4.E"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "UDC §3.4.E"
+      min_lot_size:
+        value: 6000
+        unit: "square_feet"
+        code_ref: "UDC §3.4.E"
+      min_lot_width:
+        value: 50
+        unit: "feet"
+        code_ref: "UDC §3.4.E"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.4.E"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "UDC §3.4.E"
+      rear_setback:
+        value: 20
+        unit: "feet"
+        code_ref: "UDC §3.4.E"
+      max_impervious_cover:
+        value: 50
+        unit: "percent"
+        code_ref: "UDC §3.4.E"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+
+  # ── MF-1: Multifamily Low ───────────────────────────────────
+  MF-1:
+    full_name: "Multifamily Residence Low Density"
+    code_section: "UDC §3.6"
+    permitted_uses:
+      - use_id: duplex
+        code_ref: "UDC §3.6.B"
+      - use_id: triplex
+        code_ref: "UDC §3.6.B"
+      - use_id: fourplex
+        code_ref: "UDC §3.6.B"
+      - use_id: townhouse
+        code_ref: "UDC §3.6.B"
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.6.B"
+        notes: "Up to density limit."
+      - use_id: condominium
+        code_ref: "UDC §3.6.B"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "UDC §3.6.C"
+      - use_id: senior_living
+        code_ref: "UDC §3.6.C"
+    prohibited_uses:
+      - use_id: general_retail
+        code_ref: "UDC §3.6.D"
+      - use_id: warehouse
+        code_ref: "UDC §3.6.D"
+    dimensional_standards:
+      max_density:
+        value: 12
+        unit: "units_per_acre"
+        code_ref: "UDC §3.6.E"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "UDC §3.6.E"
+      min_lot_size:
+        value: 8000
+        unit: "square_feet"
+        code_ref: "UDC §3.6.E"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.6.E"
+      side_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "UDC §3.6.E"
+      rear_setback:
+        value: 20
+        unit: "feet"
+        code_ref: "UDC §3.6.E"
+      max_impervious_cover:
+        value: 60
+        unit: "percent"
+        code_ref: "UDC §3.6.E"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+        notes: "Plus 0.25 visitor space per unit."
+
+  # ── MF-2: Multifamily High ──────────────────────────────────
+  MF-2:
+    full_name: "Multifamily Residence High Density"
+    code_section: "UDC §3.7"
+    permitted_uses:
+      - use_id: townhouse
+        code_ref: "UDC §3.7.B"
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.7.B"
+      - use_id: condominium
+        code_ref: "UDC §3.7.B"
+      - use_id: senior_living
+        code_ref: "UDC §3.7.B"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "UDC §3.7.C"
+      - use_id: assisted_living
+        code_ref: "UDC §3.7.C"
+    dimensional_standards:
+      max_density:
+        value: 24
+        unit: "units_per_acre"
+        code_ref: "UDC §3.7.E"
+      max_height:
+        value: 45
+        unit: "feet"
+        code_ref: "UDC §3.7.E"
+      min_lot_size:
+        value: 10000
+        unit: "square_feet"
+        code_ref: "UDC §3.7.E"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.7.E"
+      side_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "UDC §3.7.E"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.7.E"
+      max_impervious_cover:
+        value: 70
+        unit: "percent"
+        code_ref: "UDC §3.7.E"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+
+  # ── GR: General Retail ─────────────────────────────────────
+  GR:
+    full_name: "General Retail"
+    code_section: "UDC §3.8"
+    permitted_uses:
+      - use_id: general_retail
+        code_ref: "UDC §3.8.B"
+      - use_id: convenience_store
+        code_ref: "UDC §3.8.B"
+      - use_id: restaurant
+        code_ref: "UDC §3.8.B"
+      - use_id: office_general
+        code_ref: "UDC §3.8.B"
+      - use_id: office_medical
+        code_ref: "UDC §3.8.B"
+      - use_id: bank_or_financial
+        code_ref: "UDC §3.8.B"
+      - use_id: personal_services
+        code_ref: "UDC §3.8.B"
+      - use_id: childcare
+        code_ref: "UDC §3.8.B"
+    conditional_uses:
+      - use_id: gas_station
+        code_ref: "UDC §3.8.C"
+      - use_id: car_wash
+        code_ref: "UDC §3.8.C"
+      - use_id: drive_through
+        code_ref: "UDC §3.8.C"
+      - use_id: bar_or_lounge
+        code_ref: "UDC §3.8.C"
+    prohibited_uses:
+      - use_id: heavy_industrial
+        code_ref: "UDC §3.8.D"
+      - use_id: outdoor_storage
+        code_ref: "UDC §3.8.D"
+    dimensional_standards:
+      max_height:
+        value: 40
+        unit: "feet"
+        code_ref: "UDC §3.8.E"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.8.E"
+      side_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "UDC §3.8.E"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.8.E"
+      max_impervious_cover:
+        value: 80
+        unit: "percent"
+        code_ref: "UDC §3.8.E"
+    parking:
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: restaurant
+        rate: 8.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: office_general
+        rate: 3.5
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: office_medical
+        rate: 5.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+
+  # ── GC: General Commercial ─────────────────────────────────
+  GC:
+    full_name: "General Commercial"
+    code_section: "UDC §3.9"
+    permitted_uses:
+      - use_id: general_retail
+        code_ref: "UDC §3.9.B"
+      - use_id: restaurant
+        code_ref: "UDC §3.9.B"
+      - use_id: bar_or_lounge
+        code_ref: "UDC §3.9.B"
+      - use_id: office_general
+        code_ref: "UDC §3.9.B"
+      - use_id: hotel
+        code_ref: "UDC §3.9.B"
+      - use_id: motel
+        code_ref: "UDC §3.9.B"
+      - use_id: auto_sales
+        code_ref: "UDC §3.9.B"
+      - use_id: auto_service
+        code_ref: "UDC §3.9.B"
+      - use_id: gas_station
+        code_ref: "UDC §3.9.B"
+      - use_id: car_wash
+        code_ref: "UDC §3.9.B"
+      - use_id: drive_through
+        code_ref: "UDC §3.9.B"
+      - use_id: self_storage
+        code_ref: "UDC §3.9.B"
+    conditional_uses:
+      - use_id: light_industrial
+        code_ref: "UDC §3.9.C"
+      - use_id: outdoor_storage
+        code_ref: "UDC §3.9.C"
+    dimensional_standards:
+      max_height:
+        value: 50
+        unit: "feet"
+        code_ref: "UDC §3.9.E"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.9.E"
+      side_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "UDC §3.9.E"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "UDC §3.9.E"
+      max_impervious_cover:
+        value: 85
+        unit: "percent"
+        code_ref: "UDC §3.9.E"
+    parking:
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: hotel
+        rate: 1.0
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+
+  # ── LI: Light Industrial ───────────────────────────────────
+  LI:
+    full_name: "Light Industrial"
+    code_section: "UDC §3.10"
+    permitted_uses:
+      - use_id: warehouse
+        code_ref: "UDC §3.10.B"
+      - use_id: light_industrial
+        code_ref: "UDC §3.10.B"
+      - use_id: manufacturing
+        code_ref: "UDC §3.10.B"
+        notes: "Light manufacturing only."
+      - use_id: research_and_development
+        code_ref: "UDC §3.10.B"
+      - use_id: self_storage
+        code_ref: "UDC §3.10.B"
+      - use_id: outdoor_storage
+        code_ref: "UDC §3.10.B"
+        notes: "Subject to screening requirements."
+      - use_id: auto_service
+        code_ref: "UDC §3.10.B"
+      - use_id: data_center
+        code_ref: "UDC §3.10.B"
+    conditional_uses:
+      - use_id: heavy_industrial
+        code_ref: "UDC §3.10.C"
+    prohibited_uses:
+      - use_id: single_family_detached
+        code_ref: "UDC §3.10.D"
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.10.D"
+    dimensional_standards:
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "UDC §3.10.E"
+      front_setback:
+        value: 30
+        unit: "feet"
+        code_ref: "UDC §3.10.E"
+      side_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "UDC §3.10.E"
+      rear_setback:
+        value: 30
+        unit: "feet"
+        code_ref: "UDC §3.10.E"
+      max_impervious_cover:
+        value: 80
+        unit: "percent"
+        code_ref: "UDC §3.10.E"
+    parking:
+      - use_id: warehouse
+        rate: 1.0
+        unit: "spaces_per_2000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: light_industrial
+        rate: 1.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: manufacturing
+        rate: 1.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+
+  # ── MU: Mixed Use ──────────────────────────────────────────
+  MU:
+    full_name: "Mixed Use"
+    code_section: "UDC §3.11"
+    purpose: >
+      Vertical or horizontal mix of residential and
+      commercial. Common in master-planned PUDs.
+    permitted_uses:
+      - use_id: multifamily_residential
+        code_ref: "UDC §3.11.B"
+      - use_id: townhouse
+        code_ref: "UDC §3.11.B"
+      - use_id: live_work
+        code_ref: "UDC §3.11.B"
+      - use_id: general_retail
+        code_ref: "UDC §3.11.B"
+      - use_id: restaurant
+        code_ref: "UDC §3.11.B"
+      - use_id: office_general
+        code_ref: "UDC §3.11.B"
+      - use_id: office_medical
+        code_ref: "UDC §3.11.B"
+      - use_id: hotel
+        code_ref: "UDC §3.11.B"
+      - use_id: mixed_use
+        code_ref: "UDC §3.11.B"
+    conditional_uses:
+      - use_id: bar_or_lounge
+        code_ref: "UDC §3.11.C"
+      - use_id: drive_through
+        code_ref: "UDC §3.11.C"
+    dimensional_standards:
+      max_density:
+        value: 30
+        unit: "units_per_acre"
+        code_ref: "UDC §3.11.E"
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "UDC §3.11.E"
+      max_far:
+        value: 1.5
+        unit: "ratio"
+        code_ref: "UDC §3.11.E"
+      front_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "UDC §3.11.E"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "UDC §3.11.E"
+      rear_setback:
+        value: 20
+        unit: "feet"
+        code_ref: "UDC §3.11.E"
+      max_impervious_cover:
+        value: 80
+        unit: "percent"
+        code_ref: "UDC §3.11.E"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_unit"
+        code_ref: "UDC §6.4"
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"
+      - use_id: office_general
+        rate: 3.5
+        unit: "spaces_per_1000_sf"
+        code_ref: "UDC §6.4"

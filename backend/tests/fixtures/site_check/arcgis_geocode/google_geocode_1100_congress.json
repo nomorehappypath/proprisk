@@ -1,0 +1,123 @@
+{
+ "results": [
+  {
+   "address_components": [
+    {
+     "long_name": "1100",
+     "short_name": "1100",
+     "types": [
+      "street_number"
+     ]
+    },
+    {
+     "long_name": "Congress Avenue",
+     "short_name": "Congress Ave",
+     "types": [
+      "route"
+     ]
+    },
+    {
+     "long_name": "Downtown Austin",
+     "short_name": "Downtown Austin",
+     "types": [
+      "neighborhood",
+      "political"
+     ]
+    },
+    {
+     "long_name": "Austin",
+     "short_name": "Austin",
+     "types": [
+      "locality",
+      "political"
+     ]
+    },
+    {
+     "long_name": "Travis County",
+     "short_name": "Travis County",
+     "types": [
+      "administrative_area_level_2",
+      "political"
+     ]
+    },
+    {
+     "long_name": "Texas",
+     "short_name": "TX",
+     "types": [
+      "administrative_area_level_1",
+      "political"
+     ]
+    },
+    {
+     "long_name": "United States",
+     "short_name": "US",
+     "types": [
+      "country",
+      "political"
+     ]
+    },
+    {
+     "long_name": "78701",
+     "short_name": "78701",
+     "types": [
+      "postal_code"
+     ]
+    }
+   ],
+   "formatted_address": "1100 Congress Ave, Austin, TX 78701, USA",
+   "geometry": {
+    "bounds": {
+     "northeast": {
+      "lat": 30.2751613,
+      "lng": -97.73943279999999
+     },
+     "southwest": {
+      "lat": 30.2742282,
+      "lng": -97.74121249999999
+     }
+    },
+    "location": {
+     "lat": 30.2747025,
+     "lng": -97.7403448
+    },
+    "location_type": "ROOFTOP",
+    "viewport": {
+     "northeast": {
+      "lat": 30.2760227302915,
+      "lng": -97.73897366970849
+     },
+     "southwest": {
+      "lat": 30.2733247697085,
+      "lng": -97.74167163029149
+     }
+    }
+   },
+   "navigation_points": [
+    {
+     "location": {
+      "latitude": 30.2742455,
+      "longitude": -97.74053
+     },
+     "restricted_travel_modes": [
+      "WALK"
+     ]
+    },
+    {
+     "location": {
+      "latitude": 30.2743577,
+      "longitude": -97.7404892
+     },
+     "restricted_travel_modes": [
+      "DRIVE"
+     ]
+    }
+   ],
+   "place_id": "ChIJf71bFaC1RIYR6uHIQaz3-LA",
+   "types": [
+    "premise",
+    "street_address"
+   ]
+  }
+ ],
+ "status": "OK"
+}

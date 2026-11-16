@@ -1,0 +1,141 @@
+{
+ "source_id": "txdot_aadt",
+ "recorded_at": "2026-08-01T21:06:25.069720+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 1,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "txdot_aadt",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "verified_public_fact",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "traffic_counts": [
+    {
+     "road_name": "IH 35",
+     "aadt": 181493,
+     "year": "2024",
+     "source": "TxDOT Roadway Inventory",
+     "is_frontage": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.73,
+        30.278514
+       ],
+       [
+        -97.729922,
+        30.278658
+       ]
+      ]
+     },
+     "lat": 30.278586,
+     "lng": -97.729961,
+     "distance_mi": 0.6
+    },
+    {
+     "road_name": "SL 343",
+     "aadt": 37049,
+     "year": "2026",
+     "source": "TxDOT AADT",
+     "is_frontage": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.758524,
+        30.260877
+       ],
+       [
+        -97.758331,
+        30.261451
+       ],
+       [
+        -97.757769,
+        30.262959
+       ],
+       [
+        -97.757165,
+        30.264418
+       ],
+       [
+        -97.756957,
+        30.264809
+       ],
+       [
+        -97.756266,
+        30.266513
+       ],
+       [
+        -97.756221,
+        30.266664
+       ]
+      ]
+     },
+     "lat": 30.263955857142857,
+     "lng": -97.75731900000001,
+     "distance_mi": 1.36
+    },
+    {
+     "road_name": "SH 165",
+     "aadt": 2084,
+     "year": "2026",
+     "source": "TxDOT AADT",
+     "is_frontage": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.726127,
+        30.264002
+       ],
+       [
+        -97.725315,
+        30.265734
+       ],
+       [
+        -97.725408,
+        30.265768
+       ]
+      ]
+     },
+     "lat": 30.265168,
+     "lng": -97.72561666666667,
+     "distance_mi": 1.15
+    }
+   ],
+   "source": "TxDOT",
+   "source_warnings": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:06:25.069720Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

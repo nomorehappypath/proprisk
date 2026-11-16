@@ -1,0 +1,734 @@
+# Austin, TX — Title 25 Land Development Code
+# Source: https://library.municode.com/tx/austin/codes/code_of_ordinances
+# Last verified: 2026-05-02
+#
+# Coverage: 8 broker-grade districts seeded.
+#   SF-3, MF-1 / MF-2 / MF-3 / MF-4 / MF-5, GR, CS, MU, CS-MU
+# Remaining ~40 Austin districts will land in follow-up commits
+# in priority order based on deal flow.
+#
+# IMPORTANT — verification process:
+# Each district below was extracted from Title 25 with code-section
+# citations preserved. The numbers reflect Austin's base district
+# regulations as of the verified date. They do NOT reflect site-
+# specific overlay districts (NCCD, NP, McMansion, Waterfront,
+# Hill Country Roadway, etc.) — those are noted in the
+# overlay_interactions blocks but their numeric effect on a given
+# parcel still requires a parcel-level review.
+#
+# Bond Bill (HB 14, 2025) and Save Old Austin amendments may have
+# adjusted some standards after this verification date. The
+# adapter's manual_upload_request always asks for a zoning
+# verification letter as the binding source.
+
+city: austin
+state: TX
+udc_version: "Title 25 — Land Development Code (Austin)"
+udc_source_url: "https://library.municode.com/tx/austin/codes/code_of_ordinances"
+last_verified: "2026-05-02"
+
+districts:
+
+  # ── SF-3: Family Residence ─────────────────────────────────
+  SF-3:
+    full_name: "Family Residence"
+    code_section: "25-2-65"
+    purpose: >
+      Single-family detached residential use with limited
+      multifamily (duplex permitted).
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "25-2-491"
+        notes: "By right."
+      - use_id: duplex
+        code_ref: "25-2-491"
+        notes: "By right."
+      - use_id: accessory_dwelling_unit
+        code_ref: "25-2-1463"
+        notes: "Permitted under HOME Initiative provisions."
+      - use_id: church
+        code_ref: "25-2-491"
+      - use_id: school_public
+        code_ref: "25-2-491"
+      - use_id: school_private
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "25-2-625"
+        notes: "Conditional use permit required."
+      - use_id: bed_and_breakfast
+        code_ref: "25-2-491"
+        notes: "Subject to short-term rental rules."
+    prohibited_uses:
+      - use_id: multifamily_residential
+        code_ref: "25-2-491"
+      - use_id: general_retail
+        code_ref: "25-2-491"
+      - use_id: warehouse
+        code_ref: "25-2-491"
+      - use_id: light_industrial
+        code_ref: "25-2-491"
+    dimensional_standards:
+      max_density:
+        value: 12
+        unit: "units_per_acre"
+        code_ref: "25-2-492"
+        notes: "Effective with 2024 HOME amendments (was 4)."
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "25-2-492"
+      min_lot_size:
+        value: 5750
+        unit: "square_feet"
+        code_ref: "25-2-492"
+        notes: "Reduced from 5,750 sf for HOME ADU eligibility."
+      min_lot_width:
+        value: 50
+        unit: "feet"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 45
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 40
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "25-6-471"
+      - use_id: duplex
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "25-6-471"
+      - use_id: accessory_dwelling_unit
+        rate: 0.0
+        unit: "spaces_per_unit"
+        code_ref: "25-6-478"
+        notes: "ADU parking eliminated under 2024 amendments."
+    overlay_interactions:
+      - overlay_id: NCCD
+        effect: >
+          Neighborhood Conservation Combining District modifies
+          setbacks, height, and FAR per neighborhood-specific
+          plan adopted in §25-2-743.
+        code_ref: "25-2-743"
+      - overlay_id: NP
+        effect: >
+          Neighborhood Plan combining district may add use
+          restrictions or special development standards
+          specific to the plan area.
+        code_ref: "25-2-1453"
+      - overlay_id: McMansion
+        effect: >
+          Subchapter F (Residential Design and Compatibility
+          Standards) restricts height + FAR + tent envelope on
+          lots subject to McMansion ordinance.
+        code_ref: "25-2 Subchapter F"
+
+  # ── MF-1: Multifamily Limited Density ───────────────────────
+  MF-1:
+    full_name: "Multifamily Residence Limited Density"
+    code_section: "25-2-67"
+    purpose: "Lowest-density multifamily — primarily duplex/triplex scale."
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "25-2-491"
+      - use_id: duplex
+        code_ref: "25-2-491"
+      - use_id: triplex
+        code_ref: "25-2-491"
+      - use_id: fourplex
+        code_ref: "25-2-491"
+      - use_id: townhouse
+        code_ref: "25-2-491"
+      - use_id: multifamily_residential
+        code_ref: "25-2-491"
+        notes: "Up to density limit."
+      - use_id: condominium
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "25-2-625"
+    prohibited_uses:
+      - use_id: general_retail
+        code_ref: "25-2-491"
+      - use_id: warehouse
+        code_ref: "25-2-491"
+    dimensional_standards:
+      max_density:
+        value: 17
+        unit: "units_per_acre"
+        code_ref: "25-2-492"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "25-2-492"
+      min_lot_size:
+        value: 8000
+        unit: "square_feet"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 50
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 40
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_bedroom"
+        code_ref: "25-6-471"
+        notes: "Reduced rates for affordable units under SB 2 / HB 14."
+    overlay_interactions:
+      - overlay_id: NCCD
+        effect: "May restrict density / height per plan."
+        code_ref: "25-2-743"
+
+  # ── MF-2: Multifamily Low Density ───────────────────────────
+  MF-2:
+    full_name: "Multifamily Residence Low Density"
+    code_section: "25-2-67"
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "25-2-491"
+      - use_id: duplex
+        code_ref: "25-2-491"
+      - use_id: townhouse
+        code_ref: "25-2-491"
+      - use_id: multifamily_residential
+        code_ref: "25-2-491"
+      - use_id: condominium
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "25-2-625"
+    dimensional_standards:
+      max_density:
+        value: 23
+        unit: "units_per_acre"
+        code_ref: "25-2-492"
+      max_height:
+        value: 40
+        unit: "feet"
+        code_ref: "25-2-492"
+      min_lot_size:
+        value: 8000
+        unit: "square_feet"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 55
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 45
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_bedroom"
+        code_ref: "25-6-471"
+
+  # ── MF-3: Multifamily Medium Density ────────────────────────
+  MF-3:
+    full_name: "Multifamily Residence Medium Density"
+    code_section: "25-2-67"
+    permitted_uses:
+      - use_id: townhouse
+        code_ref: "25-2-491"
+      - use_id: multifamily_residential
+        code_ref: "25-2-491"
+      - use_id: condominium
+        code_ref: "25-2-491"
+      - use_id: senior_living
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "25-2-625"
+      - use_id: assisted_living
+        code_ref: "25-2-625"
+    dimensional_standards:
+      max_density:
+        value: 36
+        unit: "units_per_acre"
+        code_ref: "25-2-492"
+      max_height:
+        value: 40
+        unit: "feet"
+        code_ref: "25-2-492"
+      min_lot_size:
+        value: 8000
+        unit: "square_feet"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 60
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 45
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_bedroom"
+        code_ref: "25-6-471"
+
+  # ── MF-4: Multifamily Moderate-High Density ─────────────────
+  MF-4:
+    full_name: "Multifamily Residence Moderate-High Density"
+    code_section: "25-2-67"
+    purpose: >
+      Moderate-to-high density multifamily — workhorse
+      district for mid-rise apartment development in the
+      core.
+    permitted_uses:
+      - use_id: townhouse
+        code_ref: "25-2-491"
+      - use_id: multifamily_residential
+        code_ref: "25-2-491"
+      - use_id: condominium
+        code_ref: "25-2-491"
+      - use_id: senior_living
+        code_ref: "25-2-491"
+      - use_id: group_residential
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "25-2-625"
+      - use_id: assisted_living
+        code_ref: "25-2-625"
+      - use_id: nursing_home
+        code_ref: "25-2-625"
+    prohibited_uses:
+      - use_id: warehouse
+        code_ref: "25-2-491"
+      - use_id: light_industrial
+        code_ref: "25-2-491"
+      - use_id: outdoor_storage
+        code_ref: "25-2-491"
+    dimensional_standards:
+      max_density:
+        value: 54
+        unit: "units_per_acre"
+        code_ref: "25-2-492"
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_far:
+        value: 1.0
+        unit: "ratio"
+        code_ref: "25-2-492"
+      min_lot_size:
+        value: 8000
+        unit: "square_feet"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 65
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 50
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_bedroom"
+        code_ref: "25-6-471"
+        notes: "Affordable housing reductions per SB 2 / HB 14 may apply."
+    overlay_interactions:
+      - overlay_id: CO
+        effect: "Conditional Overlay can modify any base standard."
+        code_ref: "25-2-1421"
+      - overlay_id: NP
+        effect: "Neighborhood Plan combining district may add restrictions."
+        code_ref: "25-2-1453"
+
+  # ── MF-5: Multifamily High Density ──────────────────────────
+  MF-5:
+    full_name: "Multifamily Residence High Density"
+    code_section: "25-2-67"
+    permitted_uses:
+      - use_id: multifamily_residential
+        code_ref: "25-2-491"
+      - use_id: condominium
+        code_ref: "25-2-491"
+      - use_id: senior_living
+        code_ref: "25-2-491"
+      - use_id: group_residential
+        code_ref: "25-2-491"
+      - use_id: hotel
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: assisted_living
+        code_ref: "25-2-625"
+      - use_id: nursing_home
+        code_ref: "25-2-625"
+    dimensional_standards:
+      max_density:
+        value: 75
+        unit: "units_per_acre"
+        code_ref: "25-2-492"
+      max_height:
+        value: 90
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_far:
+        value: 2.0
+        unit: "ratio"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 70
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 60
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_bedroom"
+        code_ref: "25-6-471"
+
+  # ── GR: Community Commercial ────────────────────────────────
+  GR:
+    full_name: "Community Commercial"
+    code_section: "25-2-71"
+    purpose: >
+      Mid-scale neighborhood + community retail/service.
+      Common along arterials.
+    permitted_uses:
+      - use_id: general_retail
+        code_ref: "25-2-491"
+      - use_id: convenience_store
+        code_ref: "25-2-491"
+      - use_id: grocery
+        code_ref: "25-2-491"
+      - use_id: restaurant
+        code_ref: "25-2-491"
+      - use_id: office_general
+        code_ref: "25-2-491"
+      - use_id: office_medical
+        code_ref: "25-2-491"
+      - use_id: bank_or_financial
+        code_ref: "25-2-491"
+      - use_id: personal_services
+        code_ref: "25-2-491"
+      - use_id: childcare
+        code_ref: "25-2-491"
+        notes: "Permitted by right (not CUP)."
+    conditional_uses:
+      - use_id: bar_or_lounge
+        code_ref: "25-2-625"
+      - use_id: drive_through
+        code_ref: "25-2-625"
+        notes: "Site plan + special exception required."
+      - use_id: gas_station
+        code_ref: "25-2-625"
+      - use_id: car_wash
+        code_ref: "25-2-625"
+      - use_id: hotel
+        code_ref: "25-2-625"
+    prohibited_uses:
+      - use_id: heavy_industrial
+        code_ref: "25-2-491"
+      - use_id: outdoor_storage
+        code_ref: "25-2-491"
+      - use_id: auto_sales
+        code_ref: "25-2-491"
+    dimensional_standards:
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_far:
+        value: 1.0
+        unit: "ratio"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 0
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 90
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 75
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "25-6-471"
+      - use_id: restaurant
+        rate: 10.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "25-6-471"
+      - use_id: office_general
+        rate: 3.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "25-6-471"
+      - use_id: office_medical
+        rate: 5.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "25-6-471"
+
+  # ── CS: General Commercial Services ─────────────────────────
+  CS:
+    full_name: "General Commercial Services"
+    code_section: "25-2-72"
+    purpose: >
+      Higher-intensity commercial along major arterials —
+      includes auto-oriented uses.
+    permitted_uses:
+      - use_id: general_retail
+        code_ref: "25-2-491"
+      - use_id: restaurant
+        code_ref: "25-2-491"
+      - use_id: bar_or_lounge
+        code_ref: "25-2-491"
+      - use_id: office_general
+        code_ref: "25-2-491"
+      - use_id: office_medical
+        code_ref: "25-2-491"
+      - use_id: hotel
+        code_ref: "25-2-491"
+      - use_id: motel
+        code_ref: "25-2-491"
+      - use_id: auto_sales
+        code_ref: "25-2-491"
+      - use_id: auto_service
+        code_ref: "25-2-491"
+      - use_id: gas_station
+        code_ref: "25-2-491"
+      - use_id: car_wash
+        code_ref: "25-2-491"
+      - use_id: drive_through
+        code_ref: "25-2-491"
+      - use_id: warehouse
+        code_ref: "25-2-491"
+        notes: "Limited — see §25-2 use chart for size constraints."
+      - use_id: self_storage
+        code_ref: "25-2-491"
+    conditional_uses:
+      - use_id: light_industrial
+        code_ref: "25-2-625"
+      - use_id: outdoor_storage
+        code_ref: "25-2-625"
+        notes: "Conditional with screening + setback requirements."
+      - use_id: cannabis_retail
+        code_ref: "25-2-625"
+    dimensional_standards:
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_far:
+        value: 2.0
+        unit: "ratio"
+        code_ref: "25-2-492"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 0
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 95
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 95
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "25-6-471"
+      - use_id: hotel
+        rate: 1.0
+        unit: "spaces_per_unit"
+        code_ref: "25-6-471"
+      - use_id: warehouse
+        rate: 1.0
+        unit: "spaces_per_2000_sf"
+        code_ref: "25-6-471"
+
+  # ── CS-MU: Commercial Services - Mixed Use Combining ────────
+  CS-MU:
+    full_name: "Commercial Services - Mixed Use Combining"
+    code_section: "25-2-72"
+    purpose: >
+      CS base district with Mixed-Use Combining overlay
+      enabling residential above commercial.
+    permitted_uses:
+      # Inherits CS uses
+      - use_id: general_retail
+        code_ref: "25-2-491"
+      - use_id: restaurant
+        code_ref: "25-2-491"
+      - use_id: office_general
+        code_ref: "25-2-491"
+      - use_id: hotel
+        code_ref: "25-2-491"
+      # Plus residential
+      - use_id: multifamily_residential
+        code_ref: "25-2-1422"
+        notes: "Residential permitted as part of vertical mixed use."
+      - use_id: condominium
+        code_ref: "25-2-1422"
+      - use_id: live_work
+        code_ref: "25-2-1422"
+      - use_id: mixed_use
+        code_ref: "25-2-1422"
+    conditional_uses:
+      - use_id: light_industrial
+        code_ref: "25-2-625"
+    dimensional_standards:
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_far:
+        value: 2.0
+        unit: "ratio"
+        code_ref: "25-2-492"
+      max_density:
+        value: 54
+        unit: "units_per_acre"
+        code_ref: "25-2-1422"
+        notes: "Residential density per MU combining provisions."
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "25-2-492"
+      side_setback:
+        value: 0
+        unit: "feet"
+        code_ref: "25-2-492"
+      rear_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "25-2-492"
+      max_impervious_cover:
+        value: 90
+        unit: "percent"
+        code_ref: "25-2-492"
+      max_building_coverage:
+        value: 85
+        unit: "percent"
+        code_ref: "25-2-492"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_bedroom"
+        code_ref: "25-6-471"
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "25-6-471"
+    overlay_interactions:
+      - overlay_id: VMU
+        effect: >
+          Vertical Mixed Use overlay (where mapped) provides
+          additional density bonuses + reduced parking ratios
+          when affordable units are committed.
+        code_ref: "25-2-1422"

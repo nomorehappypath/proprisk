@@ -1,0 +1,68 @@
+{
+ "source_id": "public_aerial_imagery",
+ "recorded_at": "2026-08-01T21:07:10.133881+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "public_aerial_imagery",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "image_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/export?bbox=-97.74235847703187%2C30.274267222062523%2C-97.73715752296812%2C30.27875877793748&bboxSR=4326&imageSR=3857&size=640%2C640&format=jpg&transparent=false&f=image",
+   "bbox": {
+    "xmin": -97.74235847703187,
+    "ymin": 30.274267222062523,
+    "xmax": -97.73715752296812,
+    "ymax": 30.27875877793748,
+    "sr": 4326
+   },
+   "center": {
+    "lat": 30.276513,
+    "lng": -97.739758
+   },
+   "size_px": {
+    "w": 640,
+    "h": 640
+   },
+   "radius_m": 250,
+   "anchor": "centroid",
+   "provider": "USGS National Map",
+   "source": "USGS National Map (USGSImageryOnly)",
+   "attribution": "Imagery: USGS National Map / NAIP (public domain)",
+   "caption": "Aerial imagery \u2014 USGS National Map. Visual context only; not field-verified.",
+   "license": "public domain",
+   "is_field_verified": false
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:10.133881Z",
+  "ttl_seconds": 8640000,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

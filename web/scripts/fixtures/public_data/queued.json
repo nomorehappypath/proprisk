@@ -1,0 +1,31 @@
+{
+  "id": "pd-queued",
+  "address": "500 E Anderson Ln, Austin",
+  "parcel_id": null,
+  "county": null,
+  "lat": null,
+  "lng": null,
+  "anchor_kind": null,
+  "anchor_quality": null,
+  "status": "queued",
+  "error_code": null,
+  "failure_reason": null,
+  "mode": "check",
+  "created_at": "2026-08-01T15:00:00Z",
+  "started_at": null,
+  "finished_at": null,
+  "progress": {
+    "stage": "queued",
+    "status": "queued",
+    "message": null,
+    "completed_sources": 0,
+    "total_sources": 0,
+    "failed_sources_count": 0,
+    "elapsed_seconds": 0,
+    "updated_at": "2026-08-01T15:00:00Z"
+  },
+  "cards": null,
+  "retryable_failed_sources": [],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

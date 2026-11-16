@@ -1,0 +1,79 @@
+{
+ "source_id": "austin_zoning",
+ "recorded_at": "2026-08-01T21:07:26.711760+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "wave1",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 1,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "austin_zoning",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "verified_public_fact",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "jurisdiction": "Austin",
+   "jurisdiction_kind": "city",
+   "zoning_type": "CS",
+   "base_zone": "CS",
+   "description": "General Commercial Services",
+   "zones_found": [
+    "CS"
+   ],
+   "raw_records": [
+    {
+     "zoning_type": "CS",
+     "base_zone": "CS",
+     "description": "General Commercial Services",
+     "jurisdiction": "Austin",
+     "raw": {
+      "OBJECTID": 9802,
+      "ZONING_ID": 118883,
+      "ZONING_ZTYPE": "CS",
+      "BASE_ZONE": "CS",
+      "BASE_ZONE_CATEGORY": "General Commercial Services",
+      "CREATED_DATE": 1136073600000,
+      "CREATED_BY": null,
+      "MODIFIED_DATE": 1565102398000,
+      "MODIFIED_BY": "meekss",
+      "Shape__Area": 145179.265625,
+      "Shape__Length": 1526.9204747097292
+     }
+    }
+   ],
+   "advisory": "Property is in a zoning district; see record for details.",
+   "manual_lookup_url": null,
+   "contradiction_flags": [],
+   "source": "Austin ArcGIS",
+   "query_anchor": "lat_lng"
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:26.711760Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

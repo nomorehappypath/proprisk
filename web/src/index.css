@@ -1,0 +1,2026 @@
+:root {
+  --green: #1f6f43;
+  --green-dark: #175634;
+  --bg: #f6f7f5;
+  --card: #ffffff;
+  --text: #1c1e1c;
+  --muted: #5b615c;
+  --error: #b3261e;
+  --warn-bg: #fff7e0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  overflow-x: clip; /* the page itself never scrolls sideways; wide content scrolls in its own container */
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-left: calc(16px + env(safe-area-inset-left));
+  padding-right: calc(16px + env(safe-area-inset-right));
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
+}
+
+.page.narrow {
+  max-width: 420px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 12px 0;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.brand {
+  text-align: center;
+  color: var(--green);
+  font-size: 2.2rem;
+  margin: 40px 0 0;
+}
+
+.tagline {
+  text-align: center;
+  color: var(--muted);
+  margin: 4px 0 24px;
+}
+
+.brand-small {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  padding-top: calc(10px + env(safe-area-inset-top)); /* clears the iPhone notch/status bar */
+  padding-left: calc(16px + env(safe-area-inset-left));
+  padding-right: calc(16px + env(safe-area-inset-right));
+  background: var(--card);
+  border-bottom: 1px solid #e3e6e2;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  padding-top: env(safe-area-inset-top); /* login page has no topbar */
+}
+
+.topbar a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid #e3e6e2;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tile {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tile p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 4px 0 0;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input,
+select {
+  font-size: 1rem;
+  padding: 12px;
+  border: 1px solid #c8cdc8;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+}
+
+label.highlight input {
+  border-color: #d99a00;
+  background: var(--warn-bg);
+}
+
+button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:active {
+  background: var(--green-dark);
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+button.big {
+  font-size: 1.3rem;
+  padding: 22px;
+  width: 100%;
+}
+
+button.big.secondary {
+  background: #e8ebe7;
+  color: var(--text);
+}
+
+a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--green);
+  color: #fff;
+}
+
+a.button.big {
+  font-size: 1.3rem;
+  padding: 22px;
+  width: 100%;
+}
+
+a.button.secondary {
+  background: #e8ebe7;
+  color: var(--text);
+}
+
+button.secondary {
+  background: #e8ebe7;
+  color: var(--text);
+}
+
+.linklike {
+  background: none;
+  border: none;
+  color: var(--green);
+  font-weight: 600;
+  padding: 10px 0;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.error {
+  color: var(--error);
+  margin: 0;
+}
+
+.notice {
+  background: var(--warn-bg);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 0;
+}
+
+.card.warn {
+  background: var(--warn-bg);
+}
+
+.muted-line {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list.plain li {
+  padding: 2px 0;
+}
+
+.check-row {
+  cursor: pointer;
+}
+
+.check-row-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.check-photo {
+  /* fills a phone, stays a sane card on desktop — click to see it full size */
+  max-width: min(100%, 560px);
+  max-height: 45vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: zoom-in;
+}
+
+.big-number {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.meter {
+  height: 12px;
+  background: #e3e6e2;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width 0.3s;
+}
+
+.meter-fill.meter-warn {
+  background: #d99a00;
+}
+
+.meter-fill.meter-full {
+  background: var(--error);
+}
+
+.whatsnew .notes {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 0.9rem;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.busy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #d6dad5;
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.busy-elapsed {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.page.wide {
+  max-width: 760px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.linklike.danger {
+  color: var(--error);
+}
+
+.inline-form {
+  margin-top: 10px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* children may shrink — iOS date inputs can't force overflow */
+  gap: 8px;
+  align-items: end;
+}
+
+
+
+.filters input,
+.filters select {
+  width: 100%;
+  min-width: 0;
+}
+
+.filters input[type='checkbox'] {
+  width: 18px; /* never stretch the checkbox */
+  height: 18px;
+}
+
+.filters .checkbox-line {
+  grid-column: auto; /* sits in the grid cell beside To date */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding-bottom: 12px;
+  white-space: nowrap;
+}
+
+.filter-field {
+  font-size: 0.8rem;
+  color: var(--muted);
+  gap: 2px;
+}
+
+/* iOS renders empty date inputs as blank capsules; give them height + intent */
+input[type='date'] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 44px;
+}
+
+.checkbox-line {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+table.ledger th {
+  text-align: left;
+  padding: 10px 8px;
+  cursor: pointer;
+  border-bottom: 2px solid #e3e6e2;
+  white-space: nowrap;
+  user-select: none;
+}
+
+table.ledger td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #eef0ed;
+  cursor: pointer;
+}
+
+table.ledger td.amount {
+  text-align: left; /* Admin's UX call — right-justified read badly on phone */
+  font-variant-numeric: tabular-nums;
+}
+
+tr.void-row td {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.select-col {
+  width: 34px;
+}
+
+.select-col input {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+}
+
+
+/* Desktop: built for desktop, not a phone column. */
+@media (min-width: 900px) {
+  .page {
+    max-width: 680px;
+    padding-top: 28px;
+  }
+
+  .page.wide {
+    max-width: 1100px;
+  }
+
+  .tiles {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .filters {
+    grid-template-columns: 180px minmax(150px, 1fr) 130px 170px 160px 160px auto; /* 7 cols: Type filter joins on this branch */
+  }
+
+  table.ledger {
+    font-size: 0.95rem;
+  }
+
+  button.big,
+  a.button.big {
+    max-width: 420px;
+  }
+}
+
+/* Scan-time property validation. */
+.property-question,
+.new-property-fields,
+.warn-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #d8b650;
+  border-radius: 8px;
+  background: var(--warn-bg);
+}
+
+.property-question p,
+.warn-panel p {
+  margin: 0;
+}
+
+.new-property-fields {
+  border-color: #c8cdc8;
+  background: #f2f4f1;
+}
+
+/* Bill Diary. */
+.diary-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.diary-heading,
+.diary-detail-head,
+.diary-row,
+.notification-bar,
+.notification-toggle,
+.diary-actions {
+  display: flex;
+  align-items: center;
+}
+
+.linked-payment,
+.payment-link-heading,
+.payment-link-actions,
+.payment-candidate {
+  display: flex;
+  align-items: center;
+}
+
+.linked-payment {
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-top: 1px solid #dfe3df;
+  border-bottom: 1px solid #dfe3df;
+}
+
+.linked-payment div,
+.payment-candidate-main,
+.payment-candidate-side {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.linked-payment span,
+.linked-payment small,
+.payment-candidate span,
+.payment-candidate small {
+  overflow-wrap: anywhere;
+}
+
+.linked-payment span,
+.linked-payment small,
+.payment-candidate-main > span,
+.payment-candidate-main > small {
+  color: var(--muted);
+}
+
+.linked-payment a {
+  flex: none;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.payment-link-panel {
+  margin-top: 18px;
+  padding: 16px 0;
+  border-top: 2px solid var(--green);
+  border-bottom: 1px solid #dfe3df;
+}
+
+.payment-link-heading {
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.payment-link-heading h3,
+.payment-link-heading p {
+  margin: 0;
+}
+
+.payment-link-heading p {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.payment-link-heading .linklike {
+  width: auto;
+  padding: 4px;
+}
+
+.payment-candidate-list {
+  max-height: min(42vh, 390px);
+  overflow-y: auto;
+  margin-top: 14px;
+  border-top: 1px solid #dfe3df;
+  -webkit-overflow-scrolling: touch;
+}
+
+.payment-candidate {
+  flex-direction: row;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid #e5e8e5;
+  cursor: pointer;
+}
+
+.payment-candidate:has(input:checked) {
+  background: #eef5f0;
+}
+
+.payment-candidate input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  accent-color: var(--green);
+}
+
+.payment-candidate-main {
+  flex: 1;
+  gap: 3px;
+}
+
+.payment-candidate-side {
+  flex: none;
+  align-items: flex-end;
+  gap: 3px;
+  text-align: right;
+}
+
+.payment-candidate-side small {
+  color: var(--green);
+  font-weight: 800;
+}
+
+.payment-link-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.diary-heading,
+.diary-detail-head,
+.diary-row,
+.notification-bar {
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.diary-heading h1,
+.diary-heading p,
+.diary-detail-head h2,
+.diary-detail-head p {
+  margin: 0;
+}
+
+.command-link {
+  flex: none;
+  color: #fff;
+  background: var(--green);
+  border-radius: 8px;
+  padding: 11px 14px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.notification-bar {
+  min-height: 50px;
+  padding: 10px 12px;
+  border: 1px solid #d7ddd8;
+  border-radius: 8px;
+  background: #eef5f0;
+  flex-wrap: wrap;
+}
+
+.notification-toggle {
+  flex-direction: row;
+  gap: 9px;
+}
+
+.notification-toggle input {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  accent-color: var(--green);
+}
+
+.notification-bar .linklike {
+  width: auto;
+  padding: 6px;
+}
+
+.diary-tabs {
+  width: min(100%, 430px);
+}
+
+.diary-window {
+  height: min(58vh, 620px);
+  max-height: none;
+  border-top: 1px solid #dfe3df;
+  border-bottom: 1px solid #dfe3df;
+  padding: 8px 0;
+}
+
+.diary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.diary-list li + li {
+  border-top: 1px solid #e5e8e5;
+}
+
+.diary-row {
+  width: 100%;
+  min-height: 76px;
+  padding: 12px 10px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.diary-row:hover,
+.diary-row:focus-visible {
+  background: #eef2ee;
+}
+
+.diary-row-main,
+.diary-row-side {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.diary-row-main {
+  flex: 1;
+}
+
+.diary-row-main strong,
+.diary-row-main span {
+  overflow-wrap: anywhere;
+}
+
+.diary-row-main span,
+.diary-row-side span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.diary-row-side {
+  flex: none;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.due-state {
+  font-weight: 700;
+}
+
+.due-state.overdue {
+  color: var(--error) !important;
+}
+
+.due-state.due_today {
+  color: #9a5c00 !important;
+}
+
+.due-state.paid {
+  color: var(--green) !important;
+}
+
+.empty-state {
+  color: var(--muted);
+  text-align: center;
+  margin: 40px 0;
+}
+
+.diary-detail {
+  padding: 2px 0;
+}
+
+.diary-detail > .linklike {
+  width: auto;
+}
+
+.diary-detail-head {
+  padding: 8px 0 18px;
+  border-bottom: 1px solid #dfe3df;
+}
+
+.diary-amount {
+  flex: none;
+  font-size: 1.3rem;
+}
+
+.diary-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+  margin: 18px 0;
+}
+
+.diary-facts div:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.diary-facts dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.diary-facts dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.diary-actions {
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #dfe3df;
+}
+
+@media (max-width: 520px) {
+  .diary-window {
+    height: 56vh;
+  }
+
+  .diary-row {
+    align-items: flex-start;
+  }
+
+  .diary-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .diary-facts div:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .linked-payment {
+    align-items: flex-start;
+  }
+
+  .payment-candidate {
+    align-items: flex-start;
+  }
+
+  .payment-link-actions button {
+    width: 100%;
+  }
+}
+
+
+/* Lists scale: the page frame never grows with the data. */
+.scroll-window {
+  max-height: 55vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px;
+  margin: 4px -2px 0;
+}
+
+.pd-properties {
+  margin-top: 1.5rem;
+}
+
+.pd-properties-heading {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pd-properties-heading h2 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.pd-property-window {
+  max-height: 18rem;
+}
+
+.pd-property-row {
+  cursor: pointer;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.pd-property-row:hover {
+  border-color: var(--accent);
+}
+
+.list-count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+main.page > input[placeholder],
+main.page > button {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .scroll-window {
+    max-height: 62vh;
+  }
+}
+
+
+/* Live capture (brick 7) */
+.capture-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.capture-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: 600;
+  /* stays above the preview layer — ✕ must ALWAYS be reachable */
+  position: relative;
+  z-index: 2;
+}
+
+.capture-close {
+  color: #fff;
+  font-size: 1.4rem;
+  padding: 8px 12px; /* a real thumb target */
+}
+
+.capture-stage {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.capture-stage video,
+.capture-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* contain, not cover: the user must see the WHOLE camera frame, otherwise the
+   coaching reacts to parts of the document that are cropped off-screen. */
+.capture-stage video {
+  object-fit: contain;
+}
+
+.capture-bottom {
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.capture-coach {
+  color: #fff;
+  margin: 0;
+  min-height: 1.4em;
+}
+
+.capture-bottom .busy {
+  color: #fff;
+}
+
+/* Money direction (brick 8) */
+.direction-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.direction-toggle .chip {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1.5px solid #c9d4cc;
+  background: #fff;
+  color: #333;
+  font-weight: 600;
+}
+
+.direction-toggle .chip.on {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.amount-in {
+  color: #1d7a3f;
+  font-weight: 600;
+}
+
+.amount-out {
+  color: #b3261e;
+  font-weight: 600;
+}
+
+/* Category tree (brick 5): subs indent under their main's card */
+.subcat-list {
+  margin: 10px 0 0;
+  padding-left: 14px;
+  border-left: 3px solid #e3e8e2;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+.shutter {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #fff;
+  border: 5px solid #9fb7a8;
+  padding: 0;
+}
+
+.capture-bottom .linklike {
+  color: #cfe6d8;
+}
+
+.capture-preview-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #000;
+  display: flex;
+  overflow-y: auto; /* backstop: buttons stay reachable whatever the photo shape */
+  /* extra top room so the always-visible ✕ row isn't covered */
+  padding-top: calc(env(safe-area-inset-top) + 52px);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.capture-preview {
+  margin: auto;
+  padding: 16px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.capture-preview img {
+  width: 100%;
+  /* a tall portrait photo must never push Use/Retake off the screen */
+  max-height: 55vh;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+}
+
+/* Public Data (brick 12) */
+.pd-address {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 2px;
+}
+
+.pd-tight {
+  margin: 2px 0 0;
+}
+
+.pd-bottomline {
+  background: #eef5ef;
+  border-color: var(--green);
+  margin-top: 12px;
+}
+
+.pd-bottomline-text {
+  margin: 0;
+  font-weight: 600;
+}
+
+.pd-group h2 {
+  margin: 20px 0 8px;
+}
+
+.pd-card summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.pd-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.pd-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.pd-card-title {
+  font-weight: 600;
+}
+
+.pd-chip,
+.pd-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pd-chip-issue {
+  background: var(--warn-bg);
+  color: #7a5a00;
+}
+
+.pd-chip-not_covered,
+.pd-chip-not_checked,
+.pd-badge-neutral {
+  background: #eceeec;
+  color: var(--muted);
+}
+
+.pd-chip-manual {
+  background: #e8f0fb;
+  color: #23508c;
+}
+
+.pd-badge-current {
+  background: #e4f1e7;
+  color: var(--green-dark);
+}
+
+.pd-badge-expiring {
+  background: var(--warn-bg);
+  color: #7a5a00;
+}
+
+.pd-badge-expired,
+.pd-badge-stopped {
+  background: #f7e4e2;
+  color: var(--error);
+}
+
+/* The report screen is the one place with fact grids and tables; on a real
+   desktop window it gets a wider column. Phones keep the 560px house shell. */
+@media (min-width: 900px) {
+  .page.pd-report {
+    max-width: 860px;
+  }
+}
+
+/* the reference app's report column is wider still; on a real desktop the map wants
+   the same width so the parcel is framed identically. */
+@media (min-width: 1100px) {
+  .page.pd-report {
+    max-width: 1000px;
+  }
+}
+
+/* Hero line: the one sentence that answers the card at a glance. */
+.pd-takeaway {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.pd-card-body {
+  margin-top: 12px;
+  border-top: 1px solid #eef0ed;
+  padding-top: 12px;
+}
+
+/* Narrative overlay: visually distinct, above the deterministic facts */
+.pd-narrative {
+  background: #f2f7f3;
+  border-left: 3px solid var(--green);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.pd-narrative p {
+  margin: 0 0 6px;
+}
+
+.pd-narrative p:last-child {
+  margin-bottom: 0;
+}
+
+.pd-narrative-headline {
+  font-weight: 700;
+}
+
+/* Fact grid: one column on a phone, two once the column is wide enough. */
+.pd-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .pd-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pd-fact {
+  border: 1px solid #e3e6e2;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 8px 10px;
+  min-width: 0; /* long unbroken values must not widen the grid track */
+}
+
+.pd-fact-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.pd-fact-value {
+  display: block;
+  margin: 2px 0 0;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+.pd-fact-hint {
+  display: block;
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+/* Table block: title + its OWN scroll box (the page never scrolls sideways). */
+.pd-table-block {
+  display: grid;
+  gap: 6px;
+}
+
+.pd-table-title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pd-table-scroll {
+  overflow: auto;
+  max-width: 100%;
+  max-height: 60vh; /* the sticky header needs a scroll box to stick inside */
+  border: 1px solid #e3e6e2;
+  border-radius: 8px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.pd-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.82rem;
+}
+
+.pd-table th,
+.pd-table td {
+  text-align: left;
+  padding: 6px 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #eef0ed;
+  /* Measured on the real 31-card report at 390px: at 88px the long-text
+     columns wrapped six lines deep and the worst row ran 237px tall. 140px
+     roughly halves that (125px) at the cost of scrolling wide tables sideways
+     inside their own box — which is what a phone should do. `max-width` here
+     would be dead CSS: auto table layout ignores it. */
+  min-width: 140px;
+  overflow-wrap: anywhere;
+}
+
+.pd-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f0f3ef;
+  color: var(--muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* A row whose tallest cell is off-screen leaves the visible cells floating in
+   whitespace; the banding keeps each row readable as one row while scrolling. */
+.pd-table tbody tr:nth-child(even) td {
+  background: #fafbfa;
+}
+
+.pd-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Image block: responsive, never cropped, caption + attribution below. */
+.pd-image {
+  margin: 0;
+}
+
+.pd-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #e3e6e2;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.pd-image-caption {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+}
+
+.pd-image-attr {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+/* Source links */
+.pd-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pd-links a {
+  color: var(--green);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Advisories: the muted "↳" continuation lines, never a warning box. */
+.pd-advisory {
+  margin: 0;
+  padding-left: 16px;
+  position: relative;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.pd-advisory::before {
+  content: '↳';
+  position: absolute;
+  left: 0;
+}
+
+.pd-provenance a {
+  color: var(--green);
+}
+
+.pd-retry {
+  border-top: 1px solid #eef0ed;
+  padding-top: 10px;
+}
+
+.pd-search {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.pd-row {
+  cursor: pointer;
+}
+
+.pd-row-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pd-actions {
+  margin-top: 20px;
+}
+
+/* ── Report screen: the accordion ────────────────────────────────────────
+   One flat list of collapsible sections, collapsed except the first. The
+   collapsed row is the whole summary: disclosure triangle, glyph, section
+   name, a compact one-liner and the confidence badge. */
+
+.pd-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pd-sections .pd-card {
+  margin: 0;
+  padding: 0;
+}
+
+.pd-sections .pd-card > summary {
+  padding: 12px 14px;
+}
+
+.pd-sections .pd-card-body {
+  margin: 0;
+  padding: 12px 14px 14px;
+  border-top: 1px solid #eef0ed;
+}
+
+/* The disclosure triangle, drawn by us so it points right when shut and
+   down when open (the native marker is suppressed). */
+.pd-card > summary .pd-card-head::before {
+  content: '▶';
+  flex: none;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+}
+
+.pd-card[open] > summary .pd-card-head::before {
+  transform: rotate(90deg);
+}
+
+.pd-card-head {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.pd-card-icon {
+  flex: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.pd-card-title {
+  flex: none;
+}
+
+/* The compact one-liner. It takes the slack in the row and truncates rather
+   than pushing the badge off the edge. */
+.pd-summary {
+  flex: 1 1 100%;
+  min-width: 0;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Confidence badge — the server's own vocabulary, drawn verbatim. */
+.pd-badge-conf {
+  flex: none;
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  border: 1px solid #d6dad4;
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+/* The section's opening line, above everything the section shows. */
+.pd-hero {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Action bar — small text buttons in one row, above the sections. */
+.pd-actionbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin: 12px 0 4px;
+}
+
+.pd-action {
+  padding: 4px 0;
+  background: none;
+  border: none;
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  width: auto;
+}
+
+.pd-action:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 700px) {
+  .pd-summary {
+    flex: 1 1 auto;
+  }
+}
+
+/* ── Public Data property map, INLINE in the report ──────────────────────
+   Same engine as the deep-link page: controls in a row above the canvas,
+   the layer grid and the category chips always visible, the map framed at a
+   readable height, and whatever is selected shown directly below it. */
+
+.pdmap-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 4px 0;
+}
+
+/* Full screen: the panel owns the viewport and scrolls inside itself.
+   `dvh` so the iPhone's collapsing URL bar cannot change the height, and the
+   safe-area insets so nothing hides under the notch or the home indicator. */
+.pdmap-panel.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  margin: 0;
+  width: 100vw;
+  height: 100dvh;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--card);
+}
+
+.pdmap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdmap-basemaps {
+  display: flex;
+  border: 1px solid #d6dad4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.pdmap-basemaps button {
+  padding: 8px 11px;
+  border-radius: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--card);
+  color: var(--text);
+  width: auto;
+}
+
+.pdmap-basemaps button.is-active {
+  background: var(--green);
+  color: #fff;
+}
+
+.pdmap-tool {
+  padding: 8px 11px;
+  border: 1px solid #d6dad4;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--card);
+  color: var(--text);
+  width: auto;
+}
+
+.pdmap-tool.is-active {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* The layer checkboxes: inline, always visible, two columns on a phone and
+   three once there is room. */
+.pdmap-layer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+@media (min-width: 700px) {
+  .pdmap-layer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.pdmap-layer {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid #e3e6e2;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.pdmap-layer small {
+  grid-column: 2;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.pdmap-layer.is-unavailable {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.pdmap-layer input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--green);
+}
+
+/* Nearby-category chips — the reference app's own: eight, in ONE row that scrolls
+   sideways (never wraps, never the page), plus "All" for the rest. Metrics
+   ported from its stylesheet: 36px tall, 8px radius, 7px gap, the colour
+   swatch, the pictogram tinted by category, the count in a pill. */
+.pdmap-chiprow {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 10px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  border: 1px solid #e3e6e2;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.pdmap-chip,
+.pdmap-chip-more {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pdmap-chip {
+  border-color: color-mix(in srgb, var(--poi-color) 60%, #cbd5e1);
+}
+
+.pdmap-chip svg,
+.pdmap-category-menu label svg {
+  color: var(--poi-color);
+}
+
+.pdmap-chip-swatch {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: var(--poi-color);
+  box-shadow: 0 0 0 1px var(--poi-color);
+}
+
+.pdmap-chip strong {
+  min-width: 20px;
+  padding: 1px 5px;
+  border-radius: 7px;
+  background: #f1f5f9;
+  font-size: 11px;
+  text-align: center;
+}
+
+.pdmap-chip.is-active {
+  border-color: var(--poi-color);
+  background: color-mix(in srgb, var(--poi-color) 9%, #fff);
+  box-shadow: inset 0 0 0 1px var(--poi-color);
+}
+
+.pdmap-chip.is-active strong {
+  background: var(--poi-color);
+  color: #fff;
+}
+
+.pdmap-chip-more {
+  border-style: dashed;
+  color: var(--green);
+}
+
+/* The full category list, behind "All". Two columns on a phone, four once
+   there is room — never a 32-chip wall in the row itself. */
+.pdmap-category-menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #e3e6e2;
+  border-radius: 12px;
+}
+
+@media (min-width: 700px) {
+  .pdmap-category-menu {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.pdmap-category-menu label {
+  display: grid;
+  grid-template-columns: 18px 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.pdmap-category-menu input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--poi-color);
+}
+
+.pdmap-category-menu span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pdmap-category-menu small {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* The canvas. Framed, so it reads as part of the section rather than a
+   window cut into the page.
+
+   HEIGHT IS ALWAYS EXPLICIT and never derived from content: maplibre watches
+   this element with a ResizeObserver and redraws its canvas to match, so a
+   content-derived height makes the canvas grow the box that sizes the
+   canvas — an unbounded loop (endless page scroll, blurry map). The panel
+   states position/height/overflow inline as well; this only varies the
+   number per breakpoint. */
+.pdmap-panel {
+  --pdmap-h: 340px;
+}
+
+.pdmap-panel.is-fullscreen {
+  --pdmap-h: 72dvh;
+}
+
+@media (min-width: 900px) {
+  .pdmap-panel {
+    /* the reference app renders 922x520 at a 1280x900 viewport; matching the height
+       (and the wider report column below) makes "Fit parcel" land on the
+       same zoom, so the two apps show the same amount of ground. */
+    --pdmap-h: 520px;
+  }
+}
+
+/* `flex: none` is load-bearing. The panel is a column flex box, and in full
+   screen it has a FIXED height — so a shrinkable map would give up its own
+   height to whatever appears below it. Enabling a layer adds that layer's
+   card underneath, which squeezed the map towards zero: the map "vanished"
+   and full screen showed a smaller rectangle than the inline view. The map's
+   height is its own, never the leftover. */
+.pdmap-frame {
+  flex: none;
+  border: 1px solid #e3e6e2;
+  border-radius: 12px;
+  background: #e2e8f0;
+}
+
+/* Same reasoning for the controls: they state their height, never negotiate. */
+.pdmap-toolbar,
+.pdmap-layer-grid,
+.pdmap-chiprow,
+.pdmap-category-menu,
+.pdmap-below {
+  flex: none;
+}
+
+.pdmap-canvas canvas {
+  outline: none;
+}
+
+.pdmap-below {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pdmap-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--warn-bg);
+  border: 1px solid #e8c766;
+  font-size: 0.88rem;
+}
+
+.pdmap-warning button {
+  background: none;
+  color: var(--text);
+  padding: 4px 8px;
+  width: auto;
+}
+
+.pdmap-layer-card {
+  border: 1px solid #e3e6e2;
+  border-left: 4px solid var(--layer-color);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.pdmap-layer-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pdmap-layer-card-head h4 {
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+.pdmap-layer-card-head span,
+.pdmap-onmap {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--green);
+}
+
+.pdmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 8px;
+  font-size: 0.82rem;
+}
+
+.pdmap-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pdmap-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.pdmap-layer-card dl,
+.pdmap-selected dl {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0;
+}
+
+.pdmap-layer-card dt,
+.pdmap-selected dt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.pdmap-layer-card dd,
+.pdmap-selected dd {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.pdmap-layer-advisory {
+  margin: 10px 0 0;
+  font-size: 0.86rem;
+}
+
+.pdmap-source {
+  margin: 10px 0 0;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.pdmap-long-text .linklike {
+  display: block;
+  padding: 4px 0 0;
+  font-size: 0.82rem;
+}
+
+/* The tapped feature's card, below the map. */
+.pdmap-selected {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #e3e6e2;
+  border-top: 3px solid #dc2626;
+  border-radius: 10px;
+}
+
+.pdmap-selected.is-feature {
+  border-top-color: #475569;
+}
+
+.pdmap-selected-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdmap-selected p {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.pdmap-selected-name {
+  font-weight: 700;
+  font-size: 1rem !important;
+}
+
+.pdmap-selected a {
+  color: var(--green);
+}
+
+.pdmap-selected .linklike {
+  width: auto;
+}
+
+.pdmap-advisories {
+  border-radius: 10px;
+  background: var(--warn-bg);
+  padding: 10px 12px;
+}
+
+.pdmap-advisories p {
+  margin: 0 0 6px;
+  font-size: 0.86rem;
+}
+
+.pdmap-advisories p:last-child {
+  margin-bottom: 0;
+}
+
+.pdmap-resolution {
+  border-radius: 10px;
+  background: #f2f4f1;
+  padding: 10px 12px;
+  font-size: 0.86rem;
+}
+
+.pdmap-resolution span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.pdmap-attribution {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.topbar-links {
+  display: flex;
+  gap: 16px;
+}
+
+.settings-menu-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.settings-subnav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.settings-subnav a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 600;
+}

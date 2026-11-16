@@ -1,0 +1,127 @@
+{
+ "source_id": "plats_intel",
+ "recorded_at": "2026-08-01T21:07:32.679642+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [
+   "Austin"
+  ],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "post_parcel",
+ "settings_overrides": {
+  "public_plat_discovery_enabled": true,
+  "public_plat_search_provider": "bing_html",
+  "public_plat_searxng_url": null
+ },
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "plats_intel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "no_recorded_subdivision_gis_match",
+   "county": "travis",
+   "plats_count": 0,
+   "recorded_count": 0,
+   "in_review_count": 0,
+   "approved_count": 0,
+   "in_review": [],
+   "approved": [],
+   "all_plats": [],
+   "portal_name": "Travis County Clerk Official Public Records",
+   "portal_url": "https://www.tccsearch.org/",
+   "manual_instructions": "Use Travis County Clerk Web Search for recorded plats. Acknowledge the disclaimer, then search the Recording / Official Public Records records by Instrument/Document Number when PropDesk provides one. If no number is resolved, search document type Plat by the subdivision name or legal-description terms from TCAD.",
+   "public_discovery_status": "public_search_checked_no_relevant_results",
+   "public_search_provider": "BingHtmlSearchProvider",
+   "plat_clues": {
+    "address": "1100 Congress Ave, Austin, TX 78701"
+   },
+   "record_candidates": [],
+   "probable_plat_number": null,
+   "probable_plat_numbers": [],
+   "plat_read_target": null,
+   "official_retrieval_attempts": [],
+   "search_queries": [
+    "\"1100 Congress\" \"Recorded Plat\"",
+    "\"1100 Congress\" \"Plat: Recorded Plat\"",
+    "site:images1.showcase.com/d2 \"1100 Congress\"",
+    "\"1100 Congress\" \"Doc #\"",
+    "\"1100 Congress\" \"document.pdf\"",
+    "\"1100 Congress Ave, Austin, TX 78701\" \"recorded plat\"",
+    "\"1100 Congress Ave, Austin, TX 78701\" \"Plat: Recorded Plat\"",
+    "\"1100 Congress Ave, Austin, TX 78701\" \"document.pdf\"",
+    "\"1100 Congress Ave, Austin, TX 78701\" \"Doc #\"",
+    "\"1100 Congress Ave, Austin, TX 78701\" \"commercial\" \"document.pdf\"",
+    "\"1100 Congress Ave, Austin, TX 78701\" \"sale package\" \"pdf\"",
+    "\"1100 Congress Ave\" \"Plat: Recorded Plat\"",
+    "\"1100 Congress Ave\" \"document.pdf\""
+   ],
+   "source_attempts": [],
+   "search_errors": [],
+   "advisory_public_discovery": "Public discovery candidates are leads only. Retrieve the official county-clerk recorded plat PDF before treating a candidate number as authoritative.",
+   "travis_subdivision_gis_status": "no_intersecting_recorded_subdivision",
+   "travis_subdivision_gis_source": "Travis County GIS (Travis County Subdivisions)",
+   "travis_subdivision_gis_url": "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Subdivisions/MapServer/0",
+   "travis_subdivision_gis_query": "lat_lng",
+   "travis_subdivision_gis_matches": [],
+   "manual_next_step": "PropDesk checked Travis County GIS (Travis County Subdivisions) and did not find an intersecting recorded/platted subdivision polygon for this parcel. Search terms available: the subdivision / lot / block from your survey or title commitment. A recorded plat upload is only needed if a survey, title commitment, or later clerk search identifies a platted subdivision lot; then open Travis County Clerk Official Public Records (https://www.tccsearch.org/), search document type Plat by that subdivision name or legal-description terms, and upload the official recorded image/copy.",
+   "advisory": "PropDesk queried Travis County GIS recorded subdivisions and found no intersecting recorded subdivision polygon for this parcel/point. If the survey or title commitment later shows a platted lot, search Travis County Clerk Web Search with that plat name and upload the official image/copy.",
+   "contradiction_flags": [],
+   "recorded_deed": {
+    "confidence": "screened_indicator",
+    "verification_status": "clerk_image_required",
+    "county": "travis",
+    "clerk_portal_name": "Travis County Clerk Official Public Records",
+    "clerk_portal_url": "https://www.tccsearch.org/",
+    "clerk_fallback_url": "https://countyclerk.traviscountytx.gov/departments/recording/search-copies-of-records/",
+    "tier": "clerk_lookup",
+    "instrument_number": null,
+    "recorded_date": null,
+    "source_id": null,
+    "source_field": null,
+    "lookup_steps": "1) Open Travis County Clerk Web Search and acknowledge the disclaimer. 2) Use the Recording / Official Public Records search, not court dockets. 3) Search by document number when one is provided; otherwise search by party/grantor/grantee or legal description. 4) Open the matching recorded deed, download the image/copy if available, and upload it to the project.",
+    "lookup_inputs": {
+     "owner": null,
+     "legal_description": null,
+     "parcel_id": null
+    }
+   }
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:32.679642Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "PropDesk queried Travis County GIS recorded subdivisions and found no intersecting recorded subdivision polygon for this parcel/point. If the survey or title commitment later shows a platted lot, search Travis County Clerk Web Search with that plat name and upload the official image/copy."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "recorded plat",
+    "preliminary plat",
+    "subdivision agenda packet",
+    "city subdivision review correspondence"
+   ],
+   "reason": "PropDesk checked Travis County GIS (Travis County Subdivisions) and found no intersecting recorded/platted subdivision polygon for this parcel. Upload a recorded plat only if a survey, title commitment, or later clerk search identifies the parcel as a platted subdivision lot."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

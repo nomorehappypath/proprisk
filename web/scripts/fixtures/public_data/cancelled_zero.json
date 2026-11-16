@@ -1,0 +1,103 @@
+{
+  "id": "pd-cancelzero",
+  "address": "4400 Ranch Rd 12, Wimberley",
+  "parcel_id": null,
+  "county": null,
+  "lat": null,
+  "lng": null,
+  "anchor_kind": null,
+  "anchor_quality": null,
+  "status": "cancelled",
+  "error_code": null,
+  "failure_reason": null,
+  "mode": "check",
+  "created_at": "2026-07-30T18:00:00Z",
+  "started_at": "2026-07-30T18:00:02Z",
+  "finished_at": "2026-07-30T18:00:04Z",
+  "progress": {
+    "stage": "cancelled",
+    "status": "cancelled",
+    "message": null,
+    "completed_sources": 0,
+    "total_sources": 35,
+    "failed_sources_count": 0,
+    "elapsed_seconds": 2,
+    "updated_at": "2026-07-30T18:00:04Z"
+  },
+  "cards": {
+    "groups": [
+      {
+        "key": "land",
+        "title": "The land itself",
+        "cards": [
+          {
+            "card_key": "parcel",
+            "title": "Parcel Info",
+            "status": "not_checked",
+            "takeaway": "Not checked — the lookup was cancelled before this source.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "tcad_parcel",
+                "source_name": "County appraisal records",
+                "source_url": null,
+                "checked_at": null,
+                "from_cache": false
+              }
+            ],
+            "checked_at": null,
+            "narrative": null,
+            "retryable": false,
+            "icon": "📋",
+            "order": 0,
+            "summary": "Not checked — the lookup was cancelled before this source",
+            "confidence": "unknown",
+            "hero": null
+          }
+        ]
+      },
+      {
+        "key": "flood",
+        "title": "Flood & water",
+        "cards": [
+          {
+            "card_key": "fema_nfhl",
+            "title": "Flood",
+            "status": "not_checked",
+            "takeaway": "Not checked — the lookup was cancelled before this source.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "fema_nfhl",
+                "source_name": "FEMA flood maps",
+                "source_url": null,
+                "checked_at": null,
+                "from_cache": false
+              }
+            ],
+            "checked_at": null,
+            "narrative": null,
+            "retryable": false,
+            "icon": "🌊",
+            "order": 2,
+            "summary": "Not checked — the lookup was cancelled before this source",
+            "confidence": "unknown",
+            "hero": null
+          }
+        ]
+      }
+    ],
+    "bottom_line": {
+      "text": "",
+      "kind": "deterministic",
+      "checked_at": null
+    },
+    "manual_checks": [],
+    "anchor_note": null
+  },
+  "retryable_failed_sources": [],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

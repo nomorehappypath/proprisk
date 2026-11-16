@@ -1,0 +1,261 @@
+{
+ "source_id": "transit_intel",
+ "recorded_at": "2026-08-01T21:07:23.507554+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "transit_intel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "bus_stops_count": 126,
+   "rail_stations_count": 7,
+   "nearest_bus_stop": {
+    "stop_id": 6518,
+    "name": "117 15Th/Brazos",
+    "on_street": "15Th",
+    "at_street": "Brazos",
+    "stop_type": "Bus Stop",
+    "shelter": false,
+    "bench": false,
+    "bike_rack": false,
+    "distance_mi": 0.06,
+    "lat": 30.27657151014624,
+    "lng": -97.73873241157486
+   },
+   "nearest_rail_station": {
+    "stop_id": 5534,
+    "name": "Downtown Station",
+    "city": "Austin",
+    "zip": 78701,
+    "distance_mi": 0.81,
+    "lat": 30.264842781627976,
+    "lng": -97.73844827771553
+   },
+   "bus_stops": [
+    {
+     "stop_id": 6518,
+     "name": "117 15Th/Brazos",
+     "on_street": "15Th",
+     "at_street": "Brazos",
+     "stop_type": "Bus Stop",
+     "shelter": false,
+     "bench": false,
+     "bike_rack": false,
+     "distance_mi": 0.06,
+     "lat": 30.27657151014624,
+     "lng": -97.73873241157486
+    },
+    {
+     "stop_id": 5092,
+     "name": "116 15Th/Brazos",
+     "on_street": "15Th",
+     "at_street": "Brazos",
+     "stop_type": "Bus Stop",
+     "shelter": true,
+     "bench": true,
+     "bike_rack": false,
+     "distance_mi": 0.07,
+     "lat": 30.27685106785762,
+     "lng": -97.7385750214952
+    },
+    {
+     "stop_id": 593,
+     "name": "LAVACA/15TH",
+     "on_street": "Lavaca",
+     "at_street": "15Th",
+     "stop_type": "Bus Stop",
+     "shelter": true,
+     "bench": false,
+     "bike_rack": false,
+     "distance_mi": 0.14,
+     "lat": 30.27738321926127,
+     "lng": -97.74189414936177
+    },
+    {
+     "stop_id": 919,
+     "name": "SAN JACINTO/14TH",
+     "on_street": "San Jacinto",
+     "at_street": "14Th",
+     "stop_type": "Bus Stop",
+     "shelter": true,
+     "bench": true,
+     "bike_rack": false,
+     "distance_mi": 0.15,
+     "lat": 30.275451348892844,
+     "lng": -97.73752573210275
+    },
+    {
+     "stop_id": 591,
+     "name": "CAPITOL STATION (NB)",
+     "on_street": "Lavaca",
+     "at_street": "13Th",
+     "stop_type": "Rapid Station",
+     "shelter": true,
+     "bench": true,
+     "bike_rack": true,
+     "distance_mi": 0.18,
+     "lat": 30.27558668529569,
+     "lng": -97.74255760269757
+    },
+    {
+     "stop_id": 5940,
+     "name": "1609 Lavaca/17Th (Midblock)",
+     "on_street": "Lavaca",
+     "at_street": "17Th",
+     "stop_type": "Bus Stop",
+     "shelter": true,
+     "bench": true,
+     "bike_rack": false,
+     "distance_mi": 0.19,
+     "lat": 30.278834291632233,
+     "lng": -97.74135766718426
+    },
+    {
+     "stop_id": 916,
+     "name": "Medical School SB (San Jacinto",
+     "on_street": "San Jacinto",
+     "at_street": "17th",
+     "stop_type": "Rapid Station",
+     "shelter": true,
+     "bench": true,
+     "bike_rack": false,
+     "distance_mi": 0.2,
+     "lat": 30.27772253990791,
+     "lng": -97.73664264915162
+    },
+    {
+     "stop_id": 4657,
+     "name": "Museum Station (NB)",
+     "on_street": "Lavaca",
+     "at_street": "17Th",
+     "stop_type": "Rapid Station",
+     "shelter": true,
+     "bench": true,
+     "bike_rack": false,
+     "distance_mi": 0.21,
+     "lat": 30.279300000908314,
+     "lng": -97.74118999986052
+    },
+    {
+     "stop_id": 590,
+     "name": "Lavaca/12Th",
+     "on_street": "Lavaca",
+     "at_street": "12Th",
+     "stop_type": "Bus Stop",
+     "shelter": false,
+     "bench": true,
+     "bike_rack": false,
+     "distance_mi": 0.24,
+     "lat": 30.274407917973175,
+     "lng": -97.7429951827075
+    },
+    {
+     "stop_id": 501,
+     "name": "GUADALUPE/16TH STREET",
+     "on_street": "Guadalupe",
+     "at_street": "16Th",
+     "stop_type": "Bus Stop",
+     "shelter": false,
+     "bench": false,
+     "bike_rack": false,
+     "distance_mi": 0.24,
+     "lat": 30.27896215541845,
+     "lng": -97.74270751974355
+    }
+   ],
+   "rail_stations": [
+    {
+     "stop_id": 5534,
+     "name": "Downtown Station",
+     "city": "Austin",
+     "zip": 78701,
+     "distance_mi": 0.81,
+     "lat": 30.264842781627976,
+     "lng": -97.73844827771553
+    },
+    {
+     "stop_id": 6035,
+     "name": "Rail - Baylor at 4Th (Seaholm)",
+     "city": "Austin",
+     "zip": 78703,
+     "distance_mi": 1.08,
+     "lat": 30.2702451718677,
+     "lng": -97.75635295986775
+    },
+    {
+     "stop_id": 6014,
+     "name": "Lone Star - Seaholm",
+     "city": "Austin",
+     "zip": 78703,
+     "distance_mi": 1.11,
+     "lat": 30.269632726806904,
+     "lng": -97.75663574592593
+    },
+    {
+     "stop_id": 5535,
+     "name": "Plaza Saltillo Station",
+     "city": "Austin",
+     "zip": 78702,
+     "distance_mi": 1.22,
+     "lat": 30.262241531648183,
+     "lng": -97.72757784171752
+    },
+    {
+     "stop_id": 5536,
+     "name": "M L King Jr Station",
+     "city": "Austin",
+     "zip": 78702,
+     "distance_mi": 1.85,
+     "lat": 30.279817905951205,
+     "lng": -97.7090307248983
+    }
+   ],
+   "bus_buffer_mi": 1.0,
+   "rail_buffer_mi": 3.0,
+   "advisory": "126 active CMTA bus stop(s) within 1.0 mi \u2014 nearest: 117 15Th/Brazos (0.06 mi). Nearest rail: Downtown Station (0.81 mi) \u2014 Red Line. Distance is straight-line, not walking. TOD-overlay eligibility + headway require manual verification with CMTA / city.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:23.507554Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "126 active CMTA bus stop(s) within 1.0 mi \u2014 nearest: 117 15Th/Brazos (0.06 mi). Nearest rail: Downtown Station (0.81 mi) \u2014 Red Line. Distance is straight-line, not walking. TOD-overlay eligibility + headway require manual verification with CMTA / city."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "CMTA Project Connect map",
+    "TOD overlay confirmation",
+    "city transit study"
+   ],
+   "reason": "Stop / station proximity is screening \u2014 binding TOD-overlay eligibility, headway, and Project Connect alignment require verification with CMTA + the city's transit / planning department."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

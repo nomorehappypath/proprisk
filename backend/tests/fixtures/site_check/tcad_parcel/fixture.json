@@ -1,0 +1,77 @@
+{
+ "source_id": "tcad_parcel",
+ "recorded_at": "2026-08-01T21:07:09.363026+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 1,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "tcad_parcel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "manual_verification_required",
+  "coverage_status": "manual_verification_required",
+  "normalized_facts": {
+   "county": "travis",
+   "status": "nearby_candidates_only",
+   "candidate_count": 2,
+   "nearby_candidates": [
+    {
+     "parcel_id": "200164",
+     "cad_account": "0210040114",
+     "owner_name": "TEXAS PUBLIC FINANCE AUTHORITY",
+     "situs": "1400 CONGRESS AVE   TX 78701",
+     "legal_description": "BLOCK 173 ORIGINAL CITY",
+     "acreage": 2.03743696
+    },
+    {
+     "parcel_id": "200173",
+     "cad_account": "0210040601",
+     "owner_name": "STATE OF TEXAS",
+     "situs": "CONGRESS AVE   TX 78701",
+     "legal_description": "LOT 1-4 BLOCK 172 ORIGINAL CITY",
+     "acreage": 2.01712513
+    }
+   ],
+   "manual_lookup_url": "https://traviscad.org/property-search",
+   "source": "Travis County Tax Maps parcel layer",
+   "source_url": "https://taxmaps.traviscountytx.gov/arcgis/rest/services/Parcels/FeatureServer/0",
+   "source_status": "official_rest_verified",
+   "note": "No parcel polygon contains the geocoded point in the public county layer. PropDesk found nearby parcel candidates but did not choose one automatically."
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:09.363026Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": {
+   "document_types": [
+    "tax_assessment",
+    "deed",
+    "survey"
+   ],
+   "reason": "Select the correct county parcel ID or upload a tax assessment, deed, or survey before relying on parcel-specific public-data conclusions."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

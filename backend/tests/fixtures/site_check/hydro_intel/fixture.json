@@ -1,0 +1,76 @@
+{
+ "source_id": "hydro_intel",
+ "recorded_at": "2026-08-01T21:07:22.082739+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "hydro_intel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "search_radius_m": 500,
+   "flowlines_count": 1,
+   "named_flowlines_count": 1,
+   "nearest_named_flowline": {
+    "name": "Waller Creek",
+    "ftype": 460,
+    "ftype_label": "Stream/River (perennial or intermittent)",
+    "reach_code": "12090205000126",
+    "segment_length_km": 3.886
+   },
+   "flowlines": [
+    {
+     "name": "Waller Creek",
+     "ftype": 460,
+     "ftype_label": "Stream/River (perennial or intermittent)",
+     "reach_code": "12090205000126",
+     "segment_length_km": 3.886
+    }
+   ],
+   "advisory": "1 NHD flowline(s) within 500 m (1 named). Nearest named waterway: **Waller Creek** (Stream/River (perennial or intermittent), 3.886 km in this segment). Named perennial streams typically trigger city setbacks (water-quality buffer / Critical Water Quality Zone) and may fall under USACE Section 404 jurisdiction for any fill activity. Mapping is broad-scale screening \u2014 USACE JD + field delineation is the binding answer.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:22.082739Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "1 NHD flowline(s) within 500 m (1 named). Nearest named waterway: **Waller Creek** (Stream/River (perennial or intermittent), 3.886 km in this segment). Named perennial streams typically trigger city setbacks (water-quality buffer / Critical Water Quality Zone) and may fall under USACE Section 404 jurisdiction for any fill activity. Mapping is broad-scale screening \u2014 USACE JD + field delineation is the binding answer."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "USACE Jurisdictional Determination",
+    "wetland delineation",
+    "stream-buffer waiver",
+    "civil drainage study"
+   ],
+   "reason": "NHD flowlines are screening \u2014 the binding ordinary high water mark + WOTUS jurisdiction comes from a USACE JD + field delineation. City setback waivers / stream-buffer modifications require a civil drainage study + planning department approval."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

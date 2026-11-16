@@ -1,0 +1,8460 @@
+{
+ "source_id": "site_constraints",
+ "recorded_at": "2026-08-01T21:07:33.384928+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [
+   "Austin"
+  ],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "wave2",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 4,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "site_constraints",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "result_schema_version": 4,
+   "material_findings": [],
+   "degraded_sources": [],
+   "access_facts": {
+    "frontages": [],
+    "status": "no mapped road frontage identified (screening)",
+    "planned_work_source": "see TxDOT projects layer for published planned work",
+    "advisory": "Mapped facts only. Legal access, driveway location, spacing, median openings, and any traffic study are determined by the road authority."
+   },
+   "status": "resolved_with_gaps",
+   "search_radius_mi": 5.0,
+   "coverage": [
+    {
+     "key": "water_wastewater_authority",
+     "label": "Water / wastewater service authority",
+     "status": "verified_public_fact",
+     "result": "CITY OF AUSTIN WATER & WASTEWATER",
+     "source": "TWDB / PUC / TCEQ service areas",
+     "verification_action": "Confirm current provider and obtain will-serve/SER."
+    },
+    {
+     "key": "water_mains",
+     "label": "Water mains, pipe size, and tie-in distance",
+     "status": "no_mapped_feature_found",
+     "result": "No public mapped water-main geometry found",
+     "source": "OpenStreetMap public infrastructure screen",
+     "verification_action": "Obtain provider GIS/as-built; verify size, pressure, capacity, tie-in, and extension cost."
+    },
+    {
+     "key": "wastewater_mains",
+     "label": "Sanitary sewer, lift stations, and routing",
+     "status": "no_mapped_feature_found",
+     "result": "0 line(s), 0 pumping/lift feature(s)",
+     "source": "OpenStreetMap public infrastructure screen",
+     "verification_action": "Obtain utility as-built and civil route; verify gravity/force-main, invert, capacity, and lift requirements."
+    },
+    {
+     "key": "utility_capacity",
+     "label": "Water / wastewater capacity and will-serve",
+     "status": "provider_verification_required",
+     "result": "Not established by any general free public geometry source",
+     "source": "Serving utility",
+     "verification_action": "Obtain a dated will-serve/SER and concept review response."
+    },
+    {
+     "key": "electric_service",
+     "label": "Three-phase service, feeder headroom, and cost",
+     "status": "provider_verification_required",
+     "result": "12 transmission line(s), 0 substation(s) screened",
+     "source": "HIFLD electric infrastructure",
+     "verification_action": "Obtain serving-utility distribution map, load study, service letter, easement, and cost estimate."
+    },
+    {
+     "key": "gas_pipelines",
+     "label": "Gas transmission pipelines and easements",
+     "status": "mapped_screening_evidence",
+     "result": "12 dated HIFLD line(s) within 5 mi",
+     "source": "DOE/NETL HIFLD plus PHMSA NPMS verification",
+     "verification_action": "Verify current pipeline/operator in NPMS and 811; obtain title/survey easement geometry."
+    },
+    {
+     "key": "access_inventory",
+     "label": "Driveways, medians, signals, and access control",
+     "status": "mapped_screening_evidence",
+     "result": "1 TxDOT segment(s), 0 mapped driveway(s), 120 signal(s)",
+     "source": "TxDOT Roadway Inventory and OpenStreetMap",
+     "verification_action": "Field-verify and obtain current road plans/access classification and agency spacing approval."
+    },
+    {
+     "key": "future_row",
+     "label": "Planned widening and future ROW impact",
+     "status": "mapped_screening_evidence",
+     "result": "90 public project record(s)",
+     "source": "TxDOT project records and published plans",
+     "verification_action": "Overlay surveyed proposed ROW or dedication line from current plans before closing."
+    },
+    {
+     "key": "edwards",
+     "label": "Edwards Aquifer protection zones",
+     "status": "mapped_screening_evidence",
+     "result": "4 mapped zone(s) within 5 mi",
+     "source": "TCEQ Edwards Aquifer public map",
+     "verification_action": "Confirm applicability and required EAPP review with TCEQ/civil/environmental counsel."
+    },
+    {
+     "key": "critical_habitat",
+     "label": "Endangered-species critical habitat",
+     "status": "mapped_screening_evidence",
+     "result": "2 final/proposed mapped habitat feature(s)",
+     "source": "USFWS critical habitat service",
+     "verification_action": "Run parcel-specific USFWS IPaC and species/karst field review where indicated."
+    },
+    {
+     "key": "karst",
+     "label": "Karst / cave habitat",
+     "status": "authoritative_source_unavailable",
+     "result": "No complete nationwide parcel-level public karst feature service is available",
+     "source": "USFWS IPaC, state/local records, and field investigation",
+     "verification_action": "Order karst/cave review in susceptible geology; do not infer clearance from no mapped feature."
+    },
+    {
+     "key": "regulatory",
+     "label": "Setbacks, height, coverage, impervious, detention, platting",
+     "status": "verified_public_fact",
+     "result": "7 curated dimensional rule(s); plat status no_recorded_subdivision_gis_match",
+     "source": "Official code citations, zoning record, county GIS, and clerk record",
+     "verification_action": "Confirm current standards, drainage/detention criteria, and plat/replat path with governing agencies."
+    },
+    {
+     "key": "districts",
+     "label": "ETJ / MUD / PID / TIRZ and special districts",
+     "status": "verified_public_fact",
+     "result": "1 district record(s) returned",
+     "source": "Jurisdiction resolver and official district layers",
+     "verification_action": "Confirm current boundary/tax obligations with district and title evidence."
+    },
+    {
+     "key": "recorded_easements",
+     "label": "Recorded utility, drainage, access, and pipeline easements",
+     "status": "title_or_survey_required",
+     "result": "Public plat/deed discovery is recorded-reference evidence, not georeferenced easement geometry",
+     "source": "County clerk, title commitment, recorded instruments, and survey",
+     "verification_action": "Retrieve all referenced instruments and have the surveyor plot them on the parcel."
+    },
+    {
+     "key": "market_context",
+     "label": "Demographics and permit/project activity",
+     "status": "calculated_screening_result",
+     "result": "3 ACS ring(s); 0 nearby published record(s)",
+     "source": "U.S. Census ACS and resolved jurisdiction permit/project sources",
+     "verification_action": "Treat radial travel-time estimates as screening; use a routed study for investment reliance."
+    },
+    {
+     "key": "buildable_envelope",
+     "label": "Provisional buildable envelope",
+     "status": "insufficient_geometry",
+     "result": "None screened acre(s); completeness parcel_boundary_missing",
+     "source": "Verified CAD parcel plus available published constraints",
+     "verification_action": "Replace with survey/civil envelope after easements, ROW, drainage, access, flood, and wetlands are located."
+    }
+   ],
+   "gas_pipelines": [
+    {
+     "id": "hifld-gas:8054",
+     "kind": "gas_transmission_pipeline",
+     "title": "Houston Pipeline Co.",
+     "operator": "Houston Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 8561,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.70166161393574,
+        30.20404923188406
+       ],
+       [
+        -97.69863199964585,
+        30.250597999819178
+       ],
+       [
+        -97.71518199989173,
+        30.26655000012709
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32843",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 9729,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.74560000015269,
+        30.302784000049655
+       ],
+       [
+        -97.7157846674637,
+        30.348976768115943
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32844",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 9729,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.77369600003297,
+        30.30515199993531
+       ],
+       [
+        -97.74560000015269,
+        30.302784000049655
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32845",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 11173,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.77740799958539,
+        30.234304000367047
+       ],
+       [
+        -97.77369600003297,
+        30.30515199993531
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32842",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 14938,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.77369600003297,
+        30.30515199993531
+       ],
+       [
+        -97.77619199959261,
+        30.319615999844693
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32841",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 15348,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.77740799958539,
+        30.234304000367047
+       ],
+       [
+        -97.73945599971643,
+        30.234304000367047
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32846",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 19412,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.77695657430387,
+        30.20404923188406
+       ],
+       [
+        -97.77740799958539,
+        30.234304000367047
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:6698",
+     "kind": "gas_transmission_pipeline",
+     "title": "El Paso Texas Pipeline Co.",
+     "operator": "El Paso Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 22035,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.65584927443794,
+        30.22376363405138
+       ],
+       [
+        -97.68352900026974,
+        30.240605999928874
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:11413",
+     "kind": "gas_transmission_pipeline",
+     "title": "Atmos Pipeline - Texas",
+     "operator": "Atmos Pipeline - Texas",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 22690,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.65584927443794,
+        30.30433798303369
+       ],
+       [
+        -97.66461900000834,
+        30.301818000294503
+       ],
+       [
+        -97.66926000039668,
+        30.288768000273745
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:11403",
+     "kind": "gas_transmission_pipeline",
+     "title": "Atmos Pipeline - Texas",
+     "operator": "Atmos Pipeline - Texas",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 23894,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.72705999978716,
+        30.211734000210708
+       ],
+       [
+        -97.7066180000638,
+        30.211749999725722
+       ],
+       [
+        -97.66573899974165,
+        30.232445000145415
+       ],
+       [
+        -97.66102399973346,
+        30.24316499962483
+       ],
+       [
+        -97.65584927443794,
+        30.243528006476883
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:32393",
+     "kind": "gas_transmission_pipeline",
+     "title": "Kinder Morgan Texas Pipeline Co.",
+     "operator": "Kinder Morgan Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 24450,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.73142284625145,
+        30.20404923188406
+       ],
+       [
+        -97.82366672556205,
+        30.22832926181862
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    },
+    {
+     "id": "hifld-gas:6786",
+     "kind": "gas_transmission_pipeline",
+     "title": "El Paso Texas Pipeline Co.",
+     "operator": "El Paso Texas Pipeline Co.",
+     "pipeline_type": "Intrastate",
+     "distance_ft": 33899,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.66104574609663,
+        30.20404923188406
+       ],
+       [
+        -97.65584927443794,
+        30.218344081309336
+       ]
+      ]
+     },
+     "source": "DOE/NETL HIFLD Natural Gas Pipelines",
+     "source_url": "https://www.npms.phmsa.dot.gov/PublicViewer/",
+     "currency_note": "HIFLD screening geometry may be dated. Confirm current operator/location in the PHMSA NPMS county viewer and by 811.",
+     "easement_status": "title_or_survey_required"
+    }
+   ],
+   "edwards_aquifer_zones": [
+    {
+     "id": "edwards_aquifer:10",
+     "kind": "edwards_aquifer",
+     "title": "Edwards Aquifer Transition Zone",
+     "distance_ft": 6597,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -97.7659045580067,
+         30.2689218618577
+        ],
+        [
+         -97.7624664330962,
+         30.2676238602389
+        ],
+        [
+         -97.7581341838575,
+         30.2655728519613
+        ],
+        [
+         -97.7569293875983,
+         30.2648756322325
+        ],
+        [
+         -97.755178539913,
+         30.2641551648648
+        ],
+        [
+         -97.754791864999,
+         30.2639078530612
+        ],
+        [
+         -97.7563154164927,
+         30.2611160183349
+        ],
+        [
+         -97.7593945438557,
+         30.2558055540671
+        ],
+        [
+         -97.7599081951492,
+         30.2547343618727
+        ],
+        [
+         -97.7605937246694,
+         30.2538384978433
+        ],
+        [
+         -97.7611713409993,
+         30.2528446070672
+        ],
+        [
+         -97.7617363764861,
+         30.2520242955543
+        ],
+        [
+         -97.7631133936891,
+         30.2503205790306
+        ],
+        [
+         -97.7665993917244,
+         30.2474275662113
+        ],
+        [
+         -97.7684449890471,
+         30.2460553049013
+        ],
+        [
+         -97.7701196808447,
+         30.2443723538474
+        ],
+        [
+         -97.7705517173382,
+         30.2436861062004
+        ],
+        [
+         -97.7710549923272,
+         30.242650862427
+        ],
+        [
+         -97.77136070256,
+         30.2418325848035
+        ],
+        [
+         -97.7761524345033,
+         30.2277081508134
+        ],
+        [
+         -97.776402096666,
+         30.2268983584558
+        ],
+        [
+         -97.776543288791,
+         30.2260898082714
+        ],
+        [
+         -97.7765749478677,
+         30.223899624755
+        ],
+        [
+         -97.7767829923134,
+         30.2219389333617
+        ],
+        [
+         -97.7769304922193,
+         30.2213018891912
+        ],
+        [
+         -97.777159531005,
+         30.2207400519027
+        ],
+        [
+         -97.7780739715509,
+         30.2194694839712
+        ],
+        [
+         -97.7786260112644,
+         30.2189377250944
+        ],
+        [
+         -97.7792915374526,
+         30.2184701855118
+        ],
+        [
+         -97.7801464909496,
+         30.2180698276278
+        ],
+        [
+         -97.7813738765497,
+         30.2178511441953
+        ],
+        [
+         -97.7840304183624,
+         30.2176908355674
+        ],
+        [
+         -97.7853461350236,
+         30.2175225626498
+        ],
+        [
+         -97.7872954126539,
+         30.216947311228
+        ],
+        [
+         -97.7906767204226,
+         30.215609217551
+        ],
+        [
+         -97.7914746758973,
+         30.2151383243548
+        ],
+        [
+         -97.7930268610374,
+         30.2139998575839
+        ],
+        [
+         -97.7934524757169,
+         30.2134961958618
+        ],
+        [
+         -97.7938459318628,
+         30.2128072525222
+        ],
+        [
+         -97.7998245138088,
+         30.20404923188406
+        ],
+        [
+         -97.82042938827641,
+         30.20404923188406
+        ],
+        [
+         -97.8198636190589,
+         30.2047152227773
+        ],
+        [
+         -97.8197301450214,
+         30.2050185720769
+        ],
+        [
+         -97.8196456105976,
+         30.2058998769647
+        ],
+        [
+         -97.8194418451933,
+         30.2064890940874
+        ],
+        [
+         -97.8191565626784,
+         30.2068903357202
+        ],
+        [
+         -97.8181360240419,
+         30.2076932705029
+        ],
+        [
+         -97.8175780091462,
+         30.2082589871661
+        ],
+        [
+         -97.8173299989345,
+         30.2089087117231
+        ],
+        [
+         -97.8172273285042,
+         30.2094040876538
+        ],
+        [
+         -97.8172382320478,
+         30.2102839960598
+        ],
+        [
+         -97.8173254632996,
+         30.2108081570584
+        ],
+        [
+         -97.8173236960495,
+         30.2113360261303
+        ],
+        [
+         -97.8172283220673,
+         30.2117096485385
+        ],
+        [
+         -97.8163141014106,
+         30.213118114934
+        ],
+        [
+         -97.8138151721744,
+         30.2158500009638
+        ],
+        [
+         -97.8132385287565,
+         30.2162846851152
+        ],
+        [
+         -97.8124786484889,
+         30.2166748436634
+        ],
+        [
+         -97.8115614241777,
+         30.2168650506127
+        ],
+        [
+         -97.8106690807737,
+         30.2171998548842
+        ],
+        [
+         -97.8101554800774,
+         30.2175741876441
+        ],
+        [
+         -97.8099649548241,
+         30.217865727204
+        ],
+        [
+         -97.8096914604977,
+         30.2186302550357
+        ],
+        [
+         -97.8094622645892,
+         30.219059053418
+        ],
+        [
+         -97.8090250706748,
+         30.2195581500859
+        ],
+        [
+         -97.8086004409305,
+         30.2198227441556
+        ],
+        [
+         -97.8078914323544,
+         30.2201907787905
+        ],
+        [
+         -97.8062007866741,
+         30.2207551584873
+        ],
+        [
+         -97.8056998555707,
+         30.2212604307204
+        ],
+        [
+         -97.8034149423859,
+         30.2223652884478
+        ],
+        [
+         -97.8007006479606,
+         30.2237977941488
+        ],
+        [
+         -97.8006383602499,
+         30.2251846097492
+        ],
+        [
+         -97.8007180143098,
+         30.2253635559346
+        ],
+        [
+         -97.8008711963827,
+         30.225423610856
+        ],
+        [
+         -97.8014360766619,
+         30.2275741503326
+        ],
+        [
+         -97.8015964039427,
+         30.2286516859114
+        ],
+        [
+         -97.8020466326067,
+         30.2302981043701
+        ],
+        [
+         -97.801861108745,
+         30.2306550973129
+        ],
+        [
+         -97.8006017130549,
+         30.2309864736156
+        ],
+        [
+         -97.799842088619,
+         30.2312885765586
+        ],
+        [
+         -97.7992720504294,
+         30.23159467056
+        ],
+        [
+         -97.7987154438563,
+         30.2316504770746
+        ],
+        [
+         -97.7972604092736,
+         30.2316190810046
+        ],
+        [
+         -97.7967482144353,
+         30.2317610116693
+        ],
+        [
+         -97.7963044359663,
+         30.2320975782206
+        ],
+        [
+         -97.7959303047423,
+         30.2324212466669
+        ],
+        [
+         -97.7955175666961,
+         30.2329814299464
+        ],
+        [
+         -97.7952437434195,
+         30.2336534275806
+        ],
+        [
+         -97.7951212978243,
+         30.2343741919889
+        ],
+        [
+         -97.7950253036851,
+         30.2350027065632
+        ],
+        [
+         -97.7950735913514,
+         30.2357295509747
+        ],
+        [
+         -97.7948573233314,
+         30.2362080693955
+        ],
+        [
+         -97.7944069085586,
+         30.2367137603193
+        ],
+        [
+         -97.7940722177854,
+         30.2364647862942
+        ],
+        [
+         -97.7936673021072,
+         30.2363821022211
+        ],
+        [
+         -97.793282415778,
+         30.2361484547888
+        ],
+        [
+         -97.7925175485691,
+         30.2359180731439
+        ],
+        [
+         -97.7920377849832,
+         30.2356361745196
+        ],
+        [
+         -97.7911837787729,
+         30.2355786679204
+        ],
+        [
+         -97.7904369549078,
+         30.235731943632
+        ],
+        [
+         -97.7888787563761,
+         30.2365883266655
+        ],
+        [
+         -97.7884348199887,
+         30.2369338868762
+        ],
+        [
+         -97.7876025485688,
+         30.2383857551204
+        ],
+        [
+         -97.7873513242513,
+         30.2398565326979
+        ],
+        [
+         -97.7874132533562,
+         30.2404729667689
+        ],
+        [
+         -97.7872345731689,
+         30.2410601029421
+        ],
+        [
+         -97.786916388206,
+         30.2415827812292
+        ],
+        [
+         -97.7865359283918,
+         30.2419402009957
+        ],
+        [
+         -97.7859780847539,
+         30.2423027436058
+        ],
+        [
+         -97.7854590870858,
+         30.2425167554186
+        ],
+        [
+         -97.784534841927,
+         30.2427788900323
+        ],
+        [
+         -97.782269777778,
+         30.242951860512
+        ],
+        [
+         -97.7812632921412,
+         30.2431929052012
+        ],
+        [
+         -97.7804904731362,
+         30.2434992809872
+        ],
+        [
+         -97.7802043106831,
+         30.2439500522848
+        ],
+        [
+         -97.7801083630597,
+         30.2443033335807
+        ],
+        [
+         -97.7800876462697,
+         30.244876139162
+        ],
+        [
+         -97.7801739872527,
+         30.2456687616324
+        ],
+        [
+         -97.779860218321,
+         30.2469336525298
+        ],
+        [
+         -97.7793839713243,
+         30.2477323134169
+        ],
+        [
+         -97.7787232966919,
+         30.2485788829631
+        ],
+        [
+         -97.7784817091921,
+         30.2490999974285
+        ],
+        [
+         -97.7783594877049,
+         30.2496335047979
+        ],
+        [
+         -97.7784031955066,
+         30.2499858313791
+        ],
+        [
+         -97.7788752731499,
+         30.2500511431039
+        ],
+        [
+         -97.7782154032866,
+         30.251723373279
+        ],
+        [
+         -97.7780820930024,
+         30.2523650583492
+        ],
+        [
+         -97.7777709671083,
+         30.2530975766907
+        ],
+        [
+         -97.7773835429855,
+         30.2536962826926
+        ],
+        [
+         -97.7763176159023,
+         30.2549496265005
+        ],
+        [
+         -97.775772000702,
+         30.2557837181489
+        ],
+        [
+         -97.7751756736322,
+         30.2565158179511
+        ],
+        [
+         -97.7749281723326,
+         30.2565157586542
+        ],
+        [
+         -97.7743321355324,
+         30.2563342221145
+        ],
+        [
+         -97.7739391947322,
+         30.2563282882461
+        ],
+        [
+         -97.7735072652411,
+         30.2564280146858
+        ],
+        [
+         -97.7728032040172,
+         30.2564710488662
+        ],
+        [
+         -97.7723911141904,
+         30.2564378597634
+        ],
+        [
+         -97.7715599711263,
+         30.2561480795908
+        ],
+        [
+         -97.7710338724486,
+         30.2560371166394
+        ],
+        [
+         -97.7706468742945,
+         30.2561801171766
+        ],
+        [
+         -97.770310685326,
+         30.2564160848882
+        ],
+        [
+         -97.7698725645749,
+         30.2569601509017
+        ],
+        [
+         -97.7695491886606,
+         30.2576271121529
+        ],
+        [
+         -97.7695744839938,
+         30.2579950586699
+        ],
+        [
+         -97.7698914969574,
+         30.258620661803
+        ],
+        [
+         -97.7697198058211,
+         30.2594176323688
+        ],
+        [
+         -97.7699547840225,
+         30.2595890312432
+        ],
+        [
+         -97.7700368985222,
+         30.2598808122757
+        ],
+        [
+         -97.7698268349029,
+         30.2613586997332
+        ],
+        [
+         -97.76987171189,
+         30.2618757183462
+        ],
+        [
+         -97.7703529709087,
+         30.2635022207931
+        ],
+        [
+         -97.7701881069229,
+         30.2642721854481
+        ],
+        [
+         -97.7683221445354,
+         30.266052585994
+        ],
+        [
+         -97.7659045580067,
+         30.2689218618577
+        ]
+       ]
+      ]
+     },
+     "attributes": {
+      "TYPE": "Edwards Aquifer Transition Zone"
+     },
+     "source": "TCEQ Edwards Aquifer protection zones",
+     "source_url": "https://www.tceq.texas.gov/permitting/eapp/viewer.html"
+    },
+    {
+     "id": "edwards_aquifer:8",
+     "kind": "edwards_aquifer",
+     "title": "Edwards Aquifer Recharge Zone",
+     "distance_ft": 8702,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -97.779073472538,
+         30.3096624523963
+        ],
+        [
+         -97.7790159914327,
+         30.3093709079467
+        ],
+        [
+         -97.7790796108218,
+         30.3090624473126
+        ],
+        [
+         -97.7792763863499,
+         30.3086559706429
+        ],
+        [
+         -97.7790546524802,
+         30.3083493590417
+        ],
+        [
+         -97.7791240295965,
+         30.3082056288555
+        ],
+        [
+         -97.7795369727095,
+         30.3079252431028
+        ],
+        [
+         -97.7797529539857,
+         30.3076994137319
+        ],
+        [
+         -97.7794545369929,
+         30.3073920867325
+        ],
+        [
+         -97.7799431594252,
+         30.3070357046001
+        ],
+        [
+         -97.7801464770702,
+         30.3067826869489
+        ],
+        [
+         -97.7804761597116,
+         30.3066120583254
+        ],
+        [
+         -97.7809207928086,
+         30.3065011530309
+        ],
+        [
+         -97.7805461315054,
+         30.3063149358267
+        ],
+        [
+         -97.7804258888731,
+         30.306000248616
+        ],
+        [
+         -97.7803685642792,
+         30.3056432862051
+        ],
+        [
+         -97.7805209634965,
+         30.3054078391991
+        ],
+        [
+         -97.7807813549246,
+         30.3053741722339
+        ],
+        [
+         -97.780959097001,
+         30.3055066676737
+        ],
+        [
+         -97.7811496368016,
+         30.3054452798932
+        ],
+        [
+         -97.7808064560664,
+         30.3050788861669
+        ],
+        [
+         -97.7810986486975,
+         30.3047860879852
+        ],
+        [
+         -97.7823106843256,
+         30.3047928625783
+        ],
+        [
+         -97.7825455818348,
+         30.3045604381807
+        ],
+        [
+         -97.782330044847,
+         30.3044884997014
+        ],
+        [
+         -97.7815553544529,
+         30.3044339143998
+        ],
+        [
+         -97.7816511095429,
+         30.3042588476152
+        ],
+        [
+         -97.7819618898354,
+         30.3041444365831
+        ],
+        [
+         -97.7825073550902,
+         30.3040773249911
+        ],
+        [
+         -97.7829204197361,
+         30.3041533564544
+        ],
+        [
+         -97.783053619646,
+         30.3040508247236
+        ],
+        [
+         -97.7833960283315,
+         30.3035328998087
+        ],
+        [
+         -97.7834469673968,
+         30.3031972490076
+        ],
+        [
+         -97.7832949968463,
+         30.3030830422302
+        ],
+        [
+         -97.7835675502714,
+         30.3030111322393
+        ],
+        [
+         -97.7836371479518,
+         30.3029012411274
+        ],
+        [
+         -97.7834917889359,
+         30.3026201610869
+        ],
+        [
+         -97.7836565230713,
+         30.3025427373961
+        ],
+        [
+         -97.7841326323339,
+         30.302565209867
+        ],
+        [
+         -97.7849451088532,
+         30.3018734347715
+        ],
+        [
+         -97.785383017978,
+         30.3016203305742
+        ],
+        [
+         -97.7860747327589,
+         30.3002845015631
+        ],
+        [
+         -97.7865444160729,
+         30.299614351387
+        ],
+        [
+         -97.7868554571153,
+         30.2988434670325
+        ],
+        [
+         -97.7869191774517,
+         30.2981018735051
+        ],
+        [
+         -97.7875217178515,
+         30.2969321436172
+        ],
+        [
+         -97.7879727504517,
+         30.2962437669707
+        ],
+        [
+         -97.7879598282272,
+         30.29581503015
+        ],
+        [
+         -97.7877314800543,
+         30.2956234206023
+        ],
+        [
+         -97.7877249624627,
+         30.2954135639476
+        ],
+        [
+         -97.7879855490073,
+         30.2949918724144
+        ],
+        [
+         -97.7879726379913,
+         30.2938750906426
+        ],
+        [
+         -97.7874078731496,
+         30.29366682888
+        ],
+        [
+         -97.7869765458229,
+         30.2935996653292
+        ],
+        [
+         -97.7868879915175,
+         30.293402583526
+        ],
+        [
+         -97.7854281216708,
+         30.2930574275812
+        ],
+        [
+         -97.7854284809216,
+         30.2928701923807
+        ],
+        [
+         -97.7858090294061,
+         30.2926278328554
+        ],
+        [
+         -97.7861897100377,
+         30.292480220755
+        ],
+        [
+         -97.7865450910569,
+         30.2925399147248
+        ],
+        [
+         -97.7873065753387,
+         30.2921815182243
+        ],
+        [
+         -97.7877569956809,
+         30.2921225288246
+        ],
+        [
+         -97.7879030524448,
+         30.2915012574873
+        ],
+        [
+         -97.7877319947698,
+         30.2908793039907
+        ],
+        [
+         -97.7876431036978,
+         30.2901814129303
+        ],
+        [
+         -97.787345238232,
+         30.2891973447901
+        ],
+        [
+         -97.7862221102423,
+         30.2865768753194
+        ],
+        [
+         -97.7854860462588,
+         30.2851917017653
+        ],
+        [
+         -97.7844459849261,
+         30.2836412778329
+        ],
+        [
+         -97.7838114855153,
+         30.2829811763959
+        ],
+        [
+         -97.7809187816494,
+         30.2801840423695
+        ],
+        [
+         -97.7777593182082,
+         30.277639269627
+        ],
+        [
+         -97.7770682057486,
+         30.2769402580428
+        ],
+        [
+         -97.776090985303,
+         30.2761551011154
+        ],
+        [
+         -97.7748033473593,
+         30.2752542382601
+        ],
+        [
+         -97.7738835233248,
+         30.2747154945993
+        ],
+        [
+         -97.7733569775686,
+         30.2745278343669
+        ],
+        [
+         -97.7732427923889,
+         30.2743575734393
+        ],
+        [
+         -97.7726656244127,
+         30.2740611551768
+        ],
+        [
+         -97.7725012237745,
+         30.2739062132249
+        ],
+        [
+         -97.772843583529,
+         30.2738575387072
+        ],
+        [
+         -97.7728247871773,
+         30.273697193425
+        ],
+        [
+         -97.7726910890626,
+         30.2735290059043
+        ],
+        [
+         -97.7710424104529,
+         30.2723562709237
+        ],
+        [
+         -97.7705598744097,
+         30.2719231228961
+        ],
+        [
+         -97.7702559563559,
+         30.2713901370469
+        ],
+        [
+         -97.7692534201965,
+         30.270455803182
+        ],
+        [
+         -97.7685243822109,
+         30.2699932606
+        ],
+        [
+         -97.7659045580067,
+         30.2689218618577
+        ],
+        [
+         -97.7683221455745,
+         30.2660525860035
+        ],
+        [
+         -97.7701881069229,
+         30.2642721854481
+        ],
+        [
+         -97.7703529698696,
+         30.2635022207837
+        ],
+        [
+         -97.76987171189,
+         30.2618757183462
+        ],
+        [
+         -97.7698268349029,
+         30.2613586997332
+        ],
+        [
+         -97.7700368985331,
+         30.2598808113737
+        ],
+        [
+         -97.7699547840116,
+         30.2595890321452
+        ],
+        [
+         -97.769719805832,
+         30.2594176314668
+        ],
+        [
+         -97.7698914969574,
+         30.258620661803
+        ],
+        [
+         -97.7695744839938,
+         30.2579950586699
+        ],
+        [
+         -97.7695491886716,
+         30.2576271112509
+        ],
+        [
+         -97.7698725656139,
+         30.2569601509112
+        ],
+        [
+         -97.770310686365,
+         30.2564160848977
+        ],
+        [
+         -97.7706468743054,
+         30.2561801162745
+        ],
+        [
+         -97.7710338714096,
+         30.25603711663
+        ],
+        [
+         -97.7715599721654,
+         30.2561480796003
+        ],
+        [
+         -97.7723911141904,
+         30.2564378597634
+        ],
+        [
+         -97.7728032040172,
+         30.2564710488662
+        ],
+        [
+         -97.773507264202,
+         30.2564280146763
+        ],
+        [
+         -97.7739391957712,
+         30.2563282882555
+        ],
+        [
+         -97.7743321355215,
+         30.2563342230165
+        ],
+        [
+         -97.7749281723326,
+         30.2565157586542
+        ],
+        [
+         -97.7751756736322,
+         30.2565158179511
+        ],
+        [
+         -97.775772001741,
+         30.2557837181583
+        ],
+        [
+         -97.7763176159023,
+         30.2549496265005
+        ],
+        [
+         -97.7773835429747,
+         30.2536962835946
+        ],
+        [
+         -97.77777096713,
+         30.2530975748866
+        ],
+        [
+         -97.7780820930024,
+         30.2523650583492
+        ],
+        [
+         -97.7782154022584,
+         30.2517233723675
+        ],
+        [
+         -97.7788752731499,
+         30.2500511431039
+        ],
+        [
+         -97.7784031955066,
+         30.2499858313791
+        ],
+        [
+         -97.7783594866768,
+         30.2496335038864
+        ],
+        [
+         -97.7784817102311,
+         30.2490999974379
+        ],
+        [
+         -97.7787232967027,
+         30.2485788820611
+        ],
+        [
+         -97.7793839713243,
+         30.2477323134169
+        ],
+        [
+         -97.779860218321,
+         30.2469336525298
+        ],
+        [
+         -97.7801739862138,
+         30.245668761623
+        ],
+        [
+         -97.7800876473195,
+         30.2448761382694
+        ],
+        [
+         -97.7801083630488,
+         30.2443033344827
+        ],
+        [
+         -97.780204309655,
+         30.2439500513734
+        ],
+        [
+         -97.7804904731362,
+         30.2434992809872
+        ],
+        [
+         -97.7812632911023,
+         30.2431929051918
+        ],
+        [
+         -97.782269777778,
+         30.242951860512
+        ],
+        [
+         -97.784534841927,
+         30.2427788900323
+        ],
+        [
+         -97.7854590860469,
+         30.2425167554092
+        ],
+        [
+         -97.7859780857928,
+         30.2423027436151
+        ],
+        [
+         -97.7865359283918,
+         30.2419402009957
+        ],
+        [
+         -97.7869163892449,
+         30.2415827812385
+        ],
+        [
+         -97.7872345731689,
+         30.2410601029421
+        ],
+        [
+         -97.7874132533454,
+         30.2404729676708
+        ],
+        [
+         -97.7873513242513,
+         30.2398565326979
+        ],
+        [
+         -97.7876025485796,
+         30.2383857542184
+        ],
+        [
+         -97.7884348199887,
+         30.2369338868762
+        ],
+        [
+         -97.7888787553481,
+         30.2365883257542
+        ],
+        [
+         -97.7904369549078,
+         30.235731943632
+        ],
+        [
+         -97.7911837808613,
+         30.2355786670371
+        ],
+        [
+         -97.7920377839443,
+         30.2356361745103
+        ],
+        [
+         -97.7925175475302,
+         30.2359180731346
+        ],
+        [
+         -97.793282415778,
+         30.2361484547888
+        ],
+        [
+         -97.7936673021179,
+         30.236382101319
+        ],
+        [
+         -97.7940722177854,
+         30.2364647862942
+        ],
+        [
+         -97.7944069085586,
+         30.2367137603193
+        ],
+        [
+         -97.7948573243595,
+         30.2362080703068
+        ],
+        [
+         -97.7950735913407,
+         30.2357295518768
+        ],
+        [
+         -97.7950253036958,
+         30.2350027056612
+        ],
+        [
+         -97.795121297835,
+         30.2343741910868
+        ],
+        [
+         -97.7952437434087,
+         30.2336534284826
+        ],
+        [
+         -97.7955175666961,
+         30.2329814299464
+        ],
+        [
+         -97.7959303047423,
+         30.2324212466669
+        ],
+        [
+         -97.796304435977,
+         30.2320975773186
+        ],
+        [
+         -97.7967482154634,
+         30.2317610125806
+        ],
+        [
+         -97.7972604092736,
+         30.2316190810046
+        ],
+        [
+         -97.7987154428282,
+         30.2316504761633
+        ],
+        [
+         -97.7992720504401,
+         30.2315946696579
+        ],
+        [
+         -97.7998420886083,
+         30.2312885774607
+        ],
+        [
+         -97.8006017130549,
+         30.2309864736156
+        ],
+        [
+         -97.8013301749714,
+         30.2307901072676
+        ],
+        [
+         -97.802602115735,
+         30.230494934409
+        ],
+        [
+         -97.8031459203526,
+         30.2304232018276
+        ],
+        [
+         -97.8036835159282,
+         30.2304348796024
+        ],
+        [
+         -97.8044426792765,
+         30.2304914393187
+        ],
+        [
+         -97.8051319463194,
+         30.230635336726
+        ],
+        [
+         -97.8058578777342,
+         30.2310773457019
+        ],
+        [
+         -97.8067793302761,
+         30.2318933571889
+        ],
+        [
+         -97.8069745667104,
+         30.2320214650605
+        ],
+        [
+         -97.8070567215672,
+         30.231941000337
+        ],
+        [
+         -97.8076207613566,
+         30.2312152197968
+        ],
+        [
+         -97.8079967678405,
+         30.2305711942702
+        ],
+        [
+         -97.809849116148,
+         30.2270011314339
+        ],
+        [
+         -97.8101442516665,
+         30.2262751510781
+        ],
+        [
+         -97.8105201939918,
+         30.2249859256959
+        ],
+        [
+         -97.8114600831999,
+         30.2231874658792
+        ],
+        [
+         -97.8117622048066,
+         30.2223645400561
+        ],
+        [
+         -97.8098072560422,
+         30.2226039749656
+        ],
+        [
+         -97.8080241122189,
+         30.2225967908634
+        ],
+        [
+         -97.8073917073878,
+         30.2225346388703
+        ],
+        [
+         -97.8070249584559,
+         30.2224139941688
+        ],
+        [
+         -97.8062537044128,
+         30.2223956898467
+        ],
+        [
+         -97.8053412211604,
+         30.2229942150317
+        ],
+        [
+         -97.8052403760368,
+         30.223117372527
+        ],
+        [
+         -97.8063423947278,
+         30.2236552972394
+        ],
+        [
+         -97.8066691381124,
+         30.2237011362915
+        ],
+        [
+         -97.8073150123104,
+         30.2239393761269
+        ],
+        [
+         -97.8073894316703,
+         30.2240686394438
+        ],
+        [
+         -97.8073372640024,
+         30.2241403551626
+        ],
+        [
+         -97.8064555257177,
+         30.2248271464762
+        ],
+        [
+         -97.8061032687072,
+         30.224742725762
+        ],
+        [
+         -97.8052725063187,
+         30.2243809756635
+        ],
+        [
+         -97.804396674759,
+         30.2243098216822
+        ],
+        [
+         -97.803167698049,
+         30.2243888403073
+        ],
+        [
+         -97.8025238763474,
+         30.2242498585618
+        ],
+        [
+         -97.8020889216143,
+         30.2243451434974
+        ],
+        [
+         -97.8013550448061,
+         30.2249385047942
+        ],
+        [
+         -97.8008711963827,
+         30.225423610856
+        ],
+        [
+         -97.8007180143204,
+         30.2253635550326
+        ],
+        [
+         -97.8006383612886,
+         30.2251846097584
+        ],
+        [
+         -97.8007006479499,
+         30.2237977950508
+        ],
+        [
+         -97.8034149413472,
+         30.2223652884386
+        ],
+        [
+         -97.8056998555707,
+         30.2212604307204
+        ],
+        [
+         -97.8062007866741,
+         30.2207551584873
+        ],
+        [
+         -97.807891432365,
+         30.2201907778884
+        ],
+        [
+         -97.8086004409305,
+         30.2198227441556
+        ],
+        [
+         -97.8090250717134,
+         30.2195581500951
+        ],
+        [
+         -97.8094622645892,
+         30.219059053418
+        ],
+        [
+         -97.8096914615364,
+         30.2186302550448
+        ],
+        [
+         -97.8099649548241,
+         30.217865727204
+        ],
+        [
+         -97.8101554800774,
+         30.2175741876441
+        ],
+        [
+         -97.8106690807631,
+         30.2171998557862
+        ],
+        [
+         -97.8115614241883,
+         30.2168650497106
+        ],
+        [
+         -97.8124786484889,
+         30.2166748436634
+        ],
+        [
+         -97.8132385287565,
+         30.2162846851152
+        ],
+        [
+         -97.8138151721744,
+         30.2158500009638
+        ],
+        [
+         -97.816314100372,
+         30.2131181149249
+        ],
+        [
+         -97.8172283220673,
+         30.2117096485385
+        ],
+        [
+         -97.8173236960495,
+         30.2113360261303
+        ],
+        [
+         -97.8173254633101,
+         30.2108081561564
+        ],
+        [
+         -97.8172382309987,
+         30.2102839969528
+        ],
+        [
+         -97.8172273284937,
+         30.2094040885558
+        ],
+        [
+         -97.8173299999731,
+         30.2089087117322
+        ],
+        [
+         -97.8175780091462,
+         30.2082589871661
+        ],
+        [
+         -97.8181360240419,
+         30.2076932705029
+        ],
+        [
+         -97.8191565626784,
+         30.2068903357202
+        ],
+        [
+         -97.8194418441443,
+         30.2064890949804
+        ],
+        [
+         -97.8196456105976,
+         30.2058998769647
+        ],
+        [
+         -97.8197301450214,
+         30.2050185720769
+        ],
+        [
+         -97.819863620087,
+         30.2047152236885
+        ],
+        [
+         -97.8202821870977,
+         30.2041888488765
+        ],
+        [
+         -97.82042938881995,
+         30.20404923188406
+        ],
+        [
+         -97.82366672556205,
+         30.20404923188406
+        ],
+        [
+         -97.82366672556205,
+         30.26727501713757
+        ],
+        [
+         -97.8228922221541,
+         30.2678562091331
+        ],
+        [
+         -97.8201841973266,
+         30.2704734989847
+        ],
+        [
+         -97.8172665467583,
+         30.2736009238807
+        ],
+        [
+         -97.8156553053232,
+         30.2751632313781
+        ],
+        [
+         -97.8138469873157,
+         30.2771162589999
+        ],
+        [
+         -97.8121597247405,
+         30.2793703926804
+        ],
+        [
+         -97.8112401176933,
+         30.2807336294683
+        ],
+        [
+         -97.8097556227696,
+         30.2831362028485
+        ],
+        [
+         -97.8091211018502,
+         30.283701172736
+        ],
+        [
+         -97.8084743298615,
+         30.2840426945944
+        ],
+        [
+         -97.8075669544205,
+         30.2847089422633
+        ],
+        [
+         -97.8063167685702,
+         30.2857262345188
+        ],
+        [
+         -97.8052699865882,
+         30.2866867175978
+        ],
+        [
+         -97.8043568503933,
+         30.2876100611923
+        ],
+        [
+         -97.8025545650529,
+         30.2896171175336
+        ],
+        [
+         -97.8015330275529,
+         30.2905259139093
+        ],
+        [
+         -97.8000484568735,
+         30.2920485710794
+        ],
+        [
+         -97.7990520579444,
+         30.2929169708794
+        ],
+        [
+         -97.7985380795549,
+         30.2934987830331
+        ],
+        [
+         -97.7976499462947,
+         30.2941200179548
+        ],
+        [
+         -97.7947748498024,
+         30.2957764606824
+        ],
+        [
+         -97.7932264366698,
+         30.2967660589135
+        ],
+        [
+         -97.7907896078935,
+         30.2984963843809
+        ],
+        [
+         -97.7897234471932,
+         30.2993708321743
+        ],
+        [
+         -97.788917893174,
+         30.3001912861408
+        ],
+        [
+         -97.7881432075177,
+         30.3007728986244
+        ],
+        [
+         -97.7841071332204,
+         30.3044734441972
+        ],
+        [
+         -97.7835607811936,
+         30.3051383615713
+        ],
+        [
+         -97.7826218026639,
+         30.3060184434601
+        ],
+        [
+         -97.7815104882095,
+         30.3069578218561
+        ],
+        [
+         -97.7810092629115,
+         30.3076502183366
+        ],
+        [
+         -97.7800824162185,
+         30.3093312283299
+        ],
+        [
+         -97.7797647931695,
+         30.3097343234137
+        ],
+        [
+         -97.7794285975756,
+         30.3099048884756
+        ],
+        [
+         -97.779073472538,
+         30.3096624523963
+        ]
+       ]
+      ]
+     },
+     "attributes": {
+      "TYPE": "Edwards Aquifer Recharge Zone"
+     },
+     "source": "TCEQ Edwards Aquifer protection zones",
+     "source_url": "https://www.tceq.texas.gov/permitting/eapp/viewer.html"
+    },
+    {
+     "id": "edwards_aquifer:2",
+     "kind": "edwards_aquifer",
+     "title": "Edwards Aquifer Contributing Zone",
+     "distance_ft": 17209,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -97.7937455598094,
+         30.3118514117665
+        ],
+        [
+         -97.7931261597548,
+         30.311902094964
+        ],
+        [
+         -97.7927910728412,
+         30.3121426381082
+        ],
+        [
+         -97.7924433444655,
+         30.3126718159839
+        ],
+        [
+         -97.7917034797168,
+         30.3133755856419
+        ],
+        [
+         -97.7908821733549,
+         30.3138823368632
+        ],
+        [
+         -97.790363356765,
+         30.3140512427441
+        ],
+        [
+         -97.7897194797386,
+         30.314135522064
+        ],
+        [
+         -97.7890046680515,
+         30.3140679975081
+        ],
+        [
+         -97.7885312316322,
+         30.3138763767136
+        ],
+        [
+         -97.7873556339615,
+         30.3130127622428
+        ],
+        [
+         -97.7864706660515,
+         30.3125127745049
+        ],
+        [
+         -97.7847381318382,
+         30.3120658187011
+        ],
+        [
+         -97.7831526702731,
+         30.3115006473547
+        ],
+        [
+         -97.7815916187929,
+         30.3108025874108
+        ],
+        [
+         -97.7803143703916,
+         30.3103349991815
+        ],
+        [
+         -97.7794285975756,
+         30.3099048884756
+        ],
+        [
+         -97.7797647921299,
+         30.3097343234042
+        ],
+        [
+         -97.7800824162185,
+         30.3093312283299
+        ],
+        [
+         -97.7810092629224,
+         30.3076502174346
+        ],
+        [
+         -97.7815104892599,
+         30.3069578209635
+        ],
+        [
+         -97.7826218026639,
+         30.3060184434601
+        ],
+        [
+         -97.7835607822332,
+         30.3051383615806
+        ],
+        [
+         -97.7841071321701,
+         30.3044734450898
+        ],
+        [
+         -97.7881432075177,
+         30.3007728986244
+        ],
+        [
+         -97.7889178931632,
+         30.3001912870428
+        ],
+        [
+         -97.7897234482327,
+         30.2993708321837
+        ],
+        [
+         -97.7907896089437,
+         30.2984963834882
+        ],
+        [
+         -97.7932264366698,
+         30.2967660589135
+        ],
+        [
+         -97.7947748498024,
+         30.2957764606824
+        ],
+        [
+         -97.7976499452553,
+         30.2941200179455
+        ],
+        [
+         -97.7985380795549,
+         30.2934987830331
+        ],
+        [
+         -97.7990520579444,
+         30.2929169708794
+        ],
+        [
+         -97.8000484579236,
+         30.2920485701866
+        ],
+        [
+         -97.8015330275529,
+         30.2905259139093
+        ],
+        [
+         -97.8025545650529,
+         30.2896171175336
+        ],
+        [
+         -97.804356849354,
+         30.2876100611831
+        ],
+        [
+         -97.8052699876275,
+         30.286686717607
+        ],
+        [
+         -97.8063167685702,
+         30.2857262345188
+        ],
+        [
+         -97.8075669544099,
+         30.2847089431653
+        ],
+        [
+         -97.8084743288328,
+         30.2840426936832
+        ],
+        [
+         -97.8091211018396,
+         30.283701173638
+        ],
+        [
+         -97.8097556227696,
+         30.2831362028485
+        ],
+        [
+         -97.8112401176827,
+         30.2807336303703
+        ],
+        [
+         -97.8121597257798,
+         30.2793703926896
+        ],
+        [
+         -97.8138469873157,
+         30.2771162589999
+        ],
+        [
+         -97.8156553053127,
+         30.2751632322801
+        ],
+        [
+         -97.8172665477976,
+         30.2736009238898
+        ],
+        [
+         -97.8201841973266,
+         30.2704734989847
+        ],
+        [
+         -97.8228922221541,
+         30.2678562091331
+        ],
+        [
+         -97.82366672556205,
+         30.267275018031253
+        ],
+        [
+         -97.82366672556205,
+         30.315973242443796
+        ],
+        [
+         -97.8235663894387,
+         30.3161136599939
+        ],
+        [
+         -97.8233828715204,
+         30.3167301222429
+        ],
+        [
+         -97.8231622024242,
+         30.3180072260954
+        ],
+        [
+         -97.8232511736047,
+         30.3186667462073
+        ],
+        [
+         -97.8231247904101,
+         30.3192882347066
+        ],
+        [
+         -97.822915531229,
+         30.3198277649637
+        ],
+        [
+         -97.8223216390751,
+         30.3200795892533
+        ],
+        [
+         -97.8217150634519,
+         30.3201959447339
+        ],
+        [
+         -97.8209248115831,
+         30.3201256583829
+        ],
+        [
+         -97.8192119299764,
+         30.3195868408599
+        ],
+        [
+         -97.8173158632214,
+         30.3188230115963
+        ],
+        [
+         -97.8160957949473,
+         30.3184420085047
+        ],
+        [
+         -97.81461637203,
+         30.3182774651468
+        ],
+        [
+         -97.8137374432296,
+         30.3183935707865
+        ],
+        [
+         -97.8130988521618,
+         30.3186855537687
+        ],
+        [
+         -97.8123531995755,
+         30.3194999282213
+        ],
+        [
+         -97.8115251596269,
+         30.32062260378
+        ],
+        [
+         -97.8113293310603,
+         30.3210133488166
+        ],
+        [
+         -97.811032755718,
+         30.3214031760893
+        ],
+        [
+         -97.8106407800117,
+         30.3216184333085
+        ],
+        [
+         -97.8089966198389,
+         30.3219035036634
+        ],
+        [
+         -97.8079730915475,
+         30.3217182203405
+        ],
+        [
+         -97.8067083226738,
+         30.3207885436784
+        ],
+        [
+         -97.805956643221,
+         30.3198432368153
+        ],
+        [
+         -97.8056725827965,
+         30.3194142817044
+        ],
+        [
+         -97.8053117350464,
+         30.3180281314383
+        ],
+        [
+         -97.8049325521084,
+         30.3173501587033
+        ],
+        [
+         -97.8046734310635,
+         30.3172237175922
+        ],
+        [
+         -97.8026950676936,
+         30.3175214463325
+        ],
+        [
+         -97.8017852285791,
+         30.3175063480225
+        ],
+        [
+         -97.8003562072562,
+         30.3172631498318
+        ],
+        [
+         -97.7996989565738,
+         30.3169503204311
+        ],
+        [
+         -97.7992628434504,
+         30.3166801242446
+        ],
+        [
+         -97.7983273527904,
+         30.3157849727323
+        ],
+        [
+         -97.7975878811454,
+         30.3151803699396
+        ],
+        [
+         -97.7973293000822,
+         30.3147448628865
+        ],
+        [
+         -97.796797823935,
+         30.3127051725287
+        ],
+        [
+         -97.7954200597335,
+         30.312369901593
+        ],
+        [
+         -97.7943268517157,
+         30.3119402370758
+        ],
+        [
+         -97.7937455598094,
+         30.3118514117665
+        ]
+       ]
+      ]
+     },
+     "attributes": {
+      "TYPE": "Edwards Aquifer Contributing Zone"
+     },
+     "source": "TCEQ Edwards Aquifer protection zones",
+     "source_url": "https://www.tceq.texas.gov/permitting/eapp/viewer.html"
+    },
+    {
+     "id": "edwards_aquifer:12",
+     "kind": "edwards_aquifer",
+     "title": "Edwards Aquifer Contributing Zone within the Transition Zone",
+     "distance_ft": 25737,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -97.8020466315679,
+         30.2302981043608
+        ],
+        [
+         -97.8015964039427,
+         30.2286516859114
+        ],
+        [
+         -97.8014360766725,
+         30.2275741494305
+        ],
+        [
+         -97.8008711963827,
+         30.225423610856
+        ],
+        [
+         -97.8016818856428,
+         30.2246549939703
+        ],
+        [
+         -97.8020889216143,
+         30.2243451434974
+        ],
+        [
+         -97.8025238763367,
+         30.2242498594639
+        ],
+        [
+         -97.8031676980596,
+         30.2243888394052
+        ],
+        [
+         -97.8046440965863,
+         30.2243098232226
+        ],
+        [
+         -97.8052725073575,
+         30.2243809756728
+        ],
+        [
+         -97.8061032687072,
+         30.224742725762
+        ],
+        [
+         -97.8064555257071,
+         30.2248271473783
+        ],
+        [
+         -97.8073372650517,
+         30.2241403542698
+        ],
+        [
+         -97.807389432709,
+         30.224068639453
+        ],
+        [
+         -97.807315012321,
+         30.2239393752248
+        ],
+        [
+         -97.8066691381124,
+         30.2237011362915
+        ],
+        [
+         -97.8063423947172,
+         30.2236552981415
+        ],
+        [
+         -97.8052403750086,
+         30.2231173716157
+        ],
+        [
+         -97.8053412211604,
+         30.2229942150317
+        ],
+        [
+         -97.8062537044128,
+         30.2223956898467
+        ],
+        [
+         -97.8070249584666,
+         30.2224139932668
+        ],
+        [
+         -97.8073917073878,
+         30.2225346388703
+        ],
+        [
+         -97.8080241132576,
+         30.2225967908725
+        ],
+        [
+         -97.8098072560527,
+         30.2226039740636
+        ],
+        [
+         -97.811762204796,
+         30.2223645409581
+        ],
+        [
+         -97.8114600831999,
+         30.2231874658792
+        ],
+        [
+         -97.8105201950305,
+         30.2249859257051
+        ],
+        [
+         -97.8101442516559,
+         30.2262751519801
+        ],
+        [
+         -97.809849116148,
+         30.2270011314339
+        ],
+        [
+         -97.8079967678405,
+         30.2305711942702
+        ],
+        [
+         -97.8076207603179,
+         30.2312152197876
+        ],
+        [
+         -97.8069745667104,
+         30.2320214650605
+        ],
+        [
+         -97.8058578777342,
+         30.2310773457019
+        ],
+        [
+         -97.8051319463194,
+         30.230635336726
+        ],
+        [
+         -97.8044426792871,
+         30.2304914384167
+        ],
+        [
+         -97.8031459203526,
+         30.2304232018276
+        ],
+        [
+         -97.801861108745,
+         30.2306550973129
+        ],
+        [
+         -97.8020466315679,
+         30.2302981043608
+        ]
+       ]
+      ]
+     },
+     "attributes": {
+      "TYPE": "Edwards Aquifer Contributing Zone within the Transition Zone"
+     },
+     "source": "TCEQ Edwards Aquifer protection zones",
+     "source_url": "https://www.tceq.texas.gov/permitting/eapp/viewer.html"
+    }
+   ],
+   "critical_habitat": [
+    {
+     "id": "critical_habitat:636",
+     "kind": "critical_habitat",
+     "title": "Austin blind Salamander",
+     "distance_ft": 9138,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "Polygon",
+      "coordinates": [
+       [
+        [
+         -97.7710634592451,
+         30.260781540156
+        ],
+        [
+         -97.7725362399669,
+         30.2609893111809
+        ],
+        [
+         -97.7737291119344,
+         30.2617674168511
+        ],
+        [
+         -97.7742292112395,
+         30.2625192972232
+        ],
+        [
+         -97.7744292947994,
+         30.2633699536766
+        ],
+        [
+         -97.7743087651428,
+         30.2642318321335
+        ],
+        [
+         -97.7733966418544,
+         30.2656414678337
+        ],
+        [
+         -97.7711101240291,
+         30.2668318143848
+        ],
+        [
+         -97.7696227690402,
+         30.2669360423016
+        ],
+        [
+         -97.7666530060846,
+         30.2659305957298
+        ],
+        [
+         -97.7655361154204,
+         30.2650716580184
+        ],
+        [
+         -97.7650070238878,
+         30.2638605498911
+        ],
+        [
+         -97.7651869196083,
+         30.2625747296695
+        ],
+        [
+         -97.7656870189134,
+         30.2618228497218
+        ],
+        [
+         -97.7664356551083,
+         30.2612471340384
+        ],
+        [
+         -97.7678509759913,
+         30.2608369728073
+        ],
+        [
+         -97.7710634592451,
+         30.260781540156
+        ]
+       ]
+      ]
+     },
+     "attributes": {
+      "comname": "Austin blind Salamander",
+      "sciname": "Eurycea waterlooensis",
+      "status": "Final",
+      "pubdate": "20130820",
+      "effectdate": "Please check current species specific shapefile",
+      "unit": "Please check current species specific shapefile",
+      "subunit": "Please check current species specific shapefile",
+      "listing_status": "Endangered"
+     },
+     "source": "U.S. Fish and Wildlife Service critical habitat",
+     "source_url": "https://ipac.ecosphere.fws.gov/",
+     "designation": "final"
+    },
+    {
+     "id": "critical_habitat:331",
+     "kind": "critical_habitat",
+     "title": "Bracted twistflower",
+     "distance_ft": 13370,
+     "intersects_subject": false,
+     "map_geometry": {
+      "type": "MultiPolygon",
+      "coordinates": [
+       [
+        [
+         [
+          -97.82366672556205,
+          30.269653963530054
+         ],
+         [
+          -97.8235925011795,
+          30.2695013022682
+         ],
+         [
+          -97.8233525099632,
+          30.2693154257311
+         ],
+         [
+          -97.8229278871082,
+          30.2685918220426
+         ],
+         [
+          -97.8224622938896,
+          30.268969026277
+         ],
+         [
+          -97.8216364897169,
+          30.2685498361486
+         ],
+         [
+          -97.8221205496027,
+          30.2677723886167
+         ],
+         [
+          -97.8223374604045,
+          30.267538729926
+         ],
+         [
+          -97.8223411955995,
+          30.2671007671536
+         ],
+         [
+          -97.8220821861502,
+          30.2662327930543
+         ],
+         [
+          -97.8219086001963,
+          30.2661943666129
+         ],
+         [
+          -97.8216270457284,
+          30.2664816610602
+         ],
+         [
+          -97.8214939504376,
+          30.2667352627601
+         ],
+         [
+          -97.8209547636377,
+          30.2672005118617
+         ],
+         [
+          -97.8206778157306,
+          30.2671950808363
+         ],
+         [
+          -97.82065353876,
+          30.2670858318179
+         ],
+         [
+          -97.8206070078249,
+          30.2671936928213
+         ],
+         [
+          -97.8201120423916,
+          30.2671771227609
+         ],
+         [
+          -97.8201970149326,
+          30.2667231398778
+         ],
+         [
+          -97.8205515467376,
+          30.2666391897494
+         ],
+         [
+          -97.8205663788213,
+          30.2663948586379
+         ],
+         [
+          -97.8207704266465,
+          30.266255411167
+         ],
+         [
+          -97.8208399167236,
+          30.2649708722465
+         ],
+         [
+          -97.8212511510876,
+          30.264772695643
+         ],
+         [
+          -97.8216441622278,
+          30.264868180812
+         ],
+         [
+          -97.8215437269858,
+          30.2643064457855
+         ],
+         [
+          -97.8216531139396,
+          30.2641186259076
+         ],
+         [
+          -97.821345296326,
+          30.2638796002462
+         ],
+         [
+          -97.8213400160288,
+          30.2635453623051
+         ],
+         [
+          -97.8218806347432,
+          30.2630101801131
+         ],
+         [
+          -97.8218854838491,
+          30.2626326333159
+         ],
+         [
+          -97.8213119050486,
+          30.2627156961412
+         ],
+         [
+          -97.8210357799982,
+          30.2623755667179
+         ],
+         [
+          -97.8210657316264,
+          30.262098429992
+         ],
+         [
+          -97.8216808772718,
+          30.2617937153268
+         ],
+         [
+          -97.8213059869475,
+          30.2611341268837
+         ],
+         [
+          -97.8211674469678,
+          30.2599289641603
+         ],
+         [
+          -97.8208504988776,
+          30.2595544347132
+         ],
+         [
+          -97.8198643292571,
+          30.259877740355
+         ],
+         [
+          -97.8192716998843,
+          30.2610925397215
+         ],
+         [
+          -97.8190207546114,
+          30.2612508498608
+         ],
+         [
+          -97.8192487146912,
+          30.2615690770494
+         ],
+         [
+          -97.81853763616,
+          30.2623021720885
+         ],
+         [
+          -97.8182095750115,
+          30.2623157099812
+         ],
+         [
+          -97.8177180887533,
+          30.2620666358891
+         ],
+         [
+          -97.8178110563004,
+          30.261663433289
+         ],
+         [
+          -97.8182515523864,
+          30.2618614027944
+         ],
+         [
+          -97.8186435358539,
+          30.2615794687478
+         ],
+         [
+          -97.8183726309137,
+          30.2608214320841
+         ],
+         [
+          -97.819046105967,
+          30.2598587287954
+         ],
+         [
+          -97.8196389913596,
+          30.2594598297041
+         ],
+         [
+          -97.820114095042,
+          30.2595867487206
+         ],
+         [
+          -97.8203609179461,
+          30.2589846912221
+         ],
+         [
+          -97.8206767763798,
+          30.2587672998886
+         ],
+         [
+          -97.8206686008124,
+          30.2581573492403
+         ],
+         [
+          -97.8193910123237,
+          30.2570725240808
+         ],
+         [
+          -97.8196106072916,
+          30.2567371223346
+         ],
+         [
+          -97.8195452674311,
+          30.2565817410939
+         ],
+         [
+          -97.8191920642344,
+          30.2564583091736
+         ],
+         [
+          -97.8188150673608,
+          30.2569323083799
+         ],
+         [
+          -97.8185203121498,
+          30.2571001623112
+         ],
+         [
+          -97.818243861011,
+          30.2570560826705
+         ],
+         [
+          -97.8181942722107,
+          30.2572105638467
+         ],
+         [
+          -97.8185014628002,
+          30.2574495917739
+         ],
+         [
+          -97.8189292917424,
+          30.2583174572876
+         ],
+         [
+          -97.8188815112508,
+          30.2588072477257
+         ],
+         [
+          -97.8186352542853,
+          30.2589720001812
+         ],
+         [
+          -97.8183281661038,
+          30.2589554279573
+         ],
+         [
+          -97.8179703302952,
+          30.2585050492748
+         ],
+         [
+          -97.8177496465692,
+          30.2585030566879
+         ],
+         [
+          -97.8172437252827,
+          30.2588664330966
+         ],
+         [
+          -97.8166031016193,
+          30.2588375197396
+         ],
+         [
+          -97.8167157826952,
+          30.2585249518632
+         ],
+         [
+          -97.8170062286878,
+          30.2585019160716
+         ],
+         [
+          -97.817439091789,
+          30.2581338113343
+         ],
+         [
+          -97.8173331139416,
+          30.2580370556219
+         ],
+         [
+          -97.8174436148064,
+          30.25775624191
+         ],
+         [
+          -97.8164515773904,
+          30.2575472543594
+         ],
+         [
+          -97.8167011401561,
+          30.2572714657813
+         ],
+         [
+          -97.8161652852076,
+          30.2572362008903
+         ],
+         [
+          -97.8162598373829,
+          30.2576581279374
+         ],
+         [
+          -97.8166570517403,
+          30.2577450187802
+         ],
+         [
+          -97.8165331731643,
+          30.2580104496466
+         ],
+         [
+          -97.8157469451697,
+          30.2578888398636
+         ],
+         [
+          -97.8157398772251,
+          30.2573426892144
+         ],
+         [
+          -97.8160060291791,
+          30.257215214829
+         ],
+         [
+          -97.8158580452108,
+          30.2569587206619
+         ],
+         [
+          -97.8164941970607,
+          30.2565383673305
+         ],
+         [
+          -97.8161676495735,
+          30.2566286337455
+         ],
+         [
+          -97.8159303209636,
+          30.2565069516407
+         ],
+         [
+          -97.8158104371957,
+          30.2567857716471
+         ],
+         [
+          -97.8147657603007,
+          30.2571739961306
+         ],
+         [
+          -97.8137327067071,
+          30.2580853683117
+         ],
+         [
+          -97.8133044133358,
+          30.2579799376143
+         ],
+         [
+          -97.8132718503051,
+          30.2573340731915
+         ],
+         [
+          -97.8135014381321,
+          30.2565764313046
+         ],
+         [
+          -97.8139851800143,
+          30.2561587812918
+         ],
+         [
+          -97.8144637799398,
+          30.2561061657965
+         ],
+         [
+          -97.8143827788506,
+          30.2556313051762
+         ],
+         [
+          -97.8145597541481,
+          30.2555045447745
+         ],
+         [
+          -97.8151160457693,
+          30.2555774897757
+         ],
+         [
+          -97.8160810420986,
+          30.2552383412682
+         ],
+         [
+          -97.8163009290189,
+          30.2547697128349
+         ],
+         [
+          -97.8156740208333,
+          30.2543417767432
+         ],
+         [
+          -97.8158825000478,
+          30.2540217996149
+         ],
+         [
+          -97.8153889027486,
+          30.2539065260861
+         ],
+         [
+          -97.8147119700798,
+          30.2532672391663
+         ],
+         [
+          -97.8132234697388,
+          30.2523236952322
+         ],
+         [
+          -97.8131935252971,
+          30.2525661431397
+         ],
+         [
+          -97.8127229787682,
+          30.2529608667815
+         ],
+         [
+          -97.8123543532947,
+          30.2530598692788
+         ],
+         [
+          -97.8116024175878,
+          30.252960041922
+         ],
+         [
+          -97.8113129830982,
+          30.2531393466747
+         ],
+         [
+          -97.8108866399694,
+          30.2531123513866
+         ],
+         [
+          -97.8106170528577,
+          30.2527259413752
+         ],
+         [
+          -97.8120066055667,
+          30.2515863998037
+         ],
+         [
+          -97.811959309267,
+          30.250544910318
+         ],
+         [
+          -97.8117194797474,
+          30.2511457026973
+         ],
+         [
+          -97.811456577898,
+          30.2513682712051
+         ],
+         [
+          -97.8108158033177,
+          30.2513000806507
+         ],
+         [
+          -97.8108547650482,
+          30.2509972747833
+         ],
+         [
+          -97.8106652322013,
+          30.2507193811754
+         ],
+         [
+          -97.8105957924299,
+          30.2515785041651
+         ],
+         [
+          -97.8099687863279,
+          30.251373963837
+         ],
+         [
+          -97.8096021928436,
+          30.2515458367781
+         ],
+         [
+          -97.8093968469528,
+          30.2514138262187
+         ],
+         [
+          -97.8093886920466,
+          30.2509606713867
+         ],
+         [
+          -97.8100334335873,
+          30.2501460797129
+         ],
+         [
+          -97.8114404477488,
+          30.2491508922809
+         ],
+         [
+          -97.8114416380166,
+          30.2490521101095
+         ],
+         [
+          -97.8107613528351,
+          30.2491343820323
+         ],
+         [
+          -97.8105606620141,
+          30.2489344251336
+         ],
+         [
+          -97.8106947768927,
+          30.2488006860037
+         ],
+         [
+          -97.8107077090395,
+          30.2481824601671
+         ],
+         [
+          -97.8110287848884,
+          30.2477520586955
+         ],
+         [
+          -97.8109247536903,
+          30.2474950610172
+         ],
+         [
+          -97.8103197446346,
+          30.2479167109632
+         ],
+         [
+          -97.8098425918951,
+          30.2478414531848
+         ],
+         [
+          -97.8092441180831,
+          30.2482789640707
+         ],
+         [
+          -97.8087652540529,
+          30.2482828976665
+         ],
+         [
+          -97.8085361010105,
+          30.2491506377517
+         ],
+         [
+          -97.8079684744471,
+          30.2499764166899
+         ],
+         [
+          -97.8075479389266,
+          30.2496329381675
+         ],
+         [
+          -97.8074955698405,
+          30.2491617128709
+         ],
+         [
+          -97.807777074901,
+          30.2484322259717
+         ],
+         [
+          -97.8083934763911,
+          30.2478377050386
+         ],
+         [
+          -97.8088673098557,
+          30.2477789887193
+         ],
+         [
+          -97.8092065720975,
+          30.2472980318022
+         ],
+         [
+          -97.8090445968686,
+          30.2470325906142
+         ],
+         [
+          -97.8092353047119,
+          30.246746428139
+         ],
+         [
+          -97.8099580532568,
+          30.2465857556875
+         ],
+         [
+          -97.8101249216091,
+          30.2467207798216
+         ],
+         [
+          -97.810719765329,
+          30.2467261832663
+         ],
+         [
+          -97.8107287933976,
+          30.2459766280406
+         ],
+         [
+          -97.8105222734087,
+          30.245725352823
+         ],
+         [
+          -97.810420824867,
+          30.2449507596843
+         ],
+         [
+          -97.8102109379925,
+          30.2445926430131
+         ],
+         [
+          -97.8102191854251,
+          30.2439379786984
+         ],
+         [
+          -97.8105576607427,
+          30.2437621237501
+         ],
+         [
+          -97.8110423099233,
+          30.245392380896
+         ],
+         [
+          -97.8126289988198,
+          30.2486294182019
+         ],
+         [
+          -97.8131660081034,
+          30.2513968926623
+         ],
+         [
+          -97.8149416657046,
+          30.252785787661
+         ],
+         [
+          -97.8161990420994,
+          30.2535173086394
+         ],
+         [
+          -97.8165187102882,
+          30.253940206875
+         ],
+         [
+          -97.8168102064114,
+          30.2539700466243
+         ],
+         [
+          -97.8169415284278,
+          30.2544167230374
+         ],
+         [
+          -97.8172534181046,
+          30.2542268077675
+         ],
+         [
+          -97.8178769603028,
+          30.2543517059568
+         ],
+         [
+          -97.8181166164476,
+          30.2546986877336
+         ],
+         [
+          -97.8186293254044,
+          30.2550204170957
+         ],
+         [
+          -97.8186455462835,
+          30.2552614988742
+         ],
+         [
+          -97.8189555557864,
+          30.2553145377172
+         ],
+         [
+          -97.8189566652058,
+          30.2556624619782
+         ],
+         [
+          -97.818747170895,
+          30.2557218641826
+         ],
+         [
+          -97.8187435102602,
+          30.2560066526912
+         ],
+         [
+          -97.8189336171305,
+          30.2557332109199
+         ],
+         [
+          -97.8191335722313,
+          30.2557488153003
+         ],
+         [
+          -97.8191784879955,
+          30.2558957376754
+         ],
+         [
+          -97.8191421736001,
+          30.2554086322618
+         ],
+         [
+          -97.8197659385806,
+          30.2554679531446
+         ],
+         [
+          -97.8220409678517,
+          30.2574786746939
+         ],
+         [
+          -97.8220778427958,
+          30.2581050816576
+         ],
+         [
+          -97.8222381345819,
+          30.2580214663478
+         ],
+         [
+          -97.8224621052434,
+          30.2582424588786
+         ],
+         [
+          -97.8223842850887,
+          30.2585533570787
+         ],
+         [
+          -97.822974562672,
+          30.2604930263644
+         ],
+         [
+          -97.8226990727306,
+          30.2657147272929
+         ],
+         [
+          -97.8228834708072,
+          30.2657435920727
+         ],
+         [
+          -97.8231177137041,
+          30.2661539027244
+         ],
+         [
+          -97.8234277537497,
+          30.2674883992241
+         ],
+         [
+          -97.82366672556205,
+          30.267669165829606
+         ],
+         [
+          -97.82366672556205,
+          30.269653963530054
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8148287241172,
+          30.2560079469744
+         ],
+         [
+          -97.815428519351,
+          30.2560638897906
+         ],
+         [
+          -97.8147791146557,
+          30.2565286563785
+         ],
+         [
+          -97.8148287241172,
+          30.2560079469744
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8175563758325,
+          30.2557558446422
+         ],
+         [
+          -97.8175848910545,
+          30.2552351086385
+         ],
+         [
+          -97.8179004521458,
+          30.2555286241498
+         ],
+         [
+          -97.8178954386482,
+          30.2558127699555
+         ],
+         [
+          -97.8169159767479,
+          30.2562870221321
+         ],
+         [
+          -97.8175563758325,
+          30.2557558446422
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8116733925801,
+          30.2502017247813
+         ],
+         [
+          -97.8112004116167,
+          30.2507298229091
+         ],
+         [
+          -97.8110812348229,
+          30.250493447269
+         ],
+         [
+          -97.8113844898931,
+          30.2499818587554
+         ],
+         [
+          -97.8116712842341,
+          30.2500733859811
+         ],
+         [
+          -97.8119682591822,
+          30.249801142131
+         ],
+         [
+          -97.8120719517155,
+          30.2500866857767
+         ],
+         [
+          -97.8116733925801,
+          30.2502017247813
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8080366978996,
+          30.2396936057004
+         ],
+         [
+          -97.8092067293027,
+          30.2391446197626
+         ],
+         [
+          -97.8094927358211,
+          30.2385066376326
+         ],
+         [
+          -97.8095195199897,
+          30.2381727867721
+         ],
+         [
+          -97.8096986701085,
+          30.2379895300129
+         ],
+         [
+          -97.809809349738,
+          30.238007630793
+         ],
+         [
+          -97.8100447505632,
+          30.238619632789
+         ],
+         [
+          -97.8101106931933,
+          30.2390830733076
+         ],
+         [
+          -97.810394762944,
+          30.2391436170642
+         ],
+         [
+          -97.8106787716093,
+          30.2393056117086
+         ],
+         [
+          -97.8107357733073,
+          30.2391856147528
+         ],
+         [
+          -97.8111227863964,
+          30.2395346042573
+         ],
+         [
+          -97.8113187916048,
+          30.2398955922173
+         ],
+         [
+          -97.8114807973764,
+          30.2399975887858
+         ],
+         [
+          -97.8112303138375,
+          30.2401161148647
+         ],
+         [
+          -97.8102716596141,
+          30.2394620190872
+         ],
+         [
+          -97.8091953009356,
+          30.2393592342409
+         ],
+         [
+          -97.8083317306901,
+          30.2399094203462
+         ],
+         [
+          -97.8084803219195,
+          30.239966600081
+         ],
+         [
+          -97.808427908816,
+          30.2401220689096
+         ],
+         [
+          -97.8082235043596,
+          30.2400014427773
+         ],
+         [
+          -97.8078988199782,
+          30.2402775080015
+         ],
+         [
+          -97.8080396686283,
+          30.2403477620226
+         ],
+         [
+          -97.8079838500114,
+          30.2405204893039
+         ],
+         [
+          -97.8070538870799,
+          30.2412232521297
+         ],
+         [
+          -97.806591814359,
+          30.2412968976566
+         ],
+         [
+          -97.8065133276543,
+          30.2411873699379
+         ],
+         [
+          -97.8066906622779,
+          30.2407535789983
+         ],
+         [
+          -97.8075096841702,
+          30.240337589259
+         ],
+         [
+          -97.8074196810636,
+          30.2401325948095
+         ],
+         [
+          -97.8080366978996,
+          30.2396936057004
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8103596981052,
+          30.2410461723458
+         ],
+         [
+          -97.8102865491899,
+          30.2408273063644
+         ],
+         [
+          -97.8105660662788,
+          30.2408709672249
+         ],
+         [
+          -97.8107194185793,
+          30.2416838811151
+         ],
+         [
+          -97.810602984342,
+          30.242294235156
+         ],
+         [
+          -97.8105858813173,
+          30.2422027099968
+         ],
+         [
+          -97.8103400744078,
+          30.2423270996333
+         ],
+         [
+          -97.8103596981052,
+          30.2410461723458
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7931971447519,
+          30.2417635539681
+         ],
+         [
+          -97.792491483062,
+          30.2417833086163
+         ],
+         [
+          -97.7926355386976,
+          30.2411564638713
+         ],
+         [
+          -97.791984241252,
+          30.2416962468912
+         ],
+         [
+          -97.7914949549678,
+          30.2418058237108
+         ],
+         [
+          -97.7902724062566,
+          30.2418338309849
+         ],
+         [
+          -97.7903452084222,
+          30.2416436771987
+         ],
+         [
+          -97.790247735824,
+          30.2412997613378
+         ],
+         [
+          -97.7914360407566,
+          30.2410471222522
+         ],
+         [
+          -97.7924647797418,
+          30.2399494759654
+         ],
+         [
+          -97.7935622856604,
+          30.2391162578285
+         ],
+         [
+          -97.7951332926669,
+          30.2381345713152
+         ],
+         [
+          -97.7960844154151,
+          30.2382586432472
+         ],
+         [
+          -97.796616661831,
+          30.2393346239438
+         ],
+         [
+          -97.7984226519462,
+          30.2386337761885
+         ],
+         [
+          -97.7987454049497,
+          30.2390347698991
+         ],
+         [
+          -97.79919414757,
+          30.2399196342861
+         ],
+         [
+          -97.7989058081268,
+          30.239878749805
+         ],
+         [
+          -97.7988845773434,
+          30.2407303651999
+         ],
+         [
+          -97.7983745525526,
+          30.2407997551321
+         ],
+         [
+          -97.79852648282,
+          30.2411111757255
+         ],
+         [
+          -97.7976478568103,
+          30.2416473759131
+         ],
+         [
+          -97.7974719011006,
+          30.2420783202029
+         ],
+         [
+          -97.79676477875,
+          30.2428876752172
+         ],
+         [
+          -97.7960730490318,
+          30.2429275868289
+         ],
+         [
+          -97.7955793601044,
+          30.2427187586419
+         ],
+         [
+          -97.7944016067832,
+          30.2426174726594
+         ],
+         [
+          -97.7937411833526,
+          30.2422898527593
+         ],
+         [
+          -97.7931971447519,
+          30.2417635539681
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7951350542632,
+          30.24165462977
+         ],
+         [
+          -97.7950712235724,
+          30.2411005653391
+         ],
+         [
+          -97.7946552838329,
+          30.2412015688446
+         ],
+         [
+          -97.7945011167605,
+          30.2414625828169
+         ],
+         [
+          -97.794441233267,
+          30.2412863586883
+         ],
+         [
+          -97.7940837388182,
+          30.2412727286499
+         ],
+         [
+          -97.7945015650198,
+          30.2408989662286
+         ],
+         [
+          -97.7949098376383,
+          30.2408664217902
+         ],
+         [
+          -97.7949356633044,
+          30.2404379292309
+         ],
+         [
+          -97.7954724336361,
+          30.2397361440802
+         ],
+         [
+          -97.7967032405598,
+          30.2399891427543
+         ],
+         [
+          -97.7963425328372,
+          30.240238715964
+         ],
+         [
+          -97.796438101007,
+          30.2407363432657
+         ],
+         [
+          -97.7961258340379,
+          30.240967763902
+         ],
+         [
+          -97.7961113621786,
+          30.2411985522756
+         ],
+         [
+          -97.7954588987198,
+          30.241182802788
+         ],
+         [
+          -97.7953557343959,
+          30.2416536651243
+         ],
+         [
+          -97.7951350542632,
+          30.24165462977
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7984592627856,
+          30.2393542161033
+         ],
+         [
+          -97.7987020279995,
+          30.2395480389649
+         ],
+         [
+          -97.798262995269,
+          30.2397963583778
+         ],
+         [
+          -97.7981815441239,
+          30.2393516690063
+         ],
+         [
+          -97.7984592627856,
+          30.2393542161033
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8048755039569,
+          30.2421321538627
+         ],
+         [
+          -97.8051174229579,
+          30.2421369297283
+         ],
+         [
+          -97.8065473261928,
+          30.2414656932816
+         ],
+         [
+          -97.8064140260862,
+          30.2418559626936
+         ],
+         [
+          -97.8055361232202,
+          30.2423695833253
+         ],
+         [
+          -97.8039166359344,
+          30.2430924481779
+         ],
+         [
+          -97.8035028692196,
+          30.2430728303779
+         ],
+         [
+          -97.8031632790928,
+          30.2426547403628
+         ],
+         [
+          -97.8034856862449,
+          30.2425680216501
+         ],
+         [
+          -97.8034567047972,
+          30.2424237691551
+         ],
+         [
+          -97.8048755039569,
+          30.2421321538627
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.807834247279,
+          30.241913692299
+         ],
+         [
+          -97.8079152007574,
+          30.242121469861
+         ],
+         [
+          -97.8067619085614,
+          30.2431247117248
+         ],
+         [
+          -97.8063804740103,
+          30.2433319520285
+         ],
+         [
+          -97.8060504751957,
+          30.2430779616293
+         ],
+         [
+          -97.807834247279,
+          30.241913692299
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8140756610247,
+          30.2423313578593
+         ],
+         [
+          -97.8140831359062,
+          30.2424493510773
+         ],
+         [
+          -97.813923145954,
+          30.242672446824
+         ],
+         [
+          -97.8137601071199,
+          30.2427294169688
+         ],
+         [
+          -97.8141769622426,
+          30.2439825112267
+         ],
+         [
+          -97.8136224600655,
+          30.2441414457185
+         ],
+         [
+          -97.8132468241396,
+          30.2439261129771
+         ],
+         [
+          -97.8128147883868,
+          30.2433532832933
+         ],
+         [
+          -97.8127082176514,
+          30.2428614446288
+         ],
+         [
+          -97.8140756610247,
+          30.2423313578593
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8017314022591,
+          30.2458946328442
+         ],
+         [
+          -97.7999856396922,
+          30.2459716591306
+         ],
+         [
+          -97.7999168997083,
+          30.2460567141403
+         ],
+         [
+          -97.7986858161036,
+          30.2459135260459
+         ],
+         [
+          -97.7986808897426,
+          30.2458369040254
+         ],
+         [
+          -97.7988834230082,
+          30.2457755433523
+         ],
+         [
+          -97.7984430778391,
+          30.2456512907821
+         ],
+         [
+          -97.7984741460732,
+          30.245426140655
+         ],
+         [
+          -97.7999303636578,
+          30.245419986715
+         ],
+         [
+          -97.8004493850761,
+          30.2456094642552
+         ],
+         [
+          -97.8007393899959,
+          30.2453830242653
+         ],
+         [
+          -97.80195490939,
+          30.245165567133
+         ],
+         [
+          -97.8024301451248,
+          30.2456384280676
+         ],
+         [
+          -97.8018240140733,
+          30.2460839713363
+         ],
+         [
+          -97.8017314022591,
+          30.2458946328442
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8080630167408,
+          30.2459586466846
+         ],
+         [
+          -97.8084438619971,
+          30.2459903870235
+         ],
+         [
+          -97.8084378136403,
+          30.2463001979872
+         ],
+         [
+          -97.8079898076384,
+          30.2462928086687
+         ],
+         [
+          -97.8080630167408,
+          30.2459586466846
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8079434689428,
+          30.2465704649172
+         ],
+         [
+          -97.8081387474142,
+          30.2469011451421
+         ],
+         [
+          -97.8077170081513,
+          30.2478527759998
+         ],
+         [
+          -97.8075831250379,
+          30.2476679208511
+         ],
+         [
+          -97.8077521529401,
+          30.2469213209129
+         ],
+         [
+          -97.8078569908253,
+          30.2466440653077
+         ],
+         [
+          -97.8079434689428,
+          30.2465704649172
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8144091641672,
+          30.2493467421375
+         ],
+         [
+          -97.8141384909923,
+          30.2495229937156
+         ],
+         [
+          -97.8140344858453,
+          30.2498543003219
+         ],
+         [
+          -97.8138061493714,
+          30.2498658448402
+         ],
+         [
+          -97.8135208022164,
+          30.2488258588626
+         ],
+         [
+          -97.8129927697974,
+          30.2479185858108
+         ],
+         [
+          -97.8130175273667,
+          30.2473206146987
+         ],
+         [
+          -97.8124872177185,
+          30.2470031321118
+         ],
+         [
+          -97.8118687545948,
+          30.245257069356
+         ],
+         [
+          -97.8121041401487,
+          30.2452887230056
+         ],
+         [
+          -97.8121150609676,
+          30.2455297611508
+         ],
+         [
+          -97.8125329590344,
+          30.2459558157324
+         ],
+         [
+          -97.8127495572225,
+          30.2466516051483
+         ],
+         [
+          -97.812961583884,
+          30.2468397261559
+         ],
+         [
+          -97.813640733595,
+          30.2468504383575
+         ],
+         [
+          -97.8139895790642,
+          30.2469597246304
+         ],
+         [
+          -97.8141351771072,
+          30.2472221791196
+         ],
+         [
+          -97.8146513688324,
+          30.2472649346298
+         ],
+         [
+          -97.81462286978,
+          30.2475764480337
+         ],
+         [
+          -97.8136624153327,
+          30.2477032023693
+         ],
+         [
+          -97.8136990872576,
+          30.2478692771515
+         ],
+         [
+          -97.8144043608753,
+          30.2487396662963
+         ],
+         [
+          -97.8154643603342,
+          30.2493352161822
+         ],
+         [
+          -97.8156028733645,
+          30.2499505992722
+         ],
+         [
+          -97.8150288993053,
+          30.250035785085
+         ],
+         [
+          -97.8145104833514,
+          30.2496220330454
+         ],
+         [
+          -97.8144091641672,
+          30.2493467421375
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7874173914004,
+          30.2490851973678
+         ],
+         [
+          -97.7879366472791,
+          30.2480160809413
+         ],
+         [
+          -97.7882810802236,
+          30.2477237147658
+         ],
+         [
+          -97.7888404997786,
+          30.2476991950289
+         ],
+         [
+          -97.7889355451289,
+          30.2470360361433
+         ],
+         [
+          -97.7884444011288,
+          30.2469084242198
+         ],
+         [
+          -97.7876945989207,
+          30.2457423222783
+         ],
+         [
+          -97.787289385964,
+          30.2454817201056
+         ],
+         [
+          -97.7869405836139,
+          30.2453800807717
+         ],
+         [
+          -97.7866336724005,
+          30.2450688172725
+         ],
+         [
+          -97.7876340057582,
+          30.2446034097823
+         ],
+         [
+          -97.7884740509231,
+          30.2445720096768
+         ],
+         [
+          -97.788404327284,
+          30.2450842859885
+         ],
+         [
+          -97.7886824717471,
+          30.2458487066576
+         ],
+         [
+          -97.7889346189658,
+          30.2461851016446
+         ],
+         [
+          -97.7899366591226,
+          30.2465411808816
+         ],
+         [
+          -97.7905048785741,
+          30.2474693290852
+         ],
+         [
+          -97.7900293023778,
+          30.2481076860474
+         ],
+         [
+          -97.7907358201622,
+          30.247917233996
+         ],
+         [
+          -97.7905294771415,
+          30.2487345089563
+         ],
+         [
+          -97.790140214671,
+          30.2491561163352
+         ],
+         [
+          -97.7893743766368,
+          30.2491493278581
+         ],
+         [
+          -97.788767367033,
+          30.2492666051753
+         ],
+         [
+          -97.7887287062381,
+          30.2492185108609
+         ],
+         [
+          -97.7888371688255,
+          30.2491242668265
+         ],
+         [
+          -97.7886163260978,
+          30.2491222259372
+         ],
+         [
+          -97.7880799088039,
+          30.2493962781998
+         ],
+         [
+          -97.7879724972454,
+          30.2492092748751
+         ],
+         [
+          -97.7872853956475,
+          30.2501060181619
+         ],
+         [
+          -97.7867632669566,
+          30.2499897933222
+         ],
+         [
+          -97.7874173914004,
+          30.2490851973678
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8218412903304,
+          30.2498610266704
+         ],
+         [
+          -97.822189550098,
+          30.2500332949126
+         ],
+         [
+          -97.8218445610963,
+          30.2502936118635
+         ],
+         [
+          -97.8218412903304,
+          30.2498610266704
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8088794829261,
+          30.2512377728055
+         ],
+         [
+          -97.8084783950332,
+          30.2517899340163
+         ],
+         [
+          -97.808129449851,
+          30.2517897702839
+         ],
+         [
+          -97.8080745663804,
+          30.2517244891824
+         ],
+         [
+          -97.8082577966472,
+          30.2513634663007
+         ],
+         [
+          -97.8088794829261,
+          30.2512377728055
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8091547806281,
+          30.2519203471005
+         ],
+         [
+          -97.8094302732645,
+          30.251940711956
+         ],
+         [
+          -97.8095953252232,
+          30.2522070881304
+         ],
+         [
+          -97.8094586447561,
+          30.2526002643667
+         ],
+         [
+          -97.8092821949731,
+          30.2527488753168
+         ],
+         [
+          -97.8088527490633,
+          30.2527125247647
+         ],
+         [
+          -97.8087269112617,
+          30.2525357621083
+         ],
+         [
+          -97.8091547806281,
+          30.2519203471005
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7849764334149,
+          30.2534362982336
+         ],
+         [
+          -97.785009575859,
+          30.2539698580647
+         ],
+         [
+          -97.7845999854119,
+          30.2539235787086
+         ],
+         [
+          -97.7845779093138,
+          30.2536068336773
+         ],
+         [
+          -97.784655175208,
+          30.2534456820322
+         ],
+         [
+          -97.7849764334149,
+          30.2534362982336
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7925882891102,
+          30.2550323001002
+         ],
+         [
+          -97.7927531721857,
+          30.2547417038162
+         ],
+         [
+          -97.7933450326005,
+          30.2543838796749
+         ],
+         [
+          -97.7938076784466,
+          30.2543840596981
+         ],
+         [
+          -97.7946680488931,
+          30.2541129630293
+         ],
+         [
+          -97.7955306839925,
+          30.2536558678683
+         ],
+         [
+          -97.7963978466008,
+          30.2528267847203
+         ],
+         [
+          -97.7968019636129,
+          30.2513470580782
+         ],
+         [
+          -97.7971743090099,
+          30.2511682397022
+         ],
+         [
+          -97.7969004243579,
+          30.250729579248
+         ],
+         [
+          -97.7968780796635,
+          30.249572085041
+         ],
+         [
+          -97.7971572841387,
+          30.2480113170017
+         ],
+         [
+          -97.7974832576024,
+          30.2478870447542
+         ],
+         [
+          -97.7975019910694,
+          30.2518415608943
+         ],
+         [
+          -97.7971322642614,
+          30.25259365693
+         ],
+         [
+          -97.7966023220241,
+          30.2531020992433
+         ],
+         [
+          -97.7964596444042,
+          30.2534471641338
+         ],
+         [
+          -97.7954738529743,
+          30.2541912119989
+         ],
+         [
+          -97.7936896488014,
+          30.2547494152983
+         ],
+         [
+          -97.7934578340508,
+          30.2551042056707
+         ],
+         [
+          -97.7933378344001,
+          30.2551376237758
+         ],
+         [
+          -97.7929226303809,
+          30.2550704632044
+         ],
+         [
+          -97.7927452202988,
+          30.2551681351391
+         ],
+         [
+          -97.7925882891102,
+          30.2550323001002
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7844396190657,
+          30.2553452562054
+         ],
+         [
+          -97.7844000743286,
+          30.2550525711958
+         ],
+         [
+          -97.7845498710972,
+          30.2550697268216
+         ],
+         [
+          -97.7853139915526,
+          30.2558716723571
+         ],
+         [
+          -97.7847349456052,
+          30.2556988292855
+         ],
+         [
+          -97.784553078981,
+          30.2555854037158
+         ],
+         [
+          -97.7844396190657,
+          30.2553452562054
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7857856178565,
+          30.2554547929733
+         ],
+         [
+          -97.7853957337518,
+          30.2559346538914
+         ],
+         [
+          -97.7854003448042,
+          30.2551233779976
+         ],
+         [
+          -97.7854331836177,
+          30.2551974360023
+         ],
+         [
+          -97.7861133205772,
+          30.2550432682502
+         ],
+         [
+          -97.7862428208102,
+          30.2551645680702
+         ],
+         [
+          -97.7861817066248,
+          30.2555226826778
+         ],
+         [
+          -97.7863423038381,
+          30.2557234067741
+         ],
+         [
+          -97.786613470188,
+          30.255712696316
+         ],
+         [
+          -97.787476688294,
+          30.255255661364
+         ],
+         [
+          -97.787068060841,
+          30.2536810068926
+         ],
+         [
+          -97.7870820386268,
+          30.2533581689379
+         ],
+         [
+          -97.7872600065627,
+          30.2533510369964
+         ],
+         [
+          -97.7875194858308,
+          30.2538844700323
+         ],
+         [
+          -97.7877140833792,
+          30.2553029201234
+         ],
+         [
+          -97.7874209873565,
+          30.2556243456611
+         ],
+         [
+          -97.7867167881238,
+          30.2559358977388
+         ],
+         [
+          -97.7862036740268,
+          30.2559377080296
+         ],
+         [
+          -97.7857856178565,
+          30.2554547929733
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8166967482927,
+          30.259037724175
+         ],
+         [
+          -97.8169138648086,
+          30.259215247951
+         ],
+         [
+          -97.8166598383143,
+          30.2595089758096
+         ],
+         [
+          -97.8164181762315,
+          30.2593297781228
+         ],
+         [
+          -97.8166967482927,
+          30.259037724175
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8161714997528,
+          30.2602965120453
+         ],
+         [
+          -97.816311194966,
+          30.260592911242
+         ],
+         [
+          -97.8157348152185,
+          30.2607921297951
+         ],
+         [
+          -97.8156102188886,
+          30.260478744895
+         ],
+         [
+          -97.8161714997528,
+          30.2602965120453
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8176799669476,
+          30.2603869138951
+         ],
+         [
+          -97.8180165863458,
+          30.2605843987005
+         ],
+         [
+          -97.8181654955788,
+          30.2608812082609
+         ],
+         [
+          -97.8175635578632,
+          30.2608759840542
+         ],
+         [
+          -97.8174839213149,
+          30.2607573860291
+         ],
+         [
+          -97.8176799669476,
+          30.2603869138951
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8174010544249,
+          30.2613989239857
+         ],
+         [
+          -97.8177005248928,
+          30.2613269500883
+         ],
+         [
+          -97.8175705476544,
+          30.2609345288283
+         ],
+         [
+          -97.8181704578725,
+          30.2610489693173
+         ],
+         [
+          -97.8181763957365,
+          30.2615142849335
+         ],
+         [
+          -97.8178486516933,
+          30.2613989643328
+         ],
+         [
+          -97.8175422543162,
+          30.2615941752531
+         ],
+         [
+          -97.8174010544249,
+          30.2613989239857
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8161994696975,
+          30.2613537778505
+         ],
+         [
+          -97.8163440661189,
+          30.261376580977
+         ],
+         [
+          -97.8166423373359,
+          30.2622300576393
+         ],
+         [
+          -97.8165193983977,
+          30.2623943698493
+         ],
+         [
+          -97.8159035547614,
+          30.261638138799
+         ],
+         [
+          -97.8161994696975,
+          30.2613537778505
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.784200193788,
+          30.2618770589626
+         ],
+         [
+          -97.7843825257395,
+          30.2619753068309
+         ],
+         [
+          -97.7837417260063,
+          30.2621906737223
+         ],
+         [
+          -97.7835581957022,
+          30.2624641192402
+         ],
+         [
+          -97.7833793797567,
+          30.2624284542984
+         ],
+         [
+          -97.7833810326568,
+          30.2622688371147
+         ],
+         [
+          -97.7834738151509,
+          30.2620837662368
+         ],
+         [
+          -97.784200193788,
+          30.2618770589626
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7827609938881,
+          30.2625701487717
+         ],
+         [
+          -97.783139373269,
+          30.2627488253509
+         ],
+         [
+          -97.7831614844014,
+          30.2629351247681
+         ],
+         [
+          -97.7837315948065,
+          30.2629246082941
+         ],
+         [
+          -97.7837090812289,
+          30.2629815860926
+         ],
+         [
+          -97.7829419451291,
+          30.2631749891408
+         ],
+         [
+          -97.7829164742975,
+          30.2628341001551
+         ],
+         [
+          -97.7818042279234,
+          30.2629167228776
+         ],
+         [
+          -97.7805140782921,
+          30.263276938266
+         ],
+         [
+          -97.7801162809282,
+          30.2635481686978
+         ],
+         [
+          -97.7796556589864,
+          30.263640964275
+         ],
+         [
+          -97.7793968300986,
+          30.2635472337509
+         ],
+         [
+          -97.7805233857368,
+          30.2630583576785
+         ],
+         [
+          -97.7827609938881,
+          30.2625701487717
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8232432496718,
+          30.2656368436301
+         ],
+         [
+          -97.8234632713394,
+          30.2650649668501
+         ],
+         [
+          -97.8231460986704,
+          30.2647989126224
+         ],
+         [
+          -97.8231590344105,
+          30.2637477350606
+         ],
+         [
+          -97.8233771417682,
+          30.2633026551946
+         ],
+         [
+          -97.8232772562952,
+          30.2628187327726
+         ],
+         [
+          -97.8234942533352,
+          30.2624666486682
+         ],
+         [
+          -97.8234138011167,
+          30.2602281856963
+         ],
+         [
+          -97.8232072739413,
+          30.2595780762522
+         ],
+         [
+          -97.823323304835,
+          30.2588322736981
+         ],
+         [
+          -97.8228083420051,
+          30.2586965570121
+         ],
+         [
+          -97.8227921103462,
+          30.2584554743536
+         ],
+         [
+          -97.8223746111314,
+          30.2579233006526
+         ],
+         [
+          -97.82232607336,
+          30.2572316368142
+         ],
+         [
+          -97.8211968667933,
+          30.2560242729438
+         ],
+         [
+          -97.8196285277832,
+          30.2546874301121
+         ],
+         [
+          -97.81847244003,
+          30.2539562988465
+         ],
+         [
+          -97.8185124581792,
+          30.2534905509018
+         ],
+         [
+          -97.8179015274292,
+          30.2535737952759
+         ],
+         [
+          -97.8174968786146,
+          30.2534012337178
+         ],
+         [
+          -97.817520531256,
+          30.253055491242
+         ],
+         [
+          -97.8181464288369,
+          30.2527458203034
+         ],
+         [
+          -97.8181170269777,
+          30.2519285018894
+         ],
+         [
+          -97.8178536059021,
+          30.2519554579277
+         ],
+         [
+          -97.8178597090561,
+          30.2515704471211
+         ],
+         [
+          -97.8184855967556,
+          30.2512607761573
+         ],
+         [
+          -97.8186170418413,
+          30.251055144904
+         ],
+         [
+          -97.819023411828,
+          30.2510796133642
+         ],
+         [
+          -97.819455220307,
+          30.2508044856186
+         ],
+         [
+          -97.8197820301023,
+          30.2503327320572
+         ],
+         [
+          -97.8193214638561,
+          30.2503742112562
+         ],
+         [
+          -97.8187014556302,
+          30.2499719306521
+         ],
+         [
+          -97.8173122433826,
+          30.2503005050208
+         ],
+         [
+          -97.8178353772883,
+          30.2513451227691
+         ],
+         [
+          -97.8176167192634,
+          30.2517123830707
+         ],
+         [
+          -97.8177139142821,
+          30.2522059451131
+         ],
+         [
+          -97.8174543757252,
+          30.252487342708
+         ],
+         [
+          -97.8170896749912,
+          30.2519232570309
+         ],
+         [
+          -97.8171993188632,
+          30.2513365892505
+         ],
+         [
+          -97.8170951753757,
+          30.2510719497053
+         ],
+         [
+          -97.8166450664177,
+          30.2511442787601
+         ],
+         [
+          -97.8161881419418,
+          30.2509450879733
+         ],
+         [
+          -97.8155686367724,
+          30.2503907088805
+         ],
+         [
+          -97.8156415251762,
+          30.2502712632245
+         ],
+         [
+          -97.8169064186733,
+          30.2504389601477
+         ],
+         [
+          -97.8171906141881,
+          30.2497510351379
+         ],
+         [
+          -97.8174402146831,
+          30.2494617207045
+         ],
+         [
+          -97.8189038712165,
+          30.2490281199391
+         ],
+         [
+          -97.8189106391239,
+          30.2487682520469
+         ],
+         [
+          -97.8191423451784,
+          30.2488485267687
+         ],
+         [
+          -97.8189227466173,
+          30.2483032361157
+         ],
+         [
+          -97.8189586720421,
+          30.2467576346769
+         ],
+         [
+          -97.8192996859987,
+          30.246408305314
+         ],
+         [
+          -97.8198299309682,
+          30.246343543678
+         ],
+         [
+          -97.8198445959652,
+          30.2461129357849
+         ],
+         [
+          -97.8201579373195,
+          30.2457884588188
+         ],
+         [
+          -97.8200586483277,
+          30.2451331746583
+         ],
+         [
+          -97.8201559412629,
+          30.2448417916805
+         ],
+         [
+          -97.8206396256529,
+          30.2446489516357
+         ],
+         [
+          -97.8209841592088,
+          30.2445930007672
+         ],
+         [
+          -97.8211233810098,
+          30.2447444579205
+         ],
+         [
+          -97.8211243970044,
+          30.2450531072069
+         ],
+         [
+          -97.8217239380149,
+          30.2451693898805
+         ],
+         [
+          -97.8217626266576,
+          30.2454308760068
+         ],
+         [
+          -97.8220043480292,
+          30.2456225279655
+         ],
+         [
+          -97.8216727987224,
+          30.2461389233849
+         ],
+         [
+          -97.8210060197112,
+          30.2458845879235
+         ],
+         [
+          -97.8209926967972,
+          30.2461141386272
+         ],
+         [
+          -97.8205711336041,
+          30.2465306486839
+         ],
+         [
+          -97.8205655110487,
+          30.2470014822926
+         ],
+         [
+          -97.8208314923229,
+          30.2471290576223
+         ],
+         [
+          -97.8208571149697,
+          30.2474093422058
+         ],
+         [
+          -97.8198996384376,
+          30.2489005532832
+         ],
+         [
+          -97.8204205615894,
+          30.2491582418082
+         ],
+         [
+          -97.8204317330383,
+          30.2492323741501
+         ],
+         [
+          -97.8204953086076,
+          30.2491952168058
+         ],
+         [
+          -97.821606775244,
+          30.2497450211486
+         ],
+         [
+          -97.8209196943073,
+          30.2506004302259
+         ],
+         [
+          -97.820736488295,
+          30.2506244301002
+         ],
+         [
+          -97.8202576871469,
+          30.2511615708662
+         ],
+         [
+          -97.8198728794219,
+          30.2511746912613
+         ],
+         [
+          -97.8192223850702,
+          30.2518198737445
+         ],
+         [
+          -97.8191027267794,
+          30.2524085507487
+         ],
+         [
+          -97.8188909453579,
+          30.2526597320529
+         ],
+         [
+          -97.8191143599623,
+          30.252432360067
+         ],
+         [
+          -97.8191890252338,
+          30.2522942716833
+         ],
+         [
+          -97.8196659399198,
+          30.2522957786335
+         ],
+         [
+          -97.8197769761805,
+          30.252425959805
+         ],
+         [
+          -97.8202953786596,
+          30.2522166070669
+         ],
+         [
+          -97.8202548071481,
+          30.251472164789
+         ],
+         [
+          -97.820655815091,
+          30.2513730730053
+         ],
+         [
+          -97.8207208692872,
+          30.2519319658703
+         ],
+         [
+          -97.8208344199324,
+          30.2519329878378
+         ],
+         [
+          -97.8214344298635,
+          30.2513896868597
+         ],
+         [
+          -97.8216980306021,
+          30.2513827208362
+         ],
+         [
+          -97.8225422969505,
+          30.2509262252267
+         ],
+         [
+          -97.8229268360793,
+          30.250939076385
+         ],
+         [
+          -97.8229867770649,
+          30.2511152878591
+         ],
+         [
+          -97.8233647117797,
+          30.2509077008079
+         ],
+         [
+          -97.8231020111529,
+          30.2508603398313
+         ],
+         [
+          -97.8230931708322,
+          30.2507233627849
+         ],
+         [
+          -97.8235012952287,
+          30.2506821398104
+         ],
+         [
+          -97.8236091307921,
+          30.2507354791064
+         ],
+         [
+          -97.82366672556205,
+          30.251101345673604
+         ],
+         [
+          -97.8232984412645,
+          30.2513915236177
+         ],
+         [
+          -97.8230584967606,
+          30.251818100625
+         ],
+         [
+          -97.8223255002348,
+          30.2521268332244
+         ],
+         [
+          -97.822134790595,
+          30.2524914313307
+         ],
+         [
+          -97.8212443158066,
+          30.2529541662523
+         ],
+         [
+          -97.8208423664294,
+          30.2534183717846
+         ],
+         [
+          -97.8210222334038,
+          30.2536087976527
+         ],
+         [
+          -97.8216856652922,
+          30.2536160568342
+         ],
+         [
+          -97.8221085966196,
+          30.2538734257082
+         ],
+         [
+          -97.822508349616,
+          30.2538584216277
+         ],
+         [
+          -97.8224022630725,
+          30.2544813140722
+         ],
+         [
+          -97.8220748082868,
+          30.2540114342756
+         ],
+         [
+          -97.8217532742972,
+          30.255190903232
+         ],
+         [
+          -97.8218570000681,
+          30.2554764397471
+         ],
+         [
+          -97.8221814706504,
+          30.2557583788987
+         ],
+         [
+          -97.8227558821891,
+          30.2551381459943
+         ],
+         [
+          -97.8234248773442,
+          30.2548394893677
+         ],
+         [
+          -97.82366672556205,
+          30.254620015909733
+         ],
+         [
+          -97.82366672556205,
+          30.257417276082684
+         ],
+         [
+          -97.8235477551969,
+          30.2574391926551
+         ],
+         [
+          -97.82366672556205,
+          30.257734864959637
+         ],
+         [
+          -97.82366672556205,
+          30.26667578229095
+         ],
+         [
+          -97.8232432496718,
+          30.2656368436301
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.8209724361943,
+          30.2542772771803
+         ],
+         [
+          -97.8195203867927,
+          30.2537756981685
+         ],
+         [
+          -97.8201574908568,
+          30.2534494431559
+         ],
+         [
+          -97.8204400442513,
+          30.2535512223523
+         ],
+         [
+          -97.820757543907,
+          30.2540555238183
+         ],
+         [
+          -97.8215587836483,
+          30.2540730738081
+         ],
+         [
+          -97.8216113216176,
+          30.2543319530595
+         ],
+         [
+          -97.8213137798326,
+          30.2543270357855
+         ],
+         [
+          -97.8211149179815,
+          30.2548185912536
+         ],
+         [
+          -97.8209724361943,
+          30.2542772771803
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.791549925575,
+          30.2958905701506
+         ],
+         [
+          -97.7917650352546,
+          30.295935052746
+         ],
+         [
+          -97.7919450306881,
+          30.2961397096556
+         ],
+         [
+          -97.791850721058,
+          30.2963734817452
+         ],
+         [
+          -97.79171076713,
+          30.2963655478246
+         ],
+         [
+          -97.7915834075823,
+          30.296027354649
+         ],
+         [
+          -97.7914787700214,
+          30.2959490521554
+         ],
+         [
+          -97.791549925575,
+          30.2958905701506
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7884093919855,
+          30.2971283042184
+         ],
+         [
+          -97.7883660060523,
+          30.2969923581553
+         ],
+         [
+          -97.7887093403572,
+          30.2966749252683
+         ],
+         [
+          -97.7887694178868,
+          30.2964304610674
+         ],
+         [
+          -97.7891247186496,
+          30.2960947896964
+         ],
+         [
+          -97.7892764629657,
+          30.2964044922075
+         ],
+         [
+          -97.7897254696909,
+          30.2965145648816
+         ],
+         [
+          -97.7900781581529,
+          30.2963480426257
+         ],
+         [
+          -97.789808029357,
+          30.2956880938082
+         ],
+         [
+          -97.7897213095928,
+          30.2956798821546
+         ],
+         [
+          -97.7895375017092,
+          30.2948233890188
+         ],
+         [
+          -97.7895659459644,
+          30.2946899086334
+         ],
+         [
+          -97.7899619071719,
+          30.2940946338544
+         ],
+         [
+          -97.7903008729697,
+          30.2937750399328
+         ],
+         [
+          -97.7907294322423,
+          30.2935260511024
+         ],
+         [
+          -97.791146372705,
+          30.2935111686543
+         ],
+         [
+          -97.7919059917025,
+          30.2939968393141
+         ],
+         [
+          -97.7924807706522,
+          30.2941208817836
+         ],
+         [
+          -97.7936643908706,
+          30.2932514751183
+         ],
+         [
+          -97.7942054803022,
+          30.2931713786443
+         ],
+         [
+          -97.7944070505738,
+          30.2933719063107
+         ],
+         [
+          -97.7937426215554,
+          30.2940384691574
+         ],
+         [
+          -97.7933393938755,
+          30.2947769962867
+         ],
+         [
+          -97.7928844070655,
+          30.2950560263816
+         ],
+         [
+          -97.7922866510075,
+          30.2948997377939
+         ],
+         [
+          -97.7920010442393,
+          30.294599145901
+         ],
+         [
+          -97.7908739864428,
+          30.2939869342771
+         ],
+         [
+          -97.7905785017998,
+          30.294061506693
+         ],
+         [
+          -97.790279487676,
+          30.2942700690155
+         ],
+         [
+          -97.7902103129076,
+          30.2945502198078
+         ],
+         [
+          -97.79044394495,
+          30.2950642791965
+         ],
+         [
+          -97.7907755158163,
+          30.2953791918199
+         ],
+         [
+          -97.7908761882136,
+          30.2956627126837
+         ],
+         [
+          -97.7907589257297,
+          30.2960089403479
+         ],
+         [
+          -97.7909550647871,
+          30.2961871069616
+         ],
+         [
+          -97.7913105191619,
+          30.2960396980693
+         ],
+         [
+          -97.7913403881451,
+          30.2962092116834
+         ],
+         [
+          -97.7916133924481,
+          30.2962218583527
+         ],
+         [
+          -97.7916795884031,
+          30.2964030386772
+         ],
+         [
+          -97.7918130376301,
+          30.2964588351473
+         ],
+         [
+          -97.7909787533612,
+          30.296794962892
+         ],
+         [
+          -97.7904754758165,
+          30.2972414886561
+         ],
+         [
+          -97.7903926610288,
+          30.2971167520719
+         ],
+         [
+          -97.7900033841852,
+          30.2973786870036
+         ],
+         [
+          -97.7893551302318,
+          30.2972230482119
+         ],
+         [
+          -97.7884093919855,
+          30.2971283042184
+         ]
+        ]
+       ],
+       [
+        [
+         [
+          -97.7731162219587,
+          30.3201963932457
+         ],
+         [
+          -97.7734824004214,
+          30.3203722291261
+         ],
+         [
+          -97.7734686436211,
+          30.3214008257929
+         ],
+         [
+          -97.7734024809038,
+          30.3217813512872
+         ],
+         [
+          -97.7733182503712,
+          30.321840908874
+         ],
+         [
+          -97.7732188428018,
+          30.3218028391997
+         ],
+         [
+          -97.7729094621197,
+          30.3213235368963
+         ],
+         [
+          -97.7728753872243,
+          30.3210760471598
+         ],
+         [
+          -97.7729280311949,
+          30.3206289708432
+         ],
+         [
+          -97.7731162219587,
+          30.3201963932457
+         ]
+        ]
+       ]
+      ]
+     },
+     "attributes": {
+      "comname": "Bracted twistflower",
+      "sciname": "Streptanthus bracteatus",
+      "status": "Final",
+      "pubdate": "20230411",
+      "effectdate": "Please check current species specific shapefile",
+      "unit": "Please check current species specific shapefile",
+      "subunit": "Please check current species specific shapefile",
+      "listing_status": "Threatened"
+     },
+     "source": "U.S. Fish and Wildlife Service critical habitat",
+     "source_url": "https://ipac.ecosphere.fws.gov/",
+     "designation": "final"
+    }
+   ],
+   "utility_lines": [],
+   "utility_facilities": [],
+   "access_features": [
+    {
+     "id": "osm:node:152435888",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 144,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7395483,
+       30.2768648
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152705016",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 442,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7408768,
+       30.2772427
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152435891",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 491,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7382038,
+       30.2764919
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152435894",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 836,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.737135,
+       30.2761936
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516208",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 940,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7415882,
+       30.2785514
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516204",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 950,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7426258,
+       30.2757163
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456622",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1145,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7429772,
+       30.2779673
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152486606",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1162,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7412597,
+       30.2794313
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152435897",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1184,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7360734,
+       30.2758995
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516202",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1245,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.743029,
+       30.2745983
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456620",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1257,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7436993,
+       30.2760124
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152631181",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1315,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7382539,
+       30.2731397
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456628",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1424,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7423281,
+       30.2797303
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516210",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1426,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7409256,
+       30.2803004
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495613",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1437,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7410865,
+       30.2727332
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456618",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1493,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7441098,
+       30.2749008
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152723404",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1493,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7423833,
+       30.2730972
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152583404",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1498,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7440534,
+       30.278267
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495615",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1510,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7397454,
+       30.272361
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152435902",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1585,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.734856,
+       30.2755611
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152400261",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1587,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7381247,
+       30.2806405
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516199",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1630,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7434727,
+       30.2733971
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152502965",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1642,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7394684,
+       30.2810229
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495617",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1657,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7386591,
+       30.2720566
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152567095",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1658,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7367989,
+       30.2802805
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152502970",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1772,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7405443,
+       30.2813378
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152480207",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1793,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.741431,
+       30.2718012
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152567099",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1793,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7357009,
+       30.2799635
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456616",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1825,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7445412,
+       30.2736952
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152480209",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1844,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.74274,
+       30.2721508
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152608872",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1851,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7401098,
+       30.2714317
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393515",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1854,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7451294,
+       30.2785766
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495618",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1854,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7376179,
+       30.2717641
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152480211",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1956,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7438318,
+       30.2724585
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152608874",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 1973,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7390076,
+       30.2711251
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456636",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2016,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7419265,
+       30.2817283
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393496",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2086,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7462648,
+       30.2755052
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456613",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2119,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7448925,
+       30.2727588
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152539646",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2140,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7379669,
+       30.2708379
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152460221",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2157,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.741772,
+       30.2708441
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152679466",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2187,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7430806,
+       30.2712341
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152460223",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2204,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7404551,
+       30.2704818
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152636886",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2211,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.746208,
+       30.2788857
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516197",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2284,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7441809,
+       30.2715412
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152460225",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2304,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.739359,
+       30.2701861
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495620",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2375,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7354446,
+       30.2711596
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152636882",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2404,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7473319,
+       30.2758111
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456610",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2425,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7452368,
+       30.2718358
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393528",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2432,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.743741,
+       30.282238
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152460228",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2445,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7383271,
+       30.269905
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152398214",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2512,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7421173,
+       30.269914
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393543",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2546,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7441936,
+       30.2823614
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152398217",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2546,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7434367,
+       30.2702821
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152580985",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2555,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7407993,
+       30.2695447
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152486709",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2562,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7472665,
+       30.2791944
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152435906",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2599,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7317846,
+       30.2747245
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152566317",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2606,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.735793,
+       30.2702281
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152398219",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2630,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7445371,
+       30.2705892
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152580983",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2644,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7397118,
+       30.2692427
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456645",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2739,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.741944,
+       30.2838034
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152547977",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2743,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7484317,
+       30.2760504
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152398222",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2753,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.745593,
+       30.2708838
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152539643",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2768,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7386854,
+       30.2689573
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152711116",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2770,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7327989,
+       30.2718717
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152460230",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2862,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7361415,
+       30.2692967
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152512835",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2863,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7424606,
+       30.2689964
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152512839",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2893,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.74378,
+       30.2693646
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152620569",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2901,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7411381,
+       30.2686244
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152512841",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2967,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7448803,
+       30.2696716
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495627",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2975,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7332892,
+       30.270561
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152631180",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2979,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7400551,
+       30.2683251
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152718830",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 2999,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7319073,
+       30.271868
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152567105",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3013,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7305502,
+       30.278697
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456607",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3077,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7459362,
+       30.2699663
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152539640",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3092,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7390224,
+       30.2680336
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152566316",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3143,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7364973,
+       30.2683457
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456647",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3150,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7418203,
+       30.2849883
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152617974",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3202,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7499021,
+       30.2764357
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152495578",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3212,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7324804,
+       30.270338
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152401898",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3217,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7428064,
+       30.268072
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152620992",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3243,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7441258,
+       30.2684402
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152451608",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3246,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.737919,
+       30.267729
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152401899",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3250,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7414682,
+       30.2676984
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516195",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3309,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7452261,
+       30.2687473
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152401901",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3320,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7404009,
+       30.2674008
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456605",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3409,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.746282,
+       30.2690419
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152401905",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3424,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7393479,
+       30.2671043
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152566314",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3429,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7368405,
+       30.2674281
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152567121",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3459,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7290655,
+       30.2786078
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152401909",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3563,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.738267,
+       30.2667989
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516638",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3573,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7431556,
+       30.2671385
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152723403",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3597,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.744475,
+       30.2675067
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516640",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3604,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7418142,
+       30.2667642
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152398687",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3616,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7511724,
+       30.2773652
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152580969",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3618,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7343429,
+       30.2677445
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516193",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3657,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7455753,
+       30.2678138
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516642",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3666,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7407501,
+       30.2664672
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152550836",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3678,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7514047,
+       30.2768746
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393482",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3709,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7484483,
+       30.2696465
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152401912",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3733,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7371915,
+       30.2664902
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516644",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3763,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7396676,
+       30.2661652
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152580960",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3823,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7335086,
+       30.2675058
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152629396",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3869,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7346862,
+       30.2668269
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152451606",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3886,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7386204,
+       30.2658716
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152620994",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3896,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7495067,
+       30.2699418
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152447350",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3931,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7435056,
+       30.266203
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152451541",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 3953,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.744825,
+       30.2665712
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152451543",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4008,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7459253,
+       30.2668783
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393481",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4023,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7487976,
+       30.268713
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152516646",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4040,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7375356,
+       30.2655702
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152629403",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4070,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7338615,
+       30.2665601
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152456658",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4105,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7415796,
+       30.2876895
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152547971",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4113,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7506065,
+       30.270244
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152381257",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4141,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7350382,
+       30.2658861
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152583446",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4169,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7423716,
+       30.2877525
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152583452",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4196,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.74265,
+       30.2877748
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152636874",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4199,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7498736,
+       30.2690134
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152388960",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4235,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7306684,
+       30.2850796
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152393439",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4243,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7431178,
+       30.2878105
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    },
+    {
+     "id": "osm:node:152496937",
+     "kind": "access_signal",
+     "title": "Traffic signal",
+     "distance_ft": 4287,
+     "map_geometry": {
+      "type": "Point",
+      "coordinates": [
+       -97.7438534,
+       30.2652726
+      ]
+     },
+     "source": "OpenStreetMap contributors",
+     "confidence": "community_mapped_screening_indicator"
+    }
+   ],
+   "buildable_envelope": {
+    "status": "parcel_geometry_required",
+    "map_geometry": null,
+    "gross_area_sqft": null,
+    "screened_area_sqft": null,
+    "completeness": "parcel_boundary_missing",
+    "applied_constraints": [],
+    "missing_constraints": [
+     "verified parcel boundary"
+    ],
+    "constraints_ledger": []
+   },
+   "market_context": {
+    "demographic_rings": {
+     "1mi": {
+      "block_groups_included": 19,
+      "population": 29653,
+      "median_household_income": 40367,
+      "median_home_value": 223443,
+      "owner_occupied_units": 3552,
+      "renter_occupied_units": 6944,
+      "owner_renter_ratio": 0.51,
+      "median_age": 27.9,
+      "population_65_plus": 1399,
+      "population_25_44": 5608,
+      "median_household_size": 1.7,
+      "estimated_commute_minutes": 18,
+      "estimated_daytime_workers": 16220,
+      "college_educated_25_plus_pct": 77.4,
+      "hispanic_pct": 20.9,
+      "ring_too_small": false,
+      "no_block_groups": false,
+      "aggregation_note": "Population-weighted means used for median income, home value, and age. True medians require PUMS microdata \u2014 these are approximations. Texas block groups only."
+     },
+     "3mi": {
+      "block_groups_included": 131,
+      "population": 163041,
+      "median_household_income": 95823,
+      "median_home_value": 661241,
+      "owner_occupied_units": 30168,
+      "renter_occupied_units": 51285,
+      "owner_renter_ratio": 0.59,
+      "median_age": 34.0,
+      "population_65_plus": 14699,
+      "population_25_44": 67156,
+      "median_household_size": 1.9,
+      "estimated_commute_minutes": 21,
+      "estimated_daytime_workers": 107805,
+      "college_educated_25_plus_pct": 74.7,
+      "hispanic_pct": 21.3,
+      "ring_too_small": false,
+      "no_block_groups": false,
+      "aggregation_note": "Population-weighted means used for median income, home value, and age. True medians require PUMS microdata \u2014 these are approximations. Texas block groups only."
+     },
+     "5mi": {
+      "block_groups_included": 258,
+      "population": 341957,
+      "median_household_income": 96907,
+      "median_home_value": 587393,
+      "owner_occupied_units": 62463,
+      "renter_occupied_units": 102164,
+      "owner_renter_ratio": 0.61,
+      "median_age": 34.6,
+      "population_65_plus": 31343,
+      "population_25_44": 141152,
+      "median_household_size": 2.0,
+      "estimated_commute_minutes": 23,
+      "estimated_daytime_workers": 223042,
+      "college_educated_25_plus_pct": 65.5,
+      "hispanic_pct": 28.7,
+      "ring_too_small": false,
+      "no_block_groups": false,
+      "aggregation_note": "Population-weighted means used for median income, home value, and age. True medians require PUMS microdata \u2014 these are approximations. Texas block groups only."
+     }
+    },
+    "acs_year": 2023,
+    "travel_time_screening_catchments": [
+     {
+      "minutes": 5,
+      "radius_mi": 2.1,
+      "method": "25 mph radial travel-time screening estimate; not network-routed",
+      "map_geometry": {
+       "type": "Polygon",
+       "coordinates": [
+        [
+         [
+          -97.704516,
+          30.276513
+         ],
+         [
+          -97.705052,
+          30.281798
+         ],
+         [
+          -97.706642,
+          30.286922
+         ],
+         [
+          -97.709238,
+          30.29173
+         ],
+         [
+          -97.712761,
+          30.296076
+         ],
+         [
+          -97.717105,
+          30.299827
+         ],
+         [
+          -97.722137,
+          30.30287
+         ],
+         [
+          -97.727705,
+          30.305112
+         ],
+         [
+          -97.733638,
+          30.306485
+         ],
+         [
+          -97.739758,
+          30.306948
+         ],
+         [
+          -97.745878,
+          30.306485
+         ],
+         [
+          -97.751811,
+          30.305112
+         ],
+         [
+          -97.757379,
+          30.30287
+         ],
+         [
+          -97.762411,
+          30.299827
+         ],
+         [
+          -97.766755,
+          30.296076
+         ],
+         [
+          -97.770278,
+          30.29173
+         ],
+         [
+          -97.772874,
+          30.286922
+         ],
+         [
+          -97.774464,
+          30.281798
+         ],
+         [
+          -97.775,
+          30.276513
+         ],
+         [
+          -97.774464,
+          30.271228
+         ],
+         [
+          -97.772874,
+          30.266104
+         ],
+         [
+          -97.770278,
+          30.261296
+         ],
+         [
+          -97.766755,
+          30.25695
+         ],
+         [
+          -97.762411,
+          30.253199
+         ],
+         [
+          -97.757379,
+          30.250156
+         ],
+         [
+          -97.751811,
+          30.247914
+         ],
+         [
+          -97.745878,
+          30.246541
+         ],
+         [
+          -97.739758,
+          30.246078
+         ],
+         [
+          -97.733638,
+          30.246541
+         ],
+         [
+          -97.727705,
+          30.247914
+         ],
+         [
+          -97.722137,
+          30.250156
+         ],
+         [
+          -97.717105,
+          30.253199
+         ],
+         [
+          -97.712761,
+          30.25695
+         ],
+         [
+          -97.709238,
+          30.261296
+         ],
+         [
+          -97.706642,
+          30.266104
+         ],
+         [
+          -97.705052,
+          30.271228
+         ],
+         [
+          -97.704516,
+          30.276513
+         ]
+        ]
+       ]
+      }
+     },
+     {
+      "minutes": 10,
+      "radius_mi": 4.2,
+      "method": "25 mph radial travel-time screening estimate; not network-routed",
+      "map_geometry": {
+       "type": "Polygon",
+       "coordinates": [
+        [
+         [
+          -97.669275,
+          30.276513
+         ],
+         [
+          -97.670345,
+          30.287083
+         ],
+         [
+          -97.673525,
+          30.297332
+         ],
+         [
+          -97.678718,
+          30.306948
+         ],
+         [
+          -97.685765,
+          30.315639
+         ],
+         [
+          -97.694452,
+          30.323142
+         ],
+         [
+          -97.704516,
+          30.329228
+         ],
+         [
+          -97.715651,
+          30.333712
+         ],
+         [
+          -97.727519,
+          30.336458
+         ],
+         [
+          -97.739758,
+          30.337383
+         ],
+         [
+          -97.751997,
+          30.336458
+         ],
+         [
+          -97.763865,
+          30.333712
+         ],
+         [
+          -97.775,
+          30.329228
+         ],
+         [
+          -97.785064,
+          30.323142
+         ],
+         [
+          -97.793751,
+          30.315639
+         ],
+         [
+          -97.800798,
+          30.306948
+         ],
+         [
+          -97.805991,
+          30.297332
+         ],
+         [
+          -97.809171,
+          30.287083
+         ],
+         [
+          -97.810241,
+          30.276513
+         ],
+         [
+          -97.809171,
+          30.265943
+         ],
+         [
+          -97.805991,
+          30.255694
+         ],
+         [
+          -97.800798,
+          30.246078
+         ],
+         [
+          -97.793751,
+          30.237387
+         ],
+         [
+          -97.785064,
+          30.229884
+         ],
+         [
+          -97.775,
+          30.223798
+         ],
+         [
+          -97.763865,
+          30.219314
+         ],
+         [
+          -97.751997,
+          30.216568
+         ],
+         [
+          -97.739758,
+          30.215643
+         ],
+         [
+          -97.727519,
+          30.216568
+         ],
+         [
+          -97.715651,
+          30.219314
+         ],
+         [
+          -97.704516,
+          30.223798
+         ],
+         [
+          -97.694452,
+          30.229884
+         ],
+         [
+          -97.685765,
+          30.237387
+         ],
+         [
+          -97.678718,
+          30.246078
+         ],
+         [
+          -97.673525,
+          30.255694
+         ],
+         [
+          -97.670345,
+          30.265943
+         ],
+         [
+          -97.669275,
+          30.276513
+         ]
+        ]
+       ]
+      }
+     },
+     {
+      "minutes": 15,
+      "radius_mi": 6.25,
+      "method": "25 mph radial travel-time screening estimate; not network-routed",
+      "map_geometry": {
+       "type": "Polygon",
+       "coordinates": [
+        [
+         [
+          -97.634872,
+          30.276513
+         ],
+         [
+          -97.636466,
+          30.292242
+         ],
+         [
+          -97.641197,
+          30.307493
+         ],
+         [
+          -97.648924,
+          30.321803
+         ],
+         [
+          -97.659411,
+          30.334737
+         ],
+         [
+          -97.672339,
+          30.345901
+         ],
+         [
+          -97.687315,
+          30.354957
+         ],
+         [
+          -97.703885,
+          30.36163
+         ],
+         [
+          -97.721545,
+          30.365717
+         ],
+         [
+          -97.739758,
+          30.367093
+         ],
+         [
+          -97.757971,
+          30.365717
+         ],
+         [
+          -97.775631,
+          30.36163
+         ],
+         [
+          -97.792201,
+          30.354957
+         ],
+         [
+          -97.807177,
+          30.345901
+         ],
+         [
+          -97.820105,
+          30.334737
+         ],
+         [
+          -97.830592,
+          30.321803
+         ],
+         [
+          -97.838319,
+          30.307493
+         ],
+         [
+          -97.84305,
+          30.292242
+         ],
+         [
+          -97.844644,
+          30.276513
+         ],
+         [
+          -97.84305,
+          30.260784
+         ],
+         [
+          -97.838319,
+          30.245533
+         ],
+         [
+          -97.830592,
+          30.231223
+         ],
+         [
+          -97.820105,
+          30.218289
+         ],
+         [
+          -97.807177,
+          30.207125
+         ],
+         [
+          -97.792201,
+          30.198069
+         ],
+         [
+          -97.775631,
+          30.191396
+         ],
+         [
+          -97.757971,
+          30.187309
+         ],
+         [
+          -97.739758,
+          30.185933
+         ],
+         [
+          -97.721545,
+          30.187309
+         ],
+         [
+          -97.703885,
+          30.191396
+         ],
+         [
+          -97.687315,
+          30.198069
+         ],
+         [
+          -97.672339,
+          30.207125
+         ],
+         [
+          -97.659411,
+          30.218289
+         ],
+         [
+          -97.648924,
+          30.231223
+         ],
+         [
+          -97.641197,
+          30.245533
+         ],
+         [
+          -97.636466,
+          30.260784
+         ],
+         [
+          -97.634872,
+          30.276513
+         ]
+        ]
+       ]
+      }
+     }
+    ],
+    "published_permit_project_record_density_per_sqmi": 0.0,
+    "published_record_count": 0,
+    "published_record_radius_m": 800,
+    "permit_density_scope": "Nearby records published by the resolved city/county entitlement sources; not a complete inventory of all building permits."
+   },
+   "source_links": [
+    {
+     "label": "PHMSA NPMS Public Viewer",
+     "url": "https://www.npms.phmsa.dot.gov/PublicViewer/"
+    },
+    {
+     "label": "TCEQ Edwards Aquifer Viewer",
+     "url": "https://www.tceq.texas.gov/permitting/eapp/viewer.html"
+    },
+    {
+     "label": "USFWS IPaC",
+     "url": "https://ipac.ecosphere.fws.gov/"
+    }
+   ],
+   "mapped_feature_count": 138,
+   "advisory": "Public-source resolution is complete for this refresh. Mapped screening evidence does not establish utility capacity, a right to connect, three-phase availability, pipeline/easement title, approved access, survey location, or a legally buildable area. Rows marked provider, title, survey, or agency verification required remain open diligence items."
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:33.384928Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "Public-source resolution is complete for this refresh. Mapped screening evidence does not establish utility capacity, a right to connect, three-phase availability, pipeline/easement title, approved access, survey location, or a legally buildable area. Rows marked provider, title, survey, or agency verification required remain open diligence items."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "will-serve letter or utility SER",
+    "utility map or as-built",
+    "title commitment and recorded easement instruments",
+    "boundary/topographic survey",
+    "access permit or TIA",
+    "plat and civil site plan"
+   ],
+   "reason": "Bind non-public capacity, tie-in, easement, access, and buildable-area evidence to the resolved public screen."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

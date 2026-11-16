@@ -1,0 +1,98 @@
+{
+ "source_id": "historic_intel",
+ "recorded_at": "2026-08-01T21:07:23.022721+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "historic_intel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "near_landmark",
+   "is_in_local_historic_district": false,
+   "districts": [],
+   "nearby_landmarks_count": 11,
+   "nearby_landmarks": [
+    {
+     "name": "Gethsemane Lutheran Church",
+     "address": "1510 Congress Ave",
+     "case_number": "C14H-1976-0020",
+     "landmark_id": "343",
+     "distance_mi": 0.09
+    },
+    {
+     "name": "Carrington-Covert House",
+     "address": "1511 Colorado St",
+     "case_number": "C14H-1976-0019",
+     "landmark_id": "156",
+     "distance_mi": 0.1
+    },
+    {
+     "name": "Texas State Capitol",
+     "address": "1100 Congress Ave",
+     "case_number": "C14H-1986-0023",
+     "landmark_id": "152",
+     "distance_mi": 0.13
+    },
+    {
+     "name": "Bartholomew-Robinson Building",
+     "address": "1415 Lavaca St",
+     "case_number": "C14H-1996-0003",
+     "landmark_id": "131",
+     "distance_mi": 0.13
+    },
+    {
+     "name": "Hancock House",
+     "address": "1306 Colorado St",
+     "case_number": "C14H-1979-0005",
+     "landmark_id": "155",
+     "distance_mi": 0.14
+    }
+   ],
+   "thc_atlas_url": "https://atlas.thc.texas.gov/",
+   "advisory": "Parcel is not inside a local historic district, but 11 historic landmark(s) sit within 0.25 mi (nearest: Gethsemane Lutheran Church at 1510 Congress Ave, 0.09 mi). Adjacent landmarks can trigger compatibility review for new construction.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:23.022721Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "Parcel is not inside a local historic district, but 11 historic landmark(s) sit within 0.25 mi (nearest: Gethsemane Lutheran Church at 1510 Congress Ave, 0.09 mi). Adjacent landmarks can trigger compatibility review for new construction."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "historic landmark verification letter",
+    "Historic Landmark Commission case file",
+    "NRHP / RTHL designation document",
+    "design-standards PDF"
+   ],
+   "reason": "Local Historic District / landmark membership flags the constraint. The binding answers \u2014 exact design standards, Historic Landmark Commission case history, NRHP / RTHL listing details \u2014 live in city case files + THC Atlas at https://atlas.thc.texas.gov/."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

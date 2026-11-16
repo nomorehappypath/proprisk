@@ -1,0 +1,393 @@
+{
+  "id": "pd-completed",
+  "address": "500 E Anderson Ln, Austin",
+  "parcel_id": "R123456",
+  "county": "Travis",
+  "lat": 30.35,
+  "lng": -97.7,
+  "anchor_kind": "geocode",
+  "anchor_quality": "provisional",
+  "status": "completed",
+  "error_code": null,
+  "failure_reason": null,
+  "mode": "check",
+  "created_at": "2026-07-28T14:55:00Z",
+  "started_at": "2026-07-28T14:55:05Z",
+  "finished_at": "2026-07-28T15:01:30Z",
+  "progress": {
+    "stage": "done",
+    "status": "succeeded",
+    "message": null,
+    "completed_sources": 35,
+    "total_sources": 35,
+    "failed_sources_count": 1,
+    "elapsed_seconds": 385,
+    "updated_at": "2026-07-28T15:01:30Z"
+  },
+  "cards": {
+    "groups": [
+      {
+        "key": "land",
+        "title": "The land itself",
+        "cards": [
+          {
+            "card_key": "parcel",
+            "title": "Parcel Info",
+            "status": "ok",
+            "takeaway": "11.9 acres in Travis County, on record with the county appraisal district.",
+            "facts": [
+              {
+                "label": "Size",
+                "value": "11.9 acres"
+              },
+              {
+                "label": "Owner on record",
+                "value": "ACME Land LP"
+              }
+            ],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "tcad_parcel",
+                "source_name": "Travis County appraisal records",
+                "source_url": "https://traviscad.org",
+                "checked_at": "2026-07-28T15:00:00Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-07-28T15:00:00Z",
+            "narrative": {
+              "headline": "A clean, buildable-size parcel",
+              "broker_read": "The county shows one 11.9-acre parcel at this address with a single owner of record.",
+              "why_it_matters": "One parcel and one owner keeps a purchase simple — no assembly needed.",
+              "next_step": "Pull the deed to confirm the owner before making contact.",
+              "caveat": "Ownership records can lag a recent sale."
+            },
+            "retryable": false,
+            "links": [
+              {
+                "label": "County appraisal record",
+                "url": "https://traviscad.org/property/R123456"
+              },
+              {
+                "label": "Deed search",
+                "url": "https://county.example/deeds?q=R123456"
+              }
+            ],
+            "icon": "📋",
+            "order": 0,
+            "summary": "11.9 acres in Travis County, on record with the county appraisal district",
+            "confidence": "verified public fact",
+            "hero": null
+          },
+          {
+            "card_key": "public_aerial_imagery",
+            "title": "Aerial photo",
+            "status": "ok",
+            "takeaway": "Open pasture in every photo back to 1995 — no sign of past building or dumping.",
+            "facts": [
+              {
+                "label": "Oldest photo",
+                "value": "1995"
+              },
+              {
+                "label": "Newest photo",
+                "value": "2022",
+                "hint": "Statewide imagery program"
+              }
+            ],
+            "tables": [
+              {
+                "title": "What the photos show",
+                "columns": [
+                  "Year",
+                  "What is visible",
+                  "Apparent use"
+                ],
+                "rows": [
+                  [
+                    "2022",
+                    "Open field, mowed, one gravel drive",
+                    "Pasture"
+                  ],
+                  [
+                    "2012",
+                    "Open field, fence line along the road",
+                    "Pasture"
+                  ],
+                  [
+                    "1995",
+                    "Open field, no structures",
+                    "Pasture"
+                  ]
+                ]
+              }
+            ],
+            "image": {
+              "url": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20480%20320'%3E%3Crect%20width%3D'480'%20height%3D'320'%20fill%3D'%23dfe7dc'%2F%3E%3Crect%20x%3D'40'%20y%3D'40'%20width%3D'400'%20height%3D'240'%20fill%3D'%23c3d4bd'%20stroke%3D'%231f6f43'%20stroke-width%3D'4'%2F%3E%3Cpath%20d%3D'M40%20220%20H440'%20stroke%3D'%238a8f88'%20stroke-width%3D'14'%2F%3E%3Ctext%20x%3D'240'%20y%3D'170'%20font-family%3D'sans-serif'%20font-size%3D'26'%20fill%3D'%231c1e1c'%20text-anchor%3D'middle'%3EAerial%20view%201995%3C%2Ftext%3E%3C%2Fsvg%3E",
+              "caption": "Aerial view, 1995 — the oldest photo we found",
+              "attribution": "Texas Natural Resources Information System"
+            },
+            "links": [
+              {
+                "label": "Browse the full photo set",
+                "url": "https://imagery.example/site/R123456"
+              }
+            ],
+            "advisories": [
+              "Photos are a screening aid, not a verified history of the site."
+            ],
+            "sources": [
+              {
+                "source_id": "public_aerial_imagery",
+                "source_name": "Public aerial photos",
+                "source_url": "https://imagery.example",
+                "checked_at": "2026-07-28T15:00:00Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-07-28T15:00:00Z",
+            "narrative": null,
+            "retryable": false,
+            "icon": "🛰",
+            "order": 19,
+            "summary": "Open pasture in every photo back to 1995",
+            "confidence": "verified public fact",
+            "hero": null
+          }
+        ]
+      },
+      {
+        "key": "flood",
+        "title": "Flood & water",
+        "cards": [
+          {
+            "card_key": "fema_nfhl",
+            "title": "Flood",
+            "status": "ok",
+            "takeaway": "Outside the mapped flood zones (Zone X — minimal risk).",
+            "facts": [
+              {
+                "label": "Flood zone",
+                "value": "Zone X — minimal risk"
+              }
+            ],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "fema_nfhl",
+                "source_name": "FEMA flood maps",
+                "source_url": null,
+                "checked_at": "2026-07-28T15:00:00Z",
+                "from_cache": true
+              }
+            ],
+            "checked_at": "2026-07-28T15:00:00Z",
+            "narrative": null,
+            "retryable": false,
+            "icon": "🌊",
+            "order": 2,
+            "summary": "Outside the mapped flood zones (Zone X — minimal risk)",
+            "confidence": "verified public fact",
+            "hero": null
+          }
+        ]
+      },
+      {
+        "key": "zoning",
+        "title": "Zoning & permissions",
+        "cards": [
+          {
+            "card_key": "zoning_standards",
+            "title": "Zoning standards",
+            "status": "not_covered",
+            "takeaway": "Zoning summaries from this source cover ten Central Texas cities only — this site is outside them.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "zoning_standards",
+                "source_name": "City zoning summaries",
+                "source_url": null,
+                "checked_at": "2026-07-28T15:00:00Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-07-28T15:00:00Z",
+            "narrative": null,
+            "retryable": false,
+            "icon": "📏",
+            "order": 5,
+            "summary": "Zoning summaries from this source cover ten Central Texas cities only",
+            "confidence": "unknown",
+            "hero": null
+          },
+          {
+            "card_key": "plats_intel",
+            "title": "Plats",
+            "status": "manual",
+            "takeaway": "This one needs a human look — the county posts plats as scanned documents; open the county page and search this address.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "plats_intel",
+                "source_name": "County plat records",
+                "source_url": "https://county.example/plats",
+                "checked_at": "2026-07-28T15:00:00Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-07-28T15:00:00Z",
+            "narrative": null,
+            "retryable": false,
+            "icon": "📐",
+            "order": 31,
+            "summary": "This one needs a human look",
+            "confidence": "manual verification required",
+            "hero": null
+          }
+        ]
+      },
+      {
+        "key": "roads",
+        "title": "Roads & access",
+        "cards": [
+          {
+            "card_key": "traffic",
+            "title": "Traffic & Roads",
+            "status": "ok",
+            "takeaway": "About 24,000 vehicles a day pass on the nearest highway, and the count is rising.",
+            "facts": [
+              {
+                "label": "Vehicles per day",
+                "value": "24,000",
+                "source_id": "txdot_aadt"
+              },
+              {
+                "label": "Five-year trend",
+                "value": "Up 12%",
+                "source_id": "txdot_aadt_history"
+              }
+            ],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "txdot_aadt",
+                "source_name": "Traffic counts",
+                "source_url": null,
+                "checked_at": "2026-07-28T15:00:00Z",
+                "from_cache": false
+              },
+              {
+                "source_id": "txdot_aadt_history",
+                "source_name": "Traffic history",
+                "source_url": null,
+                "checked_at": "2026-01-12T15:00:00Z",
+                "from_cache": false
+              }
+            ],
+            "checked_at": "2026-01-12T15:00:00Z",
+            "narrative": null,
+            "retryable": false,
+            "tables": [
+              {
+                "title": "Traffic counts by year",
+                "columns": [
+                  "Year",
+                  "Vehicles a day",
+                  "Trucks",
+                  "Counted on"
+                ],
+                "rows": [
+                  [
+                    "2025",
+                    "18,500",
+                    "6.2%",
+                    "E Anderson Ln"
+                  ],
+                  [
+                    "2023",
+                    "17,900",
+                    "6.0%",
+                    "E Anderson Ln"
+                  ],
+                  [
+                    "2021",
+                    "16,400",
+                    "5.4%",
+                    "E Anderson Ln"
+                  ],
+                  [
+                    "2019",
+                    "15,850",
+                    "5.1%",
+                    "E Anderson Ln"
+                  ]
+                ]
+              }
+            ],
+            "icon": "🛣",
+            "order": 6,
+            "summary": "About 24,000 vehicles a day pass on the nearest highway, and the count is…",
+            "confidence": "verified public fact",
+            "hero": null
+          },
+          {
+            "card_key": "txdot_projects",
+            "title": "TxDOT Projects",
+            "status": "issue",
+            "takeaway": "We couldn't get a full answer from Road projects.",
+            "facts": [],
+            "advisories": [],
+            "sources": [
+              {
+                "source_id": "txdot_projects",
+                "source_name": "Road projects",
+                "source_url": null,
+                "checked_at": null,
+                "from_cache": false
+              }
+            ],
+            "checked_at": null,
+            "narrative": null,
+            "retryable": true,
+            "icon": "🏗",
+            "order": 9,
+            "summary": "We couldn't get a full answer from Road projects",
+            "confidence": "warning",
+            "hero": null
+          }
+        ]
+      }
+    ],
+    "bottom_line": {
+      "text": "Low flood risk, strong traffic, and a clean parcel — worth a closer look.",
+      "kind": "ai",
+      "checked_at": "2026-01-12T15:00:00Z"
+    },
+    "manual_checks": [
+      {
+        "label": "Recorded plat",
+        "reason": "The county posts plats as scanned images we can't read automatically.",
+        "link": "https://county.example/plats"
+      }
+    ],
+    "anchor_note": "Mapped from the address you typed. For a purchase or permit decision, confirm against the survey or recorded plat."
+  },
+  "retryable_failed_sources": [
+    {
+      "source_id": "txdot_projects",
+      "source_label": "Road projects",
+      "cause": "The source didn't answer in time.",
+      "error_detail": "The road-projects service didn't answer in time.",
+      "last_failed_at": "2026-07-28T15:01:00Z",
+      "retry_status": null,
+      "retry_disabled_until": null,
+      "retry_after_seconds": null,
+      "retry_message": null
+    }
+  ],
+  "cards_schema_version": 4,
+  "retry_active": false
+}

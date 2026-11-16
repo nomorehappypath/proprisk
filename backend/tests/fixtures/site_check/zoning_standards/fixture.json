@@ -1,0 +1,132 @@
+{
+ "source_id": "zoning_standards",
+ "recorded_at": "2026-08-01T21:07:32.659912+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [
+   "Austin"
+  ],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "post_parcel",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "zoning_standards",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "verified_public_fact",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "city": "austin",
+   "district": "CS",
+   "district_full_name": "General Commercial Services",
+   "district_code_section": "25-2-72",
+   "use_query": null,
+   "dimensional_standards": {
+    "max_height": {
+     "value": 60,
+     "unit": "feet",
+     "code_ref": "25-2-492",
+     "notes": null
+    },
+    "max_far": {
+     "value": 2.0,
+     "unit": "ratio",
+     "code_ref": "25-2-492",
+     "notes": null
+    },
+    "front_setback": {
+     "value": 25,
+     "unit": "feet",
+     "code_ref": "25-2-492",
+     "notes": null
+    },
+    "side_setback": {
+     "value": 0,
+     "unit": "feet",
+     "code_ref": "25-2-492",
+     "notes": null
+    },
+    "rear_setback": {
+     "value": 10,
+     "unit": "feet",
+     "code_ref": "25-2-492",
+     "notes": null
+    },
+    "max_impervious_cover": {
+     "value": 95,
+     "unit": "percent",
+     "code_ref": "25-2-492",
+     "notes": null
+    },
+    "max_building_coverage": {
+     "value": 95,
+     "unit": "percent",
+     "code_ref": "25-2-492",
+     "notes": null
+    }
+   },
+   "parking": [
+    {
+     "use_id": "general_retail",
+     "rate": 4.0,
+     "unit": "spaces_per_1000_sf",
+     "code_ref": "25-6-471",
+     "notes": null
+    },
+    {
+     "use_id": "hotel",
+     "rate": 1.0,
+     "unit": "spaces_per_unit",
+     "code_ref": "25-6-471",
+     "notes": null
+    },
+    {
+     "use_id": "warehouse",
+     "rate": 1.0,
+     "unit": "spaces_per_2000_sf",
+     "code_ref": "25-6-471",
+     "notes": null
+    }
+   ],
+   "overlay_interactions": [],
+   "advisory": "Austin CS (General Commercial Services) per \u00a725-2-72. max height 60 feet, max impervious cover 95percent. Zoning verification letter from the city is the binding authority.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:32.659912Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "Austin CS (General Commercial Services) per \u00a725-2-72. max height 60 feet, max impervious cover 95percent. Zoning verification letter from the city is the binding authority."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "zoning verification letter",
+    "city parking table screenshot",
+    "planner email",
+    "zoning code excerpt"
+   ],
+   "reason": "Curated rules carry code citations and a last-verified date, but the city is the binding authority. Upload a zoning verification letter for any deal that turns on the rule."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

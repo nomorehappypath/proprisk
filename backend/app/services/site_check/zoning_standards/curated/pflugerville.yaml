@@ -1,0 +1,484 @@
+# Pflugerville, TX — Unified Development Code
+# Source: https://library.municode.com/tx/pflugerville/codes/code_of_ordinances
+# Last verified: 2026-05-02
+#
+# Coverage: 8 broker-grade districts.
+#   A, SF-R, SF-S, MF-12, MF-25, RT, RC, RIA
+# Pflugerville's UDC organizes uses by use category and
+# permits matrix; numbers below are the base district rules
+# from Title XV Land Development Code.
+
+city: pflugerville
+state: TX
+udc_version: "Pflugerville Unified Development Code (Title XV LDC)"
+udc_source_url: "https://library.municode.com/tx/pflugerville/codes/code_of_ordinances"
+last_verified: "2026-05-02"
+
+districts:
+
+  A:
+    full_name: "Agricultural"
+    code_section: "LDC §15-A"
+    permitted_uses:
+      - use_id: agricultural
+        code_ref: "LDC §15-A"
+      - use_id: ag_exempt
+        code_ref: "LDC §15-A"
+      - use_id: single_family_detached
+        code_ref: "LDC §15-A"
+        notes: "1 du / 5 acres."
+    conditional_uses:
+      - use_id: solar_farm
+        code_ref: "LDC §15-A"
+      - use_id: telecom_tower
+        code_ref: "LDC §15-A"
+    prohibited_uses:
+      - use_id: multifamily_residential
+        code_ref: "LDC §15-A"
+      - use_id: general_retail
+        code_ref: "LDC §15-A"
+    dimensional_standards:
+      max_density:
+        value: 0.2
+        unit: "units_per_acre"
+        code_ref: "LDC §15-A"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "LDC §15-A"
+      min_lot_size:
+        value: 217800
+        unit: "square_feet"
+        code_ref: "LDC §15-A"
+      front_setback:
+        value: 50
+        unit: "feet"
+        code_ref: "LDC §15-A"
+      side_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-A"
+      rear_setback:
+        value: 50
+        unit: "feet"
+        code_ref: "LDC §15-A"
+      max_impervious_cover:
+        value: 25
+        unit: "percent"
+        code_ref: "LDC §15-A"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "LDC §15-Parking"
+
+  SF-R:
+    full_name: "Single Family Rural"
+    code_section: "LDC §15-SFR"
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "LDC §15-SFR"
+      - use_id: church
+        code_ref: "LDC §15-SFR"
+      - use_id: school_public
+        code_ref: "LDC §15-SFR"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "LDC §15-SFR"
+    prohibited_uses:
+      - use_id: multifamily_residential
+        code_ref: "LDC §15-SFR"
+      - use_id: general_retail
+        code_ref: "LDC §15-SFR"
+    dimensional_standards:
+      max_density:
+        value: 1.0
+        unit: "units_per_acre"
+        code_ref: "LDC §15-SFR"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "LDC §15-SFR"
+      min_lot_size:
+        value: 43560
+        unit: "square_feet"
+        code_ref: "LDC §15-SFR"
+      front_setback:
+        value: 35
+        unit: "feet"
+        code_ref: "LDC §15-SFR"
+      side_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "LDC §15-SFR"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-SFR"
+      max_impervious_cover:
+        value: 35
+        unit: "percent"
+        code_ref: "LDC §15-SFR"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "LDC §15-Parking"
+
+  SF-S:
+    full_name: "Single Family Standard"
+    code_section: "LDC §15-SFS"
+    permitted_uses:
+      - use_id: single_family_detached
+        code_ref: "LDC §15-SFS"
+      - use_id: church
+        code_ref: "LDC §15-SFS"
+      - use_id: school_public
+        code_ref: "LDC §15-SFS"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "LDC §15-SFS"
+      - use_id: accessory_dwelling_unit
+        code_ref: "LDC §15-SFS"
+    prohibited_uses:
+      - use_id: duplex
+        code_ref: "LDC §15-SFS"
+      - use_id: multifamily_residential
+        code_ref: "LDC §15-SFS"
+    dimensional_standards:
+      max_density:
+        value: 6.0
+        unit: "units_per_acre"
+        code_ref: "LDC §15-SFS"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "LDC §15-SFS"
+      min_lot_size:
+        value: 6000
+        unit: "square_feet"
+        code_ref: "LDC §15-SFS"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-SFS"
+      side_setback:
+        value: 5
+        unit: "feet"
+        code_ref: "LDC §15-SFS"
+      rear_setback:
+        value: 20
+        unit: "feet"
+        code_ref: "LDC §15-SFS"
+      max_impervious_cover:
+        value: 50
+        unit: "percent"
+        code_ref: "LDC §15-SFS"
+    parking:
+      - use_id: single_family_detached
+        rate: 2.0
+        unit: "spaces_per_unit"
+        code_ref: "LDC §15-Parking"
+
+  MF-12:
+    full_name: "Multifamily 12 Units/Acre"
+    code_section: "LDC §15-MF12"
+    permitted_uses:
+      - use_id: duplex
+        code_ref: "LDC §15-MF12"
+      - use_id: triplex
+        code_ref: "LDC §15-MF12"
+      - use_id: fourplex
+        code_ref: "LDC §15-MF12"
+      - use_id: townhouse
+        code_ref: "LDC §15-MF12"
+      - use_id: multifamily_residential
+        code_ref: "LDC §15-MF12"
+      - use_id: condominium
+        code_ref: "LDC §15-MF12"
+    conditional_uses:
+      - use_id: childcare
+        code_ref: "LDC §15-MF12"
+      - use_id: senior_living
+        code_ref: "LDC §15-MF12"
+    dimensional_standards:
+      max_density:
+        value: 12
+        unit: "units_per_acre"
+        code_ref: "LDC §15-MF12"
+      max_height:
+        value: 35
+        unit: "feet"
+        code_ref: "LDC §15-MF12"
+      min_lot_size:
+        value: 8000
+        unit: "square_feet"
+        code_ref: "LDC §15-MF12"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-MF12"
+      side_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "LDC §15-MF12"
+      rear_setback:
+        value: 20
+        unit: "feet"
+        code_ref: "LDC §15-MF12"
+      max_impervious_cover:
+        value: 60
+        unit: "percent"
+        code_ref: "LDC §15-MF12"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_unit"
+        code_ref: "LDC §15-Parking"
+
+  MF-25:
+    full_name: "Multifamily 25 Units/Acre"
+    code_section: "LDC §15-MF25"
+    permitted_uses:
+      - use_id: townhouse
+        code_ref: "LDC §15-MF25"
+      - use_id: multifamily_residential
+        code_ref: "LDC §15-MF25"
+      - use_id: condominium
+        code_ref: "LDC §15-MF25"
+      - use_id: senior_living
+        code_ref: "LDC §15-MF25"
+    conditional_uses:
+      - use_id: assisted_living
+        code_ref: "LDC §15-MF25"
+      - use_id: childcare
+        code_ref: "LDC §15-MF25"
+    dimensional_standards:
+      max_density:
+        value: 25
+        unit: "units_per_acre"
+        code_ref: "LDC §15-MF25"
+      max_height:
+        value: 45
+        unit: "feet"
+        code_ref: "LDC §15-MF25"
+      min_lot_size:
+        value: 10000
+        unit: "square_feet"
+        code_ref: "LDC §15-MF25"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-MF25"
+      side_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "LDC §15-MF25"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-MF25"
+      max_impervious_cover:
+        value: 70
+        unit: "percent"
+        code_ref: "LDC §15-MF25"
+    parking:
+      - use_id: multifamily_residential
+        rate: 1.5
+        unit: "spaces_per_unit"
+        code_ref: "LDC §15-Parking"
+
+  RT:
+    full_name: "Retail"
+    code_section: "LDC §15-RT"
+    permitted_uses:
+      - use_id: general_retail
+        code_ref: "LDC §15-RT"
+      - use_id: convenience_store
+        code_ref: "LDC §15-RT"
+      - use_id: restaurant
+        code_ref: "LDC §15-RT"
+      - use_id: office_general
+        code_ref: "LDC §15-RT"
+      - use_id: office_medical
+        code_ref: "LDC §15-RT"
+      - use_id: bank_or_financial
+        code_ref: "LDC §15-RT"
+      - use_id: personal_services
+        code_ref: "LDC §15-RT"
+      - use_id: childcare
+        code_ref: "LDC §15-RT"
+    conditional_uses:
+      - use_id: gas_station
+        code_ref: "LDC §15-RT"
+      - use_id: drive_through
+        code_ref: "LDC §15-RT"
+      - use_id: bar_or_lounge
+        code_ref: "LDC §15-RT"
+    prohibited_uses:
+      - use_id: heavy_industrial
+        code_ref: "LDC §15-RT"
+      - use_id: outdoor_storage
+        code_ref: "LDC §15-RT"
+    dimensional_standards:
+      max_height:
+        value: 40
+        unit: "feet"
+        code_ref: "LDC §15-RT"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-RT"
+      side_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "LDC §15-RT"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-RT"
+      max_impervious_cover:
+        value: 80
+        unit: "percent"
+        code_ref: "LDC §15-RT"
+    parking:
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "LDC §15-Parking"
+      - use_id: restaurant
+        rate: 8.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "LDC §15-Parking"
+      - use_id: office_general
+        rate: 3.5
+        unit: "spaces_per_1000_sf"
+        code_ref: "LDC §15-Parking"
+      - use_id: office_medical
+        rate: 5.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "LDC §15-Parking"
+
+  RC:
+    full_name: "Regional Commercial"
+    code_section: "LDC §15-RC"
+    permitted_uses:
+      - use_id: general_retail
+        code_ref: "LDC §15-RC"
+      - use_id: restaurant
+        code_ref: "LDC §15-RC"
+      - use_id: office_general
+        code_ref: "LDC §15-RC"
+      - use_id: hotel
+        code_ref: "LDC §15-RC"
+      - use_id: motel
+        code_ref: "LDC §15-RC"
+      - use_id: auto_sales
+        code_ref: "LDC §15-RC"
+      - use_id: auto_service
+        code_ref: "LDC §15-RC"
+      - use_id: gas_station
+        code_ref: "LDC §15-RC"
+      - use_id: car_wash
+        code_ref: "LDC §15-RC"
+      - use_id: drive_through
+        code_ref: "LDC §15-RC"
+      - use_id: self_storage
+        code_ref: "LDC §15-RC"
+      - use_id: event_venue
+        code_ref: "LDC §15-RC"
+    conditional_uses:
+      - use_id: light_industrial
+        code_ref: "LDC §15-RC"
+      - use_id: warehouse
+        code_ref: "LDC §15-RC"
+        notes: "Conditional with screening + size limits."
+    dimensional_standards:
+      max_height:
+        value: 50
+        unit: "feet"
+        code_ref: "LDC §15-RC"
+      front_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-RC"
+      side_setback:
+        value: 10
+        unit: "feet"
+        code_ref: "LDC §15-RC"
+      rear_setback:
+        value: 25
+        unit: "feet"
+        code_ref: "LDC §15-RC"
+      max_impervious_cover:
+        value: 85
+        unit: "percent"
+        code_ref: "LDC §15-RC"
+    parking:
+      - use_id: general_retail
+        rate: 4.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "LDC §15-Parking"
+      - use_id: hotel
+        rate: 1.0
+        unit: "spaces_per_unit"
+        code_ref: "LDC §15-Parking"
+
+  RIA:
+    full_name: "Restricted Industrial / Assembly"
+    code_section: "LDC §15-RIA"
+    permitted_uses:
+      - use_id: warehouse
+        code_ref: "LDC §15-RIA"
+      - use_id: light_industrial
+        code_ref: "LDC §15-RIA"
+      - use_id: manufacturing
+        code_ref: "LDC §15-RIA"
+        notes: "Light manufacturing only."
+      - use_id: research_and_development
+        code_ref: "LDC §15-RIA"
+      - use_id: self_storage
+        code_ref: "LDC §15-RIA"
+      - use_id: outdoor_storage
+        code_ref: "LDC §15-RIA"
+        notes: "With screening."
+      - use_id: data_center
+        code_ref: "LDC §15-RIA"
+    conditional_uses:
+      - use_id: heavy_industrial
+        code_ref: "LDC §15-RIA"
+    prohibited_uses:
+      - use_id: multifamily_residential
+        code_ref: "LDC §15-RIA"
+      - use_id: single_family_detached
+        code_ref: "LDC §15-RIA"
+    dimensional_standards:
+      max_height:
+        value: 60
+        unit: "feet"
+        code_ref: "LDC §15-RIA"
+      front_setback:
+        value: 30
+        unit: "feet"
+        code_ref: "LDC §15-RIA"
+      side_setback:
+        value: 15
+        unit: "feet"
+        code_ref: "LDC §15-RIA"
+      rear_setback:
+        value: 30
+        unit: "feet"
+        code_ref: "LDC §15-RIA"
+      max_impervious_cover:
+        value: 80
+        unit: "percent"
+        code_ref: "LDC §15-RIA"
+    parking:
+      - use_id: warehouse
+        rate: 1.0
+        unit: "spaces_per_2000_sf"
+        code_ref: "LDC §15-Parking"
+      - use_id: light_industrial
+        rate: 1.0
+        unit: "spaces_per_1000_sf"
+        code_ref: "LDC §15-Parking"

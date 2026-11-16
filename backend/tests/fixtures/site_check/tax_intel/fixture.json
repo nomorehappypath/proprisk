@@ -1,0 +1,70 @@
+{
+ "source_id": "tax_intel",
+ "recorded_at": "2026-08-01T21:07:33.180489+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [
+   "Austin"
+  ],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "wave2",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "tax_intel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "fiscal_year": "2023",
+   "districts_queried": 1,
+   "districts_matched": 0,
+   "results": [
+    {
+     "district_name": "AUSTIN FIRE DEPARTMENT",
+     "matches": []
+    }
+   ],
+   "comptroller_portal_url": "https://comptroller.texas.gov/transparency/local/hb1378/",
+   "advisory": "0 of 1 districts matched to HB 1378 entries (FY 2023). Each match links to the entity's debt-report PDF; the actual outstanding-debt numbers are inside the PDF, not in the index. Unmatched districts may be sub-units, recently renamed, or below the HB 1378 reporting threshold \u2014 search the Comptroller portal directly: https://comptroller.texas.gov/transparency/local/hb1378/",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:33.180489Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "0 of 1 districts matched to HB 1378 entries (FY 2023). Each match links to the entity's debt-report PDF; the actual outstanding-debt numbers are inside the PDF, not in the index. Unmatched districts may be sub-units, recently renamed, or below the HB 1378 reporting threshold \u2014 search the Comptroller portal directly: https://comptroller.texas.gov/transparency/local/hb1378/"
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "local government debt report (HB 1378 PDF)",
+    "MUD bond report",
+    "TIRZ debt schedule",
+    "ISD debt schedule",
+    "tax bill (parcel-specific)"
+   ],
+   "reason": "TX Comptroller HB 1378 publishes the index of debt-reporting entities + a link to each entity's debt-report PDF. Download each report linked above and upload the relevant ones."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

@@ -1,0 +1,887 @@
+{
+ "source_id": "electric_power_infrastructure",
+ "recorded_at": "2026-08-01T21:07:18.594417+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [
+  "fetched_at"
+ ],
+ "notes": [],
+ "expected": {
+  "source_id": "electric_power_infrastructure",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "radius_mi": 15.0,
+   "nearest_transmission_lines": [
+    {
+     "label": "69 kV transmission line",
+     "voltage_kv": 69,
+     "voltage_class": "Under 100",
+     "adequacy_class": "69kv",
+     "distance_mi": 0.48,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "HOLLY POWER PLANT",
+     "substation_2": "BRACKENRIDGE",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.719779,
+        30.250964
+       ],
+       [
+        -97.720459,
+        30.251508
+       ],
+       [
+        -97.732235,
+        30.255678
+       ],
+       [
+        -97.726626,
+        30.267745
+       ],
+       [
+        -97.725756,
+        30.268755
+       ],
+       [
+        -97.726621,
+        30.272787
+       ],
+       [
+        -97.731434,
+        30.272
+       ],
+       [
+        -97.732745,
+        30.272438
+       ],
+       [
+        -97.73292,
+        30.272731
+       ]
+      ]
+     }
+    },
+    {
+     "label": "69 kV transmission line",
+     "voltage_kv": 69,
+     "voltage_class": "Under 100",
+     "adequacy_class": "69kv",
+     "distance_mi": 0.48,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "BRACKENRIDGE",
+     "substation_2": "HARRIS",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.73292,
+        30.272731
+       ],
+       [
+        -97.731542,
+        30.272417
+       ],
+       [
+        -97.726515,
+        30.273228
+       ],
+       [
+        -97.726733,
+        30.274199
+       ],
+       [
+        -97.724228,
+        30.274592
+       ],
+       [
+        -97.72519,
+        30.278985
+       ],
+       [
+        -97.723234,
+        30.279344
+       ],
+       [
+        -97.724437,
+        30.285298
+       ],
+       [
+        -97.724124,
+        30.28579
+       ],
+       [
+        -97.72621,
+        30.286903
+       ],
+       [
+        -97.728919,
+        30.287969
+       ],
+       [
+        -97.73003,
+        30.288852
+       ],
+       [
+        -97.732011,
+        30.289046
+       ],
+       [
+        -97.732077,
+        30.288245
+       ],
+       [
+        -97.732563,
+        30.28831
+       ]
+      ]
+     }
+    },
+    {
+     "label": "69 kV transmission line",
+     "voltage_kv": 69,
+     "voltage_class": "Under 100",
+     "adequacy_class": "69kv",
+     "distance_mi": 0.92,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "HARRIS",
+     "substation_2": "HOLLY POWER PLANT",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.732563,
+        30.28831
+       ],
+       [
+        -97.732147,
+        30.288288
+       ],
+       [
+        -97.732167,
+        30.289377
+       ],
+       [
+        -97.73003,
+        30.289195
+       ],
+       [
+        -97.728643,
+        30.28819
+       ],
+       [
+        -97.726976,
+        30.287404
+       ],
+       [
+        -97.725102,
+        30.286925
+       ],
+       [
+        -97.721329,
+        30.285104
+       ],
+       [
+        -97.722167,
+        30.283714
+       ],
+       [
+        -97.72153,
+        30.280847
+       ],
+       [
+        -97.722511,
+        30.280675
+       ],
+       [
+        -97.720953,
+        30.273668
+       ],
+       [
+        -97.723939,
+        30.273203
+       ],
+       [
+        -97.723551,
+        30.272233
+       ],
+       [
+        -97.724465,
+        30.270085
+       ],
+       [
+        -97.724296,
+        30.26926
+       ],
+       [
+        -97.723683,
+        30.269074
+       ],
+       [
+        -97.730069,
+        30.255318
+       ],
+       [
+        -97.720249,
+        30.25188
+       ],
+       [
+        -97.720296,
+        30.251586
+       ],
+       [
+        -97.719779,
+        30.250964
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 0.94,
+     "owner": "AUSTIN ENERGY",
+     "status": "NOT AVAILABLE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "OpenStreetMap",
+     "substation_1": "WARREN",
+     "substation_2": "SEAHOLM",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.758281,
+        30.310642
+       ],
+       [
+        -97.758627,
+        30.310258
+       ],
+       [
+        -97.757527,
+        30.306855
+       ],
+       [
+        -97.758074,
+        30.303094
+       ],
+       [
+        -97.757627,
+        30.299636
+       ],
+       [
+        -97.758368,
+        30.296568
+       ],
+       [
+        -97.759368,
+        30.295805
+       ],
+       [
+        -97.759703,
+        30.294755
+       ],
+       [
+        -97.758868,
+        30.294716
+       ],
+       [
+        -97.759138,
+        30.293507
+       ],
+       [
+        -97.760462,
+        30.290495
+       ],
+       [
+        -97.76267,
+        30.287018
+       ],
+       [
+        -97.76508,
+        30.282095
+       ],
+       [
+        -97.766618,
+        30.279751
+       ],
+       [
+        -97.767072,
+        30.276976
+       ],
+       [
+        -97.765969,
+        30.274381
+       ],
+       [
+        -97.763794,
+        30.272315
+       ],
+       [
+        -97.755785,
+        30.268776
+       ],
+       [
+        -97.754762,
+        30.268728
+       ],
+       [
+        -97.751742,
+        30.267627
+       ],
+       [
+        -97.751186,
+        30.267224
+       ],
+       [
+        -97.75141,
+        30.266758
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 1.05,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "CARDINAL LANE",
+     "substation_2": "TAP304680",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.768784,
+        30.233762
+       ],
+       [
+        -97.769199,
+        30.234183
+       ],
+       [
+        -97.764895,
+        30.241798
+       ],
+       [
+        -97.763995,
+        30.245213
+       ],
+       [
+        -97.756941,
+        30.256312
+       ],
+       [
+        -97.756308,
+        30.257782
+       ],
+       [
+        -97.756259,
+        30.259375
+       ],
+       [
+        -97.755502,
+        30.260706
+       ],
+       [
+        -97.755499,
+        30.262416
+       ],
+       [
+        -97.754924,
+        30.263293
+       ],
+       [
+        -97.752397,
+        30.265415
+       ],
+       [
+        -97.751137,
+        30.264972
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 1.28,
+     "owner": "AUSTIN ENERGY",
+     "status": "NOT AVAILABLE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "OpenStreetMap",
+     "substation_1": "FIESTA",
+     "substation_2": "HOLLY POWER PLANT",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.718607,
+        30.29497
+       ],
+       [
+        -97.71861,
+        30.294542
+       ],
+       [
+        -97.716412,
+        30.293424
+       ],
+       [
+        -97.716107,
+        30.292902
+       ],
+       [
+        -97.713556,
+        30.291661
+       ],
+       [
+        -97.718261,
+        30.284384
+       ],
+       [
+        -97.717515,
+        30.28095
+       ],
+       [
+        -97.717157,
+        30.280377
+       ],
+       [
+        -97.715268,
+        30.271307
+       ],
+       [
+        -97.719337,
+        30.270661
+       ],
+       [
+        -97.71908,
+        30.26946
+       ],
+       [
+        -97.726004,
+        30.254341
+       ],
+       [
+        -97.72001,
+        30.252285
+       ],
+       [
+        -97.720174,
+        30.251646
+       ],
+       [
+        -97.719516,
+        30.25131
+       ],
+       [
+        -97.719779,
+        30.250964
+       ]
+      ]
+     }
+    },
+    {
+     "label": "69 kV transmission line",
+     "voltage_kv": 69,
+     "voltage_class": "Under 100",
+     "adequacy_class": "69kv",
+     "distance_mi": 2.03,
+     "owner": "AUSTIN ENERGY",
+     "status": "NOT AVAILABLE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "OpenStreetMap",
+     "substation_1": "HOLLY POWER PLANT",
+     "substation_2": "KINGSBERRY",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.719779,
+        30.250964
+       ],
+       [
+        -97.717866,
+        30.251776
+       ],
+       [
+        -97.71624,
+        30.255315
+       ],
+       [
+        -97.711428,
+        30.253642
+       ],
+       [
+        -97.710222,
+        30.256218
+       ],
+       [
+        -97.707259,
+        30.255196
+       ],
+       [
+        -97.70533,
+        30.259326
+       ],
+       [
+        -97.687448,
+        30.264277
+       ],
+       [
+        -97.687213,
+        30.265281
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 2.39,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "KOENIG LANE",
+     "substation_2": "CENTRAL AUSTIN",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.727028,
+        30.32835
+       ],
+       [
+        -97.727059,
+        30.328121
+       ],
+       [
+        -97.726278,
+        30.328259
+       ],
+       [
+        -97.72546,
+        30.327875
+       ],
+       [
+        -97.725285,
+        30.327347
+       ],
+       [
+        -97.730877,
+        30.318487
+       ],
+       [
+        -97.728686,
+        30.31761
+       ],
+       [
+        -97.728784,
+        30.317048
+       ],
+       [
+        -97.731943,
+        30.312269
+       ],
+       [
+        -97.732542,
+        30.311582
+       ],
+       [
+        -97.733911,
+        30.310724
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 2.9,
+     "owner": "AUSTIN ENERGY",
+     "status": "NOT AVAILABLE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "OpenStreetMap",
+     "substation_1": "BEE CREEK",
+     "substation_2": "AUSTIN DAM",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.789606,
+        30.293813
+       ],
+       [
+        -97.789012,
+        30.293979
+       ],
+       [
+        -97.784401,
+        30.29327
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 3.23,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "KINGSBERRY",
+     "substation_2": "GROVE",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.687213,
+        30.265281
+       ],
+       [
+        -97.686916,
+        30.265248
+       ],
+       [
+        -97.686791,
+        30.264321
+       ],
+       [
+        -97.688563,
+        30.247843
+       ],
+       [
+        -97.689201,
+        30.244839
+       ],
+       [
+        -97.689165,
+        30.242274
+       ],
+       [
+        -97.689974,
+        30.234292
+       ],
+       [
+        -97.68902,
+        30.224403
+       ],
+       [
+        -97.689184,
+        30.223952
+       ],
+       [
+        -97.693068,
+        30.220413
+       ],
+       [
+        -97.693548,
+        30.220375
+       ],
+       [
+        -97.69654,
+        30.222171
+       ],
+       [
+        -97.703435,
+        30.225127
+       ],
+       [
+        -97.706318,
+        30.220671
+       ],
+       [
+        -97.71016,
+        30.215428
+       ],
+       [
+        -97.711002,
+        30.215837
+       ],
+       [
+        -97.710812,
+        30.216179
+       ],
+       [
+        -97.710991,
+        30.216456
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 3.23,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "KINGSBERRY",
+     "substation_2": "ED BLUESTEIN",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.687213,
+        30.265281
+       ],
+       [
+        -97.686752,
+        30.265414
+       ],
+       [
+        -97.686252,
+        30.265075
+       ],
+       [
+        -97.6821,
+        30.266223
+       ],
+       [
+        -97.664665,
+        30.263879
+       ],
+       [
+        -97.660216,
+        30.264236
+       ],
+       [
+        -97.658863,
+        30.264831
+       ],
+       [
+        -97.661332,
+        30.266102
+       ],
+       [
+        -97.659493,
+        30.270548
+       ],
+       [
+        -97.661004,
+        30.27103
+       ],
+       [
+        -97.662098,
+        30.270537
+       ]
+      ]
+     }
+    },
+    {
+     "label": "138 kV transmission line",
+     "voltage_kv": 138,
+     "voltage_class": "100-161",
+     "adequacy_class": "138kv",
+     "distance_mi": 3.35,
+     "owner": "AUSTIN ENERGY",
+     "status": "IN SERVICE",
+     "type": "AC",
+     "source": "HIFLD Electric Power Transmission Lines",
+     "source_field": "IMAGERY, OpenStreetMap",
+     "substation_1": "WHELESS LANE",
+     "substation_2": "TAP304861",
+     "map_geometry": {
+      "type": "LineString",
+      "coordinates": [
+       [
+        -97.685037,
+        30.313072
+       ],
+       [
+        -97.684971,
+        30.287318
+       ]
+      ]
+     }
+    }
+   ],
+   "nearest_substations": [],
+   "max_voltage_nearby_kv": 138,
+   "nearest_345kv_mi": null,
+   "nearest_138kv_mi": 0.94,
+   "cannot_confirm": [
+    "available transmission headroom",
+    "interconnection queue position",
+    "upgrade cost",
+    "energization timeline",
+    "deliverable MW"
+   ],
+   "attribution": "HIFLD electric transmission lines and substations"
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng_radius_15mi",
+  "fetched_at": "2026-08-01T21:14:15.130216Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "HIFLD identifies infrastructure proximity only; it does not provide ATC, headroom, queue, cost, or MW availability."
+  ],
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

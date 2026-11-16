@@ -1,0 +1,86 @@
+{
+ "source_id": "fema_nfhl",
+ "recorded_at": "2026-08-01T21:07:23.895927+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "wave1",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 3,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "fema_nfhl",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "verified_public_fact",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "result_schema_version": 3,
+   "status": "clear",
+   "geometry_type": "buffer",
+   "confidence_level": "buffer",
+   "query_radius_m": 300,
+   "zones_found": [
+    "X"
+   ],
+   "sfha_zones_found": [],
+   "has_sfha": false,
+   "has_shaded_x": false,
+   "multiple_zones": false,
+   "loma_cases": [],
+   "lomr_cases": [],
+   "advisory": "No high-risk flood zone touches the mapped property area.",
+   "base_flood_elevation": null,
+   "max_flood_depth_ft": null,
+   "max_flood_velocity_fps": null,
+   "in_regulatory_floodway": false,
+   "zone_engineering_detail": [
+    {
+     "zone": "X",
+     "subtype": "AREA OF MINIMAL FLOOD HAZARD",
+     "bfe": null,
+     "depth": null,
+     "in_floodway": false
+    }
+   ],
+   "zone_subtypes": [
+    "AREA OF MINIMAL FLOOD HAZARD"
+   ],
+   "zone": "X",
+   "in_floodplain": false,
+   "zone_description": "Area of minimal flood hazard (AREA OF MINIMAL FLOOD HAZARD)",
+   "source": "FEMA NFHL",
+   "sfha_map_geometry": null,
+   "floodway_map_geometry": null,
+   "shaded_x_map_geometry": null,
+   "sfha_intersection_acres": null,
+   "floodway_intersection_acres": null,
+   "shaded_x_intersection_acres": null,
+   "parcel_zone_features": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:23.895927Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": null,
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

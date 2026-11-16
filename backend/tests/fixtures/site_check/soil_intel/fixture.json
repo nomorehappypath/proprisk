@@ -1,0 +1,81 @@
+{
+ "source_id": "soil_intel",
+ "recorded_at": "2026-08-01T21:07:21.670781+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "soil_intel",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "clear",
+   "map_units_count": 1,
+   "map_units": [
+    {
+     "mukey": "393253",
+     "name": "Urban land, 0 to 6 percent slopes",
+     "symbol": "Ur",
+     "farmland_class": "Not prime farmland",
+     "components": [
+      {
+       "component_name": "Urban land",
+       "comp_pct": 100,
+       "hydric_rating": "No",
+       "drainage_class": "",
+       "slope_low": 0.0,
+       "slope_high": 6.0,
+       "runoff": "Very high"
+      }
+     ]
+    }
+   ],
+   "any_hydric_component": false,
+   "any_prime_farmland": true,
+   "max_component_slope_pct": 6.0,
+   "web_soil_survey_url": "https://websoilsurvey.sc.egov.usda.gov/",
+   "advisory": "Soil map unit(s): Ur (Urban land, 0 to 6 percent slopes). Flags: prime-farmland classification \u2014 Farmland Protection Policy Act review applies to any federally-funded or permitted project. SSURGO is broad-acre mapping; site-specific geotech, OSSF evaluation, or wetland delineation is required for any binding decision.",
+   "contradiction_flags": []
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:21.670781Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "Soil map unit(s): Ur (Urban land, 0 to 6 percent slopes). Flags: prime-farmland classification \u2014 Farmland Protection Policy Act review applies to any federally-funded or permitted project. SSURGO is broad-acre mapping; site-specific geotech, OSSF evaluation, or wetland delineation is required for any binding decision."
+  ],
+  "manual_upload_request": {
+   "document_types": [
+    "geotechnical investigation",
+    "wetland delineation",
+    "septic site evaluation (OSSF)",
+    "civil drainage study"
+   ],
+   "reason": "SSURGO is broad-acre soil mapping. A site-specific geotech investigation is required for any foundation or grading design. For parcels considering OSSF, an on-site sewage facility evaluation is required by the county OSSF office. Hydric components trigger a wetland delineation."
+  },
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

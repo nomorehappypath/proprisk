@@ -1,0 +1,64 @@
+{
+ "source_id": "usgs_elevation",
+ "recorded_at": "2026-08-01T21:07:26.837547+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "wave1",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "usgs_elevation",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "status": "screened",
+   "center_elevation_ft": 547.1,
+   "min_elevation_ft": 547.1,
+   "max_elevation_ft": 547.1,
+   "relief_ft": 0.0,
+   "sampled_max_grade_pct": null,
+   "sampled_grade_basis": null,
+   "sample_count": 1,
+   "samples": [
+    {
+     "kind": "center",
+     "lat": 30.276513,
+     "lng": -97.739758,
+     "elevation_ft": 547.1,
+     "resolution_m": 1
+    }
+   ],
+   "source": "USGS 3DEP Elevation Point Query Service",
+   "source_url": "https://apps.nationalmap.gov/epqs/",
+   "advisory": "Interpolated public DEM screening, not a boundary survey, topographic survey, finished-floor elevation, or drainage design."
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:07:26.837547Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [],
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}

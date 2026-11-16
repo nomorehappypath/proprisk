@@ -1,0 +1,160 @@
+# Buda, TX — Land Development Code
+# Source: https://budatx.gov/297/Documents-Resources
+# Last verified: 2026-05-02
+#
+# Coverage: 6 broker-grade districts.
+#   AG, R-1, R-3, MF-2, C-2, M-1
+
+city: buda
+state: TX
+udc_version: "Buda Land Development Code"
+udc_source_url: "https://budatx.gov/297/Documents-Resources"
+last_verified: "2026-05-02"
+
+districts:
+
+  AG:
+    full_name: "Agricultural"
+    code_section: "LDC §AG"
+    permitted_uses:
+      - {use_id: agricultural, code_ref: "LDC §AG"}
+      - {use_id: ag_exempt, code_ref: "LDC §AG"}
+      - {use_id: single_family_detached, code_ref: "LDC §AG", notes: "1 du / 5 acres."}
+    conditional_uses:
+      - {use_id: solar_farm, code_ref: "LDC §AG"}
+    prohibited_uses:
+      - {use_id: multifamily_residential, code_ref: "LDC §AG"}
+      - {use_id: general_retail, code_ref: "LDC §AG"}
+    dimensional_standards:
+      max_density: {value: 0.2, unit: "units_per_acre", code_ref: "LDC §AG"}
+      max_height: {value: 35, unit: "feet", code_ref: "LDC §AG"}
+      min_lot_size: {value: 217800, unit: "square_feet", code_ref: "LDC §AG"}
+      front_setback: {value: 50, unit: "feet", code_ref: "LDC §AG"}
+      side_setback: {value: 25, unit: "feet", code_ref: "LDC §AG"}
+      rear_setback: {value: 50, unit: "feet", code_ref: "LDC §AG"}
+      max_impervious_cover: {value: 25, unit: "percent", code_ref: "LDC §AG"}
+    parking:
+      - {use_id: single_family_detached, rate: 2.0, unit: "spaces_per_unit", code_ref: "LDC §Parking"}
+
+  R-1:
+    full_name: "Single Family - Estate"
+    code_section: "LDC §R-1"
+    permitted_uses:
+      - {use_id: single_family_detached, code_ref: "LDC §R-1"}
+      - {use_id: church, code_ref: "LDC §R-1"}
+      - {use_id: school_public, code_ref: "LDC §R-1"}
+    conditional_uses:
+      - {use_id: childcare, code_ref: "LDC §R-1"}
+    prohibited_uses:
+      - {use_id: multifamily_residential, code_ref: "LDC §R-1"}
+    dimensional_standards:
+      max_density: {value: 1.0, unit: "units_per_acre", code_ref: "LDC §R-1"}
+      max_height: {value: 35, unit: "feet", code_ref: "LDC §R-1"}
+      min_lot_size: {value: 43560, unit: "square_feet", code_ref: "LDC §R-1"}
+      front_setback: {value: 35, unit: "feet", code_ref: "LDC §R-1"}
+      side_setback: {value: 15, unit: "feet", code_ref: "LDC §R-1"}
+      rear_setback: {value: 25, unit: "feet", code_ref: "LDC §R-1"}
+      max_impervious_cover: {value: 35, unit: "percent", code_ref: "LDC §R-1"}
+    parking:
+      - {use_id: single_family_detached, rate: 2.0, unit: "spaces_per_unit", code_ref: "LDC §Parking"}
+
+  R-3:
+    full_name: "Single Family - Standard"
+    code_section: "LDC §R-3"
+    permitted_uses:
+      - {use_id: single_family_detached, code_ref: "LDC §R-3"}
+      - {use_id: church, code_ref: "LDC §R-3"}
+      - {use_id: school_public, code_ref: "LDC §R-3"}
+    conditional_uses:
+      - {use_id: childcare, code_ref: "LDC §R-3"}
+      - {use_id: accessory_dwelling_unit, code_ref: "LDC §R-3"}
+    prohibited_uses:
+      - {use_id: duplex, code_ref: "LDC §R-3"}
+      - {use_id: multifamily_residential, code_ref: "LDC §R-3"}
+    dimensional_standards:
+      max_density: {value: 5.0, unit: "units_per_acre", code_ref: "LDC §R-3"}
+      max_height: {value: 35, unit: "feet", code_ref: "LDC §R-3"}
+      min_lot_size: {value: 7000, unit: "square_feet", code_ref: "LDC §R-3"}
+      front_setback: {value: 25, unit: "feet", code_ref: "LDC §R-3"}
+      side_setback: {value: 5, unit: "feet", code_ref: "LDC §R-3"}
+      rear_setback: {value: 20, unit: "feet", code_ref: "LDC §R-3"}
+      max_impervious_cover: {value: 50, unit: "percent", code_ref: "LDC §R-3"}
+    parking:
+      - {use_id: single_family_detached, rate: 2.0, unit: "spaces_per_unit", code_ref: "LDC §Parking"}
+
+  MF-2:
+    full_name: "Multifamily"
+    code_section: "LDC §MF-2"
+    permitted_uses:
+      - {use_id: townhouse, code_ref: "LDC §MF-2"}
+      - {use_id: multifamily_residential, code_ref: "LDC §MF-2"}
+      - {use_id: condominium, code_ref: "LDC §MF-2"}
+      - {use_id: senior_living, code_ref: "LDC §MF-2"}
+    conditional_uses:
+      - {use_id: assisted_living, code_ref: "LDC §MF-2"}
+      - {use_id: childcare, code_ref: "LDC §MF-2"}
+    dimensional_standards:
+      max_density: {value: 18, unit: "units_per_acre", code_ref: "LDC §MF-2"}
+      max_height: {value: 40, unit: "feet", code_ref: "LDC §MF-2"}
+      min_lot_size: {value: 8000, unit: "square_feet", code_ref: "LDC §MF-2"}
+      front_setback: {value: 25, unit: "feet", code_ref: "LDC §MF-2"}
+      side_setback: {value: 15, unit: "feet", code_ref: "LDC §MF-2"}
+      rear_setback: {value: 25, unit: "feet", code_ref: "LDC §MF-2"}
+      max_impervious_cover: {value: 65, unit: "percent", code_ref: "LDC §MF-2"}
+    parking:
+      - {use_id: multifamily_residential, rate: 1.5, unit: "spaces_per_unit", code_ref: "LDC §Parking"}
+
+  C-2:
+    full_name: "General Commercial"
+    code_section: "LDC §C-2"
+    permitted_uses:
+      - {use_id: general_retail, code_ref: "LDC §C-2"}
+      - {use_id: convenience_store, code_ref: "LDC §C-2"}
+      - {use_id: restaurant, code_ref: "LDC §C-2"}
+      - {use_id: office_general, code_ref: "LDC §C-2"}
+      - {use_id: office_medical, code_ref: "LDC §C-2"}
+      - {use_id: bank_or_financial, code_ref: "LDC §C-2"}
+      - {use_id: hotel, code_ref: "LDC §C-2"}
+      - {use_id: gas_station, code_ref: "LDC §C-2"}
+      - {use_id: car_wash, code_ref: "LDC §C-2"}
+      - {use_id: drive_through, code_ref: "LDC §C-2"}
+      - {use_id: auto_service, code_ref: "LDC §C-2"}
+      - {use_id: self_storage, code_ref: "LDC §C-2"}
+    conditional_uses:
+      - {use_id: bar_or_lounge, code_ref: "LDC §C-2"}
+      - {use_id: outdoor_storage, code_ref: "LDC §C-2"}
+    dimensional_standards:
+      max_height: {value: 50, unit: "feet", code_ref: "LDC §C-2"}
+      front_setback: {value: 25, unit: "feet", code_ref: "LDC §C-2"}
+      side_setback: {value: 10, unit: "feet", code_ref: "LDC §C-2"}
+      rear_setback: {value: 25, unit: "feet", code_ref: "LDC §C-2"}
+      max_impervious_cover: {value: 85, unit: "percent", code_ref: "LDC §C-2"}
+    parking:
+      - {use_id: general_retail, rate: 4.0, unit: "spaces_per_1000_sf", code_ref: "LDC §Parking"}
+      - {use_id: hotel, rate: 1.0, unit: "spaces_per_unit", code_ref: "LDC §Parking"}
+      - {use_id: office_general, rate: 3.5, unit: "spaces_per_1000_sf", code_ref: "LDC §Parking"}
+
+  M-1:
+    full_name: "Light Industrial"
+    code_section: "LDC §M-1"
+    permitted_uses:
+      - {use_id: warehouse, code_ref: "LDC §M-1"}
+      - {use_id: light_industrial, code_ref: "LDC §M-1"}
+      - {use_id: manufacturing, code_ref: "LDC §M-1"}
+      - {use_id: self_storage, code_ref: "LDC §M-1"}
+      - {use_id: data_center, code_ref: "LDC §M-1"}
+      - {use_id: auto_service, code_ref: "LDC §M-1"}
+    conditional_uses:
+      - {use_id: heavy_industrial, code_ref: "LDC §M-1"}
+      - {use_id: outdoor_storage, code_ref: "LDC §M-1"}
+    prohibited_uses:
+      - {use_id: multifamily_residential, code_ref: "LDC §M-1"}
+    dimensional_standards:
+      max_height: {value: 50, unit: "feet", code_ref: "LDC §M-1"}
+      front_setback: {value: 30, unit: "feet", code_ref: "LDC §M-1"}
+      side_setback: {value: 15, unit: "feet", code_ref: "LDC §M-1"}
+      rear_setback: {value: 30, unit: "feet", code_ref: "LDC §M-1"}
+      max_impervious_cover: {value: 75, unit: "percent", code_ref: "LDC §M-1"}
+    parking:
+      - {use_id: warehouse, rate: 1.0, unit: "spaces_per_2000_sf", code_ref: "LDC §Parking"}
+      - {use_id: light_industrial, rate: 1.0, unit: "spaces_per_1000_sf", code_ref: "LDC §Parking"}

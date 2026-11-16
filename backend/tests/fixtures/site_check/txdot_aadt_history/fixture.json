@@ -1,0 +1,1897 @@
+{
+ "source_id": "txdot_aadt_history",
+ "recorded_at": "2026-08-01T21:06:41.042386+00:00",
+ "strategy": "live-recorded raw payloads (Austin identity)",
+ "identity": {
+  "address": "1100 Congress Ave, Austin, TX 78701",
+  "lat": 30.276513,
+  "lng": -97.739758,
+  "county": "travis",
+  "parcel_id": null,
+  "cad_account": null,
+  "acreage": null,
+  "jurisdiction_candidates": [],
+  "parcel_geometry": null,
+  "is_multi_parcel": false,
+  "boundary_straddle_jurisdictions": [],
+  "identifier_resolution_log": []
+ },
+ "stage": "initial",
+ "settings_overrides": {},
+ "requires_keys": [],
+ "registry_result_schema_version": 0,
+ "ignore_paths": [],
+ "notes": [],
+ "expected": {
+  "source_id": "txdot_aadt_history",
+  "source_access_status": "PROGRAMMATIC_PUBLIC",
+  "data_confidence_status": "screened_indicator",
+  "coverage_status": "covered",
+  "normalized_facts": {
+   "source_dataset": "TxDOT TPP Annual AADT Data (SPM View)",
+   "source_url": "https://services.arcgis.com/KTcxiTD9dsQw4r7Z/arcgis/rest/services/TxDOT_TPP_Annual_AADT_Data_(SPM_View)/FeatureServer/0",
+   "query_radius_m": 5000,
+   "stations": [
+    {
+     "station_id": "227FS725",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.27805699,
+     "lng": -97.739863,
+     "distance_m": 172,
+     "distance_mi": 0.11,
+     "latest_year": 2015,
+     "latest_aadt": 427,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 400
+      },
+      {
+       "year": 2015,
+       "aadt": 427
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2015,
+      "latest_aadt": 427,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": 6.75,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 400
+       },
+       {
+        "year": 2015,
+        "aadt": 427
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS829",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.27047399,
+     "lng": -97.73126299,
+     "distance_m": 1057,
+     "distance_mi": 0.66,
+     "latest_year": 2020,
+     "latest_aadt": 521,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 390
+      },
+      {
+       "year": 2015,
+       "aadt": 917
+      },
+      {
+       "year": 2020,
+       "aadt": 521
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2020,
+      "latest_aadt": 521,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": -43.18,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 390
+       },
+       {
+        "year": 2015,
+        "aadt": 917
+       },
+       {
+        "year": 2020,
+        "aadt": 521
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H114",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0343",
+     "on_road": "SL 343",
+     "count_cycle": 1,
+     "lat": 30.263283,
+     "lng": -97.744185,
+     "distance_m": 1531,
+     "distance_mi": 0.95,
+     "latest_year": 2025,
+     "latest_aadt": 23563,
+     "history": [
+      {
+       "year": 2006,
+       "aadt": 15900
+      },
+      {
+       "year": 2007,
+       "aadt": 18000
+      },
+      {
+       "year": 2008,
+       "aadt": 15500
+      },
+      {
+       "year": 2009,
+       "aadt": 27000
+      },
+      {
+       "year": 2010,
+       "aadt": 23000
+      },
+      {
+       "year": 2011,
+       "aadt": 24000
+      },
+      {
+       "year": 2012,
+       "aadt": 29000
+      },
+      {
+       "year": 2013,
+       "aadt": 27476
+      },
+      {
+       "year": 2014,
+       "aadt": 22613
+      },
+      {
+       "year": 2015,
+       "aadt": 26899
+      },
+      {
+       "year": 2016,
+       "aadt": 29692
+      },
+      {
+       "year": 2017,
+       "aadt": 25842
+      },
+      {
+       "year": 2018,
+       "aadt": 24852
+      },
+      {
+       "year": 2019,
+       "aadt": 28635
+      },
+      {
+       "year": 2020,
+       "aadt": 25770
+      },
+      {
+       "year": 2021,
+       "aadt": 29494
+      },
+      {
+       "year": 2022,
+       "aadt": 24942
+      },
+      {
+       "year": 2023,
+       "aadt": 24555
+      },
+      {
+       "year": 2024,
+       "aadt": 25046
+      },
+      {
+       "year": 2025,
+       "aadt": 23563
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 23563,
+      "change_1yr_pct": -5.92,
+      "change_3yr_pct": -5.53,
+      "change_5yr_pct": -8.56,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 25770
+       },
+       {
+        "year": 2021,
+        "aadt": 29494
+       },
+       {
+        "year": 2022,
+        "aadt": 24942
+       },
+       {
+        "year": 2023,
+        "aadt": 24555
+       },
+       {
+        "year": 2024,
+        "aadt": 25046
+       },
+       {
+        "year": 2025,
+        "aadt": 23563
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H114A",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0343",
+     "on_road": "SL 343",
+     "count_cycle": 1,
+     "lat": 30.263558,
+     "lng": -97.745195,
+     "distance_m": 1532,
+     "distance_mi": 0.95,
+     "latest_year": 2025,
+     "latest_aadt": 30707,
+     "history": [
+      {
+       "year": 2006,
+       "aadt": 18000
+      },
+      {
+       "year": 2007,
+       "aadt": 18500
+      },
+      {
+       "year": 2008,
+       "aadt": 15900
+      },
+      {
+       "year": 2009,
+       "aadt": 24000
+      },
+      {
+       "year": 2010,
+       "aadt": 24000
+      },
+      {
+       "year": 2011,
+       "aadt": 23000
+      },
+      {
+       "year": 2012,
+       "aadt": 26000
+      },
+      {
+       "year": 2013,
+       "aadt": 28433
+      },
+      {
+       "year": 2014,
+       "aadt": 21351
+      },
+      {
+       "year": 2015,
+       "aadt": 28380
+      },
+      {
+       "year": 2016,
+       "aadt": 27920
+      },
+      {
+       "year": 2017,
+       "aadt": 21811
+      },
+      {
+       "year": 2018,
+       "aadt": 27900
+      },
+      {
+       "year": 2019,
+       "aadt": 26104
+      },
+      {
+       "year": 2020,
+       "aadt": 20883
+      },
+      {
+       "year": 2021,
+       "aadt": 26887
+      },
+      {
+       "year": 2022,
+       "aadt": 21553
+      },
+      {
+       "year": 2023,
+       "aadt": 21219
+      },
+      {
+       "year": 2024,
+       "aadt": 21643
+      },
+      {
+       "year": 2025,
+       "aadt": 30707
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 30707,
+      "change_1yr_pct": 41.88,
+      "change_3yr_pct": 42.47,
+      "change_5yr_pct": 47.04,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 20883
+       },
+       {
+        "year": 2021,
+        "aadt": 26887
+       },
+       {
+        "year": 2022,
+        "aadt": 21553
+       },
+       {
+        "year": 2023,
+        "aadt": 21219
+       },
+       {
+        "year": 2024,
+        "aadt": 21643
+       },
+       {
+        "year": 2025,
+        "aadt": 30707
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS731",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.26874999,
+     "lng": -97.75427,
+     "distance_m": 1639,
+     "distance_mi": 1.02,
+     "latest_year": 2025,
+     "latest_aadt": 819,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 710
+      },
+      {
+       "year": 2015,
+       "aadt": 1002
+      },
+      {
+       "year": 2020,
+       "aadt": 400
+      },
+      {
+       "year": 2025,
+       "aadt": 819
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 819,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": 104.75,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 710
+       },
+       {
+        "year": 2015,
+        "aadt": 1002
+       },
+       {
+        "year": 2020,
+        "aadt": 400
+       },
+       {
+        "year": 2025,
+        "aadt": 819
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS820",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.289291,
+     "lng": -97.74923099,
+     "distance_m": 1687,
+     "distance_mi": 1.05,
+     "latest_year": 2020,
+     "latest_aadt": 1545,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 2400
+      },
+      {
+       "year": 2015,
+       "aadt": 1603
+      },
+      {
+       "year": 2020,
+       "aadt": 1545
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2020,
+      "latest_aadt": 1545,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": -3.62,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 2400
+       },
+       {
+        "year": 2015,
+        "aadt": 1603
+       },
+       {
+        "year": 2020,
+        "aadt": 1545
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H115",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0343",
+     "on_road": "SL 343",
+     "count_cycle": 1,
+     "lat": 30.261271,
+     "lng": -97.736963,
+     "distance_m": 1716,
+     "distance_mi": 1.07,
+     "latest_year": 2025,
+     "latest_aadt": 26056,
+     "history": [
+      {
+       "year": 2006,
+       "aadt": 16500
+      },
+      {
+       "year": 2007,
+       "aadt": 17300
+      },
+      {
+       "year": 2008,
+       "aadt": 18900
+      },
+      {
+       "year": 2009,
+       "aadt": 27000
+      },
+      {
+       "year": 2010,
+       "aadt": 19800
+      },
+      {
+       "year": 2011,
+       "aadt": 23000
+      },
+      {
+       "year": 2012,
+       "aadt": 28000
+      },
+      {
+       "year": 2013,
+       "aadt": 26401
+      },
+      {
+       "year": 2014,
+       "aadt": 20895
+      },
+      {
+       "year": 2015,
+       "aadt": 30188
+      },
+      {
+       "year": 2016,
+       "aadt": 28679
+      },
+      {
+       "year": 2017,
+       "aadt": 21622
+      },
+      {
+       "year": 2018,
+       "aadt": 30614
+      },
+      {
+       "year": 2019,
+       "aadt": 30614
+      },
+      {
+       "year": 2020,
+       "aadt": 27550
+      },
+      {
+       "year": 2021,
+       "aadt": 31532
+      },
+      {
+       "year": 2022,
+       "aadt": 24500
+      },
+      {
+       "year": 2023,
+       "aadt": 24120
+      },
+      {
+       "year": 2024,
+       "aadt": 24602
+      },
+      {
+       "year": 2025,
+       "aadt": 26056
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 26056,
+      "change_1yr_pct": 5.91,
+      "change_3yr_pct": 6.35,
+      "change_5yr_pct": -5.42,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 27550
+       },
+       {
+        "year": 2021,
+        "aadt": 31532
+       },
+       {
+        "year": 2022,
+        "aadt": 24500
+       },
+       {
+        "year": 2023,
+        "aadt": 24120
+       },
+       {
+        "year": 2024,
+        "aadt": 24602
+       },
+       {
+        "year": 2025,
+        "aadt": 26056
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H128A",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0343",
+     "on_road": "SL 343",
+     "count_cycle": 1,
+     "lat": 30.265869,
+     "lng": -97.753097,
+     "distance_m": 1744,
+     "distance_mi": 1.08,
+     "latest_year": 2025,
+     "latest_aadt": 34127,
+     "history": [
+      {
+       "year": 2006,
+       "aadt": 31000
+      },
+      {
+       "year": 2007,
+       "aadt": 31000
+      },
+      {
+       "year": 2008,
+       "aadt": 27000
+      },
+      {
+       "year": 2009,
+       "aadt": 29000
+      },
+      {
+       "year": 2010,
+       "aadt": 27000
+      },
+      {
+       "year": 2011,
+       "aadt": 26000
+      },
+      {
+       "year": 2012,
+       "aadt": 35000
+      },
+      {
+       "year": 2013,
+       "aadt": 36012
+      },
+      {
+       "year": 2014,
+       "aadt": 29304
+      },
+      {
+       "year": 2015,
+       "aadt": 36009
+      },
+      {
+       "year": 2016,
+       "aadt": 40314
+      },
+      {
+       "year": 2017,
+       "aadt": 38335
+      },
+      {
+       "year": 2018,
+       "aadt": 43724
+      },
+      {
+       "year": 2019,
+       "aadt": 43724
+      },
+      {
+       "year": 2020,
+       "aadt": 35408
+      },
+      {
+       "year": 2021,
+       "aadt": 45036
+      },
+      {
+       "year": 2022,
+       "aadt": 36101
+      },
+      {
+       "year": 2023,
+       "aadt": 36115
+      },
+      {
+       "year": 2024,
+       "aadt": 36837
+      },
+      {
+       "year": 2025,
+       "aadt": 34127
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 34127,
+      "change_1yr_pct": -7.36,
+      "change_3yr_pct": -5.47,
+      "change_5yr_pct": -3.62,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 35408
+       },
+       {
+        "year": 2021,
+        "aadt": 45036
+       },
+       {
+        "year": 2022,
+        "aadt": 36101
+       },
+       {
+        "year": 2023,
+        "aadt": 36115
+       },
+       {
+        "year": 2024,
+        "aadt": 36837
+       },
+       {
+        "year": 2025,
+        "aadt": 34127
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227CS5",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "S 1ST ST",
+     "on_road": "S 1ST ST",
+     "count_cycle": 5,
+     "lat": 30.261829,
+     "lng": -97.748375,
+     "distance_m": 1831,
+     "distance_mi": 1.14,
+     "latest_year": 2020,
+     "latest_aadt": 12497,
+     "history": [
+      {
+       "year": 2013,
+       "aadt": 28483
+      },
+      {
+       "year": 2014,
+       "aadt": 23565
+      },
+      {
+       "year": 2015,
+       "aadt": 33633
+      },
+      {
+       "year": 2016,
+       "aadt": 37282
+      },
+      {
+       "year": 2017,
+       "aadt": 32909
+      },
+      {
+       "year": 2018,
+       "aadt": 32154
+      },
+      {
+       "year": 2020,
+       "aadt": 12497
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2020,
+      "latest_aadt": 12497,
+      "change_1yr_pct": null,
+      "change_3yr_pct": -62.03,
+      "change_5yr_pct": -62.84,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2014,
+        "aadt": 23565
+       },
+       {
+        "year": 2015,
+        "aadt": 33633
+       },
+       {
+        "year": 2016,
+        "aadt": 37282
+       },
+       {
+        "year": 2017,
+        "aadt": 32909
+       },
+       {
+        "year": 2018,
+        "aadt": 32154
+       },
+       {
+        "year": 2020,
+        "aadt": 12497
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS828",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.266702,
+     "lng": -97.72239699,
+     "distance_m": 1992,
+     "distance_mi": 1.24,
+     "latest_year": 2020,
+     "latest_aadt": 2080,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 3220
+      },
+      {
+       "year": 2015,
+       "aadt": 2950
+      },
+      {
+       "year": 2020,
+       "aadt": 2080
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2020,
+      "latest_aadt": 2080,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": -29.49,
+      "direction": "falling",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 3220
+       },
+       {
+        "year": 2015,
+        "aadt": 2950
+       },
+       {
+        "year": 2020,
+        "aadt": 2080
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS843",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.29134499,
+     "lng": -97.72530399,
+     "distance_m": 2156,
+     "distance_mi": 1.34,
+     "latest_year": 2025,
+     "latest_aadt": 292,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 220
+      },
+      {
+       "year": 2015,
+       "aadt": 248
+      },
+      {
+       "year": 2020,
+       "aadt": 172
+      },
+      {
+       "year": 2025,
+       "aadt": 292
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 292,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": 69.77,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 220
+       },
+       {
+        "year": 2015,
+        "aadt": 248
+       },
+       {
+        "year": 2020,
+        "aadt": 172
+       },
+       {
+        "year": 2025,
+        "aadt": 292
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227D182ANBSR",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0001",
+     "on_road": "SL 1",
+     "count_cycle": 1,
+     "lat": 30.282352,
+     "lng": -97.765151,
+     "distance_m": 2523,
+     "distance_mi": 1.57,
+     "latest_year": 2025,
+     "latest_aadt": 9261,
+     "history": [
+      {
+       "year": 2012,
+       "aadt": 99
+      },
+      {
+       "year": 2013,
+       "aadt": 99
+      },
+      {
+       "year": 2014,
+       "aadt": 99
+      },
+      {
+       "year": 2015,
+       "aadt": 99
+      },
+      {
+       "year": 2016,
+       "aadt": 11300
+      },
+      {
+       "year": 2017,
+       "aadt": 8690
+      },
+      {
+       "year": 2018,
+       "aadt": 9338
+      },
+      {
+       "year": 2019,
+       "aadt": 9166
+      },
+      {
+       "year": 2020,
+       "aadt": 3446
+      },
+      {
+       "year": 2021,
+       "aadt": 9258
+      },
+      {
+       "year": 2022,
+       "aadt": 9827
+      },
+      {
+       "year": 2023,
+       "aadt": 8751
+      },
+      {
+       "year": 2024,
+       "aadt": 8271
+      },
+      {
+       "year": 2025,
+       "aadt": 9261
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 9261,
+      "change_1yr_pct": 11.97,
+      "change_3yr_pct": -5.76,
+      "change_5yr_pct": 168.75,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 3446
+       },
+       {
+        "year": 2021,
+        "aadt": 9258
+       },
+       {
+        "year": 2022,
+        "aadt": 9827
+       },
+       {
+        "year": 2023,
+        "aadt": 8751
+       },
+       {
+        "year": 2024,
+        "aadt": 8271
+       },
+       {
+        "year": 2025,
+        "aadt": 9261
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H1002",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0001",
+     "on_road": "SL 1",
+     "count_cycle": 1,
+     "lat": 30.290052,
+     "lng": -97.761071,
+     "distance_m": 2541,
+     "distance_mi": 1.58,
+     "latest_year": 2025,
+     "latest_aadt": 164466,
+     "history": [
+      {
+       "year": 2021,
+       "aadt": 154072
+      },
+      {
+       "year": 2022,
+       "aadt": 157625
+      },
+      {
+       "year": 2023,
+       "aadt": 161271
+      },
+      {
+       "year": 2024,
+       "aadt": 161231
+      },
+      {
+       "year": 2025,
+       "aadt": 164466
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 164466,
+      "change_1yr_pct": 2.01,
+      "change_3yr_pct": 4.34,
+      "change_5yr_pct": null,
+      "direction": "unknown",
+      "points": [
+       {
+        "year": 2021,
+        "aadt": 154072
+       },
+       {
+        "year": 2022,
+        "aadt": 157625
+       },
+       {
+        "year": 2023,
+        "aadt": 161271
+       },
+       {
+        "year": 2024,
+        "aadt": 161231
+       },
+       {
+        "year": 2025,
+        "aadt": 164466
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS716",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.25632699,
+     "lng": -97.725377,
+     "distance_m": 2635,
+     "distance_mi": 1.64,
+     "latest_year": 2025,
+     "latest_aadt": 344,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 630
+      },
+      {
+       "year": 2015,
+       "aadt": 426
+      },
+      {
+       "year": 2025,
+       "aadt": 344
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 344,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": null,
+      "direction": "unknown",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 630
+       },
+       {
+        "year": 2015,
+        "aadt": 426
+       },
+       {
+        "year": 2025,
+        "aadt": 344
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227D67SBSR",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0001",
+     "on_road": "SL 1",
+     "count_cycle": 1,
+     "lat": 30.281706,
+     "lng": -97.767743,
+     "distance_m": 2749,
+     "distance_mi": 1.71,
+     "latest_year": 2025,
+     "latest_aadt": 14548,
+     "history": [
+      {
+       "year": 2021,
+       "aadt": 12000
+      },
+      {
+       "year": 2022,
+       "aadt": 12738
+      },
+      {
+       "year": 2023,
+       "aadt": 14481
+      },
+      {
+       "year": 2024,
+       "aadt": 13686
+      },
+      {
+       "year": 2025,
+       "aadt": 14548
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 14548,
+      "change_1yr_pct": 6.3,
+      "change_3yr_pct": 14.21,
+      "change_5yr_pct": null,
+      "direction": "unknown",
+      "points": [
+       {
+        "year": 2021,
+        "aadt": 12000
+       },
+       {
+        "year": 2022,
+        "aadt": 12738
+       },
+       {
+        "year": 2023,
+        "aadt": 14481
+       },
+       {
+        "year": 2024,
+        "aadt": 13686
+       },
+       {
+        "year": 2025,
+        "aadt": 14548
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H103C",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "SL0001",
+     "on_road": "SL 1",
+     "count_cycle": 1,
+     "lat": 30.294756,
+     "lng": -97.759226,
+     "distance_m": 2758,
+     "distance_mi": 1.71,
+     "latest_year": 2025,
+     "latest_aadt": 171180,
+     "history": [
+      {
+       "year": 2021,
+       "aadt": 160224
+      },
+      {
+       "year": 2022,
+       "aadt": 165320
+      },
+      {
+       "year": 2023,
+       "aadt": 168138
+      },
+      {
+       "year": 2024,
+       "aadt": 168631
+      },
+      {
+       "year": 2025,
+       "aadt": 171180
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 171180,
+      "change_1yr_pct": 1.51,
+      "change_3yr_pct": 3.54,
+      "change_5yr_pct": null,
+      "direction": "unknown",
+      "points": [
+       {
+        "year": 2021,
+        "aadt": 160224
+       },
+       {
+        "year": 2022,
+        "aadt": 165320
+       },
+       {
+        "year": 2023,
+        "aadt": 168138
+       },
+       {
+        "year": 2024,
+        "aadt": 168631
+       },
+       {
+        "year": 2025,
+        "aadt": 171180
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227FS705",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "URBAN ACR",
+     "active": true,
+     "on_road_raw": "-",
+     "on_road": "-",
+     "count_cycle": 5,
+     "lat": 30.29198899,
+     "lng": -97.715295,
+     "distance_m": 2912,
+     "distance_mi": 1.81,
+     "latest_year": 2025,
+     "latest_aadt": 1607,
+     "history": [
+      {
+       "year": 2010,
+       "aadt": 1600
+      },
+      {
+       "year": 2015,
+       "aadt": 1855
+      },
+      {
+       "year": 2020,
+       "aadt": 1079
+      },
+      {
+       "year": 2025,
+       "aadt": 1607
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 1607,
+      "change_1yr_pct": null,
+      "change_3yr_pct": null,
+      "change_5yr_pct": 48.93,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2010,
+        "aadt": 1600
+       },
+       {
+        "year": 2015,
+        "aadt": 1855
+       },
+       {
+        "year": 2020,
+        "aadt": 1079
+       },
+       {
+        "year": 2025,
+        "aadt": 1607
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H117SBSR",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "IH0035",
+     "on_road": "IH 35",
+     "count_cycle": 1,
+     "lat": 30.298041,
+     "lng": -97.717917,
+     "distance_m": 3182,
+     "distance_mi": 1.98,
+     "latest_year": 2025,
+     "latest_aadt": 13356,
+     "history": [
+      {
+       "year": 2013,
+       "aadt": 10914
+      },
+      {
+       "year": 2014,
+       "aadt": 11107
+      },
+      {
+       "year": 2015,
+       "aadt": 11737
+      },
+      {
+       "year": 2016,
+       "aadt": 11720
+      },
+      {
+       "year": 2017,
+       "aadt": 9573
+      },
+      {
+       "year": 2018,
+       "aadt": 14224
+      },
+      {
+       "year": 2019,
+       "aadt": 11931
+      },
+      {
+       "year": 2020,
+       "aadt": 10857
+      },
+      {
+       "year": 2021,
+       "aadt": 12050
+      },
+      {
+       "year": 2022,
+       "aadt": 12796
+      },
+      {
+       "year": 2023,
+       "aadt": 12421
+      },
+      {
+       "year": 2024,
+       "aadt": 14294
+      },
+      {
+       "year": 2025,
+       "aadt": 13356
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 13356,
+      "change_1yr_pct": -6.56,
+      "change_3yr_pct": 4.38,
+      "change_5yr_pct": 23.02,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 10857
+       },
+       {
+        "year": 2021,
+        "aadt": 12050
+       },
+       {
+        "year": 2022,
+        "aadt": 12796
+       },
+       {
+        "year": 2023,
+        "aadt": 12421
+       },
+       {
+        "year": 2024,
+        "aadt": 14294
+       },
+       {
+        "year": 2025,
+        "aadt": 13356
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H117NBSR",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "IH0035",
+     "on_road": "IH 35",
+     "count_cycle": 1,
+     "lat": 30.297841,
+     "lng": -97.717404,
+     "distance_m": 3199,
+     "distance_mi": 1.99,
+     "latest_year": 2025,
+     "latest_aadt": 11463,
+     "history": [
+      {
+       "year": 2013,
+       "aadt": 14071
+      },
+      {
+       "year": 2014,
+       "aadt": 13763
+      },
+      {
+       "year": 2015,
+       "aadt": 14535
+      },
+      {
+       "year": 2016,
+       "aadt": 14523
+      },
+      {
+       "year": 2017,
+       "aadt": 12854
+      },
+      {
+       "year": 2018,
+       "aadt": 13843
+      },
+      {
+       "year": 2019,
+       "aadt": 12940
+      },
+      {
+       "year": 2020,
+       "aadt": 9011
+      },
+      {
+       "year": 2021,
+       "aadt": 13069
+      },
+      {
+       "year": 2022,
+       "aadt": 13878
+      },
+      {
+       "year": 2023,
+       "aadt": 11767
+      },
+      {
+       "year": 2024,
+       "aadt": 13438
+      },
+      {
+       "year": 2025,
+       "aadt": 11463
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 11463,
+      "change_1yr_pct": -14.7,
+      "change_3yr_pct": -17.4,
+      "change_5yr_pct": 27.21,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 9011
+       },
+       {
+        "year": 2021,
+        "aadt": 13069
+       },
+       {
+        "year": 2022,
+        "aadt": 13878
+       },
+       {
+        "year": 2023,
+        "aadt": 11767
+       },
+       {
+        "year": 2024,
+        "aadt": 13438
+       },
+       {
+        "year": 2025,
+        "aadt": 11463
+       }
+      ]
+     }
+    },
+    {
+     "station_id": "227H117",
+     "district": "Austin",
+     "county": "Travis",
+     "category": "ANNUAL ACR",
+     "active": true,
+     "on_road_raw": "IH0035",
+     "on_road": "IH 35",
+     "count_cycle": 1,
+     "lat": 30.298599,
+     "lng": -97.717276,
+     "distance_m": 3270,
+     "distance_mi": 2.03,
+     "latest_year": 2025,
+     "latest_aadt": 187783,
+     "history": [
+      {
+       "year": 2006,
+       "aadt": 123000
+      },
+      {
+       "year": 2007,
+       "aadt": 120910
+      },
+      {
+       "year": 2008,
+       "aadt": 119420
+      },
+      {
+       "year": 2009,
+       "aadt": 103400
+      },
+      {
+       "year": 2010,
+       "aadt": 185960
+      },
+      {
+       "year": 2011,
+       "aadt": 188530
+      },
+      {
+       "year": 2012,
+       "aadt": 191460
+      },
+      {
+       "year": 2013,
+       "aadt": 192417
+      },
+      {
+       "year": 2014,
+       "aadt": 180878
+      },
+      {
+       "year": 2015,
+       "aadt": 195734
+      },
+      {
+       "year": 2016,
+       "aadt": 201699
+      },
+      {
+       "year": 2017,
+       "aadt": 201974
+      },
+      {
+       "year": 2018,
+       "aadt": 202376
+      },
+      {
+       "year": 2019,
+       "aadt": 200352
+      },
+      {
+       "year": 2020,
+       "aadt": 178313
+      },
+      {
+       "year": 2021,
+       "aadt": 192578
+      },
+      {
+       "year": 2022,
+       "aadt": 191475
+      },
+      {
+       "year": 2023,
+       "aadt": 183326
+      },
+      {
+       "year": 2024,
+       "aadt": 181493
+      },
+      {
+       "year": 2025,
+       "aadt": 187783
+      }
+     ],
+     "trend_summary": {
+      "available": true,
+      "latest_year": 2025,
+      "latest_aadt": 187783,
+      "change_1yr_pct": 3.47,
+      "change_3yr_pct": -1.93,
+      "change_5yr_pct": 5.31,
+      "direction": "rising",
+      "points": [
+       {
+        "year": 2020,
+        "aadt": 178313
+       },
+       {
+        "year": 2021,
+        "aadt": 192578
+       },
+       {
+        "year": 2022,
+        "aadt": 191475
+       },
+       {
+        "year": 2023,
+        "aadt": 183326
+       },
+       {
+        "year": 2024,
+        "aadt": 181493
+       },
+       {
+        "year": 2025,
+        "aadt": 187783
+       }
+      ]
+     }
+    }
+   ],
+   "representative_station": {
+    "station_id": "227H117",
+    "district": "Austin",
+    "county": "Travis",
+    "category": "ANNUAL ACR",
+    "active": true,
+    "on_road_raw": "IH0035",
+    "on_road": "IH 35",
+    "count_cycle": 1,
+    "lat": 30.298599,
+    "lng": -97.717276,
+    "distance_m": 3270,
+    "distance_mi": 2.03,
+    "latest_year": 2025,
+    "latest_aadt": 187783,
+    "history": [
+     {
+      "year": 2006,
+      "aadt": 123000
+     },
+     {
+      "year": 2007,
+      "aadt": 120910
+     },
+     {
+      "year": 2008,
+      "aadt": 119420
+     },
+     {
+      "year": 2009,
+      "aadt": 103400
+     },
+     {
+      "year": 2010,
+      "aadt": 185960
+     },
+     {
+      "year": 2011,
+      "aadt": 188530
+     },
+     {
+      "year": 2012,
+      "aadt": 191460
+     },
+     {
+      "year": 2013,
+      "aadt": 192417
+     },
+     {
+      "year": 2014,
+      "aadt": 180878
+     },
+     {
+      "year": 2015,
+      "aadt": 195734
+     },
+     {
+      "year": 2016,
+      "aadt": 201699
+     },
+     {
+      "year": 2017,
+      "aadt": 201974
+     },
+     {
+      "year": 2018,
+      "aadt": 202376
+     },
+     {
+      "year": 2019,
+      "aadt": 200352
+     },
+     {
+      "year": 2020,
+      "aadt": 178313
+     },
+     {
+      "year": 2021,
+      "aadt": 192578
+     },
+     {
+      "year": 2022,
+      "aadt": 191475
+     },
+     {
+      "year": 2023,
+      "aadt": 183326
+     },
+     {
+      "year": 2024,
+      "aadt": 181493
+     },
+     {
+      "year": 2025,
+      "aadt": 187783
+     }
+    ],
+    "trend_summary": {
+     "available": true,
+     "latest_year": 2025,
+     "latest_aadt": 187783,
+     "change_1yr_pct": 3.47,
+     "change_3yr_pct": -1.93,
+     "change_5yr_pct": 5.31,
+     "direction": "rising",
+     "points": [
+      {
+       "year": 2020,
+       "aadt": 178313
+      },
+      {
+       "year": 2021,
+       "aadt": 192578
+      },
+      {
+       "year": 2022,
+       "aadt": 191475
+      },
+      {
+       "year": 2023,
+       "aadt": 183326
+      },
+      {
+       "year": 2024,
+       "aadt": 181493
+      },
+      {
+       "year": 2025,
+       "aadt": 187783
+      }
+     ]
+    }
+   },
+   "station_count": 40
+  },
+  "result_schema_version": null,
+  "registry_version": null,
+  "identifier_used": "lat_lng",
+  "fetched_at": "2026-08-01T21:06:41.042386Z",
+  "ttl_seconds": null,
+  "raw_payload_ref": null,
+  "domain_guard_signals": null,
+  "advisories": [
+   "Traffic history comes from count stations near the site \u2014 useful for spotting trends, not proof of how many drivers would actually pull in here."
+  ],
+  "manual_upload_request": null,
+  "errors": null
+ },
+ "exchanges_file": "exchanges.json.gz"
+}
