@@ -1,4 +1,4 @@
-# Caldwell County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Caldwell County, Texas. Format: see app/regions/_template/county.yaml.
 name: Caldwell
 level: Partial
 summary: Plat records and clerk portal, water/sewer service area

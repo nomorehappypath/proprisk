@@ -1,4 +1,4 @@
-# Burnet County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Burnet County, Texas. Format: see app/regions/_template/county.yaml.
 name: Burnet
 level: Partial
 summary: County clerk portal and city planning-portal links

@@ -45,6 +45,10 @@ Today PropRisk understands Texas best, with full coverage in Travis,
 Williamson, Hays and Bastrop counties and partial coverage in a few
 others — see Settings → "Where PropRisk works" for the current list.
 
+**Add your county.** Each county is one data file, and the recipe is written so an
+AI build tool can do it for you, with no programming: see
+[`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/EXTENDING.md`](docs/EXTENDING.md).
+
 ## What it covers
 
 - **New lookup** — type an address (and optionally a parcel ID); choose
@@ -169,11 +173,12 @@ just need to re-add your keys and re-run the lookups you care about.
 - `docs/DATA_SOURCES.md` — every public source PropRisk queries.
 - `docs/MAINTENANCE.md` — tests, adding a source, upgrading packages, and
   every setting and secret name.
+- `docs/EXTENDING.md` — add or upgrade a county; `CONTRIBUTING.md` — send it back.
 - `SECURITY.md` — what is and isn't protected, and the trust model.
 - `SPEC.md` — the full specification this project was built from.
 - `docs/HOW_IT_WAS_BUILT.md` — how NoMoreHappyPath built it, step by step.
 
 ## Licence
 
-AGPL-3.0-or-later. See `LICENSE`. Anyone who changes PropRisk and offers
-it to others must share their changes under the same licence.
+Apache License 2.0. See `LICENSE` and `NOTICE`. You may use, change and share
+PropRisk, including commercially; keep the licence and notice with it.

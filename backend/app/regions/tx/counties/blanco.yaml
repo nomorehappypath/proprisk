@@ -1,4 +1,4 @@
-# Blanco County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Blanco County, Texas. Format: see app/regions/_template/county.yaml.
 name: Blanco
 level: Partial
 summary: Parcel layer, county clerk portal link

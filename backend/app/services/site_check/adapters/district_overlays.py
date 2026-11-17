@@ -104,6 +104,7 @@ def fetch(
 
     overlays_by_kind: dict[str, list[dict[str, Any]]] = {}
     errors: list[str] = []
+    layer_errors: list[dict[str, str]] = []
     source_warnings: list[str] = []
     successful_layer_count = 0
 
@@ -124,6 +125,7 @@ def fetch(
             errors.append(
                 f"{display_name}: public layer is temporarily unavailable."
             )
+            layer_errors.append({"layer": display_name, "error": error})
             continue
         successful_layer_count += 1
         overlays_by_kind.setdefault(kind, []).extend(
@@ -177,7 +179,11 @@ def fetch(
         source_id=SOURCE_ID,
         source_access_status=SourceAccessStatus.PROGRAMMATIC_PUBLIC,
         data_confidence_status=confidence,
-        coverage_status=CoverageStatus.COVERED,
+        # A layer that failed means part of the answer is missing: partial,
+        # never covered.
+        coverage_status=(
+            CoverageStatus.PARTIAL if errors else CoverageStatus.COVERED
+        ),
         normalized_facts={
             "status": status,
             "county": county,
@@ -189,6 +195,7 @@ def fetch(
             "tirz_districts": overlays_by_kind.get("tirz", []),
             "school_districts": overlays_by_kind.get("school", []),
             "unavailable_layers": errors,
+            "layer_errors": layer_errors,
             "source_warnings": source_warnings,
             "advisory": advisory,
             "contradiction_flags": [],
@@ -237,6 +244,12 @@ def _query_layer(
         resp = session.get(layer_url, params=params, timeout=_TIMEOUT)
         resp.raise_for_status()
         data = resp.json()
+        # ArcGIS reports many failures as HTTP 200 with an `error` body. That
+        # is an error, not an empty answer.
+        if isinstance(data, dict) and data.get("error"):
+            err = data["error"]
+            message = err.get("message") if isinstance(err, dict) else err
+            return [], f"ArcGIS error: {message}"[:200]
         return data.get("features", []) or [], None
     except Exception as exc:
         log.warning(

@@ -1,9 +1,9 @@
-# Hays County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Hays County, Texas. Format: see app/regions/_template/county.yaml.
 name: Hays
 level: Full
 summary: City limits and ETJ, parcel layer, districts, plats and clerk portal, zoning for
   Buda, Kyle, Dripping Springs, San Marcos
-sample_address: 111 E San Antonio St, San Marcos, TX 78666
+sample_address: 712 S Stagecoach Trl, San Marcos, TX 78666   # Hays County Government Center
 jurisdiction:
   source: Hays County GIS Hub (City Boundaries / ETJ)
   source_url: https://hays-county-haysgis.hub.arcgis.com/
@@ -68,7 +68,7 @@ clerk:
     Use Property Records / Official Public Records. Search a probable instrument/document
     number first when present; otherwise search document type Plat plus subdivision / lot
     / block or party terms.
-  fallback_url: https://www.hayscountytx.gov/county-clerk/records-division
+  fallback_url: https://www.hayscountytx.gov/202/Records-Division
   fallback_label: County clerk records page
   fallback_note: Official Hays County page linking to the Self-Service property records portal.
 subdivisions:

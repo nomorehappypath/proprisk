@@ -84,7 +84,7 @@ _CALDWELL_SUBDIVISIONS_SOURCE = _COUNTY_SUBDIVISION_SCREENS["caldwell"]["source_
 # `county_clerk_portals` module via `clerk_lookup_steps(county, "plat")` — one
 # source of truth (see docs/specs/recorded_deed_resolution.md §4). The returned
 # record exposes the same `name` / `url` / `instructions` keys the plat
-# call-sites read, with the plat-specific URL override (e.g. Bastrop kofile)
+# call-sites read, with the plat-specific URL override (e.g. Bastrop's separate plat site)
 # and plat-oriented instructions.
 
 _TIMEOUT = 25
@@ -236,7 +236,9 @@ def _fetch_impl(
         return _fetch_williamson(
             sess, identity, config=config, discovery=discovery,
         )
-    if county in {"bastrop", "caldwell"}:
+    # Any other county whose file has a `subdivisions:` section takes the
+    # file-driven subdivision screen.
+    if county in _COUNTY_SUBDIVISION_SCREENS:
         return _fetch_county_subdivision_screen(
             sess,
             identity,
@@ -566,7 +568,7 @@ def _fetch_county_subdivision_screen(
             source_key: source_label,
             url_key: layer_url,
         }
-        return _portal_result(county, discovery=enriched)
+        return _portal_or_no_coverage_result(county, portal, enriched)
 
     features, error = _query_subdivision_geometry(
         session,
@@ -582,7 +584,7 @@ def _fetch_county_subdivision_screen(
             source_key: source_label,
             url_key: layer_url,
         }
-        return _portal_result(county, discovery=enriched)
+        return _portal_or_no_coverage_result(county, portal, enriched)
 
     records = _summarize_county_subdivision_records(county, features)
     recorded_records = [
@@ -676,9 +678,9 @@ def _fetch_county_subdivision_screen(
             "in_review": (active_context or {}).get("in_review", []),
             "approved": recorded_records[:10],
             "all_plats": records[:20],
-            "portal_name": portal["name"],
-            "portal_url": portal["url"],
-            "manual_instructions": portal["instructions"],
+            "portal_name": (portal or {}).get("name"),
+            "portal_url": (portal or {}).get("url"),
+            "manual_instructions": (portal or {}).get("instructions"),
             **enriched,
             "manual_next_step": _build_manual_next_step(
                 county,
@@ -699,8 +701,11 @@ def _fetch_county_subdivision_screen(
                 default=(
                     f"PropDesk queried {source_label} using the parcel "
                     "polygon. Retrieve any official recorded image/copy from "
-                    f"{portal['name']} ({portal['url']}) before treating it "
-                    "as evidence."
+                    + (
+                        f"{portal['name']} ({portal['url']})" if portal
+                        else f"the {county.title()} County Clerk"
+                    )
+                    + " before treating it as evidence."
                 ),
             ),
         ),
@@ -1239,7 +1244,32 @@ def _summarize_county_subdivision_records(
         return _summarize_bastrop_subdivision_records(features)
     if county == "caldwell":
         return _summarize_caldwell_subdivision_records(features)
-    return []
+    return _summarize_file_subdivision_records(county, features)
+
+
+def _summarize_file_subdivision_records(
+    county: str,
+    features: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Subdivisions for a county with no special code: read the field names
+    from its county file. A name here only says a subdivision is nearby; it is
+    never treated as proof that a plat was recorded."""
+    screen = _COUNTY_SUBDIVISION_SCREENS.get(county) or {}
+    name_field = screen.get("name_field")
+    code_field = screen.get("code_field")
+    records: list[dict[str, Any]] = []
+    for feat in features or []:
+        attrs = feat.get("attributes") or {}
+        name = _clean_attr(attrs.get(name_field)) if name_field else None
+        record = {
+            "name": name or "Unnamed subdivision",
+            "subdivision_code": _clean_attr(attrs.get(code_field)) if code_field else None,
+            "source": screen.get("source_label"),
+            "source_url": screen.get("layer_url"),
+        }
+        records.append({k: v for k, v in record.items() if v not in (None, "")})
+    records.sort(key=lambda item: str(item.get("name") or ""))
+    return records
 
 
 def _summarize_hays_subdivision_records(
@@ -3028,6 +3058,16 @@ def _query_layer(
     except Exception as exc:
         log.warning("Plats layer query failed: %s", exc)
         return [], str(exc)[:200]
+
+
+def _portal_or_no_coverage_result(
+    county: str, portal: dict[str, Any] | None, discovery: dict[str, Any],
+) -> AdapterResult:
+    """The clerk-portal result when the county has a clerk portal; otherwise
+    the no-portal result (a county file may leave out its `clerk:` section)."""
+    if portal is None:
+        return _no_coverage_result(county, discovery=discovery)
+    return _portal_result(county, discovery=discovery)
 
 
 def _portal_result(county: str, *, discovery: dict[str, Any]) -> AdapterResult:

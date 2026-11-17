@@ -24,6 +24,8 @@ Both copies are read-only inputs; they are never edited.
   limit should PropRisk start with? The user can change it later. — $20 a month, as PropDesk today
 - Which open-source licence should PropRisk use on GitHub? — Keep PropDesk's licence (AGPL):
   anyone who changes it and offers it to others must share their changes
+  (Changed by the owner on 2026-11-17: PropRisk is now Apache License 2.0, the same as
+  NoMoreHappyPath. See RELEASE_NOTES.md.)
 - How do you use it? — Desktop app
 - Who uses it? — Just me
 - What will it hold? — My own private information
@@ -67,7 +69,7 @@ Decisions (each with its one reason):
 | Sign-in | None. One built-in local office and owner row | Owner: no users. Keeping the rows lets the kept code run unchanged. |
 | Serving the screens | The FastAPI server serves the built screens and the API on one port | One address to open; one process fewer to manage. |
 | Platform | macOS only | Owner's answer. |
-| Licence | AGPL-3.0-or-later | Owner's answer (same as PropDesk). |
+| Licence | Apache-2.0 (was AGPL-3.0-or-later until 2026-11-17) | Owner's answer; changed by the owner to match NoMoreHappyPath. |
 | AI cap default | $20.00 a month | Owner's answer (same as PropDesk). |
 
 Not included: multiple users, sign-in, hosting on a server, Linux or Windows scripts,
@@ -80,7 +82,7 @@ Everything lives in `PropRisk/` at the top of this project:
 ```
 PropRisk/
   README.md            what it is, install, launch, stop, settings, troubleshooting
-  LICENSE              AGPL-3.0 text (copied from the PropDesk copies)
+  LICENSE              Apache License 2.0 text (AGPL-3.0 until 2026-11-17)
   SECURITY.md          what is and is not protected, how to report a problem
   .gitignore           data/, node_modules/, dist/, .venv/, caches, *.sqlite3, .env*
   backend/             Python server + worker (from backend_repo/backend)

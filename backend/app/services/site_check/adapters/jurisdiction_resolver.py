@@ -526,8 +526,11 @@ def resolve_jurisdiction(
             ],
         )
 
-    # Every authoritative layer returned a CLEAN miss from here on.
-    if not cfg.get("unincorporated_on_no_hit", True):
+    # Every authoritative layer returned a CLEAN miss from here on. A miss
+    # means "unincorporated" only when the county file says its layers list
+    # every city and ETJ (`unincorporated_on_no_hit: true`); otherwise the
+    # point is "not confirmed".
+    if not cfg.get("unincorporated_on_no_hit", False):
         advisories = [
             *(cfg.get("no_hit_advisories") or ["county_jurisdiction_no_hit"]),
             "statewide_city_limits_no_hit",

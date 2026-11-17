@@ -1,4 +1,4 @@
-# Bastrop County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Bastrop County, Texas. Format: see app/regions/_template/county.yaml.
 name: Bastrop
 level: Full
 summary: City limits and ETJ, parcel layer, districts, fire, plats and clerk portal
@@ -74,7 +74,7 @@ fire_stations:
 clerk:
   name: Bastrop County Clerk Official Public Records
   url: https://cc.co.bastrop.tx.us/
-  plat_url: https://bastroptx.search.kofile.com/48109/Home/Index/1
+  plat_url: http://plats.co.bastrop.tx.us:8082/
   deed_instructions: 1) Open Bastrop County Clerk Web Access and acknowledge the disclaimer.
     2) Use Records / Official Public Records for land recordings, not probate, misdemeanor,
     or Commissioners Court records. 3) Search by instrument number when one is provided; otherwise

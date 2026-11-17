@@ -22,9 +22,9 @@ def _region(tmp_path: Path, county_text: str) -> Path:
 def test_shipped_texas_files_load():
     texas = loader.load_regions()["TX"]
     assert texas["state"]["name"] == "Texas"
-    assert set(texas["counties"]) == {
+    assert {
         "travis", "williamson", "hays", "bastrop", "caldwell", "burnet", "blanco",
-    }
+    } <= set(texas["counties"])  # contributors add more
 
 
 def test_left_out_keys_stay_absent(tmp_path):
@@ -69,3 +69,21 @@ def test_empty_section_is_refused(tmp_path):
     with pytest.raises(loader.RegionFileError) as err:
         loader.load_regions.__wrapped__(root)
     assert "test.yaml" in str(err.value) and "fire_stations" in str(err.value)
+
+
+def test_blank_templates_load(tmp_path):
+    """The files a contributor copies are valid as they stand."""
+    template = loader.REGIONS_DIR / "_template"
+    state_dir = tmp_path / "xx"
+    (state_dir / "counties").mkdir(parents=True)
+    (state_dir / "state.yaml").write_text((template / "state.yaml").read_text())
+    (state_dir / "counties" / "example.yaml").write_text((template / "county.yaml").read_text())
+    loaded = loader.load_regions.__wrapped__(tmp_path)
+    assert loaded["XX"]["counties"]["example"]["name"] == "Example"
+
+
+def test_multiword_county_key_matches_lookups(tmp_path):
+    """fort_bend.yaml is found under "fort bend", the name lookups carry."""
+    root = _region(tmp_path, COUNTY)
+    (root / "tx" / "counties" / "test.yaml").rename(root / "tx" / "counties" / "fort_bend.yaml")
+    assert "fort bend" in loader.load_regions.__wrapped__(root)["TX"]["counties"]

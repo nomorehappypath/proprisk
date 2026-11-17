@@ -65,7 +65,9 @@ fixture that fails that scan is not saved.
 
 ## Updating coverage
 
-County and state data lives in plain files, one per county:
+To add or upgrade a county, follow `docs/EXTENDING.md` and prove it with
+`scripts/check_region.sh tx <county>`. County and state data lives in plain
+files, one per county:
 
 - `backend/app/regions/tx/state.yaml`: the state, its address-search box and
   the "Statewide sources" lines on Settings.

@@ -1,4 +1,4 @@
-# Texas. Format: see app/regions/loader.py (StateFile).
+# Texas. Format: see app/regions/_template/state.yaml.
 code: TX
 name: Texas
 fips: "48"

@@ -1,4 +1,4 @@
-# Travis County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Travis County, Texas. Format: see app/regions/_template/county.yaml.
 name: Travis
 level: Full
 summary: City limits and ETJ, parcel layers, districts (MUD, ESD, PID, TIRZ, school), fire
