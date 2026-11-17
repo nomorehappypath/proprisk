@@ -1,0 +1,19 @@
+# Burnet County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Burnet
+level: Partial
+summary: County clerk portal and city planning-portal links
+sample_address: 220 S Pierce St, Burnet, TX 78611
+clerk:
+  name: Burnet County Clerk Official Public Records
+  url: https://burnetcountytx-web.tylerhost.net/web/user/disclaimer
+  deed_instructions: 1) Open Burnet County Clerk Self-Service and accept the disclaimer. 2)
+    Use Official Public Records / property records, not court records. 3) Search by instrument/document
+    number if one is provided; otherwise search by party name, recording date, or book/page.
+    4) Open the matching recorded deed, download the image/copy if available, and upload it.
+  plat_instructions: Use Burnet County Clerk Self-Service / Official Public Records. Search
+    a probable instrument/document number first when present; otherwise search document type
+    Plat plus subdivision / lot / block, party, recording date, or book/page terms.
+  fallback_url: https://www.burnetcountytexas.org/page/cclerk.home
+  fallback_label: County clerk page
+  fallback_note: Official Burnet County Clerk page describing deeds, maps, plats, and other
+    property records.

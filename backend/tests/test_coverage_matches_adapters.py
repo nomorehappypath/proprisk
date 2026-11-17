@@ -4,6 +4,7 @@ cannot silently drift from what the sources actually cover."""
 
 from pathlib import Path
 
+from app.regions import loader
 from app.services.site_check import coverage
 from app.services.site_check.adapters import austin_zoning, future_land_use
 
@@ -40,6 +41,15 @@ def test_counties_are_non_empty_and_named_once():
     names = [row["county"] for row in coverage.COUNTIES]
     assert len(names) == len(set(names)), "a county must appear only once in the table"
     assert all(row["level"] in ("Full", "Partial") for row in coverage.COUNTIES)
+
+
+def test_counties_come_from_the_region_files():
+    files = loader.counties("TX")
+    assert {row["county"].lower() for row in coverage.COUNTIES} == set(files)
+    for row in coverage.COUNTIES:
+        county = files[row["county"].lower()]
+        assert (row["level"], row["detail"]) == (county["level"], county["summary"])
+    assert coverage.STATEWIDE == loader.state("TX")["statewide_summary"]
 
 
 def test_get_coverage_shape():

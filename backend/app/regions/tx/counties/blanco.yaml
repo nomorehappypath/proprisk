@@ -1,0 +1,45 @@
+# Blanco County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Blanco
+level: Partial
+summary: Parcel layer, county clerk portal link
+sample_address: 101 E Pecan Dr, Johnson City, TX 78636
+parcels:
+  source_label: TNRIS / Blanco CAD parcel layer
+  source_url: https://services6.arcgis.com/eNPJk90aMrXNOKF8/arcgis/rest/services/Blanco_County_Parcels/FeatureServer/41
+  query_url: https://services6.arcgis.com/eNPJk90aMrXNOKF8/arcgis/rest/services/Blanco_County_Parcels/FeatureServer/41/query
+  id_fields:
+  - PROP_ID
+  - GEO_ID
+  numeric_id_fields:
+  - PROP_ID
+  cad_account_fields:
+  - GEO_ID
+  owner_fields:
+  - OWNER_NAME
+  situs_fields:
+  - SITUS_ADDR
+  legal_fields:
+  - LEGAL_DESC
+  acre_fields:
+  - GIS_AREA
+  - LEGAL_AREA
+  land_value_fields:
+  - LAND_VALUE
+  value_fields:
+  - MKT_VALUE
+  out_fields: PROP_ID,GEO_ID,OWNER_NAME,LEGAL_DESC,LEGAL_AREA,GIS_AREA,LAND_USE,SITUS_ADDR,SITUS_CITY,TAX_YEAR,MKT_VALUE,LAND_VALUE
+appraisal_search_url: https://blancocad.com/
+clerk:
+  name: Blanco County Clerk Official Public Records
+  url: https://blanco.tx.publicsearch.us/
+  deed_instructions: 1) Open Blanco County Official Records Search. 2) Use the property /
+    official records search, not court records. 3) Search by document number if one is provided;
+    otherwise search party name, full-text OCR, recording date, or book/page. 4) Open the
+    matching recorded deed, download the image/copy if available, and upload it.
+  plat_instructions: Use Blanco County Official Records Search for property / official records.
+    Search a probable document number first when PropDesk resolves one; otherwise search subdivision
+    / plat name, document type Plat, party, full-text OCR, recording date, or book/page terms.
+  fallback_url: https://www.blancocountytexas.gov/page/County.Clerk
+  fallback_label: County clerk page
+  fallback_note: Official Blanco County Clerk page links blanco.tx.publicsearch.us for property
+    records, foreclosures, and marks/brands.

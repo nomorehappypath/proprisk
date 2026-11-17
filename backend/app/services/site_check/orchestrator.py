@@ -40,6 +40,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from app.config.settings import get_settings
 from app.core.job_queue import LeaseLost, assert_lease, write_progress
 from app.models import Job, SiteCheckCoverageGap, SiteCheckRun
+from app.regions import loader as regions
 
 # The narrative wave's builder (site_check.md §11) — optional until that
 # module lands; without it runs are deterministic-only (§10.3 floor).
@@ -508,13 +509,9 @@ def _reconcile_anchor_with_parcel(
 # `tcad_parcel` is the legacy source_id, but it now dispatches to configured
 # county parcel polygon layers for Travis, Hays, Bastrop, and Blanco. WCAD stays
 # separate because Williamson has its own candidate/parcel semantics.
-_TEXAS_COUNTIES_WITH_PARCEL_ADAPTER = frozenset({
-    "travis",
-    "williamson",
-    "hays",
-    "bastrop",
-    "blanco",
-})
+_TEXAS_COUNTIES_WITH_PARCEL_ADAPTER = frozenset(
+    {*regions.county_sections("TX", "parcels"), "williamson"},
+)
 
 
 def _maybe_record_parcel_coverage_gap(

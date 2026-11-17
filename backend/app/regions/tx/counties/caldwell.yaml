@@ -1,0 +1,26 @@
+# Caldwell County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Caldwell
+level: Partial
+summary: Plat records and clerk portal, water/sewer service area
+sample_address: 110 S Main St, Lockhart, TX 78644
+clerk:
+  name: Caldwell County Clerk Official Public Records
+  url: https://tx.countygovernmentrecords.com/texas/web/login.jsp
+  deed_instructions: 1) Open Texas County Government Records for Caldwell County. 2) Use County
+    Clerk / Official Public Records / real property records, not District Clerk or court records.
+    3) Search by document number if one is provided; otherwise search by party name, recording
+    date, or book/page. 4) Open the matching recorded deed, download/purchase the image/copy
+    if available, and upload it.
+  plat_instructions: Use Texas County Government Records for Caldwell County Clerk Official
+    Public Records / real property records. Search a probable document number first when one
+    is resolved; otherwise search document type Plat plus subdivision / lot / block, party,
+    date, or book/page terms.
+  fallback_url: https://www.co.caldwell.tx.us/page/County.Clerk
+  fallback_label: County clerk page
+  fallback_note: Official Caldwell County Clerk page; the County Clerk is the official record
+    keeper for real-property Official Public Records and links to online records from 1990
+    to present.
+subdivisions:
+  source_label: Caldwell CAD Parcel Map (subdivisions)
+  layer_url: https://services.arcgis.com/rVxY74DxxIDrDbc0/arcgis/rest/services/Caldwell_CAD_Parcel_Map/FeatureServer/13
+  query_url: https://services.arcgis.com/rVxY74DxxIDrDbc0/arcgis/rest/services/Caldwell_CAD_Parcel_Map/FeatureServer/13/query

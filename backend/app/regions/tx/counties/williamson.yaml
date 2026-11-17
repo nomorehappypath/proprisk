@@ -1,0 +1,53 @@
+# Williamson County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Williamson
+level: Full
+summary: City limits and ETJ, parcel lookup (WCAD), districts, fire (via Round Rock), plats
+  and clerk portal, transit, zoning for its cities
+sample_address: 710 S Main St, Georgetown, TX 78626
+jurisdiction:
+  source: Williamson County GIS (county_incorporated_cities)
+  source_url: https://gis.wilco.org/arcgis/rest/services/public/county_incorporated_cities/MapServer
+  city_limits:
+  - url: https://gis.wilco.org/arcgis/rest/services/public/county_incorporated_cities/MapServer/0/query
+    name_field: CITY_NAME
+  etj:
+  - url: https://gis.wilco.org/arcgis/rest/services/public/county_incorporated_cities/MapServer/1/query
+    name_field: CITY_NAME
+  unincorporated_on_no_hit: true
+appraisal_search_url: https://search.wcad.org/
+districts:
+- label: Williamson County ESDs
+  kind: esd
+  urls:
+  - https://services.arcgis.com/5ZjkDcAQQjFnTEkh/arcgis/rest/services/county_administrative_boundaries_view/FeatureServer/3/query
+- label: Williamson County MUDs (WCAD)
+  kind: mud
+  urls:
+  - https://services.arcgis.com/5ZjkDcAQQjFnTEkh/arcgis/rest/services/county_administrative_boundaries_view/FeatureServer/11/query
+- label: Williamson County WCIDs
+  kind: wcid
+  urls:
+  - https://services.arcgis.com/5ZjkDcAQQjFnTEkh/arcgis/rest/services/county_administrative_boundaries_view/FeatureServer/12/query
+- label: Jonah Water SUD
+  kind: wcid
+  urls:
+  - https://services.arcgis.com/5ZjkDcAQQjFnTEkh/arcgis/rest/services/county_administrative_boundaries_view/FeatureServer/16/query
+- label: Williamson County school districts
+  kind: school
+  urls:
+  - https://services.arcgis.com/5ZjkDcAQQjFnTEkh/arcgis/rest/services/county_administrative_boundaries_view/FeatureServer/2/query
+fire_stations:
+  url: https://maps.roundrocktexas.gov/arcgis/rest/services/Fire/POLICE_and_FIRE/MapServer/0/query
+clerk:
+  name: Williamson County Clerk Official Public Records
+  url: https://williamsoncountytx-web.tylerhost.net/williamsonweb/search/DOCSEARCH149S1
+  deed_instructions: 1) Open Williamson County Clerk Official Public Record Search and Copies
+    - Web. 2) If the disclaimer appears, click I Accept. 3) Use the Instrument Number field
+    for instrument numbers; do not use Williamson publicsearch, Commissioners Court minutes,
+    judicial/court records, agendas, or case search. 4) Enter the instrument number exactly.
+    5) Open the matching recorded deed, download or purchase the PDF image/copy, and upload
+    it.
+  plat_instructions: Use Official Public Record Search and Copies - Web. Search Instrument
+    Number first when PropDesk provides a probable number. If no number is resolved, use document
+    type Plat plus subdivision / lot / block terms. Do not use Commissioners Court minutes,
+    judicial records, agendas, or case search for the recorded plat copy.

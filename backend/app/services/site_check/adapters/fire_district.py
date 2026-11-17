@@ -24,6 +24,7 @@ from typing import Any
 
 import requests
 
+from app.regions import loader as regions
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -40,11 +41,6 @@ log = logging.getLogger("propdesk.site_check.fire_district")
 
 SOURCE_ID = "fire_district"
 
-_TRAVIS_FIRE_STATIONS_QUERY = (
-    "https://gis.traviscountytx.gov/server1/rest/services/"
-    "Services_and_Facilities/Emergency_Services_Fire_EMS_Stations/"
-    "MapServer/0/query"
-)
 _TRAVIS_ESD_SERVICE_AREA_QUERY = (
     "https://services1.arcgis.com/HGcSYZ5bvjRswoCb/arcgis/rest/services/"
     "Emergency_Service_Districts_agol/FeatureServer/1/query"
@@ -53,19 +49,11 @@ _TRAVIS_ESD_TAXMAPS_QUERY = (
     "https://taxmaps.traviscountytx.gov/arcgis/rest/services/"
     "ESD/FeatureServer/0/query"
 )
-_ROUNDROCK_FIRE_STATIONS_QUERY = (
-    "https://maps.roundrocktexas.gov/arcgis/rest/services/"
-    "Fire/POLICE_and_FIRE/MapServer/0/query"
-)
-_BASTROP_FIRE_STATIONS_QUERY = (
-    "https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/"
-    "services/FireStation/FeatureServer/0/query"
-)
 
+# From each county file's `fire_stations:` section (app/regions/tx/counties/*.yaml).
 _LAYERS_BY_COUNTY: dict[str, str] = {
-    "travis":     _TRAVIS_FIRE_STATIONS_QUERY,
-    "williamson": _ROUNDROCK_FIRE_STATIONS_QUERY,
-    "bastrop":    _BASTROP_FIRE_STATIONS_QUERY,
+    county: section["url"]
+    for county, section in regions.county_sections("TX", "fire_stations").items()
 }
 
 _TIMEOUT = 25

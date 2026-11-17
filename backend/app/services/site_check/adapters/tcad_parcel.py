@@ -30,6 +30,7 @@ from typing import Any
 
 import requests
 
+from app.regions import loader as regions
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -62,114 +63,15 @@ _TXGIO_LAND_PARCELS_PAGE = "https://geographic.texas.gov/stratmap/land-parcels/"
 _TIMEOUT = 20
 _SQFT_PER_ACRE = 43_560.0
 _SQM_PER_ACRE = 4_046.8564224
-_CAD_PROPERTY_SEARCH_BY_COUNTY = {
-    "travis": _TCAD_PROPERTY_SEARCH,
-    "williamson": "https://search.wcad.org/",
-    "hays": "https://esearch.hayscad.com/",
-    "bastrop": "https://esearch.bastropcad.org/",
-    "blanco": "https://blancocad.com/",
-}
+# From each county file's `appraisal_search_url` (app/regions/tx/counties/*.yaml).
+_CAD_PROPERTY_SEARCH_BY_COUNTY: dict[str, str] = regions.county_sections(
+    "TX", "appraisal_search_url",
+)
 
-_COUNTY_PARCEL_LAYERS: dict[str, dict[str, Any]] = {
-    "travis": {
-        "source_label": "Travis County Tax Maps parcel layer",
-        "source_url": (
-            "https://taxmaps.traviscountytx.gov/arcgis/rest/services/"
-            "Parcels/FeatureServer/0"
-        ),
-        "query_url": (
-            "https://taxmaps.traviscountytx.gov/arcgis/rest/services/"
-            "Parcels/FeatureServer/0/query"
-        ),
-        "id_fields": ["PROP_ID", "geo_id"],
-        "numeric_id_fields": ["PROP_ID"],
-        "cad_account_fields": ["geo_id", "PID_10"],
-        "owner_fields": ["py_owner_name"],
-        "situs_fields": ["situs_address", "SITUS"],
-        "legal_fields": ["legal_desc"],
-        "acre_fields": ["GIS_acres", "tcad_acres", "legal_acre"],
-        "sqft_area_fields": ["Shape__Area"],
-        "value_fields": ["market_value"],
-        "out_fields": (
-            "OBJECTID,PROP_ID,geo_id,py_owner_name,situs_address,sub_dec,"
-            "legal_desc,deed_num,deed_date,tcad_acres,GIS_acres,legal_acre,"
-            "market_value,Shape__Area"
-        ),
-    },
-    "hays": {
-        "source_label": "Hays CAD / Urban Engineering parcel layer (2020)",
-        "source_url": (
-            "https://gis.urbaneng.com/arcgis/rest/services/"
-            "HaysCountyParcels/FeatureServer/0"
-        ),
-        "query_url": (
-            "https://gis.urbaneng.com/arcgis/rest/services/"
-            "HaysCountyParcels/FeatureServer/0/query"
-        ),
-        "id_fields": ["PROP_ID", "RefName"],
-        "cad_account_fields": ["RefName"],
-        "owner_fields": [],
-        "situs_fields": [],
-        "legal_fields": [],
-        "acre_fields": [],
-        "out_fields": "OBJECTID,PROP_ID,RefName,Class",
-        "source_status": "official_rest_verified_stale_fallback",
-        "source_advisory": (
-            "Hays parcel geometry comes from a public 2020 Hays CAD/Urban "
-            "Engineering layer. Verify current CAD ownership and acreage "
-            "before relying on it."
-        ),
-    },
-    "bastrop": {
-        "source_label": "Bastrop CAD parcel layer",
-        "source_url": (
-            "https://services3.arcgis.com/wdTkTU0MdZbNBEZy/ArcGIS/"
-            "rest/services/ParcelARI/FeatureServer/0"
-        ),
-        "query_url": (
-            "https://services3.arcgis.com/wdTkTU0MdZbNBEZy/ArcGIS/"
-            "rest/services/ParcelARI/FeatureServer/0/query"
-        ),
-        "id_fields": ["prop_id", "prop_id_text", "geo_id"],
-        "numeric_id_fields": ["prop_id"],
-        "cad_account_fields": ["geo_id", "prop_id_text"],
-        "owner_fields": ["file_as_name"],
-        "situs_fields": ["situs_address", "situs_num", "situs_street"],
-        "legal_fields": ["legal_desc"],
-        "acre_fields": ["legal_acreage"],
-        "land_value_fields": ["land_val"],
-        "value_fields": ["market"],
-        "out_fields": (
-            "prop_id,prop_id_text,geo_id,file_as_name,situs_num,"
-            "situs_street,situs_city,legal_desc,legal_acreage,"
-            "deed_date,deed_seq,market,land_val,imprv_val"
-        ),
-    },
-    "blanco": {
-        "source_label": "TNRIS / Blanco CAD parcel layer",
-        "source_url": (
-            "https://services6.arcgis.com/eNPJk90aMrXNOKF8/arcgis/"
-            "rest/services/Blanco_County_Parcels/FeatureServer/41"
-        ),
-        "query_url": (
-            "https://services6.arcgis.com/eNPJk90aMrXNOKF8/arcgis/"
-            "rest/services/Blanco_County_Parcels/FeatureServer/41/query"
-        ),
-        "id_fields": ["PROP_ID", "GEO_ID"],
-        "numeric_id_fields": ["PROP_ID"],
-        "cad_account_fields": ["GEO_ID"],
-        "owner_fields": ["OWNER_NAME"],
-        "situs_fields": ["SITUS_ADDR"],
-        "legal_fields": ["LEGAL_DESC"],
-        "acre_fields": ["GIS_AREA", "LEGAL_AREA"],
-        "land_value_fields": ["LAND_VALUE"],
-        "value_fields": ["MKT_VALUE"],
-        "out_fields": (
-            "PROP_ID,GEO_ID,OWNER_NAME,LEGAL_DESC,LEGAL_AREA,GIS_AREA,"
-            "LAND_USE,SITUS_ADDR,SITUS_CITY,TAX_YEAR,MKT_VALUE,LAND_VALUE"
-        ),
-    },
-}
+# From each county file's `parcels:` section (app/regions/tx/counties/*.yaml).
+_COUNTY_PARCEL_LAYERS: dict[str, dict[str, Any]] = regions.county_sections(
+    "TX", "parcels",
+)
 
 
 def fetch(

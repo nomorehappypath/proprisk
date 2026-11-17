@@ -1,0 +1,76 @@
+# Travis County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Travis
+level: Full
+summary: City limits and ETJ, parcel layers, districts (MUD, ESD, PID, TIRZ, school), fire
+  stations, plats and clerk portal, historic districts (Austin), transit (Capital Metro),
+  city zoning, future land use and planning cases for its cities
+sample_address: 1000 Guadalupe St, Austin, TX 78701
+jurisdiction:
+  source: Travis County GIS (Municipal Jurisdictions)
+  source_url: https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Municipal_Jurisdictions_Annexations/MapServer
+  city_limits:
+  - url: https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Municipal_Jurisdictions_Annexations/MapServer/0/query
+    name_field: NAME
+  - url: https://taxmaps.traviscountytx.gov/arcgis/rest/services/City/FeatureServer/0/query
+    name_field: CIT
+  etj:
+  - url: https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Municipal_Jurisdictions_Annexations/MapServer/1/query
+    name_field: NAME
+  unincorporated_on_no_hit: true
+parcels:
+  source_label: Travis County Tax Maps parcel layer
+  source_url: https://taxmaps.traviscountytx.gov/arcgis/rest/services/Parcels/FeatureServer/0
+  query_url: https://taxmaps.traviscountytx.gov/arcgis/rest/services/Parcels/FeatureServer/0/query
+  id_fields:
+  - PROP_ID
+  - geo_id
+  numeric_id_fields:
+  - PROP_ID
+  cad_account_fields:
+  - geo_id
+  - PID_10
+  owner_fields:
+  - py_owner_name
+  situs_fields:
+  - situs_address
+  - SITUS
+  legal_fields:
+  - legal_desc
+  acre_fields:
+  - GIS_acres
+  - tcad_acres
+  - legal_acre
+  sqft_area_fields:
+  - Shape__Area
+  value_fields:
+  - market_value
+  out_fields: OBJECTID,PROP_ID,geo_id,py_owner_name,situs_address,sub_dec,legal_desc,deed_num,deed_date,tcad_acres,GIS_acres,legal_acre,market_value,Shape__Area
+appraisal_search_url: https://traviscad.org/property-search
+districts:
+- label: Travis County subdivisions
+  kind: subdivision
+  urls:
+  - https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Subdivisions/MapServer/0/query
+- label: Travis County ESDs
+  kind: esd
+  urls:
+  - https://gis.traviscountytx.gov/server1/rest/services/Services_and_Facilities/Emergency_Service_Districts_ESDs/FeatureServer/0/query
+  - https://services1.arcgis.com/HGcSYZ5bvjRswoCb/arcgis/rest/services/Emergency_Service_Districts_agol/FeatureServer/1/query
+  - https://taxmaps.traviscountytx.gov/arcgis/rest/services/ESD/FeatureServer/0/query
+fire_stations:
+  url: https://gis.traviscountytx.gov/server1/rest/services/Services_and_Facilities/Emergency_Services_Fire_EMS_Stations/MapServer/0/query
+clerk:
+  name: Travis County Clerk Official Public Records
+  url: https://www.tccsearch.org/
+  deed_instructions: 1) Open Travis County Clerk Web Search and acknowledge the disclaimer.
+    2) Use the Recording / Official Public Records search, not court dockets. 3) Search by
+    document number when one is provided; otherwise search by party/grantor/grantee or legal
+    description. 4) Open the matching recorded deed, download the image/copy if available,
+    and upload it to the project.
+  plat_instructions: Use Travis County Clerk Web Search for recorded plats. Acknowledge the
+    disclaimer, then search the Recording / Official Public Records records by Instrument/Document
+    Number when PropDesk provides one. If no number is resolved, search document type Plat
+    by the subdivision name or legal-description terms from TCAD.
+  fallback_url: https://countyclerk.traviscountytx.gov/departments/recording/search-copies-of-records/
+  fallback_label: County clerk recording help
+  fallback_note: Official Travis County Clerk page describing recording search and copy options.
