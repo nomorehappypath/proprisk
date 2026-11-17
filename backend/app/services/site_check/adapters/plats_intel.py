@@ -32,6 +32,7 @@ import requests
 from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
+from app.regions import loader as regions
 from app.services.site_check import county_clerk_portals
 from app.services.site_check.adapters._base import (
     AdapterResult,
@@ -53,12 +54,14 @@ _HAYS_ACTIVE_SUBDIVISIONS_QUERY = (
     "https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/"
     "services/Active_Subdivisions/FeatureServer/0/query"
 )
-_HAYS_SUBDIVISIONS_LAYER = (
-    "https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/"
-    "services/Subdivisions/FeatureServer/4"
+# County subdivision layers come from each county file's `subdivisions:`
+# section (app/regions/tx/counties/*.yaml). The per-county summaries below
+# stay in code; they read their labels and URLs from that section.
+_COUNTY_SUBDIVISION_SCREENS: dict[str, dict[str, str]] = regions.county_sections(
+    "TX", "subdivisions",
 )
-_HAYS_SUBDIVISIONS_QUERY = f"{_HAYS_SUBDIVISIONS_LAYER}/query"
-_HAYS_SUBDIVISIONS_SOURCE = "Hays County GIS Hub (subdivisions)"
+_HAYS_SUBDIVISIONS_LAYER = _COUNTY_SUBDIVISION_SCREENS["hays"]["layer_url"]
+_HAYS_SUBDIVISIONS_SOURCE = _COUNTY_SUBDIVISION_SCREENS["hays"]["source_label"]
 _TRAVIS_SUBDIVISIONS_LAYER = (
     "https://gis.traviscountytx.gov/server1/rest/services/"
     "Boundaries_and_Jurisdictions/Travis_County_Subdivisions/"
@@ -72,22 +75,10 @@ _WILLIAMSON_SUBDIVISIONS_LAYER = (
 )
 _WILLIAMSON_SUBDIVISIONS_QUERY = f"{_WILLIAMSON_SUBDIVISIONS_LAYER}/query"
 _WILLIAMSON_SUBDIVISIONS_SOURCE = "Williamson County GIS (county_subdivisions)"
-_BASTROP_SUBDIVISIONS_LAYER = (
-    "https://maps.co.bastrop.tx.us/server/rest/services/Viewers/"
-    "PublicGISViewerService/MapServer/13"
-)
-_BASTROP_SUBDIVISIONS_QUERY = f"{_BASTROP_SUBDIVISIONS_LAYER}/query"
-_BASTROP_SUBDIVISIONS_SOURCE = (
-    "Bastrop County Public GIS Viewer (subdivisions)"
-)
-_CALDWELL_SUBDIVISIONS_LAYER = (
-    "https://services.arcgis.com/rVxY74DxxIDrDbc0/arcgis/rest/services/"
-    "Caldwell_CAD_Parcel_Map/FeatureServer/13"
-)
-_CALDWELL_SUBDIVISIONS_QUERY = f"{_CALDWELL_SUBDIVISIONS_LAYER}/query"
-_CALDWELL_SUBDIVISIONS_SOURCE = (
-    "Caldwell CAD Parcel Map (subdivisions)"
-)
+_BASTROP_SUBDIVISIONS_LAYER = _COUNTY_SUBDIVISION_SCREENS["bastrop"]["layer_url"]
+_BASTROP_SUBDIVISIONS_SOURCE = _COUNTY_SUBDIVISION_SCREENS["bastrop"]["source_label"]
+_CALDWELL_SUBDIVISIONS_LAYER = _COUNTY_SUBDIVISION_SCREENS["caldwell"]["layer_url"]
+_CALDWELL_SUBDIVISIONS_SOURCE = _COUNTY_SUBDIVISION_SCREENS["caldwell"]["source_label"]
 
 # Per-county clerk plat-search portals now come from the canonical
 # `county_clerk_portals` module via `clerk_lookup_steps(county, "plat")` — one
@@ -544,25 +535,6 @@ def _fetch_hays(
             ),
         ),
     )
-
-
-_COUNTY_SUBDIVISION_SCREENS = {
-    "hays": {
-        "layer_url": _HAYS_SUBDIVISIONS_LAYER,
-        "query_url": _HAYS_SUBDIVISIONS_QUERY,
-        "source_label": _HAYS_SUBDIVISIONS_SOURCE,
-    },
-    "bastrop": {
-        "layer_url": _BASTROP_SUBDIVISIONS_LAYER,
-        "query_url": _BASTROP_SUBDIVISIONS_QUERY,
-        "source_label": _BASTROP_SUBDIVISIONS_SOURCE,
-    },
-    "caldwell": {
-        "layer_url": _CALDWELL_SUBDIVISIONS_LAYER,
-        "query_url": _CALDWELL_SUBDIVISIONS_QUERY,
-        "source_label": _CALDWELL_SUBDIVISIONS_SOURCE,
-    },
-}
 
 
 def _fetch_county_subdivision_screen(
@@ -2933,7 +2905,6 @@ def _first_present(mapping: dict[str, Any], keys: tuple[str, ...]) -> Any:
         if value not in (None, "", [], {}):
             return value
     return None
-
 
 
 def _summarize_plats(

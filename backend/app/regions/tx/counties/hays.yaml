@@ -1,0 +1,77 @@
+# Hays County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Hays
+level: Full
+summary: City limits and ETJ, parcel layer, districts, plats and clerk portal, zoning for
+  Buda, Kyle, Dripping Springs, San Marcos
+sample_address: 111 E San Antonio St, San Marcos, TX 78666
+jurisdiction:
+  source: Hays County GIS Hub (City Boundaries / ETJ)
+  source_url: https://hays-county-haysgis.hub.arcgis.com/
+  city_limits:
+  - url: https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/services/Hays_County_City_Boundaries/FeatureServer/5/query
+    name_field: MUNI_NM
+  - url: https://services9.arcgis.com/EYTIgi02HN6AuvRN/arcgis/rest/services/City_Limits/FeatureServer/7/query
+    name_field: Name1
+    fixed_name: San Marcos
+    where: Jurisd = 'City Limits'
+  etj:
+  - url: https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/services/Hays_County_ETJ/FeatureServer/0/query
+    name_field: ETJ_NAME
+  - url: https://services9.arcgis.com/EYTIgi02HN6AuvRN/arcgis/rest/services/City_Limits/FeatureServer/7/query
+    name_field: Name1
+    fixed_name: San Marcos
+    where: Jurisd = 'ETJ'
+  - url: https://services8.arcgis.com/gvKKPGIdO9ZNOCHV/arcgis/rest/services/City_Web_Map/FeatureServer/8/query
+    name_field: ETJ_NAME
+    fixed_name: Wimberley
+  no_hit_advisories:
+  - hays_county_city_etj_no_hit
+  unincorporated_on_no_hit: true
+parcels:
+  source_label: Hays CAD / Urban Engineering parcel layer (2020)
+  source_url: https://gis.urbaneng.com/arcgis/rest/services/HaysCountyParcels/FeatureServer/0
+  query_url: https://gis.urbaneng.com/arcgis/rest/services/HaysCountyParcels/FeatureServer/0/query
+  id_fields:
+  - PROP_ID
+  - RefName
+  cad_account_fields:
+  - RefName
+  owner_fields: []
+  situs_fields: []
+  legal_fields: []
+  acre_fields: []
+  out_fields: OBJECTID,PROP_ID,RefName,Class
+  source_status: official_rest_verified_stale_fallback
+  source_advisory: Hays parcel geometry comes from a public 2020 Hays CAD/Urban Engineering
+    layer. Verify current CAD ownership and acreage before relying on it.
+appraisal_search_url: https://esearch.hayscad.com/
+districts:
+- label: Hays County subdivisions
+  kind: subdivision
+  urls:
+  - https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/services/Active_Subdivisions/FeatureServer/0/query
+- label: Hays County school districts
+  kind: school
+  urls:
+  - https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/services/Hays_County_School_Districts/FeatureServer/0/query
+clerk:
+  name: Hays County Clerk Official Public Records
+  url: https://erss.co.hays.tx.us/web/user/disclaimer
+  deed_instructions: 1) Open the Hays County Clerk Self-Service portal and accept the disclaimer.
+    2) Use Property Records / Official Public Records, not District Clerk court records, jail
+    look-up, or Commissioners Court archive records. 3) Search by document/instrument number
+    when one is provided; otherwise search by party name or recording date. 4) Open the matching
+    recorded deed. 5) Select Purchase, choose COPIES and the page range, then Add to Cart
+    or Proceed to Checkout. 6) Enter the required customer and billing information, choose
+    Credit Card or In Office payment, place the order, and upload the received copy.
+  plat_instructions: Open the Hays County Clerk Self-Service portal and accept the disclaimer.
+    Use Property Records / Official Public Records. Search a probable instrument/document
+    number first when present; otherwise search document type Plat plus subdivision / lot
+    / block or party terms.
+  fallback_url: https://www.hayscountytx.gov/county-clerk/records-division
+  fallback_label: County clerk records page
+  fallback_note: Official Hays County page linking to the Self-Service property records portal.
+subdivisions:
+  source_label: Hays County GIS Hub (subdivisions)
+  layer_url: https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/services/Subdivisions/FeatureServer/4
+  query_url: https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/services/Subdivisions/FeatureServer/4/query

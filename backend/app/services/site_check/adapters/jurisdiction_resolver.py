@@ -20,6 +20,7 @@ from typing import Any, Literal, TypedDict
 
 import requests
 
+from app.regions import loader as regions
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -41,144 +42,11 @@ _TIMEOUT = 15
 # absent the resolver returns full_purpose_city + a `limited_purpose_not_checked`
 # advisory rather than collapsing limited-purpose into confident full-purpose
 # (per reviewer contract answer #3).
-_COUNTY_JURISDICTION_GIS: dict[str, dict[str, Any]] = {
-    "williamson": {
-        "source": "Williamson County GIS (county_incorporated_cities)",
-        "source_url": (
-            "https://gis.wilco.org/arcgis/rest/services/public/"
-            "county_incorporated_cities/MapServer"
-        ),
-        "city_limits": {
-            "url": (
-                "https://gis.wilco.org/arcgis/rest/services/public/"
-                "county_incorporated_cities/MapServer/0/query"
-            ),
-            "name_field": "CITY_NAME",
-        },
-        "etj": {
-            "url": (
-                "https://gis.wilco.org/arcgis/rest/services/public/"
-                "county_incorporated_cities/MapServer/1/query"
-            ),
-            "name_field": "CITY_NAME",
-        },
-        # limited_purpose: not verified yet — deferred (advisory only).
-    },
-    "travis": {
-        "source": "Travis County GIS (Municipal Jurisdictions)",
-        "source_url": (
-            "https://gis.traviscountytx.gov/server1/rest/services/"
-            "Boundaries_and_Jurisdictions/"
-            "Municipal_Jurisdictions_Annexations/MapServer"
-        ),
-        "city_limits": [
-            {
-                "url": (
-                    "https://gis.traviscountytx.gov/server1/rest/services/"
-                    "Boundaries_and_Jurisdictions/"
-                    "Municipal_Jurisdictions_Annexations/MapServer/0/query"
-                ),
-                "name_field": "NAME",
-            },
-            {
-                "url": (
-                    "https://taxmaps.traviscountytx.gov/arcgis/rest/services/"
-                    "City/FeatureServer/0/query"
-                ),
-                "name_field": "CIT",
-            },
-        ],
-        "etj": {
-            "url": (
-                "https://gis.traviscountytx.gov/server1/rest/services/"
-                "Boundaries_and_Jurisdictions/"
-                "Municipal_Jurisdictions_Annexations/MapServer/1/query"
-            ),
-            "name_field": "NAME",
-        },
-    },
-    "hays": {
-        "source": "Hays County GIS Hub (City Boundaries / ETJ)",
-        "source_url": "https://hays-county-haysgis.hub.arcgis.com/",
-        "city_limits": [
-            {
-                "url": (
-                    "https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/"
-                    "rest/services/Hays_County_City_Boundaries/"
-                    "FeatureServer/5/query"
-                ),
-                "name_field": "MUNI_NM",
-            },
-            {
-                "url": (
-                    "https://services9.arcgis.com/EYTIgi02HN6AuvRN/"
-                    "arcgis/rest/services/City_Limits/FeatureServer/7/query"
-                ),
-                "name_field": "Name1",
-                "fixed_name": "San Marcos",
-                "where": "Jurisd = 'City Limits'",
-            },
-        ],
-        "etj": [
-            {
-                "url": (
-                    "https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/"
-                    "rest/services/Hays_County_ETJ/FeatureServer/0/query"
-                ),
-                "name_field": "ETJ_NAME",
-            },
-            {
-                "url": (
-                    "https://services9.arcgis.com/EYTIgi02HN6AuvRN/"
-                    "arcgis/rest/services/City_Limits/FeatureServer/7/query"
-                ),
-                "name_field": "Name1",
-                "fixed_name": "San Marcos",
-                "where": "Jurisd = 'ETJ'",
-            },
-            {
-                "url": (
-                    "https://services8.arcgis.com/gvKKPGIdO9ZNOCHV/"
-                    "arcgis/rest/services/City_Web_Map/FeatureServer/8/query"
-                ),
-                "name_field": "ETJ_NAME",
-                "fixed_name": "Wimberley",
-            },
-        ],
-        "no_hit_advisories": [
-            "hays_county_city_etj_no_hit",
-        ],
-        "unincorporated_on_no_hit": True,
-    },
-    "bastrop": {
-        "source": "Bastrop County GIS (Development Services Viewer)",
-        "source_url": (
-            "https://maps.co.bastrop.tx.us/server/rest/services/"
-            "Viewers/DevelopmentServicesViewerService/MapServer"
-        ),
-        "city_limits": {
-            "url": (
-                "https://maps.co.bastrop.tx.us/server/rest/services/"
-                "Administrative_BP/Bastrop_County_City_Limits/MapServer/0/query"
-            ),
-            "name_field": "muni_nm",
-            "ignore_values": ["unincorporated"],
-        },
-        "etj": {
-            "url": (
-                "https://maps.co.bastrop.tx.us/server/rest/services/"
-                "Viewers/DevelopmentServicesViewerService/MapServer/43/query"
-            ),
-            "name_field": "govt_agency",
-            "where": "juris = 'ETJ'",
-        },
-        "no_hit_advisories": [
-            "bastrop_county_city_limits_no_city_hit",
-            "bastrop_development_services_etj_no_hit",
-        ],
-        "unincorporated_on_no_hit": False,
-    },
-}
+# One entry per county file with a `jurisdiction:` section
+# (app/regions/tx/counties/*.yaml).
+_COUNTY_JURISDICTION_GIS: dict[str, dict[str, Any]] = regions.county_sections(
+    "TX", "jurisdiction",
+)
 
 _STATEWIDE_CITY_LIMITS_GIS = {
     "source": "TxDOT City Boundaries (statewide city limits)",

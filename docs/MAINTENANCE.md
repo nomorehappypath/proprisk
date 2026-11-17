@@ -65,17 +65,31 @@ fixture that fails that scan is not saved.
 
 ## Updating coverage
 
-`backend/app/services/site_check/coverage.py` is the one file behind
-Settings → "Where PropRisk works". Update its `COUNTIES`, `ZONING_CITIES`,
-`STANDARDS_CITIES` or `FUTURE_LAND_USE_CITIES` lists to match whatever the
-adapters now cover, then run:
+County and state data lives in plain files, one per county:
+
+- `backend/app/regions/tx/state.yaml`: the state, its address-search box and
+  the "Statewide sources" lines on Settings.
+- `backend/app/regions/tx/counties/<county>.yaml`: the county's name, level
+  (Full or Partial), its Settings summary, a real sample address, and the map
+  layers and pages the sources use for it (city limits and ETJ, parcels,
+  appraisal-district search page, districts, fire stations, county clerk,
+  subdivisions). Leave out any section the county does not publish.
+
+The app checks every file when it starts and refuses to start with a message
+naming the file and the field if one is wrong. The fields of each section are
+the models in `backend/app/regions/loader.py`.
+
+Settings → "Where PropRisk works" lists one row per county file. Its city lists
+(`ZONING_CITIES`, `STANDARDS_CITIES`, `FUTURE_LAND_USE_CITIES`) are still in
+`backend/app/services/site_check/coverage.py`; update them to match whatever
+the adapters now cover, then run:
 
 ```
-cd backend && uv run pytest tests/test_coverage_matches_adapters.py
+cd backend && uv run pytest tests/test_coverage_matches_adapters.py tests/test_regions_loader.py
 ```
 
-This test reads the same adapters' own city/county lists and fails if
-`coverage.py` has drifted from them.
+These tests fail if the Settings table has drifted from the files and adapters,
+or if a region file does not load.
 
 ## Changing the database
 

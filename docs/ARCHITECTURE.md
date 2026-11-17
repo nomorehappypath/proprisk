@@ -74,6 +74,7 @@ PropRisk/
         local_identity.py the two fixed ids the baseline migration inserts
         job_queue.py      the generic background-job primitives the worker uses
       config/settings.py  every non-secret tunable (no secrets live here)
+      regions/            one folder per state, one YAML file per county (loader.py checks them at startup)
       services/
         gateway.py        AI key resolution, budget reservation, metering
         audit.py           the one-row-per-mutation audit log
@@ -109,8 +110,8 @@ PropRisk/
 | `entitlement_reader.py` | The AI read of a city's own planning pages, with every case re-verified |
 | `source_cache.py` | The 180-day read-through cache of public source facts |
 | `usage.py` | Per-run, per-provider call and estimated-cost metering |
-| `coverage.py` | The data behind Settings → "Where PropRisk works" |
-| `county_source_registry.py`, `county_clerk_portals.py` | Which county-specific data/portal a lookup should use |
+| `coverage.py` | The data behind Settings → "Where PropRisk works" (county rows come from `app/regions/`) |
+| `county_source_registry.py`, `county_clerk_portals.py` | Which county-specific data/portal a lookup should use (clerk portals come from `app/regions/`) |
 | `map_context.py`, `map_contract.py` | Builds the interactive map's layers from a finished run |
 | `service.py` | The create/read/cancel/retry/delete business logic the API layer calls |
 | `worker_handler.py` | Registers the `site_check` job kind with the worker |

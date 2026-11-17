@@ -1,0 +1,14 @@
+# Texas. Format: see app/regions/loader.py (StateFile).
+code: TX
+name: Texas
+fips: "48"
+search_box: [-106.65, 25.84, -93.51, 36.50]   # west, south, east, north
+census_centroids: bg_centroids_48.json
+statewide_summary:
+  - TxDOT traffic, roads, bridges and projects
+  - TCEQ and TWDB water and sewer service areas
+  - TEA schools
+  - TCEQ environmental records
+  - Texas historical aerial photos
+  - Texas parcel layer (TxGIO)
+  - HB 1378 district debt reports

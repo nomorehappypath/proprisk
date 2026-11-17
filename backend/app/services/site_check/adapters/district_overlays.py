@@ -22,6 +22,7 @@ import requests
 from shapely.geometry import Polygon, box, mapping
 from shapely.ops import unary_union
 
+from app.regions import loader as regions
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -38,63 +39,6 @@ log = logging.getLogger("propdesk.site_check.district_overlays")
 
 SOURCE_ID = "district_overlays"
 
-_TRAVIS_SUBDIVISIONS_QUERY = (
-    "https://gis.traviscountytx.gov/server1/rest/services/"
-    "Boundaries_and_Jurisdictions/Travis_County_Subdivisions/"
-    "MapServer/0/query"
-)
-_TRAVIS_ESD_QUERY = (
-    "https://gis.traviscountytx.gov/server1/rest/services/"
-    "Services_and_Facilities/Emergency_Service_Districts_ESDs/"
-    "FeatureServer/0/query"
-)
-_TRAVIS_ESD_AGOL_QUERY = (
-    "https://services1.arcgis.com/HGcSYZ5bvjRswoCb/arcgis/rest/services/"
-    "Emergency_Service_Districts_agol/FeatureServer/1/query"
-)
-_TRAVIS_ESD_TAXMAPS_QUERY = (
-    "https://taxmaps.traviscountytx.gov/arcgis/rest/services/"
-    "ESD/FeatureServer/0/query"
-)
-
-_WILCO_BASE = (
-    "https://services.arcgis.com/5ZjkDcAQQjFnTEkh/arcgis/rest/"
-    "services/county_administrative_boundaries_view/FeatureServer"
-)
-_WILCO_ESD_QUERY = f"{_WILCO_BASE}/3/query"
-_WILCO_MUD_QUERY = f"{_WILCO_BASE}/11/query"
-_WILCO_WCID_QUERY = f"{_WILCO_BASE}/12/query"
-_WILCO_JONAH_WSD_QUERY = f"{_WILCO_BASE}/16/query"
-_WILCO_SCHOOLS_QUERY = f"{_WILCO_BASE}/2/query"
-
-_HAYS_SUBDIVISIONS_QUERY = (
-    "https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/"
-    "services/Active_Subdivisions/FeatureServer/0/query"
-)
-_HAYS_SCHOOLS_QUERY = (
-    "https://services5.arcgis.com/bVphnK8rPe5MHUSr/arcgis/rest/"
-    "services/Hays_County_School_Districts/FeatureServer/0/query"
-)
-
-_BASTROP_BASE = (
-    "https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services"
-)
-_BASTROP_ESD_QUERY = (
-    f"{_BASTROP_BASE}/EmergencyServiceDistrict/FeatureServer/0/query"
-)
-_BASTROP_MUD_QUERY = (
-    f"{_BASTROP_BASE}/MunicipalUtilityDistrict/FeatureServer/0/query"
-)
-_BASTROP_WCID_QUERY = (
-    f"{_BASTROP_BASE}/WaterControlAndImprovementDistrict/"
-    "FeatureServer/0/query"
-)
-_BASTROP_SUBDIVISIONS_QUERY = (
-    f"{_BASTROP_BASE}/Subdivision/FeatureServer/0/query"
-)
-_BASTROP_SCHOOLS_QUERY = (
-    f"{_BASTROP_BASE}/IndependentSchoolDistrict/FeatureServer/0/query"
-)
 
 _TCEQ_WATER_DISTRICTS_BASE = (
     "https://gisweb.tceq.texas.gov/arcgis/rest/services/iwud/"
@@ -105,43 +49,11 @@ _TCEQ_WCID_QUERY = f"{_TCEQ_WATER_DISTRICTS_BASE}/13/query"
 
 LayerSpec = tuple[str, tuple[str, ...], str]
 
+# From each county file's `districts:` list (app/regions/tx/counties/*.yaml),
+# in file order. Within one entry the URLs are fallbacks, tried in order.
 _LAYERS_BY_COUNTY: dict[str, list[LayerSpec]] = {
-    "travis": [
-        ("Travis County subdivisions",
-         (_TRAVIS_SUBDIVISIONS_QUERY,), "subdivision"),
-        (
-            "Travis County ESDs",
-            (
-                _TRAVIS_ESD_QUERY,
-                _TRAVIS_ESD_AGOL_QUERY,
-                _TRAVIS_ESD_TAXMAPS_QUERY,
-            ),
-            "esd",
-        ),
-    ],
-    "williamson": [
-        ("Williamson County ESDs", (_WILCO_ESD_QUERY,), "esd"),
-        ("Williamson County MUDs (WCAD)", (_WILCO_MUD_QUERY,), "mud"),
-        ("Williamson County WCIDs", (_WILCO_WCID_QUERY,), "wcid"),
-        ("Jonah Water SUD", (_WILCO_JONAH_WSD_QUERY,), "wcid"),
-        ("Williamson County school districts",
-         (_WILCO_SCHOOLS_QUERY,), "school"),
-    ],
-    "hays": [
-        ("Hays County subdivisions",
-         (_HAYS_SUBDIVISIONS_QUERY,), "subdivision"),
-        ("Hays County school districts",
-         (_HAYS_SCHOOLS_QUERY,), "school"),
-    ],
-    "bastrop": [
-        ("Bastrop County ESDs", (_BASTROP_ESD_QUERY,), "esd"),
-        ("Bastrop County MUDs", (_BASTROP_MUD_QUERY,), "mud"),
-        ("Bastrop County WCIDs", (_BASTROP_WCID_QUERY,), "wcid"),
-        ("Bastrop County subdivisions",
-         (_BASTROP_SUBDIVISIONS_QUERY,), "subdivision"),
-        ("Bastrop County school districts",
-         (_BASTROP_SCHOOLS_QUERY,), "school"),
-    ],
+    county: [(d["label"], tuple(d["urls"]), d["kind"]) for d in districts]
+    for county, districts in regions.county_sections("TX", "districts").items()
 }
 
 _TEXAS_STATEWIDE_LAYERS: list[LayerSpec] = [

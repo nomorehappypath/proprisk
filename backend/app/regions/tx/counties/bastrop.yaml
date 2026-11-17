@@ -1,0 +1,92 @@
+# Bastrop County, Texas. Format: see app/regions/loader.py (CountyFile).
+name: Bastrop
+level: Full
+summary: City limits and ETJ, parcel layer, districts, fire, plats and clerk portal
+sample_address: 804 Pecan St, Bastrop, TX 78602
+jurisdiction:
+  source: Bastrop County GIS (Development Services Viewer)
+  source_url: https://maps.co.bastrop.tx.us/server/rest/services/Viewers/DevelopmentServicesViewerService/MapServer
+  city_limits:
+  - url: https://maps.co.bastrop.tx.us/server/rest/services/Administrative_BP/Bastrop_County_City_Limits/MapServer/0/query
+    name_field: muni_nm
+    ignore_values:
+    - unincorporated
+  etj:
+  - url: https://maps.co.bastrop.tx.us/server/rest/services/Viewers/DevelopmentServicesViewerService/MapServer/43/query
+    name_field: govt_agency
+    where: juris = 'ETJ'
+  no_hit_advisories:
+  - bastrop_county_city_limits_no_city_hit
+  - bastrop_development_services_etj_no_hit
+  unincorporated_on_no_hit: false
+parcels:
+  source_label: Bastrop CAD parcel layer
+  source_url: https://services3.arcgis.com/wdTkTU0MdZbNBEZy/ArcGIS/rest/services/ParcelARI/FeatureServer/0
+  query_url: https://services3.arcgis.com/wdTkTU0MdZbNBEZy/ArcGIS/rest/services/ParcelARI/FeatureServer/0/query
+  id_fields:
+  - prop_id
+  - prop_id_text
+  - geo_id
+  numeric_id_fields:
+  - prop_id
+  cad_account_fields:
+  - geo_id
+  - prop_id_text
+  owner_fields:
+  - file_as_name
+  situs_fields:
+  - situs_address
+  - situs_num
+  - situs_street
+  legal_fields:
+  - legal_desc
+  acre_fields:
+  - legal_acreage
+  land_value_fields:
+  - land_val
+  value_fields:
+  - market
+  out_fields: prop_id,prop_id_text,geo_id,file_as_name,situs_num,situs_street,situs_city,legal_desc,legal_acreage,deed_date,deed_seq,market,land_val,imprv_val
+appraisal_search_url: https://esearch.bastropcad.org/
+districts:
+- label: Bastrop County ESDs
+  kind: esd
+  urls:
+  - https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services/EmergencyServiceDistrict/FeatureServer/0/query
+- label: Bastrop County MUDs
+  kind: mud
+  urls:
+  - https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services/MunicipalUtilityDistrict/FeatureServer/0/query
+- label: Bastrop County WCIDs
+  kind: wcid
+  urls:
+  - https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services/WaterControlAndImprovementDistrict/FeatureServer/0/query
+- label: Bastrop County subdivisions
+  kind: subdivision
+  urls:
+  - https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services/Subdivision/FeatureServer/0/query
+- label: Bastrop County school districts
+  kind: school
+  urls:
+  - https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services/IndependentSchoolDistrict/FeatureServer/0/query
+fire_stations:
+  url: https://services3.arcgis.com/wdTkTU0MdZbNBEZy/arcgis/rest/services/FireStation/FeatureServer/0/query
+clerk:
+  name: Bastrop County Clerk Official Public Records
+  url: https://cc.co.bastrop.tx.us/
+  plat_url: https://bastroptx.search.kofile.com/48109/Home/Index/1
+  deed_instructions: 1) Open Bastrop County Clerk Web Access and acknowledge the disclaimer.
+    2) Use Records / Official Public Records for land recordings, not probate, misdemeanor,
+    or Commissioners Court records. 3) Search by instrument number when one is provided; otherwise
+    search by party/grantor/grantee. 4) Open the matching recorded deed, download the image/copy
+    if available, and upload it.
+  plat_instructions: Use the County Clerk Official Public Records search for recorded plats.
+    Search probable instrument/document number first when present; otherwise search document
+    type Plat and the subdivision / lot / block terms.
+  fallback_url: https://www.bastropcounty.gov/page/co.county_clerk
+  fallback_label: County clerk page
+  fallback_note: 'Official Bastrop County Clerk page linking to Records: Official Public Records.'
+subdivisions:
+  source_label: Bastrop County Public GIS Viewer (subdivisions)
+  layer_url: https://maps.co.bastrop.tx.us/server/rest/services/Viewers/PublicGISViewerService/MapServer/13
+  query_url: https://maps.co.bastrop.tx.us/server/rest/services/Viewers/PublicGISViewerService/MapServer/13/query
