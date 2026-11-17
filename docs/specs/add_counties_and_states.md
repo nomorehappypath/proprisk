@@ -1,9 +1,9 @@
 # Spec: let anyone add a county or a state to PropRisk (with NMHP)
 
 Status: Codex PASS on the whole spec, 2026-11-17: sections 1–2.4 in round 3, and
-section 2.5 (standard jobs and formats) in round 2. The owner said go for Phase A
-on 2026-11-17. Every phase is built by NMHP, as PropRisk itself was: the owner gives
-NMHP the phase as a task, and NMHP specs, builds, reviews and releases it.
+section 2.5 (standard jobs and formats) in round 2. Phase A done 2026-11-17
+(Codex PASS in round 2; built by hand because NMHP was busy, on the owner's word).
+Phases B onward are meant to be built by NMHP.
 Owner: Gerard. Builder: NMHP (NoMoreHappyPath).
 
 ## In one paragraph
