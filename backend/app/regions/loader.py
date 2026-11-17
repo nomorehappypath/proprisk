@@ -174,7 +174,8 @@ def _read(path: Path, model: type[_Strict]) -> dict[str, Any]:
 @lru_cache(maxsize=1)
 def load_regions(root: Path = REGIONS_DIR) -> dict[str, dict[str, Any]]:
     """{"TX": {"state": {...}, "counties": {"travis": {...}, ...}}, ...}.
-    County keys are the file names (lowercase)."""
+    County keys are the county names as lookups carry them: the file name
+    with "_" read as a space (fort_bend.yaml -> "fort bend")."""
     regions: dict[str, dict[str, Any]] = {}
     for state_dir in sorted(p for p in root.iterdir() if p.is_dir()):
         if state_dir.name.startswith(("_", ".")) or state_dir.name == "__pycache__":
@@ -189,7 +190,7 @@ def load_regions(root: Path = REGIONS_DIR) -> dict[str, dict[str, Any]]:
                 f"'{state_dir.name}' (the folder must be the code in lowercase)"
             )
         counties = {
-            path.stem: _read(path, CountyFile)
+            path.stem.replace("_", " "): _read(path, CountyFile)
             for path in sorted((state_dir / "counties").glob("*.yaml"))
         }
         regions[state["code"]] = {"state": state, "counties": counties}

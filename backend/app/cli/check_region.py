@@ -20,6 +20,7 @@ import atexit
 import logging
 import os
 import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -33,6 +34,11 @@ BACKEND_DIR = Path(__file__).resolve().parents[2]
 _TIMEOUT = 25
 _HEADERS = {"User-Agent": "PropRisk check_region (open-source contributor check)"}
 _FOUND_KINDS = {"full_purpose_city", "limited_purpose", "etj", "unincorporated_county"}
+# plats_intel statuses that mean the county's subdivision layer was really queried.
+_SUBDIVISION_ANSWERED = {
+    "recorded_plat_found", "platted_subdivision_match",
+    "subdivision_match_not_recorded", "no_intersecting_recorded_subdivision",
+}
 
 
 class Report:
@@ -187,6 +193,17 @@ def _start_throwaway_postgres() -> str:
         port = sock.getsockname()[1]
     pg_dir = tempfile.mkdtemp(prefix="proprisk_check_pg_")
     sock_dir = tempfile.mkdtemp(prefix="proprisk_check_sock_")
+
+    def _stop() -> None:
+        if (Path(pg_dir) / "postmaster.pid").exists():
+            subprocess.run(["pg_ctl", "-D", pg_dir, "stop", "-m", "fast"],
+                           check=False, capture_output=True, env=env)
+        shutil.rmtree(pg_dir, ignore_errors=True)
+        shutil.rmtree(sock_dir, ignore_errors=True)
+
+    # Registered before anything starts, so a failed start is cleaned up too.
+    atexit.register(_stop)
+
     def run(args: list[str]) -> None:
         subprocess.run(args, check=True, capture_output=True, text=True, env=env)
 
@@ -194,14 +211,6 @@ def _start_throwaway_postgres() -> str:
     run(["pg_ctl", "-D", pg_dir, "-l", os.path.join(pg_dir, "postgres.log"),
          "-o", f"-p {port} -k {sock_dir} -c listen_addresses=127.0.0.1", "start", "-w"])
     run(["createdb", "-h", "127.0.0.1", "-p", str(port), "-U", "proprisk", "proprisk_check"])
-
-    def _stop() -> None:
-        subprocess.run(["pg_ctl", "-D", pg_dir, "stop", "-m", "fast"],
-                       check=False, capture_output=True, env=env)
-        shutil.rmtree(pg_dir, ignore_errors=True)
-        shutil.rmtree(sock_dir, ignore_errors=True)
-
-    atexit.register(_stop)
     return f"postgresql+psycopg://proprisk@127.0.0.1:{port}/proprisk_check"
 
 
@@ -303,11 +312,16 @@ def judge_level(
         ):
             parcel_ok = True
     district_labels = {d["label"] for d in county.get("districts") or []}
-    district_errors = [
-        e for e in _facts(results, "district_overlays").get("layer_errors") or []
-        if e.get("layer") in district_labels
-    ]
-    districts_ok = bool(district_labels) and not district_errors
+    district_result = results.get("district_overlays") or {}
+    district_facts = district_result.get("normalized_facts") or {}
+    layer_errors = district_facts.get("layer_errors")
+    districts_ok = (
+        bool(district_labels)
+        and district_result.get("coverage_status") in ("covered", "partial")
+        and not district_result.get("errors")
+        and isinstance(layer_errors, list)  # the district source really ran
+        and not [e for e in layer_errors if e.get("layer") in district_labels]
+    )
     steps = county_clerk_portals.clerk_lookup_steps(key, "deed")
     clerk_ok = bool(steps and steps.get("url") and steps.get("instructions"))
 
@@ -329,7 +343,8 @@ def judge_level(
         )
     elif level == "Partial" and not any(answers.values()):
         fire = (results.get("fire_district") or {}).get("coverage_status") == "covered"
-        subdivisions = bool(county.get("subdivisions"))
+        subdivision_status = _facts(results, "plats_intel").get(f"{key}_subdivision_gis_status")
+        subdivisions = subdivision_status in _SUBDIVISION_ANSWERED
         if not (fire or subdivisions):
             report.fail("the file says Partial, but no answer came from the county's own file")
     elif level == "Partial" and all(answers.values()):
@@ -353,7 +368,7 @@ def check_county(report: Report, state: str, key: str, county: dict[str, Any]) -
         report.fail(f"the real lookup ended as '{run_status}', not completed")
         return
     looked_up_county = _facts(results, "arcgis_geocode").get("county") or ""
-    if looked_up_county.lower().removesuffix(" county") != key.replace("_", " "):
+    if looked_up_county.lower().removesuffix(" county") != key:
         report.fail(
             f"the lookup placed the sample address in '{looked_up_county or 'no county'}', "
             f"not {county['name']} County: use an address inside the county"
@@ -380,11 +395,13 @@ def main(argv: list[str]) -> int:
     # The lookup's own progress logs are noise here; real problems are
     # reported as FAIL or warning lines.
     logging.disable(logging.WARNING)
+    # A stop signal exits normally, so the throwaway database is removed.
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
     if not argv or len(argv) > 2:
         print("usage: scripts/check_region.sh <state> [<county>]   e.g.  tx comal")
         return 2
     state = argv[0].upper()
-    county_key = argv[1].lower().replace(" ", "_") if len(argv) == 2 else None
+    county_key = argv[1].lower().replace("_", " ").strip() if len(argv) == 2 else None
     report = Report()
 
     from app.regions import loader
@@ -402,7 +419,8 @@ def main(argv: list[str]) -> int:
         return 1
     counties = regions[state]["counties"]
     if county_key and county_key not in counties:
-        report.fail(f"no file app/regions/{state.lower()}/counties/{county_key}.yaml")
+        file_name = county_key.replace(" ", "_")
+        report.fail(f"no file app/regions/{state.lower()}/counties/{file_name}.yaml")
         print("\nFAIL")
         return 1
     report.ok(f"{state.lower()}/state.yaml and {len(counties)} county file(s) load")
