@@ -54,3 +54,18 @@ def test_state_code_must_match_folder(tmp_path):
     with pytest.raises(loader.RegionFileError) as err:
         loader.load_regions.__wrapped__(root)
     assert "state.yaml" in str(err.value) and "folder" in str(err.value)
+
+
+def test_key_written_twice_is_refused(tmp_path):
+    text = COUNTY + "districts:\n  - label: A\n    kind: esd\n    urls: [https://example.test/q]\ndistricts: []\n"
+    root = _region(tmp_path, text)
+    with pytest.raises(loader.RegionFileError) as err:
+        loader.load_regions.__wrapped__(root)
+    assert "test.yaml" in str(err.value) and "districts" in str(err.value)
+
+
+def test_empty_section_is_refused(tmp_path):
+    root = _region(tmp_path, COUNTY + "fire_stations:\n")
+    with pytest.raises(loader.RegionFileError) as err:
+        loader.load_regions.__wrapped__(root)
+    assert "test.yaml" in str(err.value) and "fire_stations" in str(err.value)

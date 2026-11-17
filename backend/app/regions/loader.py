@@ -120,11 +120,44 @@ class CountyFile(_Strict):
     subdivisions: Subdivisions | None = None
 
 
+class _NoDuplicateKeysLoader(yaml.SafeLoader):
+    """A key written twice would silently replace the first one; refuse it."""
+
+    def construct_mapping(self, node, deep=False):
+        seen: set[Any] = set()
+        for key_node, _ in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            if key in seen:
+                raise yaml.constructor.ConstructorError(
+                    None, None, f"'{key}' is written twice", key_node.start_mark,
+                )
+            seen.add(key)
+        return super().construct_mapping(node, deep=deep)
+
+
+def _empty_keys(value: Any, where: str = "") -> list[str]:
+    """Keys written with no value. Leave a section out instead of leaving it empty."""
+    found: list[str] = []
+    if isinstance(value, dict):
+        for key, item in value.items():
+            path = f"{where}.{key}" if where else str(key)
+            found += [path] if item is None else _empty_keys(item, path)
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            found += _empty_keys(item, f"{where}.{index}")
+    return found
+
+
 def _read(path: Path, model: type[_Strict]) -> dict[str, Any]:
     try:
-        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        raw = yaml.load(path.read_text(encoding="utf-8"), Loader=_NoDuplicateKeysLoader)  # a SafeLoader
     except (OSError, yaml.YAMLError) as exc:
         raise RegionFileError(f"{path}: cannot read this file ({exc})") from exc
+    empty = _empty_keys(raw)
+    if empty:
+        raise RegionFileError(
+            f"{path}: {', '.join(empty)}: has no value (fill it in, or remove the line)"
+        )
     try:
         parsed = model.model_validate(raw)
     except ValidationError as exc:
