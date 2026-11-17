@@ -8,7 +8,7 @@ file stops startup with a message naming the file and the field. The adapters
 get back plain dicts in the same shapes their old in-code tables had, so data
 moved into these files without any change to adapter logic.
 
-Each section is described by the model of the same name below.
+Commented blank files to copy: app/regions/_template/. Recipe: docs/EXTENDING.md.
 """
 
 from __future__ import annotations

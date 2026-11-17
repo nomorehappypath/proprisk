@@ -1,4 +1,4 @@
-# Williamson County, Texas. Format: see app/regions/loader.py (CountyFile).
+# Williamson County, Texas. Format: see app/regions/_template/county.yaml.
 name: Williamson
 level: Full
 summary: City limits and ETJ, parcel lookup (WCAD), districts, fire (via Round Rock), plats

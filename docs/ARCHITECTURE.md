@@ -53,7 +53,7 @@ silently lost.
 ```
 PropRisk/
   README.md            what PropRisk is, install, launch, stop, settings, troubleshooting
-  LICENSE               AGPL-3.0 text
+  LICENSE               Apache License 2.0 text (NOTICE: copyright and contact)
   SECURITY.md           the trust model and what is/isn't protected
   SPEC.md                (copied from propdesk_public/Specs/) the full build specification
   .gitignore
@@ -74,12 +74,13 @@ PropRisk/
         local_identity.py the two fixed ids the baseline migration inserts
         job_queue.py      the generic background-job primitives the worker uses
       config/settings.py  every non-secret tunable (no secrets live here)
-      regions/            one folder per state, one YAML file per county (loader.py checks them at startup)
+      regions/            one folder per state, one YAML file per county (loader.py checks them at startup; _template/ holds the blank files)
       services/
         gateway.py        AI key resolution, budget reservation, metering
         audit.py           the one-row-per-mutation audit log
         site_check/        the whole Public Data engine — see below
       cli/keys.py          the command-line secret-store tool behind scripts/keys.sh
+      cli/check_region.py  the county/state proof command behind scripts/check_region.sh
     alembic/versions/0001_proprisk_baseline.py   the one migration: every table, the two fixed rows
     tests/                 the kept and adjusted test suite
   web/                    React screens
@@ -90,8 +91,8 @@ PropRisk/
       lib/                 typed API clients (publicData.ts, settings.ts, api.ts, errorReporter.ts)
       components/Busy.tsx  the shared loading indicator
     scripts/               ui_smoke.mjs, map_smoke.mjs, capture_fixtures.mjs, fixtures/
-  scripts/                launch.sh, stop.sh, test.sh, keys.sh
-  docs/                   this file, DATA_SOURCES.md, MAINTENANCE.md
+  scripts/                launch.sh, stop.sh, test.sh, keys.sh, check_region.sh
+  docs/                   this file, DATA_SOURCES.md, MAINTENANCE.md, EXTENDING.md (add a county)
   data/                   created at first launch; never in git — database, secrets, logs, pids
 ```
 

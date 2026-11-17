@@ -1,0 +1,12 @@
+# A state file. Copy this folder's state.yaml to app/regions/<code>/state.yaml,
+# where <code> is the state's two-letter postal code in lowercase (tx, co, ...).
+# Every line below is required unless it says "optional".
+# Recipe: docs/EXTENDING.md. Check: scripts/check_region.sh <code>
+
+code: XX                 # two-letter postal code, capitals; must match the folder name
+name: Example State      # the state's full name
+fips: "00"               # the Census Bureau's two-digit state code, in quotes
+search_box: [-110.0, 30.0, -100.0, 40.0]   # west, south, east, north (longitude, latitude)
+# census_centroids: bg_centroids_00.json   # optional; the population card is "not connected" without it
+statewide_summary:       # optional; the lines shown on Settings under "Statewide sources"
+  - Example statewide source

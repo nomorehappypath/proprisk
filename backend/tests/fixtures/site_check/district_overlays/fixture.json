@@ -1866,6 +1866,7 @@
    "tirz_districts": [],
    "school_districts": [],
    "unavailable_layers": [],
+   "layer_errors": [],
    "source_warnings": [],
    "advisory": "ESD: AUSTIN FIRE DEPARTMENT. Public overlay layers are screening; recorded plat is authoritative.",
    "contradiction_flags": []

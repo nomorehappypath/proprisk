@@ -1,0 +1,77 @@
+# A county file. Copy this file to app/regions/<state>/counties/<county>.yaml,
+# where <county> is the county name in lowercase with "_" for spaces
+# (comal.yaml, fort_bend.yaml).
+#
+# The first four lines are required. Every section after them is optional:
+# remove the "# " in front of a section only when the county publishes it,
+# and leave out any section it does not. Never leave a line with no value.
+# Recipe: docs/EXTENDING.md. Check: scripts/check_region.sh <state> <county>
+
+name: Example                # the county name, without "County"
+level: Partial               # Full or Partial; scripts/check_region.sh tells you which it earns
+summary: County clerk portal # one short line for Settings: what this file covers
+sample_address: "100 Main St, Example City, XX 00000"   # a real address inside the county
+
+# City limits and ETJ map layers. Each list is tried in order.
+# jurisdiction:
+#   source: Example County GIS                 # the name shown to the user
+#   source_url: https://example.gov/gis        # a page a person can open
+#   city_limits:
+#     - url: https://example.gov/arcgis/rest/services/Cities/FeatureServer/0/query
+#       name_field: CITY_NAME                  # the field that holds the city name
+#       # where: "TYPE = 'City'"               # optional filter
+#       # fixed_name: Example City             # optional: use this name for every hit
+#       # ignore_values: [unincorporated]      # optional: names that mean "no city"
+#   etj:
+#     - url: https://example.gov/arcgis/rest/services/ETJ/FeatureServer/0/query
+#       name_field: ETJ_NAME
+#   # unincorporated_on_no_hit: true   # only if these layers list EVERY city and ETJ in the
+#   #                                  # county; otherwise a miss is reported as "not confirmed"
+
+# The appraisal district's parcel map layer.
+# parcels:
+#   source_label: Example Appraisal District parcels
+#   source_url: https://example.gov/arcgis/rest/services/Parcels/FeatureServer/0
+#   query_url: https://example.gov/arcgis/rest/services/Parcels/FeatureServer/0/query
+#   id_fields: [PROP_ID]                # the property ID field(s), best first
+#   numeric_id_fields: [PROP_ID]        # optional: ID fields that hold numbers
+#   cad_account_fields: [GEO_ID]        # optional
+#   owner_fields: [OWNER_NAME]          # optional
+#   situs_fields: [SITUS_ADDR]          # optional: the property address
+#   legal_fields: [LEGAL_DESC]          # optional
+#   acre_fields: [ACRES]                # optional
+#   value_fields: [MARKET_VALUE]        # optional
+#   land_value_fields: [LAND_VALUE]     # optional
+#   out_fields: PROP_ID,GEO_ID,OWNER_NAME,SITUS_ADDR,LEGAL_DESC,ACRES,MARKET_VALUE,LAND_VALUE
+# appraisal_search_url: https://example-cad.org/property-search   # the appraisal district's search page
+
+# Special-district map layers. kind is one of: subdivision, mud, wcid, esd, school.
+# With more than one URL, the next is tried only if the one before fails.
+# districts:
+#   - label: Example County ESDs
+#     kind: esd
+#     urls: [https://example.gov/arcgis/rest/services/ESD/FeatureServer/0/query]
+
+# Fire stations (a point layer).
+# fire_stations:
+#   url: https://example.gov/arcgis/rest/services/FireStations/FeatureServer/0/query
+
+# The county clerk's official public records search.
+# clerk:
+#   name: Example County Clerk Official Public Records
+#   url: https://example.gov/clerk/search
+#   # plat_url: https://example.gov/clerk/plats    # optional: only if plats use a different site
+#   deed_instructions: "1) Open the search. 2) Search by instrument number. 3) Download the deed and upload it."
+#   plat_instructions: "Search document type Plat by subdivision name, then upload the recorded plat."
+#   # fallback_url: https://example.gov/clerk      # optional: the clerk's own help page
+#   # fallback_label: County clerk page
+#   # fallback_note: Official county clerk page.
+
+# The county's subdivision map layer. A subdivision found here is shown as
+# "subdivision nearby", never as proof that a plat was recorded.
+# subdivisions:
+#   source_label: Example County subdivisions
+#   layer_url: https://example.gov/arcgis/rest/services/Subdivisions/FeatureServer/0
+#   query_url: https://example.gov/arcgis/rest/services/Subdivisions/FeatureServer/0/query
+#   name_field: SUBDIV_NAME
+#   # code_field: SUBDIV_ID              # optional
