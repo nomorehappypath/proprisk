@@ -116,7 +116,8 @@ def test_google_replay_fixture_resolves_capitol(google_key):
     sess = _StubSession({ag._GOOGLE_GEOCODE: json.loads(_FIXTURE.read_text())})
     coords = ag._try_google(sess, _CAPITOL_ADDRESS, county="travis")
     assert coords is not None
-    lat, lng, county = coords
+    lat, lng, county, state = coords
+    assert state == "TX"
     assert lat == pytest.approx(30.2747, abs=0.01)
     assert lng == pytest.approx(-97.7403, abs=0.01)
     assert county == "travis"
@@ -186,22 +187,22 @@ def test_google_road_validation_accepts_matching_road(google_key):
 
 
 _IDENTITY = PropertyIdentity(address=_CAPITOL_ADDRESS, county="travis")
-_CAPITOL_COORDS = (30.274703, -97.740345, "travis")
+_CAPITOL_COORDS = (30.274703, -97.740345, "travis", "TX")
 
 
 def _wire(monkeypatch, *, nominatim, arcgis, google):
     """Stub the three tier functions; each records whether it ran."""
     ran = {"nominatim": False, "arcgis": False, "google": False}
 
-    def fake_nominatim(sess, address, *, county=None):
+    def fake_nominatim(sess, address, *, county=None, state=None):
         ran["nominatim"] = True
         return nominatim
 
-    def fake_arcgis(sess, address, *, county=None):
+    def fake_arcgis(sess, address, *, county=None, state=None):
         ran["arcgis"] = True
         return arcgis
 
-    def fake_google(sess, address, *, county=None):
+    def fake_google(sess, address, *, county=None, state=None):
         ran["google"] = True
         return google
 

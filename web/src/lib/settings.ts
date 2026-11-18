@@ -41,7 +41,7 @@ export type SpendingResponse = {
 
 export type CoverageResponse = {
   state: string
-  counties: Array<{ county: string; level: string; detail: string }>
+  counties: Array<{ state: string; county: string; level: string; detail: string }>
   cities: {
     zoning: string[]
     standards: string[]

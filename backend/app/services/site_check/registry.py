@@ -55,6 +55,10 @@ class AdapterRegistration:
     # share a real upstream (e.g., several jurisdiction adapters all
     # hitting Socrata).
     provider_concurrency_group: str | None = None
+    # States this source covers. Empty means everywhere. A Texas-only
+    # source is ("TX",): outside Texas the orchestrator never calls it and
+    # records "Not connected for <State> yet" instead.
+    states: tuple[str, ...] = ()
 
 
 # Single source of truth for activation. Mirrors the §4 matrix
@@ -105,6 +109,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "txdot_aadt": AdapterRegistration(
         source_id="txdot_aadt",
+        states=("TX",),
         legacy_origin="core/public_intel.py::_fetch_txdot_traffic",
         active_in_v0=True,
         provider="txdot",
@@ -115,6 +120,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "txdot_aadt_history": AdapterRegistration(
         source_id="txdot_aadt_history",
+        states=("TX",),
         legacy_origin="NEW (historical TxDOT traffic-count stations)",
         active_in_v0=True,
         provider="txdot",
@@ -127,6 +133,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "txdot_county_vmt": AdapterRegistration(
         source_id="txdot_county_vmt",
+        states=("TX",),
         legacy_origin="NEW (gas station feasibility top-down allocator)",
         active_in_v0=False,
         provider="txdot",
@@ -139,6 +146,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "txdot_projects": AdapterRegistration(
         source_id="txdot_projects",
+        states=("TX",),
         legacy_origin="core/public_intel.py::_fetch_txdot_projects",
         active_in_v0=True,
         provider="txdot",
@@ -148,6 +156,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "txdot_roadway": AdapterRegistration(
         source_id="txdot_roadway",
+        states=("TX",),
         legacy_origin=(
             "core/public_intel.py::_fetch_txdot_roadway_info "
             "+ fetch_txdot_roadway_extended"
@@ -166,6 +175,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "txdot_bridges": AdapterRegistration(
         source_id="txdot_bridges",
+        states=("TX",),
         legacy_origin="core/public_intel.py::fetch_txdot_bridges",
         active_in_v0=True,
         provider="txdot",
@@ -224,6 +234,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "austin_zoning": AdapterRegistration(
         source_id="austin_zoning",
+        states=("TX",),
         legacy_origin=(
             "core/zoning_fetchers.py::fetch_austin_zoning "
             "(via fetch_zoning_intel dispatcher)"
@@ -288,6 +299,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     # matrix to confirm no regressions.
     "txdot_extended": AdapterRegistration(
         source_id="txdot_extended",
+        states=("TX",),
         legacy_origin="fetch_txdot_all_projects + fetch_txdot_crash_data",
         active_in_v0=True,
         provider="txdot",
@@ -301,6 +313,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "wcad_parcel": AdapterRegistration(
         source_id="wcad_parcel",
+        states=("TX",),
         legacy_origin="NEW (Williamson CAD public ArcGIS parcel layer)",
         active_in_v0=True,
         provider="wcad",
@@ -341,6 +354,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "twdb_ccn": AdapterRegistration(
         source_id="twdb_ccn",
+        states=("TX",),
         legacy_origin="public_intel_adapters/ccn.py",
         active_in_v0=True,
         provider="twdb",
@@ -375,6 +389,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "future_land_use": AdapterRegistration(
         source_id="future_land_use",
+        states=("TX",),
         legacy_origin="public_intel_adapters/future_land_use.py",
         active_in_v0=True,
         provider="various_jurisdiction_flu",
@@ -398,6 +413,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "entitlement_pipeline": AdapterRegistration(
         source_id="entitlement_pipeline",
+        states=("TX",),
         legacy_origin="public_intel_adapters/entitlement_pipeline.py",
         active_in_v0=True,
         provider="various",
@@ -406,6 +422,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "zoning_standards": AdapterRegistration(
         source_id="zoning_standards",
+        states=("TX",),
         legacy_origin="public_intel_adapters/zoning_standards.py",
         active_in_v0=True,
         provider="various_jurisdiction_codes",
@@ -440,6 +457,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "historic_intel": AdapterRegistration(
         source_id="historic_intel",
+        states=("TX",),
         legacy_origin="public_intel_adapters/historic_intel.py",
         active_in_v0=True,
         provider="thc",
@@ -448,6 +466,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "schools_intel": AdapterRegistration(
         source_id="schools_intel",
+        states=("TX",),
         legacy_origin="public_intel_adapters/schools_intel.py",
         active_in_v0=True,
         provider="tea",
@@ -456,6 +475,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "tax_intel": AdapterRegistration(
         source_id="tax_intel",
+        states=("TX",),
         legacy_origin="public_intel_adapters/tax_intel.py",
         active_in_v0=True,
         provider="various_appraisal_districts",
@@ -464,6 +484,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     ),
     "transit_intel": AdapterRegistration(
         source_id="transit_intel",
+        states=("TX",),
         legacy_origin="public_intel_adapters/transit_intel.py",
         active_in_v0=True,
         provider="capmetro_etc",

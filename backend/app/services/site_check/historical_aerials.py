@@ -778,7 +778,8 @@ def _scope_key(run: Any, cfg: _Config) -> str:
     row. The read model is deliberately NOT part of the key — only the
     deterministic chips are cached."""
     return (
-        f"{round(float(run.lat), 5)},{round(float(run.lng), 5)}"
+        f"state={(getattr(run, 'state', None) or 'TX').upper()}"
+        f"|{round(float(run.lat), 5)},{round(float(run.lng), 5)}"
         f"|parcel={getattr(run, 'parcel_id', None) or '-'}"
         f"|eras={','.join(sorted(cfg.eras))}"
         f"|px={cfg.chip_size_px}"
@@ -791,6 +792,7 @@ def _identity_for(run: Any) -> PropertyIdentity:
         lat=getattr(run, "lat", None),
         lng=getattr(run, "lng", None),
         county=getattr(run, "county", None) or None,
+        state=getattr(run, "state", None) or "TX",
         parcel_id=getattr(run, "parcel_id", None) or None,
     )
 

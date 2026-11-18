@@ -31,8 +31,8 @@ def _key(county: str | None) -> str:
 # Per-county canonical record:
 #   name, url (deed/general portal), optional plat_url override,
 #   deed_instructions, plat_instructions, and fallback_* where known.
-_COUNTY_CLERK_PORTALS: dict[str, dict[str, Any]] = regions.county_sections(
-    "TX", "clerk",
+_COUNTY_CLERK_PORTALS: dict[str, dict[str, Any]] = regions.all_county_sections(
+    "clerk",
 )
 
 

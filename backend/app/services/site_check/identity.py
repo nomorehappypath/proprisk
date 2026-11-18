@@ -55,6 +55,14 @@ class PropertyIdentity(BaseModel):
             "queries only fire for Travis, etc."
         ),
     )
+    state: str = Field(
+        default="TX", min_length=2, max_length=2,
+        description=(
+            "Two-letter state code. TX when nothing named a state "
+            "(today's default). Texas-only sources and Texas county "
+            "rules run only when this is TX."
+        ),
+    )
     parcel_id: str | None = Field(
         default=None, max_length=64,
         description=(
@@ -151,6 +159,11 @@ class PropertyIdentity(BaseModel):
         cleaned = cleaned.removesuffix(" county")
         return cleaned or None
 
+    @field_validator("state")
+    @classmethod
+    def _upper_state(cls, v: str) -> str:
+        return v.strip().upper()
+
     @field_validator("parcel_id", "cad_account")
     @classmethod
     def _strip_identifier(cls, v: str | None) -> str | None:
@@ -158,6 +171,14 @@ class PropertyIdentity(BaseModel):
             return None
         cleaned = v.strip().upper()
         return cleaned or None
+
+    @property
+    def county_key(self) -> str:
+        """The county's key in the county tables: "travis" in Texas,
+        "co:denver" elsewhere (see app.regions.loader.county_key)."""
+        from app.regions.loader import county_key
+
+        return county_key(self.state, self.county)
 
     # ── Query point ─────────────────────────────────────────
 

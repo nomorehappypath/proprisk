@@ -44,8 +44,8 @@ _TIMEOUT = 15
 # (per reviewer contract answer #3).
 # One entry per county file with a `jurisdiction:` section
 # (app/regions/tx/counties/*.yaml).
-_COUNTY_JURISDICTION_GIS: dict[str, dict[str, Any]] = regions.county_sections(
-    "TX", "jurisdiction",
+_COUNTY_JURISDICTION_GIS: dict[str, dict[str, Any]] = regions.all_county_sections(
+    "jurisdiction",
 )
 
 _STATEWIDE_CITY_LIMITS_GIS = {
@@ -397,7 +397,8 @@ def resolve_jurisdiction(
     over ETJ (a parcel inside city limits is full-purpose, even if the ETJ
     polygon geometrically includes it)."""
     county = (identity.county or "").lower().strip()
-    cfg = _COUNTY_JURISDICTION_GIS.get(county)
+    cfg = _COUNTY_JURISDICTION_GIS.get(identity.county_key)
+    in_texas = identity.state == "TX"
     base = {
         "county": county or None,
         "source": cfg["source"] if cfg else None,
@@ -414,6 +415,12 @@ def resolve_jurisdiction(
     sess = http_session(session)
     lat, lng = identity.lat, identity.lng
 
+    if cfg is None and not in_texas:
+        # No county file, and the statewide city layer is Texas's.
+        return _unknown_verdict(
+            county=county or None, source=None, source_url=None,
+            advisories=["county_not_wired", "etj_not_wired"],
+        )
     if cfg is None:
         statewide, statewide_layer = _statewide_city_limits_verdict_result(
             sess, lat, lng,
@@ -496,8 +503,10 @@ def resolve_jurisdiction(
     if etj_result["status"] == "error":
         layer_error = True
 
-    statewide, statewide_layer = _statewide_city_limits_verdict_result(
-        sess, lat, lng,
+    # The statewide city-limits cross-check is a Texas layer.
+    statewide, statewide_layer = (
+        _statewide_city_limits_verdict_result(sess, lat, lng) if in_texas
+        else ({"status": "miss"}, None)
     )
     if statewide["status"] == "hit":
         return _statewide_city_limits_verdict(
@@ -552,6 +561,22 @@ def resolve_jurisdiction(
     }
 
 
+def _found_only_summary(verdict: dict[str, Any]) -> str:
+    kind = verdict.get("jurisdiction_kind")
+    city = (verdict.get("city") or "").title()
+    if kind in ("full_purpose_city", "limited_purpose") and city:
+        found = f"The county's boundary map places this point inside {city} city limits."
+    elif kind == "etj" and city:
+        found = f"The county's boundary map places this point inside the {city} ETJ."
+    elif kind == "unincorporated_county":
+        found = "The county's boundary map places this point outside every city it lists."
+    elif kind == "source_error":
+        found = "The county's boundary map did not answer, so nothing was confirmed."
+    else:
+        found = "No county boundary map confirmed whether this point is inside a city."
+    return f"{found} Zoning and development authority not checked."
+
+
 def fetch(
     identity: PropertyIdentity,
     *,
@@ -562,6 +587,11 @@ def fetch(
     geocode, before the city-aware adapters) and writes the verdict to
     `derived.jurisdiction` + `adapter_results['jurisdiction_resolver']`."""
     verdict = resolve_jurisdiction(identity, session=session)
+    verdict["state"] = identity.state
+    if identity.state != "TX":
+        # Outside Texas, say only what the boundary map found; the Texas
+        # wording about city rules and ETJ review is not checked here.
+        verdict["broker_summary"] = _found_only_summary(verdict)
     kind = verdict["jurisdiction_kind"]
     resolved = kind not in ("unknown", "source_error")
     # source_error is a fragile-source signal, not a settled "not covered":

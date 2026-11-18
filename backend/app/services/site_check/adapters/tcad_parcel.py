@@ -64,13 +64,13 @@ _TIMEOUT = 20
 _SQFT_PER_ACRE = 43_560.0
 _SQM_PER_ACRE = 4_046.8564224
 # From each county file's `appraisal_search_url` (app/regions/tx/counties/*.yaml).
-_CAD_PROPERTY_SEARCH_BY_COUNTY: dict[str, str] = regions.county_sections(
-    "TX", "appraisal_search_url",
+_CAD_PROPERTY_SEARCH_BY_COUNTY: dict[str, str] = regions.all_county_sections(
+    "appraisal_search_url",
 )
 
 # From each county file's `parcels:` section (app/regions/tx/counties/*.yaml).
-_COUNTY_PARCEL_LAYERS: dict[str, dict[str, Any]] = regions.county_sections(
-    "TX", "parcels",
+_COUNTY_PARCEL_LAYERS: dict[str, dict[str, Any]] = regions.all_county_sections(
+    "parcels",
 )
 
 
@@ -85,6 +85,8 @@ def fetch(
     No address-derived parcel guessing happens here. If the user did not
     supply property_tax_id, we still return manual guidance.
     """
+    if identity.state != "TX":
+        return _fetch_outside_texas(identity, session=session)
     county = _normalize_county(identity.county) or ""
     if county == "williamson":
         return AdapterResult(
@@ -585,6 +587,37 @@ def _clean_string(value: Any) -> str | None:
         return None
     cleaned = str(value).strip()
     return cleaned or None
+
+
+def _fetch_outside_texas(
+    identity: PropertyIdentity, *, session: requests.Session | None,
+) -> AdapterResult:
+    """Outside Texas: the county file's parcel layer only (the statewide
+    parcel layer and the Travis/Williamson paths are Texas's)."""
+    key = identity.county_key
+    cfg = _COUNTY_PARCEL_LAYERS.get(key)
+    if cfg is None:
+        return AdapterResult(
+            source_id=SOURCE_ID,
+            source_access_status=SourceAccessStatus.JURISDICTION_NOT_COVERED,
+            data_confidence_status=DataConfidenceStatus.UNKNOWN,
+            coverage_status=CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
+            normalized_facts={
+                "county": identity.county,
+                "state": identity.state,
+                "advisory": "No parcel map is connected for this county yet.",
+            },
+            identifier_used="county",
+            fetched_at=datetime.now(UTC),
+        )
+    result = _fetch_configured_county_parcel(
+        identity, sess=session or requests.Session(), county=key, cfg=cfg,
+    )
+    facts = result.normalized_facts or {}
+    if facts.get("county") == key:
+        facts["county"] = identity.county
+    facts["state"] = identity.state
+    return result
 
 
 def _fetch_configured_county_parcel(

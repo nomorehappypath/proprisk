@@ -1,0 +1,10 @@
+# Colorado. Format: see app/regions/_template/state.yaml.
+# Colorado's own state agencies (roads, water, schools) are not connected yet;
+# lookups here use the nationwide sources plus each county's file.
+code: CO
+name: Colorado
+fips: "08"
+search_box: [-109.06, 36.99, -102.04, 41.00]   # west, south, east, north
+census_centroids: bg_centroids_08.json
+statewide_summary:
+  - Census demographics (Colorado block groups)

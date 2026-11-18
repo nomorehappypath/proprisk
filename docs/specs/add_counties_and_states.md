@@ -3,7 +3,8 @@
 Status: Codex PASS on the whole spec, 2026-11-17: sections 1–2.4 in round 3, and
 section 2.5 (standard jobs and formats) in round 2. Phase A done 2026-11-17
 (Codex PASS in round 2; built by hand because NMHP was busy, on the owner's word).
-Phases B onward are meant to be built by NMHP. Phase B was built by hand, on the
+Phase C built 2026-11-17 by hand on the owner's word, with Denver, Colorado as its
+test (Codex review in progress). Phases B onward are meant to be built by NMHP. Phase B was built by hand, on the
 owner's word, as was Phase C.
 Owner: Gerard. Builder: NMHP (NoMoreHappyPath).
 

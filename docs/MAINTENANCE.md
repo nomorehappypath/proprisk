@@ -95,20 +95,20 @@ or if a region file does not load.
 
 ## Changing the database
 
-There is one migration, `backend/alembic/versions/0001_proprisk_baseline.py`
-— it is the whole schema, not a diff. To change a table:
+Migrations live in `backend/alembic/versions/`: `0001_proprisk_baseline.py`
+is the first schema PropRisk shipped, and `0002_state_column.py` adds the
+state to lookups. Users already have data, so never edit a shipped migration.
+To change a table:
 
 1. Edit `backend/app/models.py`.
-2. Edit the baseline migration to match (add/alter/drop the matching
-   column or table). There is no "add a new migration on top" step yet,
-   since this is the very first schema PropRisk ships.
+2. Add a new migration on top (`0003_...`) that changes the tables and
+   carries existing rows forward rather than dropping them.
 3. Run `cd backend && uv run pytest tests/test_baseline_matches_models.py`
-   — it builds a throwaway database from the migration and checks every
+   — it builds a throwaway database from every migration and checks every
    table and column against the models.
-4. If you are changing a table real users might already have data in
-   (after PropRisk has shipped), write a proper new migration instead of
-   editing the baseline, and migrate existing rows forward rather than
-   dropping them.
+4. `scripts/launch.sh` runs new migrations at start-up. It refuses to start
+   over a running older PropRisk ("Stop PropRisk first"), so an upgrade
+   always happens stopped.
 
 ## Upgrading packages
 

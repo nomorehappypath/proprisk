@@ -57,8 +57,8 @@ _HAYS_ACTIVE_SUBDIVISIONS_QUERY = (
 # County subdivision layers come from each county file's `subdivisions:`
 # section (app/regions/tx/counties/*.yaml). The per-county summaries below
 # stay in code; they read their labels and URLs from that section.
-_COUNTY_SUBDIVISION_SCREENS: dict[str, dict[str, str]] = regions.county_sections(
-    "TX", "subdivisions",
+_COUNTY_SUBDIVISION_SCREENS: dict[str, dict[str, str]] = regions.all_county_sections(
+    "subdivisions",
 )
 _HAYS_SUBDIVISIONS_LAYER = _COUNTY_SUBDIVISION_SCREENS["hays"]["layer_url"]
 _HAYS_SUBDIVISIONS_SOURCE = _COUNTY_SUBDIVISION_SCREENS["hays"]["source_label"]
@@ -203,6 +203,11 @@ def fetch(
     return result
 
 
+def _county_title(county: str) -> str:
+    """The county name for text: "co:denver" (another state's key) -> "Denver"."""
+    return county.split(":", 1)[-1].title()
+
+
 def _fetch_impl(
     identity: PropertyIdentity,
     *,
@@ -210,7 +215,9 @@ def _fetch_impl(
     config=None,
     buffer_mi: float = _DEFAULT_BUFFER_MI,
 ) -> AdapterResult:
-    county = (identity.county or "").lower().strip()
+    # "travis" in Texas, "co:denver" elsewhere: Texas county paths below only
+    # ever match a Texas lookup.
+    county = identity.county_key
     sess = http_session(session)
     discovery = _discover_public_recorded_plats(
         sess,
@@ -342,7 +349,7 @@ def _resolve_recorded_deed(
     Per docs/specs/recorded_deed_resolution.md §4."""
     if not isinstance(facts, dict) or not _is_unplatted(facts):
         return None
-    county = (identity.county or "").lower().strip().removesuffix(" county").strip()
+    county = identity.county_key
     portal = county_clerk_portals.clerk_lookup_steps(county, "deed")
     if portal is None:
         return None
@@ -703,7 +710,7 @@ def _fetch_county_subdivision_screen(
                     "polygon. Retrieve any official recorded image/copy from "
                     + (
                         f"{portal['name']} ({portal['url']})" if portal
-                        else f"the {county.title()} County Clerk"
+                        else f"the {_county_title(county)} County Clerk"
                     )
                     + " before treating it as evidence."
                 ),
@@ -1522,7 +1529,7 @@ def _build_advisory_county_subdivision_screen(
     status: str,
     records: list[dict[str, Any]],
 ) -> str:
-    county_label = county.title()
+    county_label = _county_title(county)
     if status == "recorded_plat_number_resolved" and records:
         first = records[0]
         return (
@@ -1908,7 +1915,7 @@ def _build_discovery_queries(
 ) -> list[str]:
     address = (identity.address or "").strip()
     parcel_id = (identity.parcel_id or "").strip()
-    county_label = f"{county.title()} County" if county else ""
+    county_label = f"{_county_title(county)} County" if county else ""
     queries: list[str] = []
     street_core = _street_core(address)
     street_road = _road_variant(street_core)
@@ -2765,7 +2772,7 @@ def _no_recorded_subdivision_source(discovery: dict[str, Any]) -> str | None:
         if isinstance(source, str) and source.strip():
             return source.strip()
         county = key.removesuffix("_subdivision_gis_status").replace("_", " ")
-        return f"{county.title()} County subdivision GIS"
+        return f"{_county_title(county)} County subdivision GIS"
     return None
 
 
@@ -3102,7 +3109,7 @@ def _portal_result(county: str, *, discovery: dict[str, Any]) -> AdapterResult:
                 county, discovery, portal=portal,
             ),
             "advisory": (
-                f"{county.title()} County recorded plats require the "
+                f"{_county_title(county)} County recorded plats require the "
                 f"official clerk image/copy for authority. PropDesk may "
                 "surface public web candidates, but the user must retrieve "
                 f"the official PDF from {portal['name']}."
@@ -3117,7 +3124,7 @@ def _portal_result(county: str, *, discovery: dict[str, Any]) -> AdapterResult:
                 county,
                 discovery,
                 default=(
-                    f"{county.title()} County official records portal: "
+                    f"{_county_title(county)} County official records portal: "
                     f"{portal['url']}. Steps: {portal['instructions']}"
                 ),
             ),
@@ -3153,7 +3160,7 @@ def _manual_upload_reason(
         )
         return (
             f"PropDesk found probable recorded-plat candidate(s) from public "
-            f"web evidence for {county.title()} County, but not the official "
+            f"web evidence for {_county_title(county)} County, but not the official "
             "county-clerk recorded PDF. Retrieve and upload the official "
             f"clerk image/copy before treating the plat as evidence."
             f"{first_search}"
@@ -3196,7 +3203,7 @@ def _no_coverage_result(
             "manual_next_step": _build_manual_next_step(county, discovery),
             "advisory": (
                 f"No wired subdivision-plats portal for "
-                f"{label.title()} County. PropDesk still ran public "
+                f"{_county_title(label)} County. PropDesk still ran public "
                 "recorded-plat discovery; retrieve the official clerk PDF "
                 "before treating any candidate as evidence."
             ),
@@ -3210,7 +3217,7 @@ def _no_coverage_result(
                 county,
                 discovery,
                 default=(
-                    f"No wired plats portal for {label.title()} "
+                    f"No wired plats portal for {_county_title(label)} "
                     "County. Search the county clerk's Official Public "
                     "Records for the recorded plat + upload it."
                 ),
@@ -3279,7 +3286,7 @@ def _fetch_failed_result(
             "approved_count": 0,
             "in_review": [], "approved": [], "all_plats": [],
             "advisory": (
-                f"{county.title()} plats layer did not "
+                f"{_county_title(county)} plats layer did not "
                 "respond. Retry or pull manually."
             ),
             "contradiction_flags": [],

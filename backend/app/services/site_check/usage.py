@@ -127,6 +127,11 @@ _RATES: dict[tuple[str, str], RateCard] = {
         free_units_per_month=_UNLIMITED,
         unit_cost_micro=0,
     ),
+    # Census county-from-point lookup (address step, outside Texas).
+    ("census", "county_lookup"): RateCard(
+        free_units_per_month=_UNLIMITED,
+        unit_cost_micro=0,
+    ),
     ("osm", "fetch"): RateCard(
         free_units_per_month=_UNLIMITED,
         unit_cost_micro=0,
@@ -229,6 +234,8 @@ class _Route:
 _ROUTES: tuple[_Route, ...] = (
     # Geocoder tiers — three real upstreams behind one source_id.
     _Route("nominatim.openstreetmap.org", None, "nominatim", "geocode_stored"),
+    # Free Census county map, asked by the address step outside Texas.
+    _Route("tigerweb.geo.census.gov", None, "census", "county_lookup"),
     _Route("geocode-api.arcgis.com", None, "arcgis", "geocode_stored"),
     _Route(
         "maps.googleapis.com", "/maps/api/geocode", "google", "geocode",

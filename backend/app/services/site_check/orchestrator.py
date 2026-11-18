@@ -41,6 +41,7 @@ from app.config.settings import get_settings
 from app.core.job_queue import LeaseLost, assert_lease, write_progress
 from app.models import Job, SiteCheckCoverageGap, SiteCheckRun
 from app.regions import loader as regions
+from app.regions import states as state_names
 
 # The narrative wave's builder (site_check.md §11) — optional until that
 # module lands; without it runs are deterministic-only (§10.3 floor).
@@ -297,7 +298,36 @@ def _load_adapter_fetch(source_id: str):
     module = importlib.import_module(
         f"app.services.site_check.adapters.{source_id}",
     )
-    return module.fetch
+    fetch = module.fetch
+    covered = registry.get(source_id).states if source_id in registry.REGISTRY else ()
+    if not covered:
+        return fetch
+
+    def fetch_if_covered(identity, *args, **kwargs):
+        # A source tied to some states (today: Texas-only sources) is never
+        # called for an address elsewhere — on every path, retries included.
+        state = getattr(identity, "state", "TX") or "TX"
+        if state in covered:
+            return fetch(identity, *args, **kwargs)
+        return not_connected_result(source_id, state)
+
+    return fetch_if_covered
+
+
+def not_connected_result(source_id: str, state: str) -> AdapterResult:
+    """A source that does not cover this state: honest "not connected"."""
+    name = state_names.name_of(state)
+    return AdapterResult(
+        source_id=source_id,
+        source_access_status=SourceAccessStatus.PROGRAMMATIC_PUBLIC,
+        data_confidence_status=DataConfidenceStatus.UNKNOWN,
+        coverage_status=CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
+        normalized_facts={
+            "state": state,
+            "advisory": f"Not connected for {name} yet.",
+        },
+        fetched_at=datetime.now(UTC),
+    )
 
 
 def _classify_anchor(
@@ -510,7 +540,7 @@ def _reconcile_anchor_with_parcel(
 # county parcel polygon layers for Travis, Hays, Bastrop, and Blanco. WCAD stays
 # separate because Williamson has its own candidate/parcel semantics.
 _TEXAS_COUNTIES_WITH_PARCEL_ADAPTER = frozenset(
-    {*regions.county_sections("TX", "parcels"), "williamson"},
+    {*regions.all_county_sections("parcels"), "williamson"},
 )
 
 
@@ -539,7 +569,7 @@ def _maybe_record_parcel_coverage_gap(
         county = (identity.county or "").strip().lower()
         if not county:
             return
-        if county in _TEXAS_COUNTIES_WITH_PARCEL_ADAPTER:
+        if identity.county_key in _TEXAS_COUNTIES_WITH_PARCEL_ADAPTER:
             return
         # Capability slug matches the spec's example
         # ("county_parcel_adapter_missing"). Tenant-deduped per
@@ -553,12 +583,13 @@ def _maybe_record_parcel_coverage_gap(
                 id=str(uuid.uuid4()),
                 tenant_id=run.tenant_id,
                 capability="parcel_adapter",
+                state=identity.state,
                 county=county.title(),
                 reason="county_parcel_adapter_missing",
                 created_at=datetime.now(UTC),
             ).on_conflict_do_nothing(
                 constraint=(
-                    "uq_site_check_coverage_gaps_tenant_capability_county"
+                    "uq_site_check_coverage_gaps_tenant_capability_state_county"
                 ),
             )
         )
@@ -1133,6 +1164,9 @@ CANCELLED_MESSAGE = "This lookup was cancelled before it finished."
 _GEOCODE_FAILED_REASON = (
     "We couldn't find this address — check the spelling or add the city."
 )
+_STATE_CONFLICT_REASON = (
+    "The address and the map disagree on the state: check the address."
+)
 
 
 def _cancel_requested(session: Session, run_id: str) -> bool:
@@ -1429,6 +1463,7 @@ def _collect(
             explicit=run.county,
             geocode_county=None,
             address=run.address,
+            state=run.state,
         )
         run.county = county or ""
         identity = PropertyIdentity(
@@ -1436,6 +1471,7 @@ def _collect(
             lat=run.lat,
             lng=run.lng,
             county=county,
+            state=run.state or "TX",
             parcel_id=run.parcel_id,
         )
         completed_sources += 1
@@ -1514,7 +1550,14 @@ def _collect(
             session, run=run, collector=provider_calls,
         )
 
-        if geocode_result.errors or not geocode_result.normalized_facts:
+        state_conflict = bool(
+            (geocode_result.normalized_facts or {}).get("state_conflict")
+        )
+        if (
+            state_conflict
+            or geocode_result.errors
+            or not geocode_result.normalized_facts
+        ):
             completed_sources += 1
             _emit_source_progress(
                 session,
@@ -1539,7 +1582,10 @@ def _collect(
                 session, run, error_code="geocode_failed",
                 # failure_reason renders verbatim on the report screen —
                 # never raw provider error text (§8.3 broker-safe rule).
-                reason=_GEOCODE_FAILED_REASON,
+                reason=(
+                    _STATE_CONFLICT_REASON if state_conflict
+                    else _GEOCODE_FAILED_REASON
+                ),
                 job_id=job_id,
                 lease_token=lease_token,
             )
@@ -1547,19 +1593,23 @@ def _collect(
         lat = geocode_result.normalized_facts.get("lat")
         lng = geocode_result.normalized_facts.get("lng")
         explicit_county = _normalize_county(run.county)
+        state = str(geocode_result.normalized_facts.get("state") or "TX")
         county = _resolve_county(
             explicit=run.county,
             geocode_county=geocode_result.normalized_facts.get("county"),
             address=run.address,
+            state=state,
         )
         run.lat = lat
         run.lng = lng
         run.county = county or ""
+        run.state = state
         run.geocode_source = geocode_provider
         identity = PropertyIdentity(
             address=run.address,
             lat=lat, lng=lng,
             county=county,
+            state=state,
             parcel_id=run.parcel_id,
             identifier_resolution_log=[{
                 "field": "county",
@@ -2142,7 +2192,13 @@ def _collect(
     # and preceded by a lease-fenced progress write so a worker that already
     # lost its lease stops BEFORE the provider calls (§7.4), exactly like
     # every other checkpoint.
-    if getattr(settings_obj, "historical_aerials_enabled", True):
+    run_state = (getattr(run, "state", None) or "TX").upper()
+    if run_state != "TX" and getattr(settings_obj, "historical_aerials_enabled", True):
+        # The historical photo archive (TxGIO) covers Texas only.
+        derived["historical_aerials_meta"] = {
+            "status": "not_connected", "state": run_state,
+        }
+    elif getattr(settings_obj, "historical_aerials_enabled", True):
         _emit_source_progress(
             session,
             job_id=job_id,
@@ -2393,12 +2449,14 @@ def _identity_for_source_retry(
         explicit=run.county,
         geocode_county=None,
         address=run.address,
+        state=run.state,
     )
     identity = PropertyIdentity(
         address=run.address,
         lat=run.lat,
         lng=run.lng,
         county=county,
+        state=run.state or "TX",
         parcel_id=run.parcel_id,
     )
     return _apply_identity_mutations(
@@ -3009,6 +3067,7 @@ def _resolve_county(
     explicit: str | None,
     geocode_county: object,
     address: str,
+    state: str | None = "TX",
 ) -> str | None:
     explicit_clean = _normalize_county(explicit)
     if explicit_clean:
@@ -3021,7 +3080,10 @@ def _resolve_county(
     # Last-resort UX fallback. This is not a legal boundary
     # engine; it prevents blank-county degradation when the
     # address contains strong local signals and the geocoder
-    # omitted county attributes.
+    # omitted county attributes. Texas city names only mean
+    # anything for a Texas address.
+    if (state or "TX").upper() != "TX":
+        return None
     addr = address.lower()
     if "williamson" in addr or any(
         token in addr

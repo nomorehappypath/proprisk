@@ -9,13 +9,24 @@ and adapters so the screen cannot silently drift from the code.
 
 from app.regions import loader as regions
 
-# One row per county file (app/regions/tx/counties/*.yaml): Full counties
-# first, then Partial, each group in alphabetical order. A county is listed
-# here only if it has a file.
+# The states with a folder in app/regions/, Texas first, then by name.
+STATES = sorted(
+    (regions.state(code)["name"] for code in regions.load_regions()),
+    key=lambda name: (name != "Texas", name),
+)
+
+# One row per county file (app/regions/<state>/counties/*.yaml), grouped by
+# state; within a state, Full counties first, then Partial, each group in
+# alphabetical order. A county is listed here only if it has a file.
 COUNTIES = [
-    {"county": c["name"], "level": c["level"], "detail": c["summary"]}
+    {"state": regions.state(code)["name"], "county": c["name"],
+     "level": c["level"], "detail": c["summary"]}
+    for code in sorted(
+        regions.load_regions(),
+        key=lambda code: STATES.index(regions.state(code)["name"]),
+    )
     for c in sorted(
-        regions.counties("TX").values(),
+        regions.counties(code).values(),
         key=lambda c: (c["level"] != "Full", c["name"]),
     )
 ]
@@ -37,8 +48,17 @@ FUTURE_LAND_USE_CITIES = [
     "Austin", "Buda", "Kyle", "Round Rock", "Pflugerville", "Hutto", "Georgetown", "Cedar Park",
 ]
 
-# Sources that cover the whole state, from the state file (app/regions/tx/state.yaml).
-STATEWIDE = list(regions.state("TX")["statewide_summary"])
+# Sources that cover a whole state, from each state file
+# (app/regions/<state>/state.yaml), named with their state.
+STATEWIDE = [
+    f"{state['name']}: {item}"
+    for code in sorted(
+        regions.load_regions(),
+        key=lambda code: STATES.index(regions.state(code)["name"]),
+    )
+    for state in [regions.state(code)]
+    for item in state["statewide_summary"]
+]
 
 # Sources that cover the whole country, from their own adapter modules.
 NATIONWIDE = [
@@ -56,7 +76,7 @@ NATIONWIDE = [
 
 def get_coverage() -> dict:
     return {
-        "state": "Texas",
+        "state": ", ".join(STATES),
         "counties": COUNTIES,
         "cities": {
             "zoning": ZONING_CITIES,

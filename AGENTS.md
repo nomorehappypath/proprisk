@@ -1,6 +1,6 @@
 # Instructions for AI build tools
 
-PropRisk checks Texas land for risk before you buy it. Read `README.md` first.
+PropRisk checks land for risk before you buy it (Texas has the most sources; other states run the nationwide ones plus any county files). Read `README.md` first.
 
 - **To add or upgrade a county, follow `docs/EXTENDING.md`.** A county is one data
   file in `backend/app/regions/<state>/counties/`. Never edit Python to add a

@@ -1865,6 +1865,7 @@
    "pid_districts": [],
    "tirz_districts": [],
    "school_districts": [],
+   "metro_districts": [],
    "unavailable_layers": [],
    "layer_errors": [],
    "source_warnings": [],

@@ -21,7 +21,8 @@ plain line per problem (section "The check" below).
 
 ## Job A: add a county to a state PropRisk already has
 
-Today that state is Texas (`tx`).
+Today those states are Texas (`tx`) and Colorado (`co`). For a state with no
+folder yet, do job C first.
 
 1. **Copy the template.** Copy `backend/app/regions/_template/county.yaml` to
    `backend/app/regions/tx/counties/<county>.yaml`. Name the file with the
@@ -93,13 +94,34 @@ Same as job A, for the missing sections only. Run the check: its four level
 tests (below) say what is still missing. When all four pass, the check says the
 county can be set to `level: Full`.
 
-## Job C: add a new state (not yet possible)
+## Job C: add a new state
 
-Lookups do not yet know which state an address is in: today every lookup is
-treated as Texas. Adding a state needs the next release of PropRisk
-(`docs/specs/add_counties_and_states.md`, Phase C). The state file format is
-ready ([`_template/state.yaml`](../backend/app/regions/_template/state.yaml)),
-but a new state folder does nothing yet.
+A lookup reads its state from the address (put the state in the address, for
+example `Denver, CO 80202`). A state with a folder gets its counties' data; in
+any state, the nationwide sources run, and every Texas-only card says
+"Not connected for <State> yet".
+
+1. **Copy the template.** Copy
+   [`_template/state.yaml`](../backend/app/regions/_template/state.yaml) to
+   `backend/app/regions/<code>/state.yaml`, where `<code>` is the state's
+   two-letter postal code in lowercase (`co`). Make an empty `counties/` folder
+   next to it.
+2. **Fill it in.** `code`, `name`, `fips` (the Census Bureau's two-digit state
+   code) and `search_box` (west, south, east, north).
+3. **Census figures (optional).** Build the state's block-group file:
+
+   ```bash
+   uv --directory backend run python ../scripts/build_census_centroids.py <fips>
+   ```
+
+   then set `census_centroids: bg_centroids_<fips>.json` in `state.yaml`.
+4. **Run the check:** `scripts/check_region.sh <code>`. A state with no counties
+   gets the file check only.
+5. **Add at least one county** with job A. Colorado's Denver
+   (`backend/app/regions/co/counties/denver.yaml`) is a worked example.
+
+Done means: `scripts/check_region.sh <code>` ends with PASS and no Python file
+was changed.
 
 ## Job D: fill a state's services (not yet possible)
 

@@ -157,6 +157,8 @@ class SiteCheckRun(Base):
     parcel_id: Mapped[str | None] = mapped_column(String(64), default=None)
     normalized_address: Mapped[str] = mapped_column(String(512), index=True)
     county: Mapped[str] = mapped_column(String(120), default="")
+    # Two-letter state code; "TX" when nothing named a state.
+    state: Mapped[str] = mapped_column(String(2), default="TX", server_default="TX")
     lat: Mapped[float | None] = mapped_column(Float, default=None)
     lng: Mapped[float | None] = mapped_column(Float, default=None)
     geocode_source: Mapped[str | None] = mapped_column(String(40), default=None)
@@ -232,19 +234,20 @@ class SiteCheckProviderUsage(Base):
 
 class SiteCheckCoverageGap(Base):
     """Operator-facing demand signal: a capability we could not serve for a
-    county. Tenant-deduped — one row per (tenant, capability, county)."""
+    county. Tenant-deduped — one row per (tenant, capability, state, county)."""
 
     __tablename__ = "site_check_coverage_gaps"
     __table_args__ = (
         UniqueConstraint(
-            "tenant_id", "capability", "county",
-            name="uq_site_check_coverage_gaps_tenant_capability_county",
+            "tenant_id", "capability", "state", "county",
+            name="uq_site_check_coverage_gaps_tenant_capability_state_county",
         ),
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
     tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id"), index=True)
     capability: Mapped[str] = mapped_column(String(60))
+    state: Mapped[str] = mapped_column(String(2), default="TX", server_default="TX")
     county: Mapped[str] = mapped_column(String(120))
     reason: Mapped[str] = mapped_column(String(120))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)

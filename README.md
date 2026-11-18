@@ -43,7 +43,8 @@ against public data sources (and, optionally, OpenAI, if you add a key).
 
 Today PropRisk understands Texas best, with full coverage in Travis,
 Williamson, Hays and Bastrop counties and partial coverage in a few
-others — see Settings → "Where PropRisk works" for the current list.
+others, plus Denver County, Colorado. Anywhere else in the US, the nationwide
+sources still answer. See Settings → "Where PropRisk works" for the current list.
 
 **Add your county.** Each county is one data file, and NoMoreHappyPath can add it
 for you, with no programming: see
@@ -108,12 +109,24 @@ check ends with PASS, and no Python file was changed.
 
 ### Add a new state, or a new state with its counties
 
-**Not possible yet.** Today PropRisk treats every address as a Texas address, so a
-new state would be ignored. A later release will teach PropRisk to recognise which
-state an address is in (`docs/specs/add_counties_and_states.md`, Phase C, which comes
-after Phase C2). After that release, adding a state works the same way: one NMHP task adds the state's file, then
-one task per county, each following the county steps above. Until then, do not ask
-NMHP to add a state: it would build something PropRisk cannot use.
+A lookup reads its state from the address, so put the state in it ("Denver, CO").
+In any state, the nationwide sources run (flood, wetlands, soils, elevation,
+federal environmental records, power lines, nearby places), and each Texas-only
+card says "Not connected for <State> yet". A state folder adds that state's
+counties. Colorado, with Denver County, is the first.
+
+Same steps as a county, with this task first:
+
+```text
+Add the state of Colorado to PropRisk. Follow docs/EXTENDING.md, Job C.
+Done means: scripts/check_region.sh co ends with PASS and no Python file
+was changed.
+```
+
+Then one task per county, following the county steps above with the state's
+code (`scripts/check_region.sh co denver`). A state's own agencies (its roads,
+water and school data) cannot be connected yet; that needs a later release
+(`docs/specs/add_counties_and_states.md`, Phase C2).
 
 ## What it covers
 

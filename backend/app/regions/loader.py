@@ -79,7 +79,7 @@ class Parcels(_Strict):
 
 class District(_Strict):
     label: str
-    kind: Literal["subdivision", "mud", "wcid", "esd", "school"]
+    kind: Literal["subdivision", "mud", "wcid", "esd", "school", "metro"]
     urls: list[str] = Field(min_length=1)
 
 
@@ -214,4 +214,27 @@ def county_sections(code: str, section: str) -> dict[str, Any]:
         key: data[section]
         for key, data in counties(code).items()
         if section in data
+    }
+
+
+def county_key(state_code: str | None, county: str | None) -> str:
+    """The key a lookup's county has in the county tables.
+
+    A Texas county keeps its bare name ("travis"), as before. A county in
+    another state is "<state>:<name>" ("co:denver"), so it can never match a
+    Texas county's name or any Texas-only rule.
+    """
+    name = (county or "").strip().lower().removesuffix(" county").strip()
+    code = (state_code or "TX").strip().upper()
+    if not name:
+        return ""
+    return name if code == "TX" else f"{code.lower()}:{name}"
+
+
+def all_county_sections(section: str) -> dict[str, Any]:
+    """county_sections for every state folder, keyed by county_key."""
+    return {
+        county_key(code, name): value
+        for code in load_regions()
+        for name, value in county_sections(code, section).items()
     }

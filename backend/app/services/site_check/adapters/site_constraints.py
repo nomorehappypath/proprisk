@@ -22,6 +22,7 @@ from shapely.geometry import Point, box, mapping, shape
 from shapely.ops import transform as shapely_transform
 
 from app.config.settings import get_settings
+from app.regions import states
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -106,7 +107,8 @@ def fetch(
             _query_gas_pipelines,
             sess, identity.lat, identity.lng, parcel_geojson,
         )
-        edwards_future = pool.submit(
+        # The Edwards Aquifer map (TCEQ) is a Texas layer.
+        edwards_future = None if identity.state != "TX" else pool.submit(
             _query_polygon_screen,
             sess,
             _EDWARDS_QUERY,
@@ -149,7 +151,9 @@ def fetch(
 
     gas_pipelines, gas_error = gas_future.result()
 
-    edwards_zones, edwards_error = edwards_future.result()
+    edwards_zones, edwards_error = (
+        edwards_future.result() if edwards_future else ([], None)
+    )
     if edwards_error:
         errors.append(edwards_error)
 
@@ -220,6 +224,7 @@ def fetch(
         buildable=buildable,
         market=market,
         source_errors=errors + [d["reason"] for d in degraded_sources],
+        state=identity.state,
     )
 
     mapped_count = sum(
@@ -1500,6 +1505,7 @@ def _coverage_ledger(
     buildable: dict[str, Any],
     market: dict[str, Any],
     source_errors: list[str],
+    state: str = "TX",
 ) -> list[dict[str, Any]]:
     ccn = _facts(results, "twdb_ccn")
     electric = _facts(results, "electric_power_infrastructure")
@@ -1664,6 +1670,22 @@ def _coverage_ledger(
             "Public provider responses",
             "Refresh later; retained upstream facts remain available.",
         ))
+    if state != "TX":
+        # Texas inputs (TWDB/PUC/TCEQ service areas, TxDOT roads and
+        # projects, the Edwards Aquifer map) were not checked here: say so,
+        # never "no mapped feature" or "0 found".
+        not_connected = f"Not connected for {states.name_of(state)} yet"
+        for entry in entries:
+            if entry["key"] in ("water_wastewater_authority", "future_row", "edwards"):
+                entry.update(status="not_connected", result=not_connected, source="")
+            elif entry["key"] == "access_inventory":
+                entry.update(
+                    result=(
+                        f"{len(driveways)} mapped driveway(s), {len(signals)} "
+                        f"signal(s); road inventory {not_connected.lower()}"
+                    ),
+                    source="OpenStreetMap",
+                )
     return entries
 
 

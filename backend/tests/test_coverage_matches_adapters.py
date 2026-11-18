@@ -38,23 +38,27 @@ def test_standards_cities_match_curated_files():
 
 
 def test_counties_are_non_empty_and_named_once():
-    names = [row["county"] for row in coverage.COUNTIES]
-    assert len(names) == len(set(names)), "a county must appear only once in the table"
+    names = [(row["state"], row["county"]) for row in coverage.COUNTIES]
+    assert len(names) == len(set(names)), "a county must appear only once per state"
     assert all(row["level"] in ("Full", "Partial") for row in coverage.COUNTIES)
 
 
 def test_counties_come_from_the_region_files():
-    files = loader.counties("TX")
-    assert {row["county"].lower() for row in coverage.COUNTIES} == set(files)
-    for row in coverage.COUNTIES:
-        county = files[row["county"].lower()]
-        assert (row["level"], row["detail"]) == (county["level"], county["summary"])
-    assert coverage.STATEWIDE == loader.state("TX")["statewide_summary"]
+    for code in loader.load_regions():
+        state_name = loader.state(code)["name"]
+        files = loader.counties(code)
+        rows = [row for row in coverage.COUNTIES if row["state"] == state_name]
+        assert {row["county"].lower() for row in rows} == set(files)
+        for row in rows:
+            county = files[row["county"].lower()]
+            assert (row["level"], row["detail"]) == (county["level"], county["summary"])
+        for item in loader.state(code)["statewide_summary"]:
+            assert f"{state_name}: {item}" in coverage.STATEWIDE
 
 
 def test_get_coverage_shape():
     result = coverage.get_coverage()
-    assert result["state"] == "Texas"
+    assert result["state"].split(", ")[0] == "Texas"
     assert {row["county"] for row in result["counties"]} == {row["county"] for row in coverage.COUNTIES}
     assert result["cities"]["zoning"] == coverage.ZONING_CITIES
     assert result["cities"]["standards"] == coverage.STANDARDS_CITIES
