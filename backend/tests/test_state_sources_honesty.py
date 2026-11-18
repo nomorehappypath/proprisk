@@ -291,3 +291,6 @@ def test_summary_with_failed_inputs_for_real_says_not_checked(monkeypatch):
     card = _card({"txdot_extended": _payload(mixed)}, "txdot_extended")
     text = _text(card)
     assert "0 within" not in text and "no bridge records" not in text
+    line = cards._summary_txdot_extended(facts)  # the collapsed-row line
+    assert "projects not checked" in line and "0 projects" not in line
+    assert "crash records not connected" in line

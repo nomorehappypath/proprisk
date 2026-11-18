@@ -4156,8 +4156,11 @@ def _summary_txdot_extended(facts: dict[str, Any]) -> str | None:
     crash_status = _text(crash.get("integration_status")) or "unknown"
     return _join([
         f"{aadt} AADT" if aadt else None,
-        f"{count} projects",
+        "projects not checked"
+        if "txdot_projects" in _as_list(facts.get("missing_inputs"))
+        else f"{count} projects",
         "CRIS gated" if crash_status == "credentials_not_configured"
+        else "crash records not connected" if crash_status == "not_connected"
         else _labelize(crash_status),
     ])
 
