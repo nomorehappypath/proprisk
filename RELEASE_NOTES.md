@@ -22,7 +22,8 @@
 - **Any state or county can now connect its own sources, card by card.**
   `docs/EXTENDING.md`, Job D, is the step-by-step recipe, and
   `scripts/check_region.sh` now prints one line per connected source.
-- **Texas lookups are unchanged.**
+- **Texas lookups are unchanged**, except one display fix everywhere: years in the
+  traffic and development tables no longer show a comma ("2026", not "2,026").
 - **Updating:** run `scripts/stop.sh`, update, then `scripts/launch.sh`.
 
 ## Unreleased: states (Phase C), with Denver, Colorado
