@@ -42,6 +42,8 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+from app.regions import states as state_names
+
 from .service import (
     _broker_error_detail,
     retryable_failed_sources_for_run,
@@ -928,6 +930,7 @@ def _format_site_constraints(facts: dict[str, Any]) -> _Content:
     coverage = [
         row for row in _dicts(facts.get("coverage"))
         if _text(row.get("status")) in _CONSTRAINT_VISIBLE_STATUSES
+        or _text(row.get("status")) == "not_connected"
     ]
     findings = _dicts(facts.get("material_findings"))
     degraded = _dicts(facts.get("degraded_sources"))
@@ -956,7 +959,8 @@ def _format_site_constraints(facts: dict[str, Any]) -> _Content:
         parts: list[str | None] = []
         water = next(
             (_title_case(row.get("result")) for row in coverage
-             if _text(row.get("key")) == "water_wastewater_authority"), None)
+             if _text(row.get("key")) == "water_wastewater_authority"
+             and _text(row.get("status")) != "not_connected"), None)
         if water:
             parts.append(f"water and sewer authority is {water}")
         if frontages:
@@ -1485,7 +1489,8 @@ def _format_jurisdiction(facts: dict[str, Any]) -> _Content:
     if county:
         _row(rows, "County", f"{county.title()} County")
     _row(rows, "City", city)
-    _row(rows, "What governs this site", {
+    texas = (_text(facts.get("state")) or "TX") == "TX"
+    _row(rows, "What governs this site", None if not texas else {
         "city": "City rules — the site is inside the city limits",
         "full_purpose_city": "City rules — the site is inside the city limits",
         "limited_purpose": "Limited-purpose city area — some city rules apply",
@@ -1754,6 +1759,7 @@ _DISTRICT_BUCKETS: list[tuple[str, str, str]] = [
     ("pid_districts", "Public improvement district",
      "Public improvement districts"),
     ("tirz_districts", "Tax increment zone", "Tax increment zones"),
+    ("metro_districts", "Metropolitan district", "Metropolitan districts"),
     ("subdivisions", "Recorded subdivision", "Recorded subdivisions"),
 ]
 
@@ -3145,9 +3151,43 @@ def _format_schools(facts: dict[str, Any]) -> _Content:
     return content
 
 
+def _format_environmental_federal_only(facts: dict[str, Any]) -> _Content:
+    """Outside Texas only EPA ECHO ran; the state records are not connected
+    and are never shown as zero, none found, or an outage."""
+    echos = _dicts(facts.get("echo_records"))
+    statuses = _as_dict(facts.get("source_statuses"))
+    echo_unavailable = _text(statuses.get("epa_echo")) not in (None, "queried")
+    not_connected = (
+        f"Not connected for {state_names.name_of(_text(facts.get('state')) or '')} yet"
+    )
+    content = _Content(_plain(facts.get("advisory")) or "")
+    content.facts.append(_fact(
+        "Federally regulated facilities",
+        "Temporarily unavailable — not an all-clear" if echo_unavailable
+        else "None found nearby" if not echos
+        else f"{len(echos)} nearby",
+    ))
+    content.facts.append(_fact("State environmental records", not_connected))
+    radius = _num(facts.get("search_radius_m"))
+    if radius is not None:
+        _row(content.facts, "Area searched", f"{radius:,.0f} m around the site")
+    content.add_table(_table(
+        "Federally regulated facilities nearby",
+        ["Facility", "Address", "Programmes"],
+        [[
+            _cell(_title_case(item.get("facility_name"))),
+            _cell(_title_case(item.get("address"))),
+            _cell(item.get("programs")),
+        ] for item in echos[:6]],
+    ))
+    return content
+
+
 def _format_environmental(facts: dict[str, Any]) -> _Content:
     """Panel: EnvironmentalSection. No-records is a LIMITED screen — never
     'clean'."""
+    if _text(facts.get("state_records")) == "not_connected":
+        return _format_environmental_federal_only(facts)
     psts = _dicts(facts.get("pst_records"))
     echos = _dicts(facts.get("echo_records"))
     statuses = _as_dict(facts.get("source_statuses"))
@@ -3944,6 +3984,7 @@ _OVERLAY_BUCKETS: list[tuple[str, str]] = [
     ("pid_districts", "PID"),
     ("tirz_districts", "TIRZ"),
     ("school_districts", "School district"),
+    ("metro_districts", "Metro district"),
 ]
 
 
@@ -4071,11 +4112,17 @@ def _summary_environmental(facts: dict[str, Any]) -> str | None:
     statuses = _as_dict(facts.get("source_statuses"))
     psts = _dicts(facts.get("pst_records"))
     echos = _dicts(facts.get("echo_records"))
-    pst_out = _text(statuses.get("pst")) not in (None, "queried")
-    echo_out = _text(statuses.get("echo")) not in (None, "queried")
+    # The adapter writes tceq_pst / epa_echo (it never wrote pst / echo).
+    pst_out = _text(statuses.get("tceq_pst")) not in (None, "queried")
+    echo_out = _text(statuses.get("epa_echo")) not in (None, "queried")
     radius = _num(facts.get("search_radius_m"))
+    state_part = (
+        "State records not connected"
+        if _text(facts.get("state_records")) == "not_connected"
+        else "PST unavailable" if pst_out else f"{len(psts)} PST"
+    )
     return " · ".join([
-        "PST unavailable" if pst_out else f"{len(psts)} PST",
+        state_part,
         "ECHO unavailable" if echo_out
         else f"{len(echos)} EPA record{'' if len(echos) == 1 else 's'}",
         f"{radius:,.0f}m" if radius else "screened",
@@ -4389,6 +4436,11 @@ def _build_card(
             or "open the official page and search this address."
         )
         takeaway = f"{_MANUAL_PREFIX}{pointer}"
+    elif status == "issue" and _text(facts_dict.get("state_records")) == "not_connected":
+        # Federal-only environmental screen (outside Texas): keep its own
+        # line, which says both that EPA did not answer and that the state's
+        # records are not connected.
+        pass
     elif status == "issue":
         failing = next(
             (sid for sid, result in present if _errors_of(result)), primary_id
@@ -4412,7 +4464,8 @@ def _build_card(
     # The collapsed accordion row: glyph, name, compact summary, badge. When
     # the card is not a normal answer the summary says THAT — a scope line or
     # "Needs a human look" is the honest one-liner, not a stale hero fact.
-    if status in ("not_covered", "issue"):
+    federal_only = _text(facts_dict.get("state_records")) == "not_connected"
+    if status in ("not_covered", "issue") and not federal_only:
         summary = _compact(takeaway)
     else:
         summary = (_summary_for(slot, primary_id, facts_dict, extras, run,
@@ -4585,6 +4638,14 @@ def _historical_aerials_card(run: Any, derived: dict[str, Any]) -> dict[str, Any
         return None
     if str(meta.get("status") or "") == "disabled":
         return None
+    if str(meta.get("status") or "") == "not_connected":
+        return _empty_card(
+            "historical_aerials", "not_covered",
+            f"Not connected for {state_names.name_of(str(meta.get('state') or ''))} yet.",
+            [{"source_id": "historical_aerials",
+              "source_name": _SOURCE_NAMES["historical_aerials"],
+              "source_url": None, "checked_at": None, "from_cache": False}],
+        )
 
     eras = [_as_dict(era) for era in _as_list(payload.get("eras"))]
     images = _ha_era_images(eras)

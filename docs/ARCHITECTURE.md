@@ -81,7 +81,7 @@ PropRisk/
         site_check/        the whole Public Data engine — see below
       cli/keys.py          the command-line secret-store tool behind scripts/keys.sh
       cli/check_region.py  the county/state proof command behind scripts/check_region.sh
-    alembic/versions/0001_proprisk_baseline.py   the one migration: every table, the two fixed rows
+    alembic/versions/      0001: every table and the two fixed rows; 0002: the state on lookups
     tests/                 the kept and adjusted test suite
   web/                    React screens
     src/

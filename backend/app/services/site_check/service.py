@@ -29,6 +29,7 @@ from sqlalchemy.orm import Session
 from app.config.settings import get_settings
 from app.core.job_queue import enqueue_job, recover_stale_job
 from app.models import Job, SiteCheckRun
+from app.regions import states as state_names
 from app.services import audit
 from app.services.site_check import registry
 
@@ -250,7 +251,12 @@ def _same_refresh_subject(
         return False
     old_county = _normalize_county(run.county)
     new_county = _normalize_county(county)
-    return not (old_county and new_county and old_county != new_county)
+    if old_county and new_county and old_county != new_county:
+        return False
+    # The same county name exists in several states: a lookup that names
+    # its state never reuses another state's results.
+    named_state = state_names.state_from_text(address)
+    return not (named_state and (run.state or "TX") != named_state)
 
 
 def _reusable_source_result(
@@ -294,6 +300,7 @@ def _invalidate_reused_dependents(
     reusable: dict[str, dict],
     *,
     county: str,
+    state: str = "TX",
 ) -> dict[str, dict]:
     """Drop cached conclusions whose required input will be refreshed."""
     active_sources = {
@@ -310,7 +317,11 @@ def _invalidate_reused_dependents(
         return {}
 
     # Parcel-aware adapters depend on the county's authoritative parcel path.
-    parcel_source = "wcad_parcel" if _normalize_county(county) == "williamson" else "tcad_parcel"
+    parcel_source = (
+        "wcad_parcel"
+        if state == "TX" and _normalize_county(county) == "williamson"
+        else "tcad_parcel"
+    )
     if parcel_source in missing:
         for source_id in (
             "austin_zoning",
@@ -341,6 +352,8 @@ def _empty_reuse_seed() -> dict[str, Any]:
         "cached_lat": None,
         "cached_lng": None,
         "cached_geocode_source": None,
+        "cached_state": None,
+        "cached_county": None,
     }
 
 
@@ -404,8 +417,13 @@ def build_refresh_reuse_seed(
         anchor_run = prior
         break
 
+    anchor_state = ((anchor_run.state if anchor_run else None) or "TX").upper()
+
     def same_anchor(prior: SiteCheckRun) -> bool:
         if anchor_lat is None or anchor_lng is None:
+            return False
+        # Results settled for another state are never reused.
+        if (prior.state or "TX").upper() != anchor_state:
             return False
         try:
             return (
@@ -424,6 +442,12 @@ def build_refresh_reuse_seed(
         for source_id, result in (prior.adapter_results or {}).items():
             if source_id in candidates:
                 continue
+            covered = (
+                registry.get(source_id).states
+                if source_id in registry.REGISTRY else ()
+            )
+            if covered and anchor_state not in covered:
+                continue  # e.g. a Texas-only result for a Colorado lookup
             if _reusable_source_result(result, now=now):
                 candidates[source_id] = (deepcopy(result), prior)
 
@@ -431,6 +455,7 @@ def build_refresh_reuse_seed(
     reusable = _invalidate_reused_dependents(
         {source_id: pair[0] for source_id, pair in candidates.items()},
         county=effective_county,
+        state=(anchor_run.state if anchor_run else None) or "TX",
     )
     queried: list[dict[str, Any]] = []
     for source_id, result in reusable.items():
@@ -458,6 +483,9 @@ def build_refresh_reuse_seed(
         "cached_geocode_source": (
             anchor_run.geocode_source if anchor_run and geocode_reused else None
         ),
+        # Reused coordinates keep the state and county they were settled with.
+        "cached_state": anchor_run.state if anchor_run and geocode_reused else None,
+        "cached_county": anchor_run.county if anchor_run and geocode_reused else None,
     }
 
 
@@ -1099,6 +1127,7 @@ def _insert_run_and_job(
     cached_lat: float | None = None,
     cached_lng: float | None = None,
     cached_geocode_source: str | None = None,
+    cached_state: str | None = None,
     adapter_results: dict[str, Any] | None = None,
     sources_queried: list[dict[str, Any]] | None = None,
     derived: dict[str, Any] | None = None,
@@ -1123,6 +1152,7 @@ def _insert_run_and_job(
         lat=cached_lat,
         lng=cached_lng,
         geocode_source=cached_geocode_source,
+        state=cached_state or "TX",
         adapter_results=deepcopy(adapter_results or {}),
         sources_queried=deepcopy(sources_queried or []),
         derived=deepcopy(derived or {}),
@@ -1289,6 +1319,8 @@ def create_run(
                 cached_lat=seed["cached_lat"],
                 cached_lng=seed["cached_lng"],
                 cached_geocode_source=seed["cached_geocode_source"],
+                cached_state=seed["cached_state"],
+                county=seed["cached_county"] or "",
                 adapter_results=seed["adapter_results"],
                 sources_queried=seed["sources_queried"],
                 derived=seed["derived"],

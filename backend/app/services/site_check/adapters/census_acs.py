@@ -23,6 +23,8 @@ from typing import Any
 
 import requests
 
+from app.regions import loader as regions
+from app.regions import states
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -39,17 +41,13 @@ SOURCE_ID = "census_acs"
 ACS_YEAR = 2023
 TIGER_YEAR = 2023
 ACS_BASE_URL = f"https://api.census.gov/data/{ACS_YEAR}/acs/acs5"
-_CENTROIDS_PATH = (
-    Path(__file__).resolve().parent.parent / "bg_centroids"
-    / "bg_centroids_48.json"
-)
+_CENTROIDS_DIR = Path(__file__).resolve().parent.parent / "bg_centroids"
 RINGS_MILES = (1, 3, 5)
 MIN_POP_THRESHOLD = 50
 ATTRIBUTION = "Source: U.S. Census Bureau"
 USER_AGENT = "PropDesk/1.0 (propdesk_control_plane site-check)"
 REQUEST_TIMEOUT = 60
 _EARTH_RADIUS_MI = 3958.8
-STATE_FIPS = "48"
 
 ACS_VARS = [
     "B01003_001E", "B19013_001E", "B25077_001E",
@@ -120,20 +118,19 @@ def _haversine_mi(lat1, lon1, lat2, lon2) -> float:
     return _EARTH_RADIUS_MI * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
-_centroids_cache: dict[str, tuple[float, float]] | None = None
+_centroids_cache: dict[str, dict[str, tuple[float, float]]] = {}
 
 
-def _load_centroids() -> dict[str, tuple[float, float]]:
-    global _centroids_cache
-    if _centroids_cache is not None:
-        return _centroids_cache
-    if not _CENTROIDS_PATH.exists():
-        raise FileNotFoundError(
-            f"bg_centroids_48.json not found at {_CENTROIDS_PATH}"
-        )
-    data = json.loads(_CENTROIDS_PATH.read_text(encoding="utf-8"))
-    _centroids_cache = {k: (v[0], v[1]) for k, v in data.items()}
-    return _centroids_cache
+def _load_centroids(filename: str) -> dict[str, tuple[float, float]]:
+    """The state's block-group centroid file, named in its state.yaml."""
+    if filename in _centroids_cache:
+        return _centroids_cache[filename]
+    path = _CENTROIDS_DIR / filename
+    if not path.exists():
+        raise FileNotFoundError(f"{filename} not found at {path}")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    _centroids_cache[filename] = {k: (v[0], v[1]) for k, v in data.items()}
+    return _centroids_cache[filename]
 
 
 def _block_groups_in_ring(
@@ -149,6 +146,7 @@ def _fetch_acs_for_bgs(
     bg_geoids: list[str],
     variables: list[str],
     sess: requests.Session,
+    state_fips: str = "48",
 ) -> dict[str, dict[str, Any]]:
     """One API call per county; filter in Python."""
     api_key = _api_key()
@@ -170,7 +168,7 @@ def _fetch_acs_for_bgs(
         url = (
             f"{ACS_BASE_URL}?get={var_str}"
             f"&for=block+group:*"
-            f"&in=state:{STATE_FIPS}"
+            f"&in=state:{state_fips}"
             f"+county:{county}"
             f"&key={api_key}"
         )
@@ -185,7 +183,7 @@ def _fetch_acs_for_bgs(
             for row in data[1:]:
                 row_dict = dict(zip(headers, row))
                 geoid = (
-                    f"{STATE_FIPS}{county}"
+                    f"{state_fips}{county}"
                     f"{row_dict.get('tract', '')}"
                     f"{row_dict.get('block group', '')}"
                 )
@@ -354,9 +352,25 @@ def fetch(
     config=None,
 ) -> AdapterResult:
     """Fetch ACS 5-year demographics in 1/3/5 mi rings around
-    identity.lat/lng. Texas block groups only."""
+    identity.lat/lng, using the block groups of the lookup's state (its
+    state.yaml names the centroid file and gives the census code)."""
     if identity.lat is None or identity.lng is None:
         return _failed_result("lat/lng required for census_acs")
+    state_file = regions.state(identity.state) or {}
+    if not state_file.get("census_centroids"):
+        return AdapterResult(
+            source_id=SOURCE_ID,
+            source_access_status=SourceAccessStatus.PROGRAMMATIC_PUBLIC,
+            data_confidence_status=DataConfidenceStatus.UNKNOWN,
+            coverage_status=CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
+            normalized_facts={
+                "state": identity.state,
+                "advisory": (
+                    f"Not connected for {states.name_of(identity.state)} yet."
+                ),
+            },
+            fetched_at=datetime.now(UTC),
+        )
 
     api_key = _api_key()
     if not api_key:
@@ -374,7 +388,7 @@ def fetch(
     sess.headers.setdefault("User-Agent", USER_AGENT)
 
     try:
-        centroids = _load_centroids()
+        centroids = _load_centroids(state_file["census_centroids"])
     except Exception as exc:
         return _failed_result(f"centroids load failed: {exc}")
 
@@ -400,7 +414,9 @@ def fetch(
     errors: list[str] = []
     if bgs_5mi:
         try:
-            bg_data = _fetch_acs_for_bgs(bgs_5mi, ACS_VARS, sess)
+            bg_data = _fetch_acs_for_bgs(
+                bgs_5mi, ACS_VARS, sess, state_fips=state_file["fips"],
+            )
         except Exception as exc:
             errors.append(f"acs api: {exc}")
 

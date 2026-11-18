@@ -37,7 +37,8 @@
    "advisories": [
     "limited_purpose_not_checked"
    ],
-   "broker_summary": "PropDesk verified this point is inside Austin city limits using Travis County GIS (Municipal Jurisdictions). City zoning and city development rules may apply."
+   "broker_summary": "PropDesk verified this point is inside Austin city limits using Travis County GIS (Municipal Jurisdictions). City zoning and city development rules may apply.",
+   "state": "TX"
   },
   "result_schema_version": null,
   "registry_version": null,

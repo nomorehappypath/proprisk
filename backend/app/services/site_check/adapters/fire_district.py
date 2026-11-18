@@ -53,7 +53,7 @@ _TRAVIS_ESD_TAXMAPS_QUERY = (
 # From each county file's `fire_stations:` section (app/regions/tx/counties/*.yaml).
 _LAYERS_BY_COUNTY: dict[str, str] = {
     county: section["url"]
-    for county, section in regions.county_sections("TX", "fire_stations").items()
+    for county, section in regions.all_county_sections("fire_stations").items()
 }
 
 _TIMEOUT = 25
@@ -69,13 +69,13 @@ _ISO_UPLOAD_TYPES = [
 ]
 
 _NAME_FIELDS = ("NAME", "STATION_NAME", "name", "full_name")
-_ADDRESS_FIELDS = ("ADDRESS", "PHYS_ADDR", "full_addr", "addr")
+_ADDRESS_FIELDS = ("ADDRESS", "PHYS_ADDR", "full_addr", "addr", "FULL_ADDRESS")
 _DEPT_FIELDS = (
     "DEPARTMENT", "DEPT", "JURISDICTI", "AGENCY",
     "msag_com", "municipal",
 )
 _STATION_NUM_FIELDS = (
-    "STATION_NU", "STATION_NUMBER", "STATIONNO", "STATION_ID",
+    "STATION_NU", "STATION_NUMBER", "STATIONNO", "STATION_ID", "STATION_NUM",
 )
 
 
@@ -90,7 +90,7 @@ def fetch(
         return _no_coordinates_result()
 
     county = (identity.county or "").lower().strip()
-    layer_url = _LAYERS_BY_COUNTY.get(county)
+    layer_url = _LAYERS_BY_COUNTY.get(identity.county_key)
     if not layer_url:
         return _jurisdiction_not_covered_result(county)
 
@@ -100,7 +100,7 @@ def fetch(
         sess, layer_url, identity.lat, identity.lng, buffer_mi,
     )
     if error:
-        if county == "travis":
+        if identity.county_key == "travis":
             fallback = _travis_service_area_fallback(
                 sess, identity.lat, identity.lng, error,
             )
@@ -413,8 +413,13 @@ def _summarize_stations(
             )
         except (TypeError, ValueError):
             continue
+        number = _first_nonempty(attrs, _STATION_NUM_FIELDS)
         out.append({
-            "name": _first_nonempty(attrs, _NAME_FIELDS) or "Unnamed",
+            # A layer with numbers but no names (Denver) reads "Station 3".
+            "name": (
+                _first_nonempty(attrs, _NAME_FIELDS)
+                or (f"Station {number}" if number else "Unnamed")
+            ),
             "address": _first_nonempty(attrs, _ADDRESS_FIELDS) or "",
             "department": _first_nonempty(attrs, _DEPT_FIELDS) or "",
             "station_number": _first_nonempty(

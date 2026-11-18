@@ -34,7 +34,9 @@
    "lng": -97.739758,
    "source": "nominatim",
    "address_used": "1100 Congress Ave, Austin, TX 78701",
-   "county": "travis"
+   "county": "travis",
+   "state": "TX",
+   "state_source": "address_and_map"
   },
   "result_schema_version": null,
   "registry_version": null,

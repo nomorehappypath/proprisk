@@ -22,9 +22,12 @@ export default function CoveragePage() {
   return (
     <div className="stack">
       <section className="card">
-        <h2>State</h2>
+        <h2>States</h2>
         <p>{data.state}</p>
-        <p className="muted-line">Most sources assume this state; elsewhere, a lookup still runs with fewer results.</p>
+        <p className="muted-line">
+          Texas has the most sources. In any other state, a lookup still runs with the nationwide sources, and
+          each Texas-only card says it is not connected for that state yet.
+        </p>
       </section>
 
       <section className="card">
@@ -36,6 +39,7 @@ export default function CoveragePage() {
             <table className="pd-table">
               <thead>
                 <tr>
+                  <th>State</th>
                   <th>County</th>
                   <th>Level</th>
                   <th>What is connected</th>
@@ -43,7 +47,8 @@ export default function CoveragePage() {
               </thead>
               <tbody>
                 {data.counties.map((row) => (
-                  <tr key={row.county}>
+                  <tr key={`${row.state}-${row.county}`}>
+                    <td>{row.state}</td>
                     <td>{row.county}</td>
                     <td>{row.level}</td>
                     <td>{row.detail}</td>
@@ -97,8 +102,8 @@ export default function CoveragePage() {
         )}
       </section>
       <p className="muted-line">
-        Everywhere else in {data.state}, a lookup still runs; county-specific cards say the county is
-        not connected yet.
+        In a county with no file, a lookup still runs; county-specific cards say the county is not
+        connected yet.
       </p>
     </div>
   )

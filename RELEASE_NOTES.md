@@ -1,5 +1,22 @@
 # Release notes
 
+## Unreleased: states (Phase C), with Denver, Colorado
+
+- **PropRisk now knows which state an address is in.** Put the state in the address
+  ("Denver, CO 80202"). With no state named, it still assumes Texas, as before.
+- **Denver County, Colorado** is the first county outside Texas: its city and county
+  boundary, parcels, metropolitan districts, fire stations, subdivisions and clerk
+  records page, plus the nationwide sources and Colorado census figures.
+- **Outside Texas, Texas-only sources are switched off** and their cards say
+  "Not connected for <State> yet", never "nothing found". The environmental card
+  shows only the federal EPA check and says state records are not connected.
+- **If the address and the map disagree on the state**, the lookup stops and asks
+  you to check the address.
+- **Settings → "Where PropRisk works"** now has a State column.
+- **Updating from an earlier version:** run `scripts/stop.sh`, update, then
+  `scripts/launch.sh`. The launch upgrades your saved lookups (all kept, marked as
+  Texas). If PropRisk is still running, the launch asks you to stop it first.
+
 ## Unreleased: Disclaimer page
 
 - **New "Disclaimer" link in the top bar.** It says plainly that PropRisk is a free,

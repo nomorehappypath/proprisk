@@ -1,0 +1,56 @@
+# Denver County, Colorado (the City and County of Denver: one government).
+# Format: see app/regions/_template/county.yaml. Sources: Denver Open Data.
+name: Denver
+level: Full
+summary: City and county boundary, parcel layer, metro districts, fire stations,
+  subdivisions, clerk records page
+sample_address: 201 W Colfax Ave, Denver, CO 80202   # Wellington E. Webb Municipal Office Building
+jurisdiction:
+  source: City and County of Denver boundary (Denver Open Data)
+  source_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVCCDBOUNDARY_A/FeatureServer/40
+  city_limits:
+  - url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVCCDBOUNDARY_A/FeatureServer/40/query
+    name_field: COUNTY
+  no_hit_advisories:
+  - Denver is a city and county in one; a point outside its boundary is not in Denver.
+parcels:
+  source_label: Denver Assessor parcels (Denver Open Data)
+  source_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PROP_PARCELS_A/FeatureServer/245
+  query_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PROP_PARCELS_A/FeatureServer/245/query
+  id_fields:
+  - SCHEDNUM
+  owner_fields:
+  - OWNER_NAME
+  situs_fields:
+  - SITUS_ADDRESS_LINE1
+  legal_fields:
+  - LEGAL_DESC
+  sqft_area_fields:
+  - LAND_AREA
+  value_fields:
+  - APPRAISED_TOTAL_VALUE
+  land_value_fields:
+  - APPRAISED_LAND_VALUE
+  out_fields: SCHEDNUM,OWNER_NAME,SITUS_ADDRESS_LINE1,LEGAL_DESC,LAND_AREA,APPRAISED_TOTAL_VALUE,APPRAISED_LAND_VALUE,PROP_CLASS,D_CLASS_CN
+appraisal_search_url: https://www.denvergov.org/property
+districts:
+- label: Denver metropolitan districts
+  kind: metro
+  urls:
+  - https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ADMN_METRODISTRICTS_A/FeatureServer/12/query
+fire_stations:
+  url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_FIRE_FIRESTATION_P/FeatureServer/65/query
+clerk:
+  name: Denver Clerk and Recorder, recorded documents
+  url: https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Denver-Clerk-and-Recorder/Recording-Division/find-records
+  deed_instructions: 1) Open the Denver Clerk and Recorder's records page and choose the
+    online records search (guest search is offered). 2) Search by reception number when one
+    is known (the parcel record's RECEPTION_NUM); otherwise search by party name or
+    recording date. 3) Open the matching recorded deed and download or upload the copy.
+  plat_instructions: Open the Denver Clerk and Recorder's online records search and search
+    by subdivision name or reception number, then download or upload the recorded plat.
+subdivisions:
+  source_label: Denver subdivisions (Denver Open Data)
+  layer_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVSUBDIVISIONS_A/FeatureServer/54
+  query_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVSUBDIVISIONS_A/FeatureServer/54/query
+  name_field: SUBNAME

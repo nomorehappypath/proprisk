@@ -718,7 +718,8 @@ def _scope_key(run: Any, jurisdiction: str, radius_m: int) -> str:
         f"{float(lat):.4f},{float(lng):.4f}"
         if lat is not None and lng is not None else "no-anchor"
     )
-    return f"{jurisdiction.lower()}|r={radius_m}|{anchor}"
+    state = (getattr(run, "state", None) or "TX").upper()
+    return f"state={state}|{jurisdiction.lower()}|r={radius_m}|{anchor}"
 
 
 def _plat_clues(facts: dict[str, Any]) -> list[str]:

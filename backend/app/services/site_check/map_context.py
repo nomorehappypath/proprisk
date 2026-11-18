@@ -18,6 +18,7 @@ from shapely.ops import nearest_points, unary_union
 from shapely.ops import transform as shapely_transform
 
 from app.models import SiteCheckRun
+from app.regions import states as state_names
 
 from .map_contract import (
     SiteCheckMapBasemap,
@@ -1073,6 +1074,7 @@ def _district_features(run: SiteCheckRun) -> list[SiteCheckMapFeature]:
         ("esd_districts", "esd", "Emergency services district"),
         ("pid_districts", "pid", "Public improvement district"),
         ("tirz_districts", "tirz", "Tax increment reinvestment zone"),
+        ("metro_districts", "metro", "Metropolitan district"),
     )
     for key, kind, label in district_groups:
         rows = facts.get(key)
@@ -1860,6 +1862,7 @@ def _regulatory_details(run: SiteCheckRun) -> list[dict[str, str]]:
     district_count = _first_list_count(district_facts, (
         "subdivisions", "mud_districts", "wcid_districts", "esd_districts",
         "pid_districts", "tirz_districts", "school_districts",
+        "metro_districts",
     ))
     details.append({
         "label": "District overlays",
@@ -2051,9 +2054,12 @@ def _environmental_details(run: SiteCheckRun) -> list[dict[str, str]]:
             "label": "Mapped Edwards protection zones",
             "value": mapped_summary(
                 edwards,
-                absent=_screen_value(
-                    environmental.get("edwards_aquifer_status"),
-                    "No mapped zone returned; verify in the governing viewer",
+                absent=(
+                    _screen_value(
+                        environmental.get("edwards_aquifer_status"),
+                        "No mapped zone returned; verify in the governing viewer",
+                    ) if _in_texas(run)
+                    else f"Not connected for {_state_name(run)} yet"
                 ),
             ),
         },
@@ -2174,6 +2180,14 @@ def _buildable_details(run: SiteCheckRun) -> list[dict[str, str]]:
             ),
         },
     ]
+
+
+def _in_texas(run: Any) -> bool:
+    return (getattr(run, "state", None) or "TX") == "TX"
+
+
+def _state_name(run: Any) -> str:
+    return state_names.name_of(getattr(run, "state", None) or "TX")
 
 
 def _layers(
@@ -2563,6 +2577,7 @@ def _layers(
             } if utilities else None,
             attribution=(
                 "TWDB / PUC / TCEQ service areas; HIFLD electric infrastructure"
+                if _in_texas(run) else "HIFLD electric infrastructure; OpenStreetMap"
             ),
             advisory=(
                 "CCN and operating-area boundaries identify service authority, not "
@@ -2596,7 +2611,10 @@ def _layers(
                 },
                 {
                     "label": "Water / wastewater authority",
-                    "value": "Public CCN or operating-area screen",
+                    "value": (
+                        "Public CCN or operating-area screen" if _in_texas(run)
+                        else f"Not connected for {_state_name(run)} yet"
+                    ),
                 },
                 {
                     "label": "Mains, capacity, and tie-in",
@@ -2912,7 +2930,11 @@ def _layers(
                     _feature_geojson(feature) for feature in environmental_geometry
                 ],
             } if environmental_geometry else None,
-            attribution="FEMA / USFWS / TCEQ / NWI / USDA SSURGO / public environmental records",
+            attribution=(
+                "FEMA / USFWS / TCEQ / NWI / USDA SSURGO / public environmental records"
+                if _in_texas(run)
+                else "FEMA / USFWS / NWI / USDA SSURGO / EPA ECHO"
+            ),
             advisory=(
                 "Environmental layers are desktop screening only. Phase I, "
                 "wetland delineation, endangered-species, Edwards aquifer, karst, "
@@ -3017,7 +3039,34 @@ def _layers(
             details=elevation_details,
         ),
     ]
+    if not _in_texas(run):
+        layers = [_outside_texas_layer(layer, run) for layer in layers]
     return layers
+
+
+# Layers drawn only from Texas agencies (TxDOT, TWDB/PUC, TCEQ). Outside
+# Texas they are not connected: no shapes, no "0 shown", no Texas credit.
+_TEXAS_ONLY_LAYERS = {"projects", "sewer_ccn", "water_districts", "water_ccn", "traffic"}
+
+
+def _outside_texas_layer(layer: SiteCheckMapLayer, run: Any) -> SiteCheckMapLayer:
+    not_connected = f"Not connected for {_state_name(run)} yet"
+    if layer.id in _TEXAS_ONLY_LAYERS:
+        return layer.model_copy(update={
+            "available": False, "status": "unavailable", "geojson": None,
+            "attribution": "", "advisory": f"{not_connected}.", "legend": [],
+            "details": [{"label": "Status", "value": not_connected}],
+        })
+    if layer.id == "access":
+        # Road frontage and inventory come from TxDOT; OSM features remain.
+        return layer.model_copy(update={
+            "attribution": "OpenStreetMap contributors",
+            "details": [
+                row for row in layer.details
+                if row.get("label") != "Roadway inventory segments"
+            ] + [{"label": "Road inventory", "value": not_connected}],
+        })
+    return layer
 
 
 def build_map_context(run: SiteCheckRun) -> SiteCheckMapContext:

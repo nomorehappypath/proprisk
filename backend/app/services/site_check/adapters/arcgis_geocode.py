@@ -53,6 +53,7 @@ from datetime import UTC, datetime
 import requests
 
 from app.config.settings import get_settings
+from app.regions import states
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -85,6 +86,22 @@ _TX_VIEWBOX = "-106.65,36.50,-93.51,25.84"
 # bounds parameter influences ranking without excluding matches, and the
 # road-number + county checks do the hard filtering.
 _TX_BOUNDS_GOOGLE = "25.84,-106.65|36.50,-93.51"
+
+
+def _viewbox(state: str | None) -> str:
+    """Nominatim viewbox (left,top,right,bottom) for the named state; Texas
+    when the address names none."""
+    if state and state != "TX" and state in states.US_STATES:
+        west, south, east, north = states.US_STATES[state][2]
+        return f"{west},{north},{east},{south}"
+    return _TX_VIEWBOX
+
+
+def _google_bounds(state: str | None) -> str:
+    if state and state != "TX" and state in states.US_STATES:
+        west, south, east, north = states.US_STATES[state][2]
+        return f"{south},{west}|{north},{east}"
+    return _TX_BOUNDS_GOOGLE
 
 # How many candidates to request so we can pick a road-valid one instead
 # of blindly taking [0]. legacy_services took limit=1 and shipped whatever OSM
@@ -136,10 +153,11 @@ def _candidate_on_requested_roads(
 
 
 def _pick_candidate(
-    candidates: list[tuple[float, float, str | None, str]],
+    candidates: list[tuple[float, float, str | None, str, str | None]],
     want_numbers: set[str],
     want_county: str | None,
-) -> tuple[float, float, str | None] | None:
+    want_state: str | None = None,
+) -> tuple[float, float, str | None, str | None] | None:
     """Choose from provider candidates, each (lat, lng, county, text).
 
     Precedence:
@@ -158,13 +176,17 @@ def _pick_candidate(
     if want_numbers and not on_road:
         return None
     pool = on_road or candidates
+    if want_state:
+        # A candidate in the state the address names wins; with none, the
+        # first one is kept so the caller can report the disagreement.
+        pool = [c for c in pool if c[4] == want_state] or pool
     if want_county:
-        for lat, lng, county, _text in pool:
+        for lat, lng, county, _text, state in pool:
             if county and county == want_county:
-                return (lat, lng, county)
+                return (lat, lng, county, state)
     if pool:
-        lat, lng, county, _text = pool[0]
-        return (lat, lng, county)
+        lat, lng, county, _text, state = pool[0]
+        return (lat, lng, county, state)
     return None
 
 
@@ -173,8 +195,8 @@ def _pick_candidate(
 
 def _try_nominatim(
     sess: requests.Session, address: str,
-    *, county: str | None = None,
-) -> tuple[float, float, str | None] | None:
+    *, county: str | None = None, state: str | None = None,
+) -> tuple[float, float, str | None, str | None] | None:
     """Port of legacy_services public_intel._geocode Nominatim path,
     hardened 2026-07-21. Tries the full address first, then
     progressively simpler variants for raw-land intersection
@@ -211,10 +233,11 @@ def _try_nominatim(
             resp = sess.get(
                 _NOMINATIM,
                 params={
+                    # An address that names its state is searched as
+                    # written; with no state named, Texas as before.
                     "q": (
-                        f"{q}, Texas"
-                        if "texas" not in q.lower()
-                        else q
+                        q if (state and state != "TX") or "texas" in q.lower()
+                        else f"{q}, Texas"
                     ),
                     "format": "json",
                     "limit": _CANDIDATE_LIMIT,
@@ -223,7 +246,7 @@ def _try_nominatim(
                     # Soft bias toward Texas (not bounded=1: the road-
                     # number + county checks do the hard filtering, and
                     # bounded=1 can drop valid edge-of-state matches).
-                    "viewbox": _TX_VIEWBOX,
+                    "viewbox": _viewbox(state),
                 },
                 timeout=_TIMEOUT_S,
                 # Nominatim TOS requires a UA.
@@ -249,9 +272,12 @@ def _try_nominatim(
                 continue
             address_parts = result.get("address") or {}
             cand_county = _normalize_county(address_parts.get("county"))
+            cand_state = states.code_for(
+                address_parts.get("ISO3166-2-lvl4") or address_parts.get("state")
+            )
             text = str(result.get("display_name") or "")
-            candidates.append((lat, lng, cand_county, text))
-        picked = _pick_candidate(candidates, want_numbers, want_county)
+            candidates.append((lat, lng, cand_county, text, cand_state))
+        picked = _pick_candidate(candidates, want_numbers, want_county, state)
         if picked is not None:
             return picked
         if candidates and want_numbers:
@@ -268,8 +294,8 @@ def _try_nominatim(
 
 def _try_arcgis(
     sess: requests.Session, address: str,
-    *, county: str | None = None,
-) -> tuple[tuple[float, float, str | None] | None, str | None]:
+    *, county: str | None = None, state: str | None = None,
+) -> tuple[tuple[float, float, str | None, str | None] | None, str | None]:
     """ArcGIS Geocoding in `forStorage=false` (not-stored)
     mode. Cheaper than Google ($0.50/1K vs $5/1K) and works on
     any ArcGIS Location Platform key with geocoding scope.
@@ -336,7 +362,7 @@ def _try_arcgis(
         raw, key=lambda c: (c.get("attributes") or {}).get("Score") or 0,
         reverse=True,
     )
-    candidates: list[tuple[float, float, str | None, str]] = []
+    candidates: list[tuple[float, float, str | None, str, str | None]] = []
     for cand in raw_sorted:
         location = cand.get("location") or {}
         lat = location.get("y")
@@ -348,8 +374,9 @@ def _try_arcgis(
         candidates.append((
             float(lat), float(lng),
             _normalize_county(attrs.get("Subregion")), text,
+            states.code_for(attrs.get("RegionAbbr")),
         ))
-    picked = _pick_candidate(candidates, want_numbers, want_county)
+    picked = _pick_candidate(candidates, want_numbers, want_county, state)
     if picked is None and candidates and want_numbers:
         log.info(
             "geocode: arcgis returned %d candidate(s) for %r but none on "
@@ -364,8 +391,8 @@ def _try_arcgis(
 
 def _try_google(
     sess: requests.Session, address: str,
-    *, county: str | None = None,
-) -> tuple[float, float, str | None] | None:
+    *, county: str | None = None, state: str | None = None,
+) -> tuple[float, float, str | None, str | None] | None:
     """Google Geocoding API as the LAST-resort tier, after Nominatim
     and ArcGIS both fail or reject every candidate. $5/1K (rate lives
     in settings.google_geocode_cost_micro_per_call).
@@ -411,7 +438,7 @@ def _try_google(
                 "address": address,
                 "key": api_key,
                 "region": "us",
-                "bounds": _TX_BOUNDS_GOOGLE,  # soft bias, not a filter
+                "bounds": _google_bounds(state),  # soft bias, not a filter
             },
             timeout=_TIMEOUT_S,
         )
@@ -436,7 +463,7 @@ def _try_google(
 
     want_county = _normalize_county(county)
     want_numbers = _requested_road_numbers(address)
-    candidates: list[tuple[float, float, str | None, str]] = []
+    candidates: list[tuple[float, float, str | None, str, str | None]] = []
     for result in (data.get("results") or [])[:_CANDIDATE_LIMIT]:
         location = (result.get("geometry") or {}).get("location") or {}
         lat = location.get("lat")
@@ -444,11 +471,14 @@ def _try_google(
         if lat is None or lng is None:
             continue
         cand_county: str | None = None
+        cand_state: str | None = None
         route_names: list[str] = []
         for comp in result.get("address_components") or []:
             types = comp.get("types") or []
             if "administrative_area_level_2" in types:
                 cand_county = _normalize_county(comp.get("long_name"))
+            elif "administrative_area_level_1" in types:
+                cand_state = states.code_for(comp.get("short_name"))
             elif "route" in types:
                 # Both spellings so the _ROAD_RE designation check sees
                 # whichever form carries the number ("FM 971" vs
@@ -459,9 +489,9 @@ def _try_google(
         text = " ; ".join(
             [str(result.get("formatted_address") or ""), *route_names],
         )
-        candidates.append((float(lat), float(lng), cand_county, text))
+        candidates.append((float(lat), float(lng), cand_county, text, cand_state))
 
-    picked = _pick_candidate(candidates, want_numbers, want_county)
+    picked = _pick_candidate(candidates, want_numbers, want_county, state)
     if picked is None and candidates and want_numbers:
         log.info(
             "geocode: google returned %d candidate(s) for %r but none on "
@@ -521,25 +551,26 @@ def fetch(
     surfaced only when Google can't resolve either.)
     """
     sess = http_session(session)
+    named = states.state_from_text(identity.address)
 
     if _is_intersection_query(identity.address):
         # 1. ArcGIS first for intersections
-        arc_coords, arc_err = _try_arcgis(sess, identity.address, county=identity.county)
+        arc_coords, arc_err = _try_arcgis(sess, identity.address, county=identity.county, state=named)
         if arc_coords is not None:
-            lat, lng, county = arc_coords
+            lat, lng, county, cand_state = arc_coords
             return _success(
-                lat, lng, county, "arcgis", identity.address,
+                lat, lng, county, cand_state, named, "arcgis", identity.address, sess=sess,
             )
         if arc_err:
             # Token/scope error — don't silently fall to
             # Nominatim and ship the wrong CR 130. The Google
             # last resort (validated identically) still runs;
             # if it misses too, surface the structural error.
-            g_coords = _try_google(sess, identity.address, county=identity.county)
+            g_coords = _try_google(sess, identity.address, county=identity.county, state=named)
             if g_coords is not None:
-                lat, lng, county = g_coords
+                lat, lng, county, cand_state = g_coords
                 return _success(
-                    lat, lng, county, "google", identity.address,
+                    lat, lng, county, cand_state, named, "google", identity.address, sess=sess,
                 )
             return _failed(arc_err)
         # 2. Nominatim fallback (low-quality on intersections,
@@ -549,11 +580,11 @@ def fetch(
             "trying nominatim",
             identity.address,
         )
-        nom_coords = _try_nominatim(sess, identity.address, county=identity.county)
+        nom_coords = _try_nominatim(sess, identity.address, county=identity.county, state=named)
         if nom_coords is not None:
-            lat, lng, county = nom_coords
+            lat, lng, county, cand_state = nom_coords
             return _success(
-                lat, lng, county, "nominatim", identity.address,
+                lat, lng, county, cand_state, named, "nominatim", identity.address, sess=sess,
             )
         # 3. Google last resort
         log.info(
@@ -561,11 +592,11 @@ def fetch(
             "trying google",
             identity.address,
         )
-        g_coords = _try_google(sess, identity.address, county=identity.county)
+        g_coords = _try_google(sess, identity.address, county=identity.county, state=named)
         if g_coords is not None:
-            lat, lng, county = g_coords
+            lat, lng, county, cand_state = g_coords
             return _success(
-                lat, lng, county, "google", identity.address,
+                lat, lng, county, cand_state, named, "google", identity.address, sess=sess,
             )
         return _failed(
             f"Could not geocode {identity.address!r} "
@@ -575,33 +606,33 @@ def fetch(
         )
 
     # Street-number address path (Nominatim first, free)
-    coords = _try_nominatim(sess, identity.address, county=identity.county)
+    coords = _try_nominatim(sess, identity.address, county=identity.county, state=named)
     if coords is not None:
-        lat, lng, county = coords
+        lat, lng, county, cand_state = coords
         return _success(
-            lat, lng, county, "nominatim", identity.address,
+            lat, lng, county, cand_state, named, "nominatim", identity.address, sess=sess,
         )
 
     log.info(
         "geocode: nominatim failed for %r; trying arcgis",
         identity.address,
     )
-    arc_coords, arc_err = _try_arcgis(sess, identity.address, county=identity.county)
+    arc_coords, arc_err = _try_arcgis(sess, identity.address, county=identity.county, state=named)
     if arc_coords is not None:
-        lat, lng, county = arc_coords
+        lat, lng, county, cand_state = arc_coords
         return _success(
-            lat, lng, county, "arcgis", identity.address,
+            lat, lng, county, cand_state, named, "arcgis", identity.address, sess=sess,
         )
 
     log.info(
         "geocode: arcgis failed for %r; trying google",
         identity.address,
     )
-    g_coords = _try_google(sess, identity.address, county=identity.county)
+    g_coords = _try_google(sess, identity.address, county=identity.county, state=named)
     if g_coords is not None:
-        lat, lng, county = g_coords
+        lat, lng, county, cand_state = g_coords
         return _success(
-            lat, lng, county, "google", identity.address,
+            lat, lng, county, cand_state, named, "google", identity.address, sess=sess,
         )
     if arc_err:
         return _failed(arc_err)
@@ -614,8 +645,34 @@ def fetch(
 
 def _success(
     lat: float, lng: float, county: str | None,
+    map_state: str | None, named_state: str | None,
     source: str, address: str,
+    *, sess: requests.Session | None = None,
 ) -> AdapterResult:
+    state, how = states.settle(named_state, map_state)
+    if state and state != "TX" and county is None and sess is not None:
+        # Outside Texas, ask the Census county map when the geocoder gave no
+        # county (Denver is a city and county in one, so OSM names no county).
+        county = _county_from_point(sess, lat, lng)
+    if state is None:
+        # The address names one state and the map placed it in another:
+        # stop at the address step rather than check the wrong place.
+        return AdapterResult(
+            source_id=SOURCE_ID,
+            source_access_status=SourceAccessStatus.PROGRAMMATIC_PUBLIC,
+            data_confidence_status=DataConfidenceStatus.UNKNOWN,
+            coverage_status=CoverageStatus.COVERED,
+            normalized_facts={
+                "state_conflict": True,
+                "state_named": named_state,
+                "state_map": map_state,
+                "source": source,
+            },
+            errors=[
+                f"address names {named_state} but the map placed it in {map_state}"
+            ],
+            fetched_at=datetime.now(UTC),
+        )
     return AdapterResult(
         source_id=SOURCE_ID,
         source_access_status=SourceAccessStatus.PROGRAMMATIC_PUBLIC,
@@ -627,10 +684,49 @@ def _success(
             "source": source,
             "address_used": address,
             "county": county,
+            "state": state,
+            # address_and_map | address | map | assumed (nothing named a
+            # state, so Texas, today's default).
+            "state_source": how,
         },
         identifier_used="address",
         fetched_at=datetime.now(UTC),
     )
+
+
+_CENSUS_COUNTIES = (
+    "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+    "State_County/MapServer/1/query"
+)
+
+
+def _county_from_point(
+    sess: requests.Session, lat: float, lng: float,
+) -> str | None:
+    """The county containing the point, from the Census Bureau; None on any
+    failure (the lookup then runs without county data, as before)."""
+    try:
+        resp = sess.get(
+            _CENSUS_COUNTIES,
+            params={
+                "geometry": f"{lng},{lat}",
+                "geometryType": "esriGeometryPoint",
+                "inSR": "4326",
+                "spatialRel": "esriSpatialRelIntersects",
+                "outFields": "NAME",
+                "returnGeometry": "false",
+                "f": "json",
+            },
+            timeout=_TIMEOUT_S,
+        )
+        resp.raise_for_status()
+        features = resp.json().get("features") or []
+    except (requests.RequestException, ValueError) as exc:
+        log.info("geocode: census county lookup failed: %s", exc)
+        return None
+    if not features:
+        return None
+    return _normalize_county((features[0].get("attributes") or {}).get("NAME"))
 
 
 def _failed(

@@ -32,6 +32,7 @@ from typing import Any
 import requests
 
 from app.config.settings import get_settings
+from app.regions import states
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -164,6 +165,54 @@ _ENV_UPLOAD_TYPES = [
 ]
 
 
+def _fetch_outside_texas(
+    identity: PropertyIdentity, sess: requests.Session, radius_m: int,
+) -> AdapterResult:
+    """Outside Texas: only EPA ECHO (nationwide) runs. The TCEQ tank,
+    cleanup and regulatory-history checks are Texas's, so they are marked
+    not connected — never reported as zero records or as an outage."""
+    echo_records, echo_error = _query_epa_echo(
+        sess, identity.lat, identity.lng, radius_m,
+    )
+    state_name = states.name_of(identity.state)
+    not_connected = f"State environmental records: Not connected for {state_name} yet."
+    if echo_error:
+        echo_line = "The federal facility check (EPA ECHO) is temporarily unavailable."
+    elif echo_records:
+        echo_line = (
+            f"{len(echo_records)} federally regulated facilit"
+            f"{'y' if len(echo_records) == 1 else 'ies'} within {radius_m:,} m (EPA ECHO)."
+        )
+    else:
+        echo_line = f"No federally regulated facilities within {radius_m:,} m (EPA ECHO)."
+    advisory = f"{echo_line} {not_connected}"
+    return AdapterResult(
+        source_id=SOURCE_ID,
+        source_access_status=(
+            SourceAccessStatus.PROGRAMMATIC_PUBLIC_BUT_FRAGILE if echo_error
+            else SourceAccessStatus.PROGRAMMATIC_PUBLIC
+        ),
+        data_confidence_status=(
+            DataConfidenceStatus.UNKNOWN if echo_error
+            else DataConfidenceStatus.SCREENED_INDICATOR
+        ),
+        coverage_status=CoverageStatus.PARTIAL,
+        normalized_facts={
+            "status": "partial",
+            "state": identity.state,
+            "state_records": "not_connected",
+            "echo_records": echo_records,
+            "search_radius_m": radius_m,
+            "source_statuses": {"epa_echo": _source_status(echo_error)},
+            "advisory": advisory,
+        },
+        errors=[f"EPA ECHO: {echo_error}"] if echo_error else [],
+        identifier_used="lat_lng",
+        fetched_at=datetime.now(UTC),
+        advisories=[advisory],
+    )
+
+
 def fetch(
     identity: PropertyIdentity,
     *,
@@ -175,6 +224,8 @@ def fetch(
         return _no_coordinates_result()
 
     sess = http_session(session)
+    if identity.state != "TX":
+        return _fetch_outside_texas(identity, sess, radius_m)
 
     pst_records, pst_error = _query_tceq_pst(
         sess, identity.lat, identity.lng, radius_m,

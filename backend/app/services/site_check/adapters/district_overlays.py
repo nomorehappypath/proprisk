@@ -53,7 +53,7 @@ LayerSpec = tuple[str, tuple[str, ...], str]
 # in file order. Within one entry the URLs are fallbacks, tried in order.
 _LAYERS_BY_COUNTY: dict[str, list[LayerSpec]] = {
     county: [(d["label"], tuple(d["urls"]), d["kind"]) for d in districts]
-    for county, districts in regions.county_sections("TX", "districts").items()
+    for county, districts in regions.all_county_sections("districts").items()
 }
 
 _TEXAS_STATEWIDE_LAYERS: list[LayerSpec] = [
@@ -96,9 +96,23 @@ def fetch(
 
     county = identity.county
     layers = [
-        *_LAYERS_BY_COUNTY.get(county or "", []),
-        *_TEXAS_STATEWIDE_LAYERS,
+        *_LAYERS_BY_COUNTY.get(identity.county_key, []),
+        # The TCEQ statewide MUD/WCID layers cover Texas only.
+        *(_TEXAS_STATEWIDE_LAYERS if identity.state == "TX" else []),
     ]
+    if not layers:
+        # Nothing was looked up, so nothing may be reported as "no match".
+        return AdapterResult(
+            source_id=SOURCE_ID,
+            source_access_status=SourceAccessStatus.JURISDICTION_NOT_COVERED,
+            data_confidence_status=DataConfidenceStatus.UNKNOWN,
+            coverage_status=CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
+            normalized_facts={
+                "county": county, "state": identity.state,
+                "advisory": "No district maps are connected for this county yet.",
+            },
+            fetched_at=datetime.now(UTC),
+        )
 
     sess = http_session(session)
 
@@ -194,6 +208,8 @@ def fetch(
             "pid_districts": overlays_by_kind.get("pid", []),
             "tirz_districts": overlays_by_kind.get("tirz", []),
             "school_districts": overlays_by_kind.get("school", []),
+            # Colorado metropolitan districts (special taxing districts).
+            "metro_districts": overlays_by_kind.get("metro", []),
             "unavailable_layers": errors,
             "layer_errors": layer_errors,
             "source_warnings": source_warnings,
@@ -368,6 +384,7 @@ def _build_advisory(
         ("mud", "MUD"), ("wcid", "WCID"),
         ("esd", "ESD"), ("pid", "PID"),
         ("tirz", "TIRZ"), ("school", "School district"),
+        ("metro", "Metro district"),
     ):
         items = overlays_by_kind.get(kind) or []
         if items:

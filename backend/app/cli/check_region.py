@@ -196,7 +196,10 @@ def _start_throwaway_postgres() -> str:
 
     def _stop() -> None:
         if (Path(pg_dir) / "postmaster.pid").exists():
-            subprocess.run(["pg_ctl", "-D", pg_dir, "stop", "-m", "fast"],
+            # "immediate": a throwaway database needs no shutdown checkpoint,
+            # which on a busy disk can outlast pg_ctl's wait and leave the
+            # server running after its folder is removed.
+            subprocess.run(["pg_ctl", "-D", pg_dir, "stop", "-m", "immediate"],
                            check=False, capture_output=True, env=env)
         shutil.rmtree(pg_dir, ignore_errors=True)
         shutil.rmtree(sock_dir, ignore_errors=True)
@@ -367,6 +370,12 @@ def check_county(report: Report, state: str, key: str, county: dict[str, Any]) -
     if run_status != "completed":
         report.fail(f"the real lookup ended as '{run_status}', not completed")
         return
+    looked_up_state = _facts(results, "arcgis_geocode").get("state") or ""
+    if looked_up_state != state:
+        report.fail(
+            f"the lookup placed the sample address in state '{looked_up_state or 'unknown'}', "
+            f"not {state}: put the state in the sample address"
+        )
     looked_up_county = _facts(results, "arcgis_geocode").get("county") or ""
     if looked_up_county.lower().removesuffix(" county") != key:
         report.fail(
@@ -374,7 +383,10 @@ def check_county(report: Report, state: str, key: str, county: dict[str, Any]) -
             f"not {county['name']} County: use an address inside the county"
         )
     print("  result cards: " + ", ".join(f"{card}={status}" for card, status in card_statuses))
-    judge_level(report, key, county, results)
+    # The county's key in the lookup tables: "comal" in Texas, "co:denver" elsewhere.
+    from app.regions import loader
+
+    judge_level(report, loader.county_key(state, key), county, results)
 
 
 def run_settings_tests(report: Report) -> None:
