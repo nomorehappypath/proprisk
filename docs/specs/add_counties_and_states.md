@@ -4,8 +4,10 @@ Status: Codex PASS on the whole spec, 2026-11-17: sections 1–2.4 in round 3, a
 section 2.5 (standard jobs and formats) in round 2. Phase A done 2026-11-17
 (Codex PASS in round 2; built by hand because NMHP was busy, on the owner's word).
 Phase C built 2026-11-17 by hand on the owner's word, with Denver, Colorado as its
-test (Codex review in progress). Phases B onward are meant to be built by NMHP. Phase B was built by hand, on the
-owner's word, as was Phase C.
+test (Codex PASS in round 2). Phase C2 (section 2.6) specified and built
+2026-11-18 on the owner's order, with every Texas card connected for Colorado and
+Denver (spec: Codex PASS in round 2). Phases B onward are meant to be built by
+NMHP; B, C and C2 were built by hand, on the owner's word.
 Owner: Gerard. Builder: NMHP (NoMoreHappyPath).
 
 ## In one paragraph
@@ -813,13 +815,13 @@ on the owner's order: a county file stays data; a source is a small module.
 | Tax / debt (`tax_intel`) | CO | DOLA property tax map 2025 (taxing units, mills, bond mills) | bond levy shown, not outstanding debt |
 | State environmental records (`state_environmental_records`) | CO | Colorado OPS storage tanks and releases; CDPHE Superfund, RCRA corrective action, institutional controls, solid waste, brownfields | no enforcement or dry-cleaner source |
 | Site constraints: water/sewer, future ROW, aquifer | CO | from the utility and road-project slots; aquifer `not_applicable` | no planned-ROW layer |
-| Historical aerials | Denver | DRCOG aerials 2018, 2020, 2022, 2024, 2026 | configured coverage starts in 2018; 2026 interim |
+| Historical aerials | Denver | DRCOG aerials: 2022 only (CC BY 3.0); 2018, 2020, 2024 and 2026 publish no licence, so they are not used | one year until DRCOG publishes the others' licence |
 | Statewide parcels (`wcad_parcel`, Williamson only) | — | not a Denver card; Denver parcels already come from `denver.yaml` | — |
 
 #### Proof
 
-- Every Texas lookup and test unchanged, apart from neutral titles with the
-  agency now read from `provider_name`.
+- Every Texas lookup and test unchanged (Texas results carry no
+  `provider_short`, so Texas titles and text stay exactly as they are, item 7).
 - `check_region.sh co` and `check_region.sh co denver` end with PASS, every slot
   *connected* or honestly *not connected / not applicable*.
 - A real Denver lookup in the owner's PropRisk shows each card above filled from
@@ -913,8 +915,9 @@ county GIS. The owner can name any county.
 - **Phase C2: state and county sources (2.6, owner's order 2026-11-18).** This
   replaces the earlier C2 plan (2.5's formats and layer reader).
   1. `regions/sources.py` `pick`, wired into `_load_adapter_fetch`; `card_fields.py`.
-  2. `provider_name`/`data_as_of` on the Texas adapters; neutral titles; the
-     map and site-constraint checks ask whether the slot answered.
+  2. Neutral titles and agency text for own-source results (Texas text
+     unchanged, 2.6 item 7); the map and site-constraint checks ask whether
+     the slot answered.
   3. The state-records slot, the aerials list and the Denver zoning standards file.
   4. Colorado and Denver modules for every row of 2.6's table, each with a
      recorded fixture.
