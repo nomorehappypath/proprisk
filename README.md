@@ -45,9 +45,75 @@ Today PropRisk understands Texas best, with full coverage in Travis,
 Williamson, Hays and Bastrop counties and partial coverage in a few
 others — see Settings → "Where PropRisk works" for the current list.
 
-**Add your county.** Each county is one data file, and the recipe is written so an
-AI build tool can do it for you, with no programming: see
-[`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/EXTENDING.md`](docs/EXTENDING.md).
+**Add your county.** Each county is one data file, and NoMoreHappyPath can add it
+for you, with no programming: see
+[Add a county or a state with NoMoreHappyPath](#add-a-county-or-a-state-with-nomorehappypath).
+
+## Add a county or a state with NoMoreHappyPath
+
+[NoMoreHappyPath](https://nomorehappypath.com) (NMHP) finds a county's public maps
+and records, writes the county's data file, and proves it works. You approve what it
+found and test the result; you write no code. Comal County was added this way.
+
+### Add a county (Texas)
+
+1. **Get PropRisk on your Mac.** Clone it (see "Install and launch" below). If you
+   want to send the county back to everyone, fork it on GitHub first and clone your
+   fork ([`CONTRIBUTING.md`](CONTRIBUTING.md)).
+2. **Create an NMHP project on that folder.** In NMHP, choose **Adopt existing** and
+   pick the PropRisk folder.
+3. **Give NMHP the task.** Paste this, with your county's name:
+
+   ```text
+   Add Comal County, Texas to PropRisk. Follow docs/EXTENDING.md, Job A.
+   Fill in the requirements table first and show it to me for approval
+   before writing the county file. Done means: scripts/check_region.sh tx comal
+   ends with PASS, the requirements table is filled in, and no Python file was changed.
+   ```
+
+4. **Approve the requirements table.** NMHP searches the county's GIS site, its
+   appraisal district and its county clerk, and shows you one row per source: the
+   source's web address, or "not published" when the county does not publish it. It
+   also proposes a real address in the county, such as the courthouse. Check that
+   every row has an answer and that the address is real and in that county, then
+   approve.
+5. **NMHP builds and checks it.** It writes the county file and runs
+   `scripts/check_region.sh tx <county>`, which asks every source about that address
+   and runs a real lookup. NMHP's independent reviewer runs the check again.
+6. **Test it yourself.** NMHP gives you a test copy of PropRisk to launch. A test copy
+   starts with no keys, so to see the full report your own PropRisk gives, copy your
+   keys file into the test copy (NMHP gives you the exact command), then launch it
+   again. Look up an address you know in the county and check the city, parcel,
+   district and fire-station cards. Delete the test copy when you are done, so your
+   keys are not left in two places.
+7. **Accept.** NMHP adds the county to your PropRisk. Run `scripts/stop.sh` then
+   `scripts/launch.sh`; the county appears in Settings → "Where PropRisk works".
+8. **Share it (optional).** Push it to your fork and open a pull request, as
+   [`CONTRIBUTING.md`](CONTRIBUTING.md) explains.
+
+A new county usually starts as **Partial**. The check says when it has everything a
+**Full** county needs.
+
+### Upgrade a Partial county to Full
+
+Same steps, with this task:
+
+```text
+Upgrade Comal County, Texas to Full in PropRisk. Follow docs/EXTENDING.md, Job B.
+Show me the requirements table for the missing sections before changing the file.
+When scripts/check_region.sh tx comal says the county can be set to Full,
+change its level to Full and run the check again. Done means: that second
+check ends with PASS, and no Python file was changed.
+```
+
+### Add a new state, or a new state with its counties
+
+**Not possible yet.** Today PropRisk treats every address as a Texas address, so a
+new state would be ignored. A later release will teach PropRisk to recognise which
+state an address is in (`docs/specs/add_counties_and_states.md`, Phase C, which comes
+after Phase C2). After that release, adding a state works the same way: one NMHP task adds the state's file, then
+one task per county, each following the county steps above. Until then, do not ask
+NMHP to add a state: it would build something PropRisk cannot use.
 
 ## What it covers
 

@@ -1,5 +1,14 @@
 # Release notes
 
+## Unreleased: Comal County, and how to add counties with NoMoreHappyPath
+
+- **Comal County, Texas (Partial).** Its parcels, school and emergency-service
+  districts, fire stations and subdivisions now come from Comal's own public maps.
+  NoMoreHappyPath added it by following `docs/EXTENDING.md`, with no code change.
+- **The README now explains, step by step, how to add a county** (or upgrade one to
+  Full) with NoMoreHappyPath, and says plainly that adding a new state needs a later
+  release.
+
 ## Unreleased: add your county (Phase B)
 
 - **New licence: Apache License 2.0** (was AGPL-3.0). You may use, change and share
