@@ -720,15 +720,23 @@ on the owner's order: a county file stays data; a source is a small module.
      road slots; it reads them in any state and names the agency from
      `provider_name`. When a road slot is missing it calls `pick`, never a Texas
      module directly.
-7. **Screen text names no agency by itself.** Titles become neutral ("Road
-   Projects", "Transportation Summary", "Transit", "Utilities", "Schools",
-   "Tax / Debt", "Zoning"); the agency comes from `provider_name`. Texas
-   adapters add `provider_name` so a Texas lookup still says "TxDOT", "TEA",
-   "TWDB/PUC", now from the data. Texas facts are otherwise unchanged.
-8. **Reuse.** A saved result is reused only when it came from the same module and
-   `VERSION` (stored as `source_module`/`source_version` in the facts); Phase C
-   already blocks cross-state reuse. Changing a module's `VERSION` stops old
-   results being reused.
+7. **Screen text names no agency by itself.** When a result carries
+   `provider_short`/`provider_name`, the card title is neutral plus that name
+   ("Schools (CDE)", "Road Projects (CDOT)") and every hard-coded agency phrase
+   on that card and its map layers ("TxDOT traffic count data", the TxGIO credit)
+   reads from the data. A Texas result carries neither, so a Texas card keeps
+   today's exact text; Texas adapters are not edited for this.
+8. **Reuse follows the source that would answer now.** The run-reuse filter
+   (`service.py`, today "Texas-registered slot, other state: skip") asks the same
+   question as dispatch: which source answers this slot for this state and
+   county now? A saved result is reused only when it came from that same module
+   and `VERSION` (`source_module`/`source_version` in the facts; a built-in
+   adapter's result has no module). Embedded parts stamp themselves too:
+   `environmental_screening` stores the state-records module and version, and a
+   change invalidates it and its dependents. A module that reads a data file
+   (Denver's zoning standards) folds the file's hash into its version. The
+   historical-aerials cache key includes each year's image-service URL, not
+   only the year.
 9. **The check.** `check_region.sh <st>` and `check_region.sh <st> <county>` run
    every source module of that state or county at the sample address and print
    one line per slot: *connected* (required fields present, `provider_name` and
@@ -739,6 +747,51 @@ on the owner's order: a county file stays data; a source is a small module.
     paging and distance), `docs/EXTENDING.md` Job D "connect a state's or a
     county's own source for a card", and the README task text for NMHP.
 
+#### Corrections from Codex (spec round 1, 2026-11-18), all part of C2
+
+1. **Every path asks `pick`.** Besides `_load_adapter_fetch` (all six call
+   sites), `txdot_extended`'s direct fallback calls go through the same
+   function, and the historical-aerials builder reads the county or state
+   `historical_aerials:` list. `zoning_standards` is Texas-registered, so Denver
+   gets a module (`co/sources/denver/zoning_standards.py`) that calls the same
+   curated-standards engine with `denver.yaml`. `card_fields.py` also lists the
+   facts later adapters read (`_build_adapter_config`): Denver's zoning module
+   puts the district code ("D-C", "U-SU-C") in `zoning_type` and `base_zone`.
+   Execution and retry tests prove each path.
+2. **Reuse** as item 8 above.
+3. **Two cards gain fields, kept distinct from Texas's.**
+   - Tax: `levies: [{name, total_mills, bond_mills, tax_year}]` and
+     `total_mills`. The card shows a "Property tax levies" table; bond mills are
+     labelled a bond levy, never outstanding debt; no district website is
+     labelled a debt report.
+   - Road projects: `cost_range` text ("$1,000,000 to $5,000,000") is shown as
+     published. No exact dollar figure is invented; the transportation summary
+     ranks projects without a number by name, not as zero.
+4. **Utilities mean what they say.** The map and the card separate "service
+   area contains the site" from "nearest nearby area", whatever the authority
+   type, so a Metro Water Recovery area that contains the site says it serves
+   the site. A part that did not answer stays unknown or not connected, never
+   "no service area".
+5. **Bridges.** The national inventory's posting evaluation is not a posting.
+   A posted bridge comes only from CDOT's `Bridge_Weight_Limit` layer (a
+   posted-limit record); otherwise posting shows as unknown, and neither the
+   card nor the summary says "no posted-weight bridge".
+6. **Districts and sewer mains carry through.** The constraint ledger counts
+   metro districts with the rest. Denver's sanitary-main layer
+   (`ODC_UTIL_SANMAIN_L`) feeds the sewer-main row and map layer for Denver.
+7. **Known limits are on the cards and in the tests.**
+   - Rezonings marked "Pending" carry their application date and the note that
+     the city's status may be out of date.
+   - The Colorado environmental card says dry-cleaner records are not connected.
+   - The 2026 aerial is labelled "interim"; the aerials line says "photo
+     coverage configured here starts in 2018" (Denver's 2016 tiles exist but
+     are not used).
+   - If the entitlement reader runs for Denver, it gets Denver's portal and its
+     prompt names the lookup's own county and state, not "County, Texas".
+   - Acceptance runs real Denver records with known answers (Larimer Square is
+     historic; Denver Water serves 201 W Colfax; a known open tank release), not
+     only field presence.
+
 #### Colorado and Denver, card by card (all checked live on 2026-11-18)
 
 | Card (slot) | Level | Colorado / Denver source | Gaps said on the card |
@@ -747,20 +800,20 @@ on the owner's order: a county file stays data; a source is a small module.
 | Traffic history (`txdot_aadt_history`) | CO | CDOT `AADT_All_Years_Data` (1997–2025, state highways) | local streets: no history |
 | Roads (`txdot_roadway`) | CO | HPMS Colorado 2025 (class, lanes, speed, ownership), CDOT `Highways_Detailed` names | right-of-way width not published |
 | Road projects (`txdot_projects`) | CO | CDOT `GoSheet_Projects` + `TenYearPlan_Approved_Lines` | cost is a range; no award data |
-| Bridges (`txdot_bridges`) | CO | National Bridge Inventory (`geo.dot.gov`), CDOT `BridgeConditionforDashboard` ratings | posted weight as a code |
+| Bridges (`txdot_bridges`) | CO | National Bridge Inventory (`geo.dot.gov`), CDOT `BridgeConditionforDashboard` ratings | posted only from CDOT's weight-limit layer; else unknown |
 | Transportation summary (`txdot_extended`) | any | built from the four road slots | crash data not connected (as in Texas) |
 | Transit (`transit_intel`) | Denver | RTD bus stops and light-rail stations (CDOT-hosted copies) | layer dates shown (2021–2022) |
 | Zoning (`austin_zoning`) | Denver | Denver `ODC_ZONE_ZONING_A` (zone district, overlays) | none |
 | Zoning standards (`zoning_standards`) | Denver | curated `denver.yaml` from the Denver Zoning Code | only districts curated; others say so |
 | Future land use (`future_land_use`) | Denver | Blueprint Denver future places (`ODC_PLAN_BPFUTUREPLACES_A`) | none |
-| Development activity (`entitlement_pipeline`) | Denver | Denver rezonings, site development plans, building permits | rezonings have no street address |
+| Development activity (`entitlement_pipeline`) | Denver | Denver rezonings, site development plans, building permits | rezonings have no street address; stale "Pending" flagged |
 | Historic (`historic_intel`) | Denver | Denver landmark districts and structures | no design-standard links |
 | Utilities (`twdb_ccn`) | CO | water: EPA water system boundaries (+ Denver Water); sewer: Metro Water Recovery service area; districts: DOLA water/sanitation and metro districts | no certificate (CCN) regime in Colorado |
 | Schools (`schools_intel`) | CO | Census school district at the point; CDE school locations; NCES/Urban Institute enrollment | ratings: link to CDE, no score |
-| Tax / debt (`tax_intel`) | CO | DOLA property tax map 2025 (taxing units, mills, bond mills) | no debt-report PDFs; bond mills shown |
-| State environmental records (`state_environmental_records`) | CO | Colorado OPS storage tanks and releases; CDPHE Superfund, RCRA corrective action, institutional controls, solid waste, brownfields | no enforcement source |
+| Tax / debt (`tax_intel`) | CO | DOLA property tax map 2025 (taxing units, mills, bond mills) | bond levy shown, not outstanding debt |
+| State environmental records (`state_environmental_records`) | CO | Colorado OPS storage tanks and releases; CDPHE Superfund, RCRA corrective action, institutional controls, solid waste, brownfields | no enforcement or dry-cleaner source |
 | Site constraints: water/sewer, future ROW, aquifer | CO | from the utility and road-project slots; aquifer `not_applicable` | no planned-ROW layer |
-| Historical aerials | Denver | DRCOG aerials 2018, 2020, 2022, 2024, 2026 | nothing keyless before 2018 |
+| Historical aerials | Denver | DRCOG aerials 2018, 2020, 2022, 2024, 2026 | configured coverage starts in 2018; 2026 interim |
 | Statewide parcels (`wcad_parcel`, Williamson only) | — | not a Denver card; Denver parcels already come from `denver.yaml` | — |
 
 #### Proof
