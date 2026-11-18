@@ -353,6 +353,7 @@ def _empty_reuse_seed() -> dict[str, Any]:
         "cached_lng": None,
         "cached_geocode_source": None,
         "cached_state": None,
+        "cached_county": None,
     }
 
 
@@ -416,8 +417,13 @@ def build_refresh_reuse_seed(
         anchor_run = prior
         break
 
+    anchor_state = ((anchor_run.state if anchor_run else None) or "TX").upper()
+
     def same_anchor(prior: SiteCheckRun) -> bool:
         if anchor_lat is None or anchor_lng is None:
+            return False
+        # Results settled for another state are never reused.
+        if (prior.state or "TX").upper() != anchor_state:
             return False
         try:
             return (
@@ -436,6 +442,12 @@ def build_refresh_reuse_seed(
         for source_id, result in (prior.adapter_results or {}).items():
             if source_id in candidates:
                 continue
+            covered = (
+                registry.get(source_id).states
+                if source_id in registry.REGISTRY else ()
+            )
+            if covered and anchor_state not in covered:
+                continue  # e.g. a Texas-only result for a Colorado lookup
             if _reusable_source_result(result, now=now):
                 candidates[source_id] = (deepcopy(result), prior)
 
@@ -471,8 +483,9 @@ def build_refresh_reuse_seed(
         "cached_geocode_source": (
             anchor_run.geocode_source if anchor_run and geocode_reused else None
         ),
-        # Reused coordinates keep the state they were settled with.
+        # Reused coordinates keep the state and county they were settled with.
         "cached_state": anchor_run.state if anchor_run and geocode_reused else None,
+        "cached_county": anchor_run.county if anchor_run and geocode_reused else None,
     }
 
 
@@ -1307,6 +1320,7 @@ def create_run(
                 cached_lng=seed["cached_lng"],
                 cached_geocode_source=seed["cached_geocode_source"],
                 cached_state=seed["cached_state"],
+                county=seed["cached_county"] or "",
                 adapter_results=seed["adapter_results"],
                 sources_queried=seed["sources_queried"],
                 derived=seed["derived"],

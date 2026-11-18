@@ -79,12 +79,14 @@ health_ok() {
 # 3. Already running? The newest database upgrade is this version's schema;
 # the running app recorded the one it started with.
 SCHEMA_HEAD="$(basename "$(ls "$BACKEND_DIR"/alembic/versions/0*.py | sort | tail -1)" .py)"
+if { is_live "$RUN_DIR/server.pid" || is_live "$RUN_DIR/worker.pid"; } \
+    && [[ "$(cat "$RUN_DIR/schema_head" 2>/dev/null)" != "$SCHEMA_HEAD" ]]; then
+  # An older PropRisk (server or worker) is still running: its database must
+  # not be upgraded live.
+  log "Stop PropRisk first (scripts/stop.sh), then launch again."
+  exit 1
+fi
 if is_live "$RUN_DIR/server.pid" && is_live "$RUN_DIR/worker.pid" && health_ok; then
-  if [[ "$(cat "$RUN_DIR/schema_head" 2>/dev/null)" != "$SCHEMA_HEAD" ]]; then
-    # An older PropRisk is running: its database must not be upgraded live.
-    log "Stop PropRisk first (scripts/stop.sh), then launch again."
-    exit 1
-  fi
   log "PropRisk is already running at $APP_URL"
   open "$APP_URL"
   exit 0

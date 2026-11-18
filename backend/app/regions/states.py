@@ -66,12 +66,10 @@ US_STATES: dict[str, tuple[str, str, tuple[float, float, float, float]]] = {
 }
 
 _BY_NAME = {name.lower(): code for code, (name, _fips, _box) in US_STATES.items()}
-_NAME_RE = re.compile(
-    r",\s*(" + "|".join(sorted((re.escape(n) for n in _BY_NAME), key=len, reverse=True)) + r")\b",
+_TRAILING_JUNK = re.compile(
+    r"[\s,]*(?:(?:usa|u\.s\.a\.|us|united states(?: of america)?)\s*)?$|[\s,]+\d{5}(?:-\d{4})?\s*$",
     re.IGNORECASE,
 )
-# "Denver, CO 80202" or "Denver, CO" at the end, or "CO 80202" anywhere.
-_CODE_RE = re.compile(r"(?:,\s*([A-Za-z]{2})\s*(?:\d{5}(?:-\d{4})?)?\s*$)|(?:\b([A-Z]{2})\s+\d{5}\b)")
 
 
 def code_for(value: object) -> str | None:
@@ -87,14 +85,31 @@ def code_for(value: object) -> str | None:
 
 
 def state_from_text(address: str) -> str | None:
-    """The state the address text names (postal code or full name), else None."""
-    text = address or ""
-    for match in _CODE_RE.finditer(text):
-        code = code_for(match.group(1) or match.group(2))
-        if code:
-            return code
-    match = _NAME_RE.search(text)
-    return _BY_NAME[match.group(1).lower()] if match else None
+    """The state the address names at its end, else None.
+
+    Reads the end of the address only, after dropping a ZIP code and a
+    country ("USA"): "Denver, CO 80202", "Franklin TN", "Franklin Tennessee",
+    "Franklin, TN, USA". A state name inside the street ("500 Washington St,
+    Austin") does not count, and a bare two-letter word only counts in
+    capitals or after a comma.
+    """
+    text = (address or "").strip()
+    previous = None
+    while text != previous:  # drop "USA", then the ZIP, in either order
+        previous = text
+        text = _TRAILING_JUNK.sub("", text).strip()
+    if "," not in text and " " not in text:
+        return None  # a single word is not "street, place, state"
+    lowered = text.lower()
+    for name, code in sorted(_BY_NAME.items(), key=lambda kv: -len(kv[0])):
+        if lowered.endswith(name):
+            before = lowered[: -len(name)]
+            if before.endswith((" ", ",")) and before.strip(" ,"):
+                return code
+    tail = re.search(r"(,\s*|\s)([A-Za-z]{2})$", text)
+    if tail and (tail.group(1).strip() == "," or tail.group(2).isupper()):
+        return code_for(tail.group(2))
+    return None
 
 
 def name_of(code: str) -> str:

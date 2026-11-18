@@ -100,6 +100,19 @@ def fetch(
         # The TCEQ statewide MUD/WCID layers cover Texas only.
         *(_TEXAS_STATEWIDE_LAYERS if identity.state == "TX" else []),
     ]
+    if not layers:
+        # Nothing was looked up, so nothing may be reported as "no match".
+        return AdapterResult(
+            source_id=SOURCE_ID,
+            source_access_status=SourceAccessStatus.JURISDICTION_NOT_COVERED,
+            data_confidence_status=DataConfidenceStatus.UNKNOWN,
+            coverage_status=CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
+            normalized_facts={
+                "county": county, "state": identity.state,
+                "advisory": "No district maps are connected for this county yet.",
+            },
+            fetched_at=datetime.now(UTC),
+        )
 
     sess = http_session(session)
 

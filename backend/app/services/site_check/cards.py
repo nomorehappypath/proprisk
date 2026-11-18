@@ -4436,6 +4436,11 @@ def _build_card(
             or "open the official page and search this address."
         )
         takeaway = f"{_MANUAL_PREFIX}{pointer}"
+    elif status == "issue" and _text(facts_dict.get("state_records")) == "not_connected":
+        # Federal-only environmental screen (outside Texas): keep its own
+        # line, which says both that EPA did not answer and that the state's
+        # records are not connected.
+        pass
     elif status == "issue":
         failing = next(
             (sid for sid, result in present if _errors_of(result)), primary_id
@@ -4459,7 +4464,8 @@ def _build_card(
     # The collapsed accordion row: glyph, name, compact summary, badge. When
     # the card is not a normal answer the summary says THAT — a scope line or
     # "Needs a human look" is the honest one-liner, not a stale hero fact.
-    if status in ("not_covered", "issue"):
+    federal_only = _text(facts_dict.get("state_records")) == "not_connected"
+    if status in ("not_covered", "issue") and not federal_only:
         summary = _compact(takeaway)
     else:
         summary = (_summary_for(slot, primary_id, facts_dict, extras, run,

@@ -6,12 +6,14 @@ database, a state folder with no counties passing the check, and the Denver
 screens saying "not connected" instead of showing Texas findings.
 """
 
+import contextlib
 import os
 import re
 import subprocess
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import requests
@@ -139,10 +141,8 @@ def test_tennessee_lookup_calls_no_texas_service(monkeypatch):
     for source_id in registry.all_source_ids():
         if source_id == "arcgis_geocode" or not registry.get(source_id).active_in_v0:
             continue
-        try:
+        with contextlib.suppress(Exception):  # failing offline is fine here
             orchestrator._load_adapter_fetch(source_id)(identity, session=None)
-        except Exception:  # an adapter failing offline is fine here
-            pass
 
     texas_paths = _texas_service_paths()
     texas_calls = [
@@ -302,3 +302,118 @@ def test_denver_historical_photos_card_says_not_connected():
     )
     assert card["status"] == "not_covered"
     assert "Not connected for Colorado yet" in card["takeaway"]
+
+
+# ── Codex review round 1 fixes ─────────────────────────────────────────────
+
+
+@pytest.mark.parametrize(("address", "expected"), [
+    ("1 Main St Franklin TN", "TN"),
+    ("1 Main St, Franklin Tennessee", "TN"),
+    ("1 Main St, Franklin, TN, USA", "TN"),
+    ("1 Main St, Franklin, TN 37064, USA", "TN"),
+    ("12 Main St, Santa Fe, New Mexico", "NM"),
+    ("1 Virginia Ave", None),
+])
+def test_state_read_from_ordinary_address_formats(address, expected):
+    assert states.state_from_text(address) == expected
+
+
+def _reuse_result(source_id, facts):
+    from datetime import UTC, datetime, timedelta
+
+    return {
+        "source_id": source_id, "source_access_status": "PROGRAMMATIC_PUBLIC",
+        "data_confidence_status": "verified_public_fact", "coverage_status": "covered",
+        "normalized_facts": facts, "errors": [],
+        "fetched_at": (datetime.now(UTC) - timedelta(days=1)).isoformat(),
+        "result_schema_version": registry.result_schema_version(source_id),
+    }
+
+
+def _denver_run(db, tenant, user, *, state, results, minutes_ago):
+    from datetime import UTC, datetime, timedelta
+
+    from app.models import SiteCheckRun
+    from app.services.site_check import service
+
+    run = SiteCheckRun(
+        tenant_id=tenant.id, requested_by=user.id, address="1437 Bannock St, Denver",
+        normalized_address=service.normalize_address("1437 Bannock St, Denver"),
+        county="denver", state=state, lat=39.739, lng=-104.990, status="completed",
+        mode="check", adapter_results=results, sources_queried=[], sources_failed=[],
+        derived={}, created_at=datetime.now(UTC) - timedelta(minutes=minutes_ago),
+        finished_at=datetime.now(UTC),
+    )
+    db.add(run)
+    db.commit()
+    return run
+
+
+def test_reuse_never_mixes_states_and_keeps_the_county(db, make_tenant, make_user):
+    from app.services.site_check import service
+
+    tenant = make_tenant("States Office")
+    user = make_user(tenant, "states@example.com")
+    geocode = _reuse_result("arcgis_geocode", {
+        "lat": 39.739, "lng": -104.990, "county": "denver", "state": "CO",
+    })
+    # An older run at the same point that was settled as Texas.
+    _denver_run(db, tenant, user, state="TX", minutes_ago=30, results={
+        "environmental_screening": _reuse_result(
+            "environmental_screening", {"advisory": "No TCEQ PST records found"}),
+        "txdot_aadt": _reuse_result("txdot_aadt", {"aadt": 1000}),
+    })
+    _denver_run(db, tenant, user, state="CO", minutes_ago=5, results={
+        "arcgis_geocode": geocode,
+        "fema_nfhl": _reuse_result("fema_nfhl", {"zone": "X"}),
+    })
+    seed = service.build_refresh_reuse_seed(
+        db, tenant_id=tenant.id, address="1437 Bannock St, Denver",
+        county="", parcel_id=None,
+    )
+    assert seed["cached_state"] == "CO"
+    assert seed["cached_county"] == "denver"
+    assert "environmental_screening" not in seed["adapter_results"]
+    assert "txdot_aadt" not in seed["adapter_results"]
+
+
+def test_district_card_is_not_connected_when_no_layer_exists():
+    from app.services.site_check.adapters import district_overlays
+
+    identity = PropertyIdentity(
+        address="x", lat=35.9, lng=-86.9, county="williamson", state="TN",
+    )
+    result = district_overlays.fetch(identity)
+    assert result.coverage_status.value == "not_supported_in_jurisdiction"
+    assert "No district maps are connected" in result.normalized_facts["advisory"]
+
+
+def test_denver_environmental_card_on_epa_failure_keeps_the_state_line():
+    from app.services.site_check.adapters import environmental_screening as env
+
+    class Offline:
+        def get(self, *a, **k):
+            raise requests.ConnectionError("offline")
+
+        def __getattr__(self, name):
+            return getattr(requests.Session(), name)
+
+    identity = PropertyIdentity(
+        address="1437 Bannock St, Denver, CO", lat=39.739, lng=-104.99,
+        county="denver", state="CO",
+    )
+    result = env._fetch_outside_texas(identity, Offline(), 500)
+    payload = orchestrator._adapter_result_payload(result, refresh_status="fetched_failed")
+
+    run = SimpleNamespace(
+        id="r", status="completed", state="CO", sources_failed=[], derived={},
+        adapter_results={"environmental_screening": payload},
+        finished_at=None, lat=None, lng=None,
+    )
+    card = next(
+        c for g in cards.build_cards(run, None).get("groups", [])
+        for c in g["cards"] if c["card_key"] == "environmental_screening"
+    )
+    assert "Not connected for Colorado yet" in card["takeaway"]
+    assert card["summary"].startswith("State records not connected")
