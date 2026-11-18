@@ -1693,8 +1693,13 @@ def _adjust_for_other_state(
     not_connected = f"Not connected for {name} yet"
 
     def answered(slot: str) -> dict[str, Any] | None:
+        raw = results.get(slot) if isinstance(results, dict) else None
         facts = _facts(results, slot)
-        return facts if facts.get("source_module") else None
+        if not facts.get("source_module"):
+            return None
+        if (raw or {}).get("coverage_status") not in ("covered", "partial"):
+            return {"_failed": True, **facts}
+        return facts
 
     ccn = answered("twdb_ccn")
     roads = answered("txdot_roadway")
@@ -1710,6 +1715,13 @@ def _adjust_for_other_state(
         elif key == "water_wastewater_authority":
             if ccn is None:
                 entry.update(status="not_connected", result=not_connected, source="")
+                continue
+            if ccn.get("_failed"):
+                entry.update(
+                    status="unavailable_this_time",
+                    result=f"{ccn.get('provider_name') or 'The utility source'} did not answer this time",
+                    source=str(ccn.get("provider_name") or ""),
+                )
                 continue
             entry["source"] = str(ccn.get("provider_name") or "")
             if not ccn.get("service_territories"):
@@ -1727,7 +1739,7 @@ def _adjust_for_other_state(
                 source=f"{agency} sanitary mains; OpenStreetMap",
             )
         elif key == "access_inventory":
-            if roads is None:
+            if roads is None or roads.get("_failed"):
                 entry.update(
                     result=(
                         f"{len(driveways)} mapped driveway(s), {len(signals)} "
@@ -1742,7 +1754,13 @@ def _adjust_for_other_state(
                     source=f"{roads.get('provider_name') or short} and OpenStreetMap",
                 )
         elif key == "future_row":
-            if projects is None:
+            if projects is not None and projects.get("_failed"):
+                entry.update(
+                    status="unavailable_this_time",
+                    result=f"{projects.get('provider_name') or 'The project source'} did not answer this time",
+                    source=str(projects.get("provider_name") or ""),
+                )
+            elif projects is None:
                 entry.update(status="not_connected", result=not_connected, source="")
             else:
                 entry.update(

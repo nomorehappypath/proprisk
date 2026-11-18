@@ -828,10 +828,15 @@ def _scope_key(run: Any, cfg: _Config) -> str:
     state = (getattr(run, 'state', None) or 'TX').upper()
     # Outside Texas each year's image service is part of the key, so a
     # region file that changes a year's service gets a new timeline.
-    eras = (
-        ",".join(sorted(cfg.eras)) if state == "TX"
-        else ",".join(f"{k}={v}" for k, v in sorted(cfg.eras.items()))
-    )
+    if state == "TX":
+        eras = ",".join(sorted(cfg.eras))
+    else:
+        import hashlib
+
+        # A short fingerprint of every year and its service: the key column
+        # is 255 characters, and full service URLs would not fit.
+        listing = "|".join(f"{k}={v}" for k, v in sorted(cfg.eras.items()))
+        eras = "sha256:" + hashlib.sha256(listing.encode()).hexdigest()[:16]
     return (
         f"state={state}"
         f"|{round(float(run.lat), 5)},{round(float(run.lng), 5)}"

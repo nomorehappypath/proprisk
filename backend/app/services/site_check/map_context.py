@@ -767,7 +767,9 @@ def _physical_utility_features(run: SiteCheckRun) -> list[SiteCheckMapFeature]:
         ("force_mains", "utility_main_wastewater", "Force main"),
         ("gas_pipelines", "utility_gas_pipeline", "Gas pipeline"),
     ]
-    for source_id in ("utility_infrastructure", "water_wastewater_infrastructure"):
+    # twdb_ccn: a state's own utility source may publish sewer mains
+    # (Denver's sanitary mains, spec 2.6).
+    for source_id in ("utility_infrastructure", "water_wastewater_infrastructure", "twdb_ccn"):
         facts = _facts(run, source_id)
         for key, kind, default_title in candidates:
             for index, row in enumerate((facts.get(key) or [])[:30]):
@@ -781,7 +783,7 @@ def _physical_utility_features(run: SiteCheckRun) -> list[SiteCheckMapFeature]:
                     kind=kind,
                     title=str(row.get("label") or row.get("name") or default_title)[:240],
                     subtitle=str(row.get("provider") or row.get("owner") or "") or None,
-                    source=str(row.get("source") or source_id),
+                    source=str(row.get("source") or row.get("provider") or source_id),
                     confidence=str(row.get("confidence") or "screened_indicator"),
                     geometry=geometry,
                     details=[

@@ -138,7 +138,8 @@ def fetch(
                 not_connected_result,
             )
             return not_connected_result(SOURCE_ID, state)
-        normalized = _for_other_state(normalized, connected, state, bridges)
+        normalized = _for_other_state(
+            normalized, connected, state, bridges, input_status)
 
     has_any_signal = any((
         traffic_counts,
@@ -166,6 +167,7 @@ def _for_other_state(
     connected: list[dict[str, Any]],
     state: str,
     bridges: list[dict[str, Any]],
+    input_status: dict[str, str],
 ) -> dict[str, Any]:
     """The same summary for a state whose own road sources answered:
     its agency named instead of TxDOT, no Texas-only crash system, and
@@ -205,8 +207,50 @@ def _for_other_state(
         "Use this as the automated transportation screen. Crash records are "
         f"not connected for {name} yet, so treat safety as unknown."
     )
+    # An input this state has no source for, or that did not answer, is
+    # unknown: never "0 projects" or "no bridge records".
+    missing = {
+        sid for sid, status in input_status.items()
+        if status not in ("reused", "queried")
+    }
+    gap = f"not connected for {name} yet (or did not answer this time)"
+    if "txdot_projects" in missing:
+        out["project_pipeline"] = {
+            "count_within_radius": None, "items": [], "largest_project": None,
+            "near_term_projects": [], "read": f"Road projects: {gap}.",
+        }
+    if "txdot_bridges" in missing:
+        out["bridge_constraints"] = {
+            "count_within_radius": None, "nearest_distance_mi": None,
+            "posted_bridge_count": None, "low_condition_bridge_count": None,
+            "items": [], "constraint_level": "not_connected",
+            "read": f"Bridges: {gap}.",
+        }
+    if "txdot_aadt" in missing:
+        out["traffic_exposure"] = {
+            **(out.get("traffic_exposure") or {}),
+            "read": f"Traffic counts: {gap}.", "top_aadt": None,
+        }
+    if "txdot_roadway" in missing:
+        out["roadway_context"] = {
+            **(out.get("roadway_context") or {}),
+            "read": f"Road inventory: {gap}.",
+        }
+    out["missing_inputs"] = sorted(missing)
+    if missing:
+        names = {
+            "txdot_aadt": "traffic counts", "txdot_roadway": "road inventory",
+            "txdot_projects": "road projects", "txdot_bridges": "bridges",
+        }
+        out["broker_read"] = (
+            str(out.get("broker_read") or "").rstrip(".")
+            + "; not checked: " + ", ".join(names[m] for m in sorted(missing) if m in names)
+            + "."
+        )
     pipeline = out.get("project_pipeline") or {}
     largest = pipeline.get("largest_project") or {}
+    if "txdot_projects" in missing:
+        pipeline = {}
     if pipeline.get("count_within_radius") and not largest.get("estimated_cost_usd"):
         cost = largest.get("cost_range")
         pipeline["read"] = (
@@ -215,7 +259,8 @@ def _for_other_state(
             + (f"; published cost range of the first: {cost}." if cost else ".")
         )
     constraints = out.get("bridge_constraints") or {}
-    if bridges and any(b.get("posting_status") == "unknown" for b in bridges):
+    if "txdot_bridges" not in missing and bridges and any(
+            b.get("posting_status") == "unknown" for b in bridges):
         posted = constraints.get("posted_bridge_count") or 0
         low = constraints.get("low_condition_bridge_count") or 0
         if not posted:

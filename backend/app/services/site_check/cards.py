@@ -960,7 +960,8 @@ def _format_site_constraints(facts: dict[str, Any]) -> _Content:
     coverage = [
         row for row in _dicts(facts.get("coverage"))
         if _text(row.get("status")) in _CONSTRAINT_VISIBLE_STATUSES
-        or _text(row.get("status")) in ("not_connected", "not_applicable")
+        or _text(row.get("status")) in (
+            "not_connected", "not_applicable", "unavailable_this_time")
     ]
     findings = _dicts(facts.get("material_findings"))
     degraded = _dicts(facts.get("degraded_sources"))
@@ -990,7 +991,8 @@ def _format_site_constraints(facts: dict[str, Any]) -> _Content:
         water = next(
             (_title_case(row.get("result")) for row in coverage
              if _text(row.get("key")) == "water_wastewater_authority"
-             and _text(row.get("status")) not in ("not_connected", "not_applicable")),
+             and _text(row.get("status")) not in (
+                 "not_connected", "not_applicable", "unavailable_this_time")),
             None)
         if water:
             parts.append(f"water and sewer authority is {water}")
@@ -2868,8 +2870,38 @@ def _format_transit(facts: dict[str, Any]) -> _Content:
             if bus_buffer and rail_buffer else
             "No public transit stops were found near this site."
         )
+    parts = _as_dict(facts.get("parts"))
+
+    def unchecked(part: str) -> bool:
+        # A part a state's source could not answer (spec 2.6) is unknown.
+        return _text(_as_dict(parts.get(part)).get("coverage")) in (
+            "not_connected", "not_applicable")
+
+    if unchecked("bus_stops") or unchecked("rail_stations"):
+        takeaway = _join([
+            "Bus stops were not checked this time" if unchecked("bus_stops")
+            else _plural(bus_count, "bus stop") + " nearby",
+            "rail stations were not checked this time" if unchecked("rail_stations")
+            else _plural(rail_count, "rail station") + " nearby",
+        ], "; ") + "."
     content = _Content(takeaway)
     rows = content.facts
+    if unchecked("bus_stops"):
+        _row(rows, "Bus stops nearby", "Not checked this time")
+    if unchecked("rail_stations"):
+        _row(rows, "Rail stations nearby", "Not checked this time")
+    if unchecked("bus_stops") or unchecked("rail_stations"):
+        for key, label, near in (
+            ("bus_stops", "Bus stops nearby", nearest_bus),
+            ("rail_stations", "Rail stations nearby", nearest_rail),
+        ):
+            if not unchecked(key):
+                count = bus_count if key == "bus_stops" else rail_count
+                _row(rows, label, f"{count:,}")
+                _row(rows, f"Nearest {'bus stop' if key == 'bus_stops' else 'rail station'}",
+                     _join([_title_case(near.get("name")),
+                            _fmt_miles(near.get("distance_mi"))]))
+        return content
     _row(rows, "Bus stops nearby", f"{bus_count:,}" if bus_count else "None")
     _row(rows, "Nearest bus stop", _join([
         _title_case(nearest_bus.get("name")),
@@ -2949,10 +2981,20 @@ def _format_twdb(facts: dict[str, Any], district_facts: dict[str, Any],
         municipal_candidate = f"City of {city}"
 
     parts: list[str] = []
+    sewer_part = _as_dict(_as_dict(facts.get("parts")).get("sewer"))
+    sewer_unknown = not sewer and _text(sewer_part.get("coverage")) in (
+        "not_connected", "not_applicable")
     if water:
         parts.append(f"Water comes from {water}")
     if sewer:
         parts.append(f"sewer from {sewer}")
+    elif sewer_unknown:
+        # The state's sewer source does not cover this site (spec 2.6): say
+        # so, never "no sewer area covers it".
+        parts.append(
+            "the sewer provider is not connected here"
+            + (f" ({_text(sewer_part.get('note'))})" if _text(sewer_part.get("note")) else "")
+        )
     elif candidates:
         parts.append(
             f"no certificated sewer area covers the site, but it sits inside "
@@ -2975,9 +3017,7 @@ def _format_twdb(facts: dict[str, Any], district_facts: dict[str, Any],
     content = _Content(takeaway)
     rows = content.facts
     _row(rows, "Water provider", ", ".join(water_all) if water_all else water)
-    sewer_part = _as_dict(_as_dict(facts.get("parts")).get("sewer"))
-    if not sewer_all and not sewer and _text(sewer_part.get("coverage")) in (
-            "not_connected", "not_applicable"):
+    if not sewer_all and sewer_unknown:
         # The sewer source does not cover this site (spec 2.6): unknown,
         # never "no area covers it".
         _row(rows, "Sewer provider",
@@ -4608,6 +4648,21 @@ def _build_card(
     primary_id, primary = present[0]
     status = _card_status(primary, present)
     facts_dict = _facts_of(primary)
+    if facts_dict.get("source_module") and str(
+            primary.get("coverage_status") or "") not in ("covered", "partial"):
+        # A state's or county's own source that did not answer (spec 2.6):
+        # nothing on this card was checked, so no formatter may turn the
+        # missing answers into "none" or "0".
+        agency = _text(facts_dict.get("provider_short")) or "The source"
+        card = _empty_card(
+            slot, "issue",
+            f"{agency} did not answer this time, so nothing on this card was "
+            "checked. This is not a \"none found\" result; try again later.",
+            [_provenance(sid, result) for sid, result in present],
+        )
+        card["title"] = _card_title(slot, facts_dict)
+        card["retryable"] = any(sid in retry_ids for sid, _ in present)
+        return card
     extras = {
         sid: _facts_of(_as_dict(results.get(sid)))
         for sid in ("txdot_aadt_history", "district_overlays",

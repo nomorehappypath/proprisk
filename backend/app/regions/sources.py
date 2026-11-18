@@ -102,8 +102,18 @@ def result_matches_current_source(
             return False
     elif saved_module or not built_in_covers:
         return False
-    for part_slot, saved in (facts.get("embedded_sources") or {}).items():
-        now = stamp(pick(part_slot, state, county))
-        if (now or {}) != {k: str(v) for k, v in (saved or {}).items()}:
+    # Parts answered inside this slot (the state environmental records inside
+    # environmental_screening): the saved part must come from the source that
+    # would answer now, including "none then, one now" (a newly connected
+    # state source must be fetched, not skipped).
+    from app.services.site_check.card_fields import EMBEDDED
+
+    saved_parts = facts.get("embedded_sources") or {}
+    for part_slot, parent in EMBEDDED.items():
+        if parent != slot:
+            continue
+        now = stamp(pick(part_slot, state, county)) or {}
+        saved = {k: str(v) for k, v in (saved_parts.get(part_slot) or {}).items()}
+        if now != saved:
             return False
     return True
