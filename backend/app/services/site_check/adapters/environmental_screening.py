@@ -233,11 +233,16 @@ def _with_state_records(
     """EPA ECHO plus a state's own environmental-records source (spec 2.6).
     The state part keeps the keys its card reads; the part's coverage,
     agency and version ride in `parts.state_records`."""
+    from app.regions import sources as region_sources
+
     try:
         state_result = module.fetch(identity, session=sess)
         state_facts = dict(state_result.normalized_facts or {})
         state_errors = list(state_result.errors or [])
-        state_coverage = str(state_result.coverage_status.value)
+        state_coverage = region_sources.settle_coverage(
+            "state_environmental_records", str(state_result.coverage_status.value),
+            state_facts, state_errors,
+        )
     except Exception as exc:  # a state source failing never fails the card
         state_facts, state_errors, state_coverage = {}, [str(exc)], "unknown"
     provider_short = str(getattr(module, "PROVIDER_SHORT", "") or "")

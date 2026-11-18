@@ -86,10 +86,23 @@ def fetch(
                 CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
             ):
                 facts, status = {}, str(result.coverage_status.value)
+            elif (
+                identity.state != "TX"
+                and result.coverage_status == CoverageStatus.MANUAL_VERIFICATION_REQUIRED
+            ):
+                # Another state's road source that did not answer (spec
+                # 2.6): unknown, never synthesized into "0 found".
+                facts, status = {}, "did_not_answer"
             else:
                 facts = result.normalized_facts or {}
                 status = "queried"
             source_errors = list(result.errors or [])
+        elif (
+            identity.state != "TX" and status == "reused"
+            and (upstream.get(source_id) or {}).get("coverage_status")
+            == CoverageStatus.MANUAL_VERIFICATION_REQUIRED.value
+        ):
+            facts, status = {}, "did_not_answer"
         facts_by_source[source_id] = facts
         input_status[source_id] = status
         for error in source_errors:
@@ -137,6 +150,21 @@ def fetch(
             from app.services.site_check.orchestrator import (
                 not_connected_result,
             )
+            if "did_not_answer" in input_status.values():
+                # Connected, but none of the road sources answered this time.
+                return AdapterResult(
+                    source_id=SOURCE_ID,
+                    source_access_status=SourceAccessStatus.PROGRAMMATIC_PUBLIC_BUT_FRAGILE,
+                    data_confidence_status=DataConfidenceStatus.UNKNOWN,
+                    coverage_status=CoverageStatus.MANUAL_VERIFICATION_REQUIRED,
+                    normalized_facts={
+                        "state": state,
+                        "input_status": input_status,
+                        "advisory": "The road sources did not answer this time.",
+                    },
+                    errors=errors or ["road sources did not answer"],
+                    fetched_at=datetime.now(UTC),
+                )
             return not_connected_result(SOURCE_ID, state)
         normalized = _for_other_state(
             normalized, connected, state, bridges, input_status)

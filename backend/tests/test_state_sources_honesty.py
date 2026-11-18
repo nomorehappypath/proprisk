@@ -196,3 +196,88 @@ def test_denver_sewer_mains_are_drawn_on_the_map():
     mains = [f for f in features if f.kind == "utility_main_wastewater"]
     assert len(mains) == 1
     assert mains[0].source == "Denver Wastewater Management"
+
+
+# ── Round 2: real provider failures, every own source, through rendering ──
+
+class _Down:
+    """A session whose every request fails, like a provider outage."""
+
+    def request(self, *args, **kwargs):
+        import requests
+        raise requests.ConnectionError("provider down")
+
+    get = post = request
+
+    def __getattr__(self, name):
+        import requests
+        return getattr(requests.Session(), name)
+
+
+_CARD_OF = {"txdot_aadt": "traffic", "txdot_aadt_history": "traffic"}
+_FALSE_ANSWERS = (
+    '"0"', "none posted", '\\"none\\"', "no bridge", "no public transit",
+    "no service area", "0 within",
+)
+
+
+def test_every_own_source_failing_for_real_says_not_checked(monkeypatch):
+    from app.config.settings import get_settings
+
+    settings = get_settings()
+    monkeypatch.setattr(settings, "public_intel_http_attempts", 1)
+    monkeypatch.setattr(settings, "public_intel_http_backoff_base_seconds", 0)
+    modules = {**sources.modules_for("CO"), **sources.modules_for("CO", "denver")}
+    modules.pop("zoning_standards")  # reads a local file; no provider to fail
+    modules.pop("state_environmental_records")  # tested through its card below
+    for slot in sorted(modules):
+        result = orchestrator._load_adapter_fetch(slot)(
+            DENVER, session=_Down(), config={"upstream_results": {}},
+        )
+        assert result.coverage_status == CoverageStatus.MANUAL_VERIFICATION_REQUIRED, slot
+        card = _card({slot: _payload(result)}, _CARD_OF.get(slot, slot))
+        text = _text(card)
+        assert "did not answer this time" in text, slot
+        assert not any(word in text for word in _FALSE_ANSWERS), (slot, text[:400])
+
+
+def test_state_records_failing_for_real_say_unavailable(monkeypatch):
+    from app.config.settings import get_settings
+    from app.services.site_check.adapters import environmental_screening as env
+
+    settings = get_settings()
+    monkeypatch.setattr(settings, "public_intel_http_attempts", 1)
+    monkeypatch.setattr(settings, "public_intel_http_backoff_base_seconds", 0)
+    result = env.fetch(DENVER, session=_Down())
+    part = result.normalized_facts["parts"]["state_records"]
+    assert part["coverage"] == "manual_verification_required"
+    assert result.normalized_facts["state_records"] == "unavailable"
+    assert "temporarily unavailable" in result.normalized_facts["advisory"]
+
+
+def test_summary_with_failed_inputs_for_real_says_not_checked(monkeypatch):
+    from app.config.settings import get_settings
+
+    settings = get_settings()
+    monkeypatch.setattr(settings, "public_intel_http_attempts", 1)
+    monkeypatch.setattr(settings, "public_intel_http_backoff_base_seconds", 0)
+    # Path 1: the summary fetches its inputs itself, and all fail.
+    alone = txdot_extended.fetch(DENVER, session=_Down(), config={"upstream_results": {}})
+    assert alone.coverage_status == CoverageStatus.MANUAL_VERIFICATION_REQUIRED
+    # Path 2: traffic answered upstream; projects and bridges failed upstream.
+    failed = {
+        slot: _payload(orchestrator._load_adapter_fetch(slot)(DENVER, session=_Down()))
+        for slot in ("txdot_projects", "txdot_bridges", "txdot_roadway")
+    }
+    traffic = _payload(_result("txdot_aadt", {
+        "provider_short": "FHWA HPMS", "source_module": "x", "traffic_counts": [
+            {"road_name": "US 40", "aadt": 31000, "year": 2023, "distance_mi": 0.05}],
+    }))
+    mixed = txdot_extended.fetch(DENVER, session=_Down(), config={
+        "upstream_results": {"txdot_aadt": traffic, **failed}})
+    facts = mixed.normalized_facts
+    assert facts["project_pipeline"]["count_within_radius"] is None
+    assert facts["bridge_constraints"]["count_within_radius"] is None
+    card = _card({"txdot_extended": _payload(mixed)}, "txdot_extended")
+    text = _text(card)
+    assert "0 within" not in text and "no bridge records" not in text

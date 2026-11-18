@@ -72,6 +72,26 @@ def modules_for(state: str, county: str | None = None) -> dict[str, ModuleType]:
     return found
 
 
+def settle_coverage(slot: str, coverage: str, facts: dict, errors: list | None) -> str:
+    """The honest coverage of a state's or county's own source (spec 2.6).
+
+    A source that reported errors and returned none of the facts its card
+    needs did not answer, whatever it says: "manual_verification_required",
+    so the card says nothing was checked instead of "0" or "none". With some
+    of those facts present, an answer with errors is at most "partial"."""
+    from app.services.site_check.card_fields import REQUIRED
+
+    if not errors or coverage in (
+        "manual_verification_required", "not_supported_in_jurisdiction", "not_yet_wired",
+    ):
+        return coverage
+    required = REQUIRED.get(slot, ())
+    answered = any(facts.get(field) not in (None, "", [], {}) for field in required)
+    if not answered:
+        return "manual_verification_required"
+    return "partial" if coverage == "covered" else coverage
+
+
 def stamp(module: ModuleType | None) -> dict[str, object] | None:
     """What a result records about the module that produced it."""
     if module is None:

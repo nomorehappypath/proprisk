@@ -332,6 +332,13 @@ def run_region_source(module, source_id: str, identity, *args, **kwargs) -> Adap
     facts["source_version"] = getattr(module, "VERSION", 1)
     facts.setdefault("state", getattr(identity, "state", "") or "")
     result.normalized_facts = facts
+    settled = region_sources.settle_coverage(
+        source_id, result.coverage_status.value, facts, result.errors,
+    )
+    if settled != result.coverage_status.value:
+        result.coverage_status = CoverageStatus(settled)
+        if settled == "manual_verification_required":
+            result.data_confidence_status = DataConfidenceStatus.UNKNOWN
     if result.source_id != source_id:
         result.source_id = source_id
     return result
