@@ -1,0 +1,33 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ZONE_ZONING_A/FeatureServer/209|-104.9988,39.7478|None": [
+   {
+    "attributes": {
+     "ADU": "Yes",
+     "CONDITIONS": null,
+     "HEIGHT_STORIES": null,
+     "NBHD_CONTEXT": "DOWNTOWN",
+     "NOTES": null,
+     "ORD_NUM": 333,
+     "ORD_YEAR": 2010,
+     "OVERLAY_DISTRICT": "UO-1",
+     "PUD_NUM": null,
+     "WAIVERS": null,
+     "ZCODE_VERSION": 2010,
+     "ZONE_DESCRIPTION": "Downtown  (AS, C, CPV, GT, LD, TD)",
+     "ZONE_DISTRICT": "D-C",
+     "ZONE_DIST_TYPE": "Commercial Mixed Use"
+    }
+   }
+  ]
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ZONE_ZONING_A/FeatureServer/209": {
+   "editingInfo": {
+    "dataLastEditDate": 1794486962541,
+    "lastEditDate": 1794486979538,
+    "schemaLastEditDate": 1794486979538
+   }
+  }
+ }
+}

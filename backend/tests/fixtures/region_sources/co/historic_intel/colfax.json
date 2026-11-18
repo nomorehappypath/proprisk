@@ -1,0 +1,431 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKDISTRICT_A/FeatureServer/68|-104.99009,39.74074|200": [
+   {
+    "attributes": {
+     "DIST_NAME": "Civic Center",
+     "DIST_NUM": "6",
+     "GIS_NOTES": null,
+     "GLOBALID": "74b013a6-2843-11e6-a95c-005056b14f6e",
+     "NOTES": null,
+     "OBJECTID": 132,
+     "ORD_DATE": 199065600000,
+     "ORD_NUM": 173,
+     "PERIOD_SIGNIFICANT": null,
+     "Shape__Area": 2858054.9150390625,
+     "Shape__Length": 10040.829214005445
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -104.990360556959,
+        39.7400695932898
+       ],
+       [
+        -104.990037657759,
+        39.7400693262263
+       ],
+       [
+        -104.989014725728,
+        39.740909641426
+       ],
+       [
+        -104.988532016004,
+        39.7405640899646
+       ],
+       [
+        -104.98840321106,
+        39.7404895589494
+       ],
+       [
+        -104.988282339674,
+        39.740387633619
+       ],
+       [
+        -104.988245946104,
+        39.7403643800296
+       ],
+       [
+        -104.988102214878,
+        39.7402736230247
+       ],
+       [
+        -104.987383821084,
+        39.7408527898482
+       ],
+       [
+        -104.987389598032,
+        39.7400682912871
+       ],
+       [
+        -104.986135224427,
+        39.7400632279019
+       ],
+       [
+        -104.986121905846,
+        39.7411986714611
+       ],
+       [
+        -104.985958975019,
+        39.7411981101302
+       ],
+       [
+        -104.98551444791,
+        39.7411973227466
+       ],
+       [
+        -104.985488323706,
+        39.7411972152525
+       ],
+       [
+        -104.98549219879,
+        39.7416773793414
+       ],
+       [
+        -104.984854787054,
+        39.7416759634848
+       ],
+       [
+        -104.984855327958,
+        39.7409490876535
+       ],
+       [
+        -104.984693164205,
+        39.7409483648839
+       ],
+       [
+        -104.9842486634,
+        39.7409475730276
+       ],
+       [
+        -104.984220908786,
+        39.7409471837764
+       ],
+       [
+        -104.984223074434,
+        39.7400534887409
+       ],
+       [
+        -104.983583340141,
+        39.7400468147278
+       ],
+       [
+        -104.98359490591,
+        39.7384365157732
+       ],
+       [
+        -104.983611205052,
+        39.7373626279895
+       ],
+       [
+        -104.983750466884,
+        39.7373634391485
+       ],
+       [
+        -104.984194826655,
+        39.7373643362781
+       ],
+       [
+        -104.984204156515,
+        39.7373643550888
+       ],
+       [
+        -104.984241106042,
+        39.737364548374
+       ],
+       [
+        -104.984246683767,
+        39.7368429996216
+       ],
+       [
+        -104.984857449776,
+        39.7368422433617
+       ],
+       [
+        -104.984860713826,
+        39.7376050533589
+       ],
+       [
+        -104.985015838596,
+        39.7376060198071
+       ],
+       [
+        -104.985488639025,
+        39.7376069574518
+       ],
+       [
+        -104.985488521107,
+        39.7377784830756
+       ],
+       [
+        -104.985961323287,
+        39.7377794192251
+       ],
+       [
+        -104.986125209837,
+        39.7377806526907
+       ],
+       [
+        -104.986129443905,
+        39.7368478070907
+       ],
+       [
+        -104.987393518516,
+        39.7368502307488
+       ],
+       [
+        -104.988842560051,
+        39.7368431514243
+       ],
+       [
+        -104.989532351518,
+        39.7368478610744
+       ],
+       [
+        -104.990243477431,
+        39.7368526599104
+       ],
+       [
+        -104.990240765,
+        39.7384490222941
+       ],
+       [
+        -104.990982180876,
+        39.7384470849517
+       ],
+       [
+        -104.991655145602,
+        39.7384451895897
+       ],
+       [
+        -104.99235830004,
+        39.7384482251813
+       ],
+       [
+        -104.992931668967,
+        39.738450697365
+       ],
+       [
+        -104.992917260648,
+        39.7400748032182
+       ],
+       [
+        -104.991654049279,
+        39.7400679801247
+       ],
+       [
+        -104.990360556959,
+        39.7400695932898
+       ]
+      ]
+     ]
+    }
+   }
+  ],
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKSTRUCTURE_P/FeatureServer/69|-104.99009,39.74074|402": [
+   {
+    "attributes": {
+     "ADDRESS_ID": null,
+     "ADDRESS_LINE1": "1326 Tremont Place",
+     "ADDRESS_LINE2": null,
+     "AKA_NAME": null,
+     "ARCH_BLDR": null,
+     "DESCRIPTION": null,
+     "DOCUMENT": null,
+     "GIS_NOTES": null,
+     "GLOBALID": "df76d822-e776-4e83-99d6-413de1693e5c",
+     "HISTORIC_DIST": "Not in Historic District",
+     "LDMK_NAME": "Fire Station No. 1",
+     "LDMK_NUM": 53,
+     "NOTES": " ",
+     "OBJECTID": 101,
+     "ORD_NUM": 58,
+     "ORD_YEAR": 1974,
+     "PHOTO_LINK": null,
+     "SITUS_DIR": null,
+     "SITUS_NUM": "1326",
+     "SITUS_ST": "Tremont",
+     "SITUS_TYPE": "PL",
+     "STATE_HIST_NUM": "5DV.152  Listed on NR",
+     "YEAR_BUILT": "1909"
+    },
+    "geometry": {
+     "x": -104.9923875656374,
+     "y": 39.74060920918363
+    }
+   },
+   {
+    "attributes": {
+     "ADDRESS_ID": null,
+     "ADDRESS_LINE1": "1325 Glenarm Place",
+     "ADDRESS_LINE2": null,
+     "AKA_NAME": null,
+     "ARCH_BLDR": null,
+     "DESCRIPTION": null,
+     "DOCUMENT": null,
+     "GIS_NOTES": null,
+     "GLOBALID": "88a8880c-7f04-435d-b4ee-0bceee9a45ee",
+     "HISTORIC_DIST": "Not in Historic District",
+     "LDMK_NAME": "Denver Athletic Club Building",
+     "LDMK_NUM": 137,
+     "NOTES": "Yr. Built - additions 1892, 1925, 1965, 1973, 1984, 1996",
+     "OBJECTID": 171,
+     "ORD_NUM": 587,
+     "ORD_YEAR": 1982,
+     "PHOTO_LINK": null,
+     "SITUS_DIR": null,
+     "SITUS_NUM": "1325",
+     "SITUS_ST": "Glenarm",
+     "SITUS_TYPE": "PL",
+     "STATE_HIST_NUM": "5DV.149  Listed on NR",
+     "YEAR_BUILT": "c. 1889 (See Notes)"
+    },
+    "geometry": {
+     "x": -104.99379960252702,
+     "y": 39.74164341775876
+    }
+   },
+   {
+    "attributes": {
+     "ADDRESS_ID": null,
+     "ADDRESS_LINE1": "1439 Court Place",
+     "ADDRESS_LINE2": null,
+     "AKA_NAME": null,
+     "ARCH_BLDR": null,
+     "DESCRIPTION": null,
+     "DOCUMENT": null,
+     "GIS_NOTES": null,
+     "GLOBALID": "c5593da5-d8d6-453c-bcfe-5e94950b4b06",
+     "HISTORIC_DIST": "Not in Historic District",
+     "LDMK_NAME": "Curry-Chucovich House",
+     "LDMK_NUM": 139,
+     "NOTES": " ",
+     "OBJECTID": 172,
+     "ORD_NUM": 654,
+     "ORD_YEAR": 1982,
+     "PHOTO_LINK": null,
+     "SITUS_DIR": null,
+     "SITUS_NUM": "1439",
+     "SITUS_ST": "Court",
+     "SITUS_TYPE": "PL",
+     "STATE_HIST_NUM": "5DV.146  Listed on NR",
+     "YEAR_BUILT": "1888"
+    },
+    "geometry": {
+     "x": -104.99066968723595,
+     "y": 39.74139837914813
+    }
+   },
+   {
+    "attributes": {
+     "ADDRESS_ID": null,
+     "ADDRESS_LINE1": "320 W. Colfax Avenue",
+     "ADDRESS_LINE2": null,
+     "AKA_NAME": null,
+     "ARCH_BLDR": null,
+     "DESCRIPTION": null,
+     "DOCUMENT": null,
+     "GIS_NOTES": null,
+     "GLOBALID": "3b08a64b-3ce1-439a-baac-fffbf3b8ccae",
+     "HISTORIC_DIST": "Civic Center",
+     "LDMK_NAME": "Denver U.S. Mint",
+     "LDMK_NUM": 28,
+     "NOTES": " ",
+     "OBJECTID": 181,
+     "ORD_NUM": 331,
+     "ORD_YEAR": 1972,
+     "PHOTO_LINK": null,
+     "SITUS_DIR": "W",
+     "SITUS_NUM": "320",
+     "SITUS_ST": "Colfax",
+     "SITUS_TYPE": "AVE",
+     "STATE_HIST_NUM": "5DV.164  Listed on NR",
+     "YEAR_BUILT": "1904-06, addn"
+    },
+    "geometry": {
+     "x": -104.99231337432796,
+     "y": 39.73924892652046
+    }
+   },
+   {
+    "attributes": {
+     "ADDRESS_ID": null,
+     "ADDRESS_LINE1": "1330 Glenarm Place",
+     "ADDRESS_LINE2": null,
+     "AKA_NAME": null,
+     "ARCH_BLDR": null,
+     "DESCRIPTION": null,
+     "DOCUMENT": null,
+     "GIS_NOTES": null,
+     "GLOBALID": "3d34a378-95b9-4885-890e-883b74c536ba",
+     "HISTORIC_DIST": "Not in Historic District",
+     "LDMK_NAME": "Denver Press Club",
+     "LDMK_NUM": 167,
+     "NOTES": " ",
+     "OBJECTID": 194,
+     "ORD_NUM": 649,
+     "ORD_YEAR": 1986,
+     "PHOTO_LINK": null,
+     "SITUS_DIR": null,
+     "SITUS_NUM": "1330",
+     "SITUS_ST": "Glenarm",
+     "SITUS_TYPE": "PL",
+     "STATE_HIST_NUM": "5DV.601",
+     "YEAR_BUILT": "1925"
+    },
+    "geometry": {
+     "x": -104.99322445143022,
+     "y": 39.74130972056072
+    }
+   },
+   {
+    "attributes": {
+     "ADDRESS_ID": null,
+     "ADDRESS_LINE1": "414 14th Street",
+     "ADDRESS_LINE2": null,
+     "AKA_NAME": null,
+     "ARCH_BLDR": null,
+     "DESCRIPTION": null,
+     "DOCUMENT": null,
+     "GIS_NOTES": null,
+     "GLOBALID": "d3ee4626-3f93-4ccb-a6dc-9282481f0daf",
+     "HISTORIC_DIST": "Not in Historic District",
+     "LDMK_NAME": "Denver Public Schools Administrative Building, Annex II",
+     "LDMK_NUM": 219,
+     "NOTES": "Annex II",
+     "OBJECTID": 248,
+     "ORD_NUM": 438,
+     "ORD_YEAR": 1994,
+     "PHOTO_LINK": null,
+     "SITUS_DIR": null,
+     "SITUS_NUM": "414",
+     "SITUS_ST": "14th",
+     "SITUS_TYPE": "ST",
+     "STATE_HIST_NUM": "5DV.1723",
+     "YEAR_BUILT": "1923"
+    },
+    "geometry": {
+     "x": -104.99261813906726,
+     "y": 39.74122925345292
+    }
+   }
+  ]
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKDISTRICT_A/FeatureServer/68": {
+   "editingInfo": {
+    "dataLastEditDate": 1783603039909,
+    "lastEditDate": 1783603056391,
+    "schemaLastEditDate": 1783603056391
+   }
+  },
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKSTRUCTURE_P/FeatureServer/69": {
+   "editingInfo": {
+    "dataLastEditDate": 1793358889706,
+    "lastEditDate": 1793358909910,
+    "schemaLastEditDate": 1793358909910
+   }
+  }
+ }
+}

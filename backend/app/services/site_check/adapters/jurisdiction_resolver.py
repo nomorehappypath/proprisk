@@ -561,7 +561,7 @@ def resolve_jurisdiction(
     }
 
 
-def _found_only_summary(verdict: dict[str, Any]) -> str:
+def _found_only_summary(verdict: dict[str, Any], zoning_connected: bool = False) -> str:
     kind = verdict.get("jurisdiction_kind")
     city = (verdict.get("city") or "").title()
     if kind in ("full_purpose_city", "limited_purpose") and city:
@@ -574,6 +574,9 @@ def _found_only_summary(verdict: dict[str, Any]) -> str:
         found = "The county's boundary map did not answer, so nothing was confirmed."
     else:
         found = "No county boundary map confirmed whether this point is inside a city."
+    if zoning_connected:
+        # The county connects its own zoning source (spec 2.6).
+        return f"{found} Zoning comes from the county's own zoning map (see the Zoning card)."
     return f"{found} Zoning and development authority not checked."
 
 
@@ -591,7 +594,14 @@ def fetch(
     if identity.state != "TX":
         # Outside Texas, say only what the boundary map found; the Texas
         # wording about city rules and ETJ review is not checked here.
-        verdict["broker_summary"] = _found_only_summary(verdict)
+        from app.regions import sources as region_sources
+
+        verdict["broker_summary"] = _found_only_summary(
+            verdict,
+            zoning_connected=region_sources.pick(
+                "austin_zoning", identity.state, identity.county,
+            ) is not None,
+        )
     kind = verdict["jurisdiction_kind"]
     resolved = kind not in ("unknown", "source_error")
     # source_error is a fragile-source signal, not a settled "not covered":

@@ -19,12 +19,6 @@ from typing import Any
 
 import requests
 
-from app.services.site_check.adapters import (
-    txdot_aadt,
-    txdot_bridges,
-    txdot_projects,
-    txdot_roadway,
-)
 from app.services.site_check.adapters._base import (
     AdapterResult,
     PropertyIdentity,
@@ -71,19 +65,30 @@ def fetch(
     input_status: dict[str, str] = {}
     errors: list[str] = []
 
-    for source_id, fetch_fn in (
-        ("txdot_aadt", txdot_aadt.fetch),
-        ("txdot_projects", txdot_projects.fetch),
-        ("txdot_roadway", txdot_roadway.fetch),
-        ("txdot_bridges", txdot_bridges.fetch),
+    # A missing input is fetched through the same per-state choice as
+    # normal dispatch (spec 2.6): a state's own road source, the Texas
+    # adapter only for Texas, otherwise "not connected".
+    from app.services.site_check.orchestrator import _load_adapter_fetch
+
+    for source_id in (
+        "txdot_aadt",
+        "txdot_projects",
+        "txdot_roadway",
+        "txdot_bridges",
     ):
         facts, status, source_errors = _facts_from_upstream(
             upstream, source_id,
         )
         if status == "missing":
-            result = fetch_fn(identity, session=sess)
-            facts = result.normalized_facts or {}
-            status = "queried"
+            result = _load_adapter_fetch(source_id)(identity, session=sess)
+            if result.coverage_status in (
+                CoverageStatus.NOT_YET_WIRED,
+                CoverageStatus.NOT_SUPPORTED_IN_JURISDICTION,
+            ):
+                facts, status = {}, str(result.coverage_status.value)
+            else:
+                facts = result.normalized_facts or {}
+                status = "queried"
             source_errors = list(result.errors or [])
         facts_by_source[source_id] = facts
         input_status[source_id] = status
@@ -122,6 +127,19 @@ def fetch(
         ),
     }
 
+    state = (getattr(identity, "state", "TX") or "TX").upper()
+    if state != "TX":
+        connected = [
+            facts_by_source[sid] for sid, status in input_status.items()
+            if status in ("reused", "queried")
+        ]
+        if not connected:
+            from app.services.site_check.orchestrator import (
+                not_connected_result,
+            )
+            return not_connected_result(SOURCE_ID, state)
+        normalized = _for_other_state(normalized, connected, state, bridges)
+
     has_any_signal = any((
         traffic_counts,
         roadways,
@@ -141,6 +159,77 @@ def fetch(
         fetched_at=datetime.now(UTC),
         identifier_used="lat_lng",
     )
+
+
+def _for_other_state(
+    normalized: dict[str, Any],
+    connected: list[dict[str, Any]],
+    state: str,
+    bridges: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """The same summary for a state whose own road sources answered:
+    its agency named instead of TxDOT, no Texas-only crash system, and
+    no claim the inputs cannot back (spec 2.6)."""
+    from app.regions import states as state_names
+
+    # The four road inputs can come from different agencies (CDOT, FHWA,
+    # the bridge inventory), so the summary names the state's public road
+    # data, and each card names its own agency.
+    name = state_names.name_of(state)
+    agency = name
+
+    def swap(value: Any) -> Any:
+        if isinstance(value, str):
+            return value.replace("TxDOT", agency)
+        if isinstance(value, list):
+            return [swap(v) for v in value]
+        if isinstance(value, dict):
+            return {k: swap(v) for k, v in value.items()}
+        return value
+
+    out = swap(normalized)
+    out["source"] = f"{agency} public-data synthesis"
+    out["provider_short"] = agency
+    out["crash_data"] = {
+        "source": None,
+        "integration_status": "not_connected",
+        "available_in_this_run": False,
+        "is_zero_crash_result": False,
+        "read": (
+            f"Crash records are not connected for {name} yet. This run does "
+            "not contain crash metrics and must not be read as a zero-crash "
+            "result."
+        ),
+    }
+    out["next_step"] = (
+        "Use this as the automated transportation screen. Crash records are "
+        f"not connected for {name} yet, so treat safety as unknown."
+    )
+    pipeline = out.get("project_pipeline") or {}
+    largest = pipeline.get("largest_project") or {}
+    if pipeline.get("count_within_radius") and not largest.get("estimated_cost_usd"):
+        cost = largest.get("cost_range")
+        pipeline["read"] = (
+            f"{pipeline['count_within_radius']} {agency} project(s) are mapped "
+            "within the screened radius"
+            + (f"; published cost range of the first: {cost}." if cost else ".")
+        )
+    constraints = out.get("bridge_constraints") or {}
+    if bridges and any(b.get("posting_status") == "unknown" for b in bridges):
+        posted = constraints.get("posted_bridge_count") or 0
+        low = constraints.get("low_condition_bridge_count") or 0
+        if not posted:
+            constraints["posted_bridge_count"] = None
+            constraints["constraint_level"] = (
+                "posted_or_low_condition_bridge_nearby" if low
+                else "posting_unknown_in_screened_set"
+            )
+            constraints["read"] = (
+                f"{low} low-condition bridge indicator(s) found; whether any "
+                f"nearby bridge is weight-posted is not published by {agency} "
+                "for these bridges."
+            )
+    return out
 
 
 def _facts_from_upstream(

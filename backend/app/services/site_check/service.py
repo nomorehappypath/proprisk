@@ -29,6 +29,7 @@ from sqlalchemy.orm import Session
 from app.config.settings import get_settings
 from app.core.job_queue import enqueue_job, recover_stale_job
 from app.models import Job, SiteCheckRun
+from app.regions import sources as region_sources
 from app.regions import states as state_names
 from app.services import audit
 from app.services.site_check import registry
@@ -446,8 +447,17 @@ def build_refresh_reuse_seed(
                 registry.get(source_id).states
                 if source_id in registry.REGISTRY else ()
             )
-            if covered and anchor_state not in covered:
-                continue  # e.g. a Texas-only result for a Colorado lookup
+            # Reuse only what the source that would answer now produced
+            # (spec 2.6): a Texas-only result never serves a Colorado
+            # lookup, and a changed state or county module is refetched.
+            if not region_sources.result_matches_current_source(
+                source_id,
+                _as_dict((result or {}).get("normalized_facts")),
+                state=anchor_state,
+                county=(anchor_run.county if anchor_run else None) or county,
+                built_in_covers=not covered or anchor_state in covered,
+            ):
+                continue
             if _reusable_source_result(result, now=now):
                 candidates[source_id] = (deepcopy(result), prior)
 

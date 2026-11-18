@@ -1,0 +1,22 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKDISTRICT_A/FeatureServer/68|-104.975,39.77|200": [],
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKSTRUCTURE_P/FeatureServer/69|-104.975,39.77|402": []
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKDISTRICT_A/FeatureServer/68": {
+   "editingInfo": {
+    "dataLastEditDate": 1783603039909,
+    "lastEditDate": 1783603056391,
+    "schemaLastEditDate": 1783603056391
+   }
+  },
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_HIST_LANDMARKSTRUCTURE_P/FeatureServer/69": {
+   "editingInfo": {
+    "dataLastEditDate": 1793358889706,
+    "lastEditDate": 1793358909910,
+    "schemaLastEditDate": 1793358909910
+   }
+  }
+ }
+}

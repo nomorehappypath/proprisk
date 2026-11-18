@@ -38,7 +38,8 @@ def fetch(identity, session=None, config=None) -> AdapterResult:
         )
     rows = query_near(LAYER, identity.lat, identity.lng, 1609, session=session)
     facts = {
-        # the facts the card reads, built from rows
+        # the facts the card reads, built from rows, for example:
+        "count": len(rows),
         "provider_name": PROVIDER_NAME,
         "provider_short": PROVIDER_SHORT,
         "source_url": LAYER,

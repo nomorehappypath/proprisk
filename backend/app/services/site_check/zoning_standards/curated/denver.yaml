@@ -1,0 +1,899 @@
+# Denver, CO - Denver Zoning Code (Articles 4, 5, 7, 8, 9)
+# Source: official article PDFs on denvergov.org (republished February 25, 2025), read 2026-11-18.
+#   https://denvergov.org/files/assets/public/community-planning-and-development/documents/zoning/denver-zoning-code/
+# Curated ONLY from numbers printed in those tables. Districts not listed here are not curated
+# (the zoning-standards source then says so). Uses and parking are not curated.
+# Mixed-use heights are the General/Shopfront form limits; other forms have their own limits.
+# Keys match the zone codes the city's zoning map serves, upper case (U-MX-2X is the code's "2x").
+# The code has been amended since 2025-02-25; a zoning verification letter is the binding answer.
+city: denver
+state: CO
+udc_version: Denver Zoning Code, Articles 4-9 as republished 2025-02-25 (Former Chapter 59 districts and PUDs not
+  included)
+udc_source_url: https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Denver-Zoning-Code
+last_verified: '2026-11-18'
+districts:
+  U-SU-A:
+    full_name: Urban Single Unit A (U-SU-A)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 3000
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 25
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 3
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 3
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 60
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-A2:
+    full_name: Urban Single Unit A2 (U-SU-A2)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 3000
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 25
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 3
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 3
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 60
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-B:
+    full_name: Urban Single Unit B (U-SU-B)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 4500
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 35
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 3
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 45
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-B2:
+    full_name: Urban Single Unit B2 (U-SU-B2)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 4500
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 35
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 3
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 45
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-C:
+    full_name: Urban Single Unit C (U-SU-C)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 5500
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 50
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 45
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-C2:
+    full_name: Urban Single Unit C2 (U-SU-C2)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 5500
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 50
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 45
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-E:
+    full_name: Urban Single Unit E (U-SU-E)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 7000
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 50
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 45
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  U-SU-H:
+    full_name: Urban Single Unit H (U-SU-H)
+    code_section: 5.2.2
+    dimensional_standards:
+      max_stories:
+        value: 3
+        unit: stories
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story. U-SU-H allows 3 stories in the front 65%.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 10000
+        unit: square_feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      min_lot_width:
+        value: 75
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 10
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 7.5
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 40
+        unit: percent
+        code_ref: DZC 5.3.3.3.A (Urban House building form)
+        notes: Includes all accessory structures.
+  E-SU-D:
+    full_name: Urban Edge Single Unit D (E-SU-D)
+    code_section: 4.2.2
+    dimensional_standards:
+      max_stories:
+        value: 2.5
+        unit: stories
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: Front 65% of lot depth; rear 35% of lot depth is 1 story.
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: 'Front 65% of zone lot depth; rear 35% is 17 ft. Up to 35 ft with 1 ft added per 5 ft of lot width
+          over 50 ft. '
+      min_lot_size:
+        value: 6000
+        unit: square_feet
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+      min_lot_width:
+        value: 50
+        unit: feet
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+      front_setback:
+        value: Calculated per DZC 13.1.5.9
+        unit: null
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: Set from the existing front setbacks of reference lots on the block, not a fixed number (DZC 13.1.5.9).
+      side_setback:
+        value: 5
+        unit: feet
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: 'Setbacks and coverage depend on the actual zone lot width: 30 ft or less: side street 3, side interior
+          3, coverage 60%; over 30 to 40 ft: side street 5, side interior 3 min one side / 10 combined, coverage
+          45%; over 40 to under 75 ft: side street 5, side interior 5, coverage 45%; 75 ft or more: side street
+          7.5, side interior 10, coverage 40%. Values below are for a lot at this district''s minimum width.'
+      side_setback_corner:
+        value: 5
+        unit: feet
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: Side street setback for this lot width.
+      rear_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: 20 ft where no alley abuts the rear lot line; 12 ft where an alley abuts it.
+      max_building_coverage:
+        value: 45
+        unit: percent
+        code_ref: DZC 4.3.3.3.B (Urban House building form)
+        notes: Includes all accessory structures.
+  U-MX-2:
+    full_name: Urban Mixed Use 2 (U-MX-2)
+    code_section: 5.2.3
+    dimensional_standards:
+      max_stories:
+        value: 2
+        unit: stories
+        code_ref: DZC 5.3.3.3.I (General building form)
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: Other building forms allowed in the district (for example Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  U-MX-2X:
+    full_name: Urban Mixed Use 2x (U-MX-2x)
+    code_section: 5.2.3
+    dimensional_standards:
+      max_stories:
+        value: 2
+        unit: stories
+        code_ref: DZC 5.3.3.3.I (General building form)
+      max_height:
+        value: 30
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: Other building forms allowed in the district (for example Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: 'Adjacent to a Protected District: side interior 5 ft; rear 12 ft with an alley, 20 ft without (U-MX-2x).'
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: 'Adjacent to a Protected District: side interior 5 ft; rear 12 ft with an alley, 20 ft without (U-MX-2x).'
+  U-MX-3:
+    full_name: Urban Mixed Use 3 (U-MX-3)
+    code_section: 5.2.3
+    dimensional_standards:
+      max_stories:
+        value: 3
+        unit: stories
+        code_ref: DZC 5.3.3.3.I (General building form)
+      max_height:
+        value: 45
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: Other building forms allowed in the district (for example Town House) have their own, lower limits.
+          Up to 4 stories / 55 ft with height incentives (DZC 10.12.1).
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.I (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  U-MS-3:
+    full_name: Urban Main Street 3 (U-MS-3)
+    code_section: 5.2.5
+    dimensional_standards:
+      max_stories:
+        value: 3
+        unit: stories
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+      max_height:
+        value: 45
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: Other building forms allowed in the district (for example Town House) have their own, lower limits.
+          Up to 4 stories / 55 ft with height incentives (DZC 10.12.1).
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  U-MS-5:
+    full_name: Urban Main Street 5 (U-MS-5)
+    code_section: 5.2.5
+    dimensional_standards:
+      max_stories:
+        value: 5
+        unit: stories
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+      max_height:
+        value: 70
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: Minimum 24 ft. 75 ft within 175 ft of a Protected District. Other building forms allowed in the district
+          (for example Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 5.3.3.3.J (Shopfront building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  C-MX-3:
+    full_name: Urban Center Mixed Use 3 (C-MX-3)
+    code_section: 7.2.2
+    dimensional_standards:
+      max_stories:
+        value: 3
+        unit: stories
+        code_ref: DZC 7.3.3.3.D (General building form)
+      max_height:
+        value: 45
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: Other building forms allowed in the district (for example Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  C-MX-5:
+    full_name: Urban Center Mixed Use 5 (C-MX-5)
+    code_section: 7.2.2
+    dimensional_standards:
+      max_stories:
+        value: 5
+        unit: stories
+        code_ref: DZC 7.3.3.3.D (General building form)
+      max_height:
+        value: 70
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 75 ft within 175 ft of a Protected District. Other building forms allowed in the district (for example
+          Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  C-MX-8:
+    full_name: Urban Center Mixed Use 8 (C-MX-8)
+    code_section: 7.2.2
+    dimensional_standards:
+      max_stories:
+        value: 8
+        unit: stories
+        code_ref: DZC 7.3.3.3.D (General building form)
+      max_height:
+        value: 110
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 75 ft within 175 ft of a Protected District. Other building forms allowed in the district (for example
+          Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  C-MX-12:
+    full_name: Urban Center Mixed Use 12 (C-MX-12)
+    code_section: 7.2.2
+    dimensional_standards:
+      max_stories:
+        value: 12
+        unit: stories
+        code_ref: DZC 7.3.3.3.D (General building form)
+      max_height:
+        value: 150
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 75 ft within 175 ft of a Protected District. Other building forms allowed in the district (for example
+          Town House) have their own, lower limits.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: Required build-to applies (building must sit near the street); see the form table.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 7.3.3.3.D (General building form)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  I-MX-3:
+    full_name: Industrial Mixed Use 3 (I-MX-3)
+    code_section: 9.1.2
+    dimensional_standards:
+      max_stories:
+        value: 3
+        unit: stories
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+      max_height:
+        value: 45
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: Town House form is limited to 3 stories / 38 ft.
+      front_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: Required build-to applies (50% within 0-10 ft) for the General form.
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+      side_setback_corner:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 10 ft side interior setback where adjacent to a Protected District; rear adjacent to a Protected
+          District is 0 ft with an alley, 10 ft without.
+  I-A:
+    full_name: Industrial A (I-A)
+    code_section: 9.1.2
+    dimensional_standards:
+      max_height:
+        value: No maximum stated
+        unit: null
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 75 ft maximum within 175 ft of a Protected District.
+      max_far:
+        value: 2.0
+        unit: null
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: Floor area ratio.
+      front_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 10 ft where adjacent to a Protected District.
+      side_setback_corner:
+        value: 10
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: May reduce to 5 ft on a lot under 100 ft wide on the long side of the block.
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 10 ft where adjacent to a Protected District.
+  I-B:
+    full_name: Industrial B (I-B)
+    code_section: 9.1.2
+    dimensional_standards:
+      max_height:
+        value: No maximum stated
+        unit: null
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 75 ft maximum within 175 ft of a Protected District.
+      max_far:
+        value: 2.0
+        unit: null
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: Floor area ratio.
+      front_setback:
+        value: 20
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+      side_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 10 ft where adjacent to a Protected District.
+      side_setback_corner:
+        value: 10
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: May reduce to 5 ft on a lot under 100 ft wide on the long side of the block.
+      rear_setback:
+        value: 0
+        unit: feet
+        code_ref: DZC 9.1.3 (General and Industrial building forms)
+        notes: 10 ft where adjacent to a Protected District.
+  D-C:
+    full_name: Downtown Core (D-C)
+    code_section: 8.2.2
+    dimensional_standards:
+      max_height:
+        value: Not limited except in mapped height areas
+        unit: null
+        code_ref: DZC 8.3.1.4.B (Permitted Structures, Maximum Heights)
+        notes: 'Height Area 1: 200 ft. Height Area 2: 400 ft. Sunlight Preservation Area 1 limits shadow on the
+          16th Street Mall (8.3.1.4.C). Minimum height 2 stories or 30 ft. Check the height-area map (Exhibit 8.1).'
+      max_far:
+        value: 10.0
+        unit: null
+        code_ref: DZC 8.3.1.4.D.1 (Maximum Floor Area Ratio)
+        notes: Base FAR on the zone lot; floor area premiums and transfers (8.3.1.4.D.2-3) can add more.

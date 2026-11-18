@@ -1,0 +1,14 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PLAN_BPFUTUREPLACES_A/FeatureServer/101|-104.9915,39.7401|None": []
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PLAN_BPFUTUREPLACES_A/FeatureServer/101": {
+   "editingInfo": {
+    "dataLastEditDate": 1786127918889,
+    "lastEditDate": 1786129042404,
+    "schemaLastEditDate": 1786129042404
+   }
+  }
+ }
+}

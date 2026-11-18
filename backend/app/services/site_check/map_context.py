@@ -295,9 +295,11 @@ def _official_points(run: SiteCheckRun) -> list[dict[str, Any]]:
             }
         )
     transit = _facts(run, "transit_intel")
+    transit_agency = str(transit.get("provider_name") or "Capital Metro")
+    transit_prefix = "transit" if transit.get("provider_name") else "cmta"
     for key, category, source_label in (
-        ("bus_stops", "bus_stop", "Capital Metro"),
-        ("rail_stations", "train_station", "Capital Metro"),
+        ("bus_stops", "bus_stop", transit_agency),
+        ("rail_stations", "train_station", transit_agency),
     ):
         for index, row in enumerate(transit.get(key) or []):
             if not isinstance(row, dict) or _valid_point(row) is None:
@@ -305,7 +307,7 @@ def _official_points(run: SiteCheckRun) -> list[dict[str, Any]]:
             points.append(
                 {
                     **row,
-                    "id": f"cmta:{category}:{row.get('stop_id') or index}",
+                    "id": f"{transit_prefix}:{category}:{row.get('stop_id') or index}",
                     "group": "transit",
                     "category": category,
                     "source": source_label,
@@ -2059,7 +2061,10 @@ def _environmental_details(run: SiteCheckRun) -> list[dict[str, str]]:
                         environmental.get("edwards_aquifer_status"),
                         "No mapped zone returned; verify in the governing viewer",
                     ) if _in_texas(run)
-                    else f"Not connected for {_state_name(run)} yet"
+                    else (
+                        "The Edwards Aquifer is in Texas; it does not apply in "
+                        f"{_state_name(run)}"
+                    )
                 ),
             ),
         },
@@ -2280,8 +2285,10 @@ def _layers(
         feature for feature in utilities
         if feature.kind == "utility_ccn_wastewater"
     ]
+    # An area that contains the site serves it, whatever the authority type
+    # (a Texas legal CCN, or another state's service area, spec 2.6).
     sewer_ccn_is_nearest_only = bool(sewer_ccn_features) and not any(
-        feature.map_properties.get("authority") == "legal_ccn"
+        feature.map_properties.get("authority") in ("legal_ccn", "service_area")
         for feature in sewer_ccn_features
     )
     nearest_sewer_providers = sorted({
@@ -2577,7 +2584,11 @@ def _layers(
             } if utilities else None,
             attribution=(
                 "TWDB / PUC / TCEQ service areas; HIFLD electric infrastructure"
-                if _in_texas(run) else "HIFLD electric infrastructure; OpenStreetMap"
+                if _in_texas(run)
+                else f"{_state_source_facts(run, 'twdb_ccn').get('provider_name')}; "
+                "HIFLD electric infrastructure; OpenStreetMap"
+                if _state_source_facts(run, "twdb_ccn")
+                else "HIFLD electric infrastructure; OpenStreetMap"
             ),
             advisory=(
                 "CCN and operating-area boundaries identify service authority, not "
@@ -2613,6 +2624,8 @@ def _layers(
                     "label": "Water / wastewater authority",
                     "value": (
                         "Public CCN or operating-area screen" if _in_texas(run)
+                        else "Public service-area screen"
+                        if _state_source_facts(run, "twdb_ccn")
                         else f"Not connected for {_state_name(run)} yet"
                     ),
                 },
@@ -2934,6 +2947,10 @@ def _layers(
                 "FEMA / USFWS / TCEQ / NWI / USDA SSURGO / public environmental records"
                 if _in_texas(run)
                 else "FEMA / USFWS / NWI / USDA SSURGO / EPA ECHO"
+                + (
+                    f" / {_state_records_provider(run)}"
+                    if _state_records_provider(run) else ""
+                )
             ),
             advisory=(
                 "Environmental layers are desktop screening only. Phase I, "
@@ -3044,6 +3061,96 @@ def _layers(
     return layers
 
 
+# Which slot each state-sourced layer is drawn from (spec 2.6).
+_LAYER_SLOT = {
+    "projects": "txdot_projects",
+    "sewer_ccn": "twdb_ccn",
+    "water_districts": "twdb_ccn",
+    "water_ccn": "twdb_ccn",
+    "traffic": "txdot_aadt",
+    "access": "txdot_roadway",
+    "utilities": "twdb_ccn",
+    "buildable_envelope": "twdb_ccn",
+}
+
+
+def _state_source_facts(run: Any, slot: str) -> dict[str, Any] | None:
+    """Facts of a slot answered by a state's or county's own source, or None."""
+    results = getattr(run, "adapter_results", None)
+    results = results if isinstance(results, dict) else {}
+    result = results.get(slot)
+    if not isinstance(result, dict):
+        return None
+    facts = result.get("normalized_facts")
+    if not isinstance(facts, dict) or not facts.get("source_module"):
+        return None
+    if result.get("coverage_status") in ("not_supported_in_jurisdiction", "not_yet_wired"):
+        return None
+    return facts
+
+
+def _state_records_provider(run: Any) -> str:
+    """The agency of a state's own environmental records part, if it ran."""
+    results = getattr(run, "adapter_results", None)
+    results = results if isinstance(results, dict) else {}
+    facts = (results.get("environmental_screening") or {}).get("normalized_facts")
+    if not isinstance(facts, dict):
+        return ""
+    state_part = (facts.get("parts") or {}).get("state_records") or {}
+    if state_part.get("coverage") not in ("covered", "partial"):
+        return ""
+    return str(state_part.get("provider_short") or state_part.get("provider_name") or "")
+
+
+def _texas_names_swapped(value: Any, swaps: list[tuple[str, str]]) -> Any:
+    if isinstance(value, str):
+        for old, new in swaps:
+            value = value.replace(old, new)
+        return value
+    if isinstance(value, list):
+        return [_texas_names_swapped(v, swaps) for v in value]
+    if isinstance(value, dict):
+        return {k: _texas_names_swapped(v, swaps) for k, v in value.items()}
+    return value
+
+
+def _agency_swaps(run: Any, slot: str | None = None) -> list[tuple[str, str]]:
+    """Texas agency names -> the agency whose own source answered: the
+    layer's own slot first (projects credit the project source), then the
+    road inventory. Texas certificate (CCN) wording becomes plain
+    service-area wording."""
+    swaps: list[tuple[str, str]] = []
+    order = ("txdot_roadway", "txdot_aadt", "txdot_projects", "txdot_bridges")
+    if slot in order:
+        order = (slot, *order)
+    roads = next(
+        (f for f in (_state_source_facts(run, s) for s in order) if f),
+        None,
+    )
+    if roads:
+        long_name = str(roads.get("provider_name") or roads.get("provider_short"))
+        short = str(roads.get("provider_short") or long_name)
+        swaps += [("Texas Department of Transportation", long_name), ("TxDOT", short)]
+    utilities = _state_source_facts(run, "twdb_ccn")
+    if utilities:
+        name = str(utilities.get("provider_name") or "public utility service areas")
+        swaps += [
+            ("TWDB / PUC / TCEQ service areas", name),
+            ("TWDB / PUCT CCN water service areas", name),
+            ("PUCT CCN sewer service areas", name),
+            ("TCEQ Water Districts (MUD / SUD / WCID / FWSD)", name),
+            ("TWDB public utility service area", name),
+            ("a TCEQ utility district", "a utility district"),
+            ("State-certificated sewer service areas (CCNs)", "Mapped sewer service areas"),
+            ("State-certificated water service areas (CCNs)", "Mapped water service areas"),
+            ("Not established by a CCN boundary", "Not established by a service-area boundary"),
+            ("CCN and operating-area boundaries", "Service-area boundaries"),
+            ("no certificated sewer area covers", "no mapped sewer service area covers"),
+            ("public CCN, mains", "public service areas, mains"),
+        ]
+    return swaps
+
+
 # Layers drawn only from Texas agencies (TxDOT, TWDB/PUC, TCEQ). Outside
 # Texas they are not connected: no shapes, no "0 shown", no Texas credit.
 _TEXAS_ONLY_LAYERS = {"projects", "sewer_ccn", "water_districts", "water_ccn", "traffic"}
@@ -3051,6 +3158,18 @@ _TEXAS_ONLY_LAYERS = {"projects", "sewer_ccn", "water_districts", "water_ccn", "
 
 def _outside_texas_layer(layer: SiteCheckMapLayer, run: Any) -> SiteCheckMapLayer:
     not_connected = f"Not connected for {_state_name(run)} yet"
+    slot = _LAYER_SLOT.get(layer.id)
+    if slot and _state_source_facts(run, slot) is not None:
+        # The state's own source answered: keep the layer, credit its agency.
+        swaps = _agency_swaps(run, slot)
+        return layer.model_copy(update={
+            "attribution": _texas_names_swapped(layer.attribution, swaps),
+            "advisory": _texas_names_swapped(layer.advisory, swaps),
+            "details": _texas_names_swapped(layer.details, swaps),
+            "legend": _texas_names_swapped(layer.legend, swaps),
+            "geojson": _texas_names_swapped(layer.geojson, swaps),
+            "label": _texas_names_swapped(layer.label, swaps),
+        })
     if layer.id in _TEXAS_ONLY_LAYERS:
         return layer.model_copy(update={
             "available": False, "status": "unavailable", "geojson": None,
@@ -3190,9 +3309,28 @@ def build_map_context(run: SiteCheckRun) -> SiteCheckMapContext:
         layers=_layers(run, parcel, context_features),
         categories=categories,
         places=places,
-        context_features=context_features,
+        context_features=_state_credited_features(run, context_features),
         advisories=advisories,
     )
+
+
+def _state_credited_features(run: Any, features: list) -> list:
+    """Outside Texas, features drawn from a state's own source name that
+    state's agency, never the Texas one their builders default to."""
+    if _in_texas(run):
+        return features
+    swaps = _agency_swaps(run)
+    if not swaps:
+        return features
+    return [
+        feature.model_copy(update={
+            "title": _texas_names_swapped(feature.title, swaps),
+            "subtitle": _texas_names_swapped(feature.subtitle, swaps),
+            "source": _texas_names_swapped(feature.source, swaps),
+            "details": _texas_names_swapped(feature.details, swaps),
+        })
+        for feature in features
+    ]
 
 
 __all__ = ["build_map_context"]

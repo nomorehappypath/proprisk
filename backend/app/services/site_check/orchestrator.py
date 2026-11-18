@@ -49,6 +49,7 @@ try:  # pragma: no cover - trivial import guard
     from app.services.site_check.narratives import build_narratives
 except ImportError:  # narratives module not landed yet
     build_narratives = None
+from app.regions import sources as region_sources
 from app.services import audit
 from app.services.site_check import registry, usage
 from app.services.site_check.adapters._base import (
@@ -63,8 +64,10 @@ from app.services.site_check.contract import (
     SourceAccessStatus,
 )
 from app.services.site_check.entitlement_reader import build_entitlement_reads
-from app.regions import sources as region_sources
-from app.services.site_check.historical_aerials import build_historical_aerials
+from app.services.site_check.historical_aerials import (
+    build_historical_aerials,
+    region_has_aerials,
+)
 from app.services.site_check.identity import PropertyIdentity
 
 log = logging.getLogger("propdesk.site_check.orchestrator")
@@ -2213,8 +2216,13 @@ def _collect(
     # lost its lease stops BEFORE the provider calls (§7.4), exactly like
     # every other checkpoint.
     run_state = (getattr(run, "state", None) or "TX").upper()
-    if run_state != "TX" and getattr(settings_obj, "historical_aerials_enabled", True):
-        # The historical photo archive (TxGIO) covers Texas only.
+    if (
+        run_state != "TX"
+        and getattr(settings_obj, "historical_aerials_enabled", True)
+        and not region_has_aerials(run_state, getattr(run, "county", None))
+    ):
+        # The Texas archive (TxGIO) covers Texas only; another state or county
+        # connects its own photo years in its region file (spec 2.6).
         derived["historical_aerials_meta"] = {
             "status": "not_connected", "state": run_state,
         }

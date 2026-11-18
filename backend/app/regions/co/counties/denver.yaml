@@ -4,7 +4,7 @@ name: Denver
 level: Full
 summary: City and county boundary, parcel layer, metro districts, fire stations,
   subdivisions, clerk records page
-sample_address: 201 W Colfax Ave, Denver, CO 80202   # Wellington E. Webb Municipal Office Building
+sample_address: 2001 Colorado Blvd, Denver, CO 80205   # Denver Museum of Nature & Science: one parcel (201 W Colfax is a condo building with stacked unit parcels)
 jurisdiction:
   source: City and County of Denver boundary (Denver Open Data)
   source_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVCCDBOUNDARY_A/FeatureServer/40
@@ -54,3 +54,13 @@ subdivisions:
   layer_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVSUBDIVISIONS_A/FeatureServer/54
   query_url: https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ENG_SRVSUBDIVISIONS_A/FeatureServer/54/query
   name_field: SUBNAME
+# Historical aerial photos (spec 2.6). Only years whose licence is published
+# are listed: DRCOG's 2022 Denver Regional Aerial Photography Project imagery
+# is CC BY 3.0 (Jefferson County's record of the same dataset). DRCOG's 2018,
+# 2020, 2024 and 2026 services answer too, but no licence is published for
+# them, so they are not used.
+historical_aerials:
+  - year: 2022
+    image_service: https://drcog-data.sanborn.com/arcgis/rest/services/DRCOG_2022/Mosaics_2022/ImageServer
+    credit: "Denver Regional Council of Governments (DRCOG), Denver Regional Aerial Photography Project 2022, CC BY 3.0"
+    licence: CC BY 3.0

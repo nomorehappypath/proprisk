@@ -60,6 +60,7 @@ def test_get_coverage_shape():
     result = coverage.get_coverage()
     assert result["state"].split(", ")[0] == "Texas"
     assert {row["county"] for row in result["counties"]} == {row["county"] for row in coverage.COUNTIES}
-    assert result["cities"]["zoning"] == coverage.ZONING_CITIES
+    assert result["cities"]["zoning"] == coverage.ZONING_PLACES
+    assert "Denver" in coverage.ZONING_PLACES  # Denver's own source (spec 2.6)
     assert result["cities"]["standards"] == coverage.STANDARDS_CITIES
-    assert result["cities"]["future_land_use"] == coverage.FUTURE_LAND_USE_CITIES
+    assert result["cities"]["future_land_use"] == coverage.FUTURE_LAND_USE_PLACES

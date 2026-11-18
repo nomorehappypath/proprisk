@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import importlib
 import re
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from types import ModuleType
 
@@ -28,7 +28,7 @@ def _county_folder(county: str | None) -> str:
     return re.sub(r"[^a-z0-9]+", "_", name).strip("_")
 
 
-@lru_cache(maxsize=None)
+@cache
 def _load(state: str, county: str, slot: str) -> ModuleType | None:
     parts = [state] + ([county] if county else [])
     path = _ROOT.joinpath(state, "sources", *parts[1:], f"{slot}.py")
@@ -70,3 +70,40 @@ def modules_for(state: str, county: str | None = None) -> dict[str, ModuleType]:
         if module is not None:
             found[path.stem] = module
     return found
+
+
+def stamp(module: ModuleType | None) -> dict[str, object] | None:
+    """What a result records about the module that produced it."""
+    if module is None:
+        return None
+    return {"module": module.__name__, "version": str(getattr(module, "VERSION", 1))}
+
+
+def result_matches_current_source(
+    slot: str,
+    facts: dict,
+    *,
+    state: str,
+    county: str | None,
+    built_in_covers: bool,
+) -> bool:
+    """May a saved result for `slot` be reused for this state and county?
+
+    Only when the source that would answer now is the one that produced it:
+    the same state or county module and VERSION, or the built-in adapter
+    (no module stamp) when it covers the state. Embedded parts
+    (`embedded_sources: {part_slot: {module, version}}`) are checked the
+    same way.
+    """
+    own = stamp(pick(slot, state, county))
+    saved_module = facts.get("source_module")
+    if own is not None:
+        if saved_module != own["module"] or str(facts.get("source_version")) != own["version"]:
+            return False
+    elif saved_module or not built_in_covers:
+        return False
+    for part_slot, saved in (facts.get("embedded_sources") or {}).items():
+        now = stamp(pick(part_slot, state, county))
+        if (now or {}) != {k: str(v) for k, v in (saved or {}).items()}:
+            return False
+    return True

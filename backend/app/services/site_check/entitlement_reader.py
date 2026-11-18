@@ -127,6 +127,13 @@ _SYSTEM_PROMPT = (
 )
 
 
+def _system_prompt(state: str | None) -> str:
+    """Texas keeps its prompt exactly; elsewhere it names no state."""
+    if (state or "TX").upper() == "TX":
+        return _SYSTEM_PROMPT
+    return _SYSTEM_PROMPT.replace("Small Texas cities do not", "Many cities do not")
+
+
 # ── Prompt ─────────────────────────────────────────────────────────────────
 
 
@@ -141,11 +148,15 @@ def _build_prompt(
     lng: float | None,
     radius_m: int,
     plat_clues: list[str],
+    state: str | None = None,
 ) -> str:
     radius_mi = round(radius_m / 1609.34, 1)
     lines = [f"Subject site: {address}"]
     if county:
-        lines.append(f"County: {county.title()} County, Texas")
+        from app.regions import states as state_names
+
+        state_name = state_names.name_of((state or "TX").upper())
+        lines.append(f"County: {county.title()} County, {state_name}")
     lines.append(f"Jurisdiction to search: {jurisdiction}")
     if lat is not None and lng is not None:
         lines.append(f"Coordinates: {lat:.6f}, {lng:.6f}")
@@ -430,6 +441,7 @@ def _call_model(
     prompt: str,
     max_output_tokens: int,
     max_tool_calls: int,
+    state: str | None = None,
 ) -> tuple[str, int, int, int]:
     """(json_text, input_tokens, output_tokens, web_searches).
 
@@ -438,7 +450,7 @@ def _call_model(
     against the live API before this module was written)."""
     resp = client.responses.create(
         model=model,
-        instructions=_SYSTEM_PROMPT,
+        instructions=_system_prompt(state),
         input=prompt,
         tools=[{"type": "web_search"}],
         max_tool_calls=max_tool_calls,
@@ -516,6 +528,7 @@ def read_city_cases(
         portal_url=portal_url,
         address=str(getattr(run, "address", "") or ""),
         county=getattr(run, "county", None),
+        state=getattr(run, "state", None),
         lat=getattr(run, "lat", None),
         lng=getattr(run, "lng", None),
         radius_m=radius_m,
@@ -568,6 +581,7 @@ def read_city_cases(
         text, input_tokens, output_tokens, searches = _call_model(
             client, model=model, prompt=prompt,
             max_output_tokens=max_output_tokens, max_tool_calls=max_tool_calls,
+            state=getattr(run, "state", None),
         )
     except Exception as exc:
         # The call failed — nothing billable happened: release (terminal,

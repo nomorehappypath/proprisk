@@ -155,10 +155,14 @@ def test_tennessee_lookup_calls_no_texas_service(monkeypatch):
 
 
 def test_texas_only_source_says_not_connected_elsewhere():
-    identity = PropertyIdentity(address="x", lat=39.7, lng=-105.0, county="denver", state="CO")
+    # Tennessee has no source modules: the Texas adapter is never called and
+    # the card says so. (Colorado now has its own traffic source, spec 2.6.)
+    identity = PropertyIdentity(
+        address="x", lat=35.9, lng=-86.8, county="williamson", state="TN",
+    )
     result = orchestrator._load_adapter_fetch("txdot_aadt")(identity, session=None)
     assert result.coverage_status.value == "not_supported_in_jurisdiction"
-    assert result.normalized_facts["advisory"] == "Not connected for Colorado yet."
+    assert result.normalized_facts["advisory"] == "Not connected for Tennessee yet."
 
 
 def test_county_key_keeps_texas_rules_for_texas_only():
@@ -399,15 +403,17 @@ def test_denver_environmental_card_on_epa_failure_keeps_the_state_line():
         def __getattr__(self, name):
             return getattr(requests.Session(), name)
 
+    # Tennessee: no state-records source, so only EPA ECHO runs (Colorado
+    # now has its own, spec 2.6).
     identity = PropertyIdentity(
-        address="1437 Bannock St, Denver, CO", lat=39.739, lng=-104.99,
-        county="denver", state="CO",
+        address="1 Main St, Franklin, TN", lat=35.92, lng=-86.87,
+        county="williamson", state="TN",
     )
     result = env._fetch_outside_texas(identity, Offline(), 500)
     payload = orchestrator._adapter_result_payload(result, refresh_status="fetched_failed")
 
     run = SimpleNamespace(
-        id="r", status="completed", state="CO", sources_failed=[], derived={},
+        id="r", status="completed", state="TN", sources_failed=[], derived={},
         adapter_results={"environmental_screening": payload},
         finished_at=None, lat=None, lng=None,
     )
@@ -415,5 +421,5 @@ def test_denver_environmental_card_on_epa_failure_keeps_the_state_line():
         c for g in cards.build_cards(run, None).get("groups", [])
         for c in g["cards"] if c["card_key"] == "environmental_screening"
     )
-    assert "Not connected for Colorado yet" in card["takeaway"]
+    assert "Not connected for Tennessee yet" in card["takeaway"]
     assert card["summary"].startswith("State records not connected")

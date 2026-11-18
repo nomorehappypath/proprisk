@@ -1,0 +1,26 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PLAN_BPFUTUREPLACES_A/FeatureServer/101|-104.99009,39.74074|None": [
+   {
+    "attributes": {
+     "FUT_NBHD_CONTEXT": "SPECIAL DISTRICT",
+     "GLOBALID": "2507d61c-ffbc-4945-9b59-4e74a7e6b238",
+     "GROWTH_FUTURE": "All other areas of the city",
+     "OBJECTID": 241021,
+     "PLCTYPE_FUT": "Civic",
+     "Shape__Area": 109951.08203125,
+     "Shape__Length": 1319.858242477791
+    }
+   }
+  ]
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PLAN_BPFUTUREPLACES_A/FeatureServer/101": {
+   "editingInfo": {
+    "dataLastEditDate": 1786127918889,
+    "lastEditDate": 1786129042404,
+    "schemaLastEditDate": 1786129042404
+   }
+  }
+ }
+}

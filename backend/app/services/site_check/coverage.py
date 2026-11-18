@@ -40,13 +40,32 @@ ZONING_CITIES = [
 # Cities with curated written zoning standards, from zoning_standards.py's curated YAML files.
 STANDARDS_CITIES = [
     "Austin", "Buda", "Cedar Park", "Dripping Springs", "Georgetown", "Hutto",
-    "Kyle", "Manor", "Pflugerville", "Round Rock",
+    "Kyle", "Manor", "Pflugerville", "Round Rock", "Denver",
 ]
 
 # Cities with future land use, from future_land_use.py's city list.
 FUTURE_LAND_USE_CITIES = [
     "Austin", "Buda", "Kyle", "Round Rock", "Pflugerville", "Hutto", "Georgetown", "Cedar Park",
 ]
+
+
+def _own_source_places(slot: str) -> list[str]:
+    """Counties that connect this card with their own source (spec 2.6),
+    named as the city and county they are ("Denver")."""
+    from app.regions import sources
+
+    return [
+        county["name"]
+        for code in regions.load_regions()
+        for key, county in regions.counties(code).items()
+        if slot in sources.modules_for(code, key)
+    ]
+
+
+# What Settings shows: the built-in Texas cities plus every county that
+# connects the card with its own source.
+ZONING_PLACES = ZONING_CITIES + _own_source_places("austin_zoning")
+FUTURE_LAND_USE_PLACES = FUTURE_LAND_USE_CITIES + _own_source_places("future_land_use")
 
 # Sources that cover a whole state, from each state file
 # (app/regions/<state>/state.yaml), named with their state.
@@ -79,9 +98,9 @@ def get_coverage() -> dict:
         "state": ", ".join(STATES),
         "counties": COUNTIES,
         "cities": {
-            "zoning": ZONING_CITIES,
+            "zoning": ZONING_PLACES,
             "standards": STANDARDS_CITIES,
-            "future_land_use": FUTURE_LAND_USE_CITIES,
+            "future_land_use": FUTURE_LAND_USE_PLACES,
         },
         "statewide": STATEWIDE,
         "nationwide": NATIONWIDE,

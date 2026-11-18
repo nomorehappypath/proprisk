@@ -127,6 +127,36 @@ class _Config:
         )
         self.min_radius_m: int = int(g("public_aerial_imagery_min_radius_m", 120))
         self.max_radius_m: int = int(g("public_aerial_imagery_max_radius_m", 800))
+        self.attribution: str = _ATTRIBUTION
+        self.interim_years: set[int] = set()
+
+
+def _apply_region(cfg: _Config, state: str | None, county: str | None) -> _Config:
+    """Outside Texas the years come from the county's (else the state's)
+    `historical_aerials:` list (spec 2.6), never from the Texas archive.
+    No list means no years: the card says not connected."""
+    code = (state or "TX").upper()
+    if code == "TX":
+        return cfg
+    from app.regions import loader
+
+    entries = None
+    key = loader.county_key(code, county)
+    for name, data in loader.counties(code).items():
+        if key and loader.county_key(code, name) == key:
+            entries = data.get("historical_aerials")
+    if not entries:
+        entries = (loader.state(code) or {}).get("historical_aerials")
+    entries = entries or []
+    cfg.eras = {str(e["year"]): str(e["image_service"]) for e in entries}
+    cfg.interim_years = {int(e["year"]) for e in entries if e.get("interim")}
+    credits = sorted({str(e["credit"]) for e in entries})
+    cfg.attribution = "Historical aerial photos: " + "; ".join(credits) if credits else ""
+    return cfg
+
+
+def region_has_aerials(state: str | None, county: str | None) -> bool:
+    return bool(_apply_region(_Config(object()), state, county).eras)
 
 
 # ── Deterministic era ladder (ported) ──────────────────────────────────────
@@ -156,6 +186,9 @@ def _build_url(env: dict[str, Any], service: str, cfg: _Config) -> str:
         "format": _IMAGE_FORMAT,
         "f": "image",
     }
+    if service.startswith("https://"):
+        # A region file's full ImageServer URL (spec 2.6).
+        return f"{service}/exportImage?{urlencode(params)}"
     return f"{cfg.base_url}/{service}/ImageServer/exportImage?{urlencode(params)}"
 
 
@@ -265,7 +298,10 @@ def fetch_era_chips(
     Per-era failure degrades — one dead era never raises. Missing lat/lng
     returns an honest empty timeline.
     """
-    cfg = _Config(settings_obj)
+    cfg = _apply_region(
+        _Config(settings_obj), getattr(identity, "state", None),
+        getattr(identity, "county", None),
+    )
 
     if identity.lat is None or identity.lng is None:
         return {
@@ -274,7 +310,7 @@ def fetch_era_chips(
             "bbox": None,
             "resolved_count": 0,
             "advisory": _NO_LOCATION_ADVISORY,
-            "attribution": _ATTRIBUTION,
+            "attribution": cfg.attribution,
         }
 
     sess = http_session(session)
@@ -288,6 +324,7 @@ def fetch_era_chips(
         ok, err = _validate_image_url(sess, url, cfg)
         eras.append({
             "year": _year_of(year_key),
+            **({"interim": True} if _year_of(year_key) in cfg.interim_years else {}),
             "service": service,
             "image_url": url if ok else None,
             "status": "resolved" if ok else "unavailable",
@@ -302,8 +339,11 @@ def fetch_era_chips(
             "xmax": env["xmax"], "ymax": env["ymax"], "sr": 4326,
         },
         "resolved_count": sum(1 for e in eras if e["status"] == "resolved"),
-        "advisory": _advisory(eras),
-        "attribution": _ATTRIBUTION,
+        "advisory": _advisory(eras) + (
+            " Photos marked interim are not the final reviewed release."
+            if cfg.interim_years else ""
+        ),
+        "attribution": cfg.attribution,
     }
 
 
@@ -539,12 +579,19 @@ def _make_client(api_key: str) -> Any:
 
 def _call_model(
     client: Any, *, model: str, content: list[dict[str, Any]],
-    max_output_tokens: int,
+    max_output_tokens: int, state: str | None = None,
 ) -> tuple[str, int, int]:
+    prompt = _SYSTEM_PROMPT
+    if (state or "TX").upper() != "TX":
+        from app.regions import states as state_names
+
+        prompt = prompt.replace(
+            "one Texas property", f"one {state_names.name_of(state)} property",
+        )
     resp = client.chat.completions.create(
         model=model,
         messages=[
-            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "system", "content": prompt},
             {"role": "user", "content": content},
         ],
         max_completion_tokens=max_output_tokens,
@@ -701,6 +748,7 @@ def read_prior_use(
         text, prompt_tokens, completion_tokens = _call_model(
             client, model=model, content=content,
             max_output_tokens=max_output_tokens,
+            state=getattr(run, "state", None),
         )
     except Exception as exc:
         # The call itself failed — nothing billable happened: release the
@@ -777,11 +825,18 @@ def _scope_key(run: Any, cfg: _Config) -> str:
     Changing any of them produces a different timeline, so each gets its own
     row. The read model is deliberately NOT part of the key — only the
     deterministic chips are cached."""
+    state = (getattr(run, 'state', None) or 'TX').upper()
+    # Outside Texas each year's image service is part of the key, so a
+    # region file that changes a year's service gets a new timeline.
+    eras = (
+        ",".join(sorted(cfg.eras)) if state == "TX"
+        else ",".join(f"{k}={v}" for k, v in sorted(cfg.eras.items()))
+    )
     return (
-        f"state={(getattr(run, 'state', None) or 'TX').upper()}"
+        f"state={state}"
         f"|{round(float(run.lat), 5)},{round(float(run.lng), 5)}"
         f"|parcel={getattr(run, 'parcel_id', None) or '-'}"
-        f"|eras={','.join(sorted(cfg.eras))}"
+        f"|eras={eras}"
         f"|px={cfg.chip_size_px}"
     )
 
@@ -888,7 +943,10 @@ def _build(
     session: Any, run: Any, settings_obj: Any,
     *, sess: requests.Session | None = None,
 ) -> dict[str, Any]:
-    cfg = _Config(settings_obj)
+    cfg = _apply_region(
+        _Config(settings_obj), getattr(run, "state", None),
+        getattr(run, "county", None),
+    )
     if not cfg.eras:
         return {
             "historical_aerials": None,
@@ -925,7 +983,7 @@ def _build(
         "bbox": timeline.get("bbox"),
         "resolved_count": int(timeline.get("resolved_count") or 0),
         "advisory": timeline.get("advisory"),
-        "attribution": timeline.get("attribution") or _ATTRIBUTION,
+        "attribution": timeline.get("attribution") or cfg.attribution,
         "reading": None,
     }
     reading, meta = read_prior_use(session, run, timeline, settings_obj, sess=sess)
