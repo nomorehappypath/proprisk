@@ -1,0 +1,76 @@
+# Comal County, Texas. Format: see app/regions/_template/county.yaml.
+name: Comal
+level: Partial
+summary: Parcel layer, school and emergency-service districts, fire stations,
+  subdivision plats, clerk portal, no confirmed city limits/ETJ layer
+sample_address: 100 N Seguin Ave, New Braunfels, TX 78130   # Comal County Courthouse
+jurisdiction:
+  source: Texas Comptroller/TxGIO statewide city boundaries (no Comal-specific layer found)
+  source_url: https://feature.geographic.texas.gov/arcgis/rest/services/City_Boundaries/Texas_City_Boundaries/MapServer
+  city_limits:
+  - url: https://feature.geographic.texas.gov/arcgis/rest/services/City_Boundaries/Texas_City_Boundaries/MapServer/0/query
+    name_field: city_name
+parcels:
+  source_label: TNRIS / Comal CAD parcel layer
+  source_url: https://services6.arcgis.com/eNPJk90aMrXNOKF8/arcgis/rest/services/Comal_County_Parcels/FeatureServer/40
+  query_url: https://services6.arcgis.com/eNPJk90aMrXNOKF8/arcgis/rest/services/Comal_County_Parcels/FeatureServer/40/query
+  id_fields:
+  - PROP_ID
+  - GEO_ID
+  numeric_id_fields: []
+  cad_account_fields:
+  - GEO_ID
+  owner_fields:
+  - OWNER_NAME
+  situs_fields:
+  - SITUS_ADDR
+  legal_fields:
+  - LEGAL_DESC
+  acre_fields:
+  - GIS_AREA
+  - LEGAL_AREA
+  land_value_fields:
+  - LAND_VALUE
+  value_fields:
+  - MKT_VALUE
+  out_fields: PROP_ID,GEO_ID,OWNER_NAME,LEGAL_DESC,LEGAL_AREA,GIS_AREA,SITUS_ADDR,SITUS_CITY,TAX_YEAR,MKT_VALUE,LAND_VALUE
+appraisal_search_url: https://esearch.comalad.org/
+districts:
+- label: Boerne ISD boundary
+  kind: school
+  urls:
+  - https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/SchoolDistrict/MapServer/49/query
+- label: Comal ISD boundary
+  kind: school
+  urls:
+  - https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/SchoolDistrict/MapServer/50/query
+- label: New Braunfels ISD boundary
+  kind: school
+  urls:
+  - https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/SchoolDistrict/MapServer/60/query
+- label: Comal County emergency service districts
+  kind: esd
+  urls:
+  - https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/EmergencyServiceDistricts/MapServer/132/query
+fire_stations:
+  url: https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/EmergencyServiceDistricts/MapServer/460/query
+clerk:
+  name: Comal County Clerk Official Public Records
+  url: https://comal.landrecordsonline.com/
+  plat_url: https://www.comalcounty.gov/212/Plat-Viewer
+  deed_instructions: 1) Open Comal County Public Access (ROAM) and log in or register for
+    a free account. 2) Use the land/official records search, not court or vital-statistics
+    records. 3) Search by instrument/document number when one is provided; otherwise search
+    party name or recording date. 4) Open the matching recorded deed and download or upload
+    the copy.
+  plat_instructions: Open the Comal County Clerk's Plat Viewer. Search by subdivision name
+    or probable instrument/document number, then download or upload the recorded plat.
+  fallback_url: https://www.comalcounty.gov/202/County-Clerk
+  fallback_label: County clerk page
+  fallback_note: Official Comal County Clerk page linking to the ROAM public-access portal
+    and the Plat Viewer.
+subdivisions:
+  source_label: Comal County Engineer's Office (subdivision plats)
+  layer_url: https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/Land/MapServer/2
+  query_url: https://cceo.co.comal.tx.us/arcgissrv/rest/services/Layers/Land/MapServer/2/query
+  name_field: SubName
