@@ -3,7 +3,8 @@
 Status: Codex PASS on the whole spec, 2026-11-17: sections 1–2.4 in round 3, and
 section 2.5 (standard jobs and formats) in round 2. Phase A done 2026-11-17
 (Codex PASS in round 2; built by hand because NMHP was busy, on the owner's word).
-Phases B onward are meant to be built by NMHP.
+Phases B onward are meant to be built by NMHP. Phase B was built by hand, on the
+owner's word, as was Phase C.
 Owner: Gerard. Builder: NMHP (NoMoreHappyPath).
 
 ## In one paragraph
@@ -238,6 +239,26 @@ existing counties keep their current values, written explicitly into their files
      | `plats_intel`, `fire_district`, `county_clerk_portals` | their per-county special branches |
 | `site_constraints` | the Edwards Aquifer query (`:109`). Pipelines, habitat and infrastructure still run. Its summary rows for TWDB/TxDOT inputs (`:1544`) say "not connected for <State> yet", not "no mapped feature" or "0 projects". |
 | `cards.py` jurisdiction card (`:1488`) | outside Texas, it states only what was found: inside city limits, inside an ETJ, or outside both. It adds "zoning and development authority not checked". The Texas wording ("County rules only — no city zoning", ETJ review authority) appears only for TX. |
+
+   - **Skipped Texas parts are never shown as findings** (Codex review of the
+     Phase C reorder, 2026-11-17):
+     - Outside Texas, `environmental_screening` marks the state tank, cleanup and
+       regulatory-history checks as not connected. Its card, collapsed summary and
+       advisories say "State environmental records: Not connected for <State>
+       yet". They never describe skipped checks as zero records, "no records
+       found", or a temporary outage (`cards.py:3206`, `:4074`,
+       `environmental_screening.py:767`). EPA ECHO is still reported on its own,
+       including its real empty and failure results. Phase C also corrects the
+       environmental summary's source-status keys (`cards.py:4074`).
+     - Outside Texas, the skipped Edwards Aquifer check is shown as "Not connected
+       for <State> yet" in the `site_constraints` coverage table and the
+       environmental map details, never as zero zones or "no mapped feature"
+       (`site_constraints.py:1603`, `map_context.py:2051`).
+     - Map layers that mix sources credit only the sources used for that lookup.
+       Nationwide utility and environmental features must not suggest that TWDB,
+       PUC, TCEQ, or an Edwards or CCN screen supplied Colorado findings
+       (`map_context.py:2564`, `:2598`, `:2915`).
+     - None of this needs C2's `provider_name` format.
 
    - **County keys.** Every bespoke `county == "<texas county>"` comparison reads
      the county through one helper, `texas_county(identity)`. It returns the county
@@ -677,7 +698,44 @@ county GIS. The owner can name any county.
   5. The configuration-driven subdivision path.
 
   Proof: section 4, done by NMHP.
-- **Phase C2 (before states): standard jobs and formats (2.5).**
+
+  **Order changed 2026-11-17 (owner):** the owner chose Denver, Colorado as the
+  test for states. Phase C alone makes a Denver lookup work honestly (nationwide
+  sources plus Denver's county file, Texas-only sources "not connected"), while C2
+  adds nothing a Denver user sees. So the order is A, B, C, C2, C3.
+- **Phase C: states (built first, on the owner's order of 2026-11-17).**
+  1. The state field, the provider-state extraction and the state-settling table.
+  2. `states` on the registry, the orchestrator skip and the historical-aerials
+     check.
+  3. The in-source Texas guards and the `texas_county()` helper.
+  4. Cache scopes and run-reuse.
+  5. Migration 0002, the gap writer and the `launch.sh` message.
+  6. Census from the state file, and the centroid script.
+  7. A Colorado `state.yaml` and a Denver county file (`co/counties/denver.yaml`),
+     the owner's chosen test. Colorado's `services:` are not written yet (that is
+     C2): every Texas-only source is simply skipped for Colorado, as item 2 says.
+
+  Proof:
+  - the "Williamson County, Tennessee" test, where no Texas host is called;
+  - an address/provider disagreement test;
+  - `check_region.sh` on a test state folder that has no counties;
+  - the stopped upgrade of a v1 database with existing rows;
+  - every Texas lookup unchanged;
+  - **Denver, the owner's test:** a lookup on a real Denver address is settled as
+    CO, calls no Texas service URL, shows the nationwide cards, says "Not
+    connected for Colorado yet" on every Texas-only card, and shows Denver's own
+    county data; `check_region.sh co denver` ends with PASS.
+    The Denver test also checks the rendered collapsed summaries, expanded cards,
+    advisories, and map-layer details and credits:
+    - skipped Texas parts are shown as not connected, with no false zero or
+      "no feature" findings and no Texas agency credited for Colorado facts;
+    - recorded Denver cases cover EPA ECHO with records, with no records, and
+      failing, plus nationwide utility shapes present;
+    - the jurisdiction card states the boundary finding and says "zoning and
+      development authority not checked".
+- **Phase C2 (after C): standard jobs and formats (2.5).** Until C2 lands, the
+  Texas-only guard of 2.2 item 5 attaches to the slot; C2 moves it to the
+  implementation `select_service` chose, as 2.5 says.
   1. `standard_formats.py` with the units each field has today.
   2. The `data_as_of` kinds.
   3. `select_service` used by dispatch, retries and historical aerials.
@@ -693,9 +751,7 @@ county GIS. The owner can name any county.
 
   Proof: every Texas lookup shows the same facts, with the same agency names now
   coming from the data, and old saved lookups still open.
-- **Phase C: states** (below). It comes before C3, because a non-Texas lookup
-  needs state support first.
-- **Phase C3 (after C): national defaults.** `regions/us/national.yaml` entries
+- **Phase C3 (after C2): national defaults.** `regions/us/national.yaml` entries
   for:
   - HPMS traffic counts (current only; history `none`) and roads;
   - NBI bridges, EPA water providers, NCES schools;
@@ -706,21 +762,6 @@ county GIS. The owner can name any county.
 
   Proof: a test state using only `national` passes `check_region.sh`, with every
   job *standard* or *not connected*, through a real non-Texas lookup.
-- **Phase C: states.**
-  1. The state field, the provider-state extraction and the state-settling table.
-  2. `states` on the registry, the orchestrator skip and the historical-aerials
-     check.
-  3. The in-source Texas guards and the `texas_county()` helper.
-  4. Cache scopes and run-reuse.
-  5. Migration 0002, the gap writer and the `launch.sh` message.
-  6. Census from the state file, and the centroid script.
-
-  Proof:
-  - the "Williamson County, Tennessee" test, where no Texas host is called;
-  - an address/provider disagreement test;
-  - `check_region.sh` on a test state folder that has no counties;
-  - the stopped upgrade of a v1 database with existing rows;
-  - every Texas lookup unchanged.
 
 Each phase is reviewed and released on its own, with a release note.
 
