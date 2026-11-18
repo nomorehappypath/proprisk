@@ -652,6 +652,129 @@ service that answers in a non-standard shape can never ship.
   4. traffic band `very_high`/`unknown` are not given a label;
   5. Travis parcel candidates lack the distance fields Williamson has.
 
+### 2.6 State and county sources: every Texas card, in any state (Phase C2, owner's order 2026-11-18)
+
+**Owner's order (2026-11-18).** "For each county / state you find the 1 to 1
+equivalent source and develop the connection and test. This is what NMHP will do
+if it was enhancing. So we need PropRisk to have these possibilities." A Denver
+lookup must show every card a Texas lookup shows, filled from Colorado's and
+Denver's own public sources, and any state or county must be able to do the same.
+
+**This replaces 2.5's machinery with something smaller.** 2.5 designed YAML field
+mappings, a shared layer reader, per-job normalizers, pydantic formats and a
+service fingerprint. Most cards need real logic (nearest school per level, top
+traffic segments, bridge condition, tank releases still open), so mappings alone
+would not fill them, and the owner asked for no over-engineering. What 2.5 got
+right is kept: one place picks the source, the card never lies about a part that
+was not checked, the agency name comes from the data, and the check command
+proves the shape. Section 7's "no Python per county" is lifted for sources only,
+on the owner's order: a county file stays data; a source is a small module.
+
+#### The rule
+
+1. **A card's slot can be filled by a state or a county.** A source module lives
+   in the state's folder:
+   - `regions/<st>/sources/<slot>.py`: statewide (example: `co/sources/txdot_bridges.py`);
+   - `regions/<st>/sources/<county>/<slot>.py`: one county (example:
+     `co/sources/denver/austin_zoning.py`).
+
+   The slot name is today's source name, unchanged, so saved lookups, cards, the
+   map and retries keep working.
+2. **One function picks the source** (`regions/sources.py: pick(slot, state, county)`):
+   county module, then state module, then the built-in adapter if it covers the
+   state (`registry.states`, Texas today), else **not connected**. The
+   orchestrator's `_load_adapter_fetch` already wraps every call, retries included
+   (Phase C); it now asks `pick`. Phase C's guard stays: a Texas adapter never runs
+   for another state.
+3. **A source module returns the same facts the Texas card reads**, plus three
+   standard fields:
+   - `provider_name` (shown on screen; "Colorado Department of Transportation");
+   - `source_url`;
+   - `data_as_of`: a date, a year, a range, or `unknown`, as 2.5 defines. Never
+     the fetch time.
+
+   The facts each card reads are listed once, per slot, in
+   `site_check/card_fields.py` (taken from `cards.py` and `map_context.py`).
+   Required fields must be present; optional ones may be missing, and the card
+   leaves them out. A module declares `PROVIDER_NAME`, `VERSION` and `fetch(identity,
+   session=None, config=None)`, the same signature as an adapter.
+4. **Parts a state does not have are said plainly.** A module can mark a part of
+   its slot `not_connected` (sewer provider outside Metro Water Recovery's area)
+   or `not_applicable` (the Edwards Aquifer outside Texas: "Does not apply in
+   Colorado"). Cards never turn a missing part into "none found" (2.5's honest
+   limits).
+5. **Data-only pieces stay data:**
+   - Historical aerial photos: a county or state file lists its years and image
+     services (`historical_aerials: [{year, image_service, credit}]`); the builder
+     uses the same export request it uses for Texas.
+   - Zoning standards: Denver's district standards are one curated file,
+     `zoning_standards/curated/denver.yaml`, in the same format as Austin's.
+6. **Shared adapters with a state part ask `pick` for that part.**
+   - `environmental_screening`: the state-records part is the slot
+     `state_environmental_records` (Texas keeps its TCEQ code; Colorado gets a
+     module). EPA ECHO stays national.
+   - `site_constraints` and `map_context` stop asking "is this Texas?" and ask
+     "did the slot this part reads answer?". Water/sewer, districts, road projects
+     and traffic layers appear for any state whose module answered.
+   - `txdot_extended` (the transportation summary) already builds from the four
+     road slots; it reads them in any state and names the agency from
+     `provider_name`. When a road slot is missing it calls `pick`, never a Texas
+     module directly.
+7. **Screen text names no agency by itself.** Titles become neutral ("Road
+   Projects", "Transportation Summary", "Transit", "Utilities", "Schools",
+   "Tax / Debt", "Zoning"); the agency comes from `provider_name`. Texas
+   adapters add `provider_name` so a Texas lookup still says "TxDOT", "TEA",
+   "TWDB/PUC", now from the data. Texas facts are otherwise unchanged.
+8. **Reuse.** A saved result is reused only when it came from the same module and
+   `VERSION` (stored as `source_module`/`source_version` in the facts); Phase C
+   already blocks cross-state reuse. Changing a module's `VERSION` stops old
+   results being reused.
+9. **The check.** `check_region.sh <st>` and `check_region.sh <st> <county>` run
+   every source module of that state or county at the sample address and print
+   one line per slot: *connected* (required fields present, `provider_name` and
+   `data_as_of` set), *not connected*, or *FAIL* naming the missing field. A
+   recorded test fixture per module checks the same thing offline.
+10. **The kit.** `regions/_template/source.py` (a filled-in skeleton),
+    `regions/arcgis.py` (one shared point/radius query helper with `outSR=4326`,
+    paging and distance), `docs/EXTENDING.md` Job D "connect a state's or a
+    county's own source for a card", and the README task text for NMHP.
+
+#### Colorado and Denver, card by card (all checked live on 2026-11-18)
+
+| Card (slot) | Level | Colorado / Denver source | Gaps said on the card |
+|---|---|---|---|
+| Traffic counts (`txdot_aadt`) | CO | FHWA HPMS Colorado 2025 (`geo.dot.gov HPMS_FULL_CO_2025`), every road with a count | none |
+| Traffic history (`txdot_aadt_history`) | CO | CDOT `AADT_All_Years_Data` (1997–2025, state highways) | local streets: no history |
+| Roads (`txdot_roadway`) | CO | HPMS Colorado 2025 (class, lanes, speed, ownership), CDOT `Highways_Detailed` names | right-of-way width not published |
+| Road projects (`txdot_projects`) | CO | CDOT `GoSheet_Projects` + `TenYearPlan_Approved_Lines` | cost is a range; no award data |
+| Bridges (`txdot_bridges`) | CO | National Bridge Inventory (`geo.dot.gov`), CDOT `BridgeConditionforDashboard` ratings | posted weight as a code |
+| Transportation summary (`txdot_extended`) | any | built from the four road slots | crash data not connected (as in Texas) |
+| Transit (`transit_intel`) | Denver | RTD bus stops and light-rail stations (CDOT-hosted copies) | layer dates shown (2021–2022) |
+| Zoning (`austin_zoning`) | Denver | Denver `ODC_ZONE_ZONING_A` (zone district, overlays) | none |
+| Zoning standards (`zoning_standards`) | Denver | curated `denver.yaml` from the Denver Zoning Code | only districts curated; others say so |
+| Future land use (`future_land_use`) | Denver | Blueprint Denver future places (`ODC_PLAN_BPFUTUREPLACES_A`) | none |
+| Development activity (`entitlement_pipeline`) | Denver | Denver rezonings, site development plans, building permits | rezonings have no street address |
+| Historic (`historic_intel`) | Denver | Denver landmark districts and structures | no design-standard links |
+| Utilities (`twdb_ccn`) | CO | water: EPA water system boundaries (+ Denver Water); sewer: Metro Water Recovery service area; districts: DOLA water/sanitation and metro districts | no certificate (CCN) regime in Colorado |
+| Schools (`schools_intel`) | CO | Census school district at the point; CDE school locations; NCES/Urban Institute enrollment | ratings: link to CDE, no score |
+| Tax / debt (`tax_intel`) | CO | DOLA property tax map 2025 (taxing units, mills, bond mills) | no debt-report PDFs; bond mills shown |
+| State environmental records (`state_environmental_records`) | CO | Colorado OPS storage tanks and releases; CDPHE Superfund, RCRA corrective action, institutional controls, solid waste, brownfields | no enforcement source |
+| Site constraints: water/sewer, future ROW, aquifer | CO | from the utility and road-project slots; aquifer `not_applicable` | no planned-ROW layer |
+| Historical aerials | Denver | DRCOG aerials 2018, 2020, 2022, 2024, 2026 | nothing keyless before 2018 |
+| Statewide parcels (`wcad_parcel`, Williamson only) | — | not a Denver card; Denver parcels already come from `denver.yaml` | — |
+
+#### Proof
+
+- Every Texas lookup and test unchanged, apart from neutral titles with the
+  agency now read from `provider_name`.
+- `check_region.sh co` and `check_region.sh co denver` end with PASS, every slot
+  *connected* or honestly *not connected / not applicable*.
+- A real Denver lookup in the owner's PropRisk shows each card above filled from
+  the Colorado or Denver source, with the agency named on the card and on the
+  map, and no Texas agency credited.
+- A test state with no source modules still gets "Not connected for <State>
+  yet" on every one of these cards (Phase C's behaviour).
+
 ## 3. What the user sees
 
 - **Settings → "Where PropRisk works":** the table gains a State column and is
@@ -734,24 +857,18 @@ county GIS. The owner can name any county.
       failing, plus nationwide utility shapes present;
     - the jurisdiction card states the boundary finding and says "zoning and
       development authority not checked".
-- **Phase C2 (after C): standard jobs and formats (2.5).** Until C2 lands, the
-  Texas-only guard of 2.2 item 5 attaches to the slot; C2 moves it to the
-  implementation `select_service` chose, as 2.5 says.
-  1. `standard_formats.py` with the units each field has today.
-  2. The `data_as_of` kinds.
-  3. `select_service` used by dispatch, retries and historical aerials.
-  4. Per-part merging, with `evidence` and coverage per part.
-  5. The Texas fixtures pass their formats.
-  6. `provider_name` / `data_as_of` replace hard-coded agency text.
-  7. The honest-limits wording: modeled areas, not-connected parts, tank-only
-     records.
-  8. The five mismatch fixes.
-  9. Version bumps and the service-fingerprint reuse rule.
-  10. The `services:` map for TX, naming today's adapters; `layer_reader.py` and
-      the job normalizers.
+- **Phase C2: state and county sources (2.6, owner's order 2026-11-18).** This
+  replaces the earlier C2 plan (2.5's formats and layer reader).
+  1. `regions/sources.py` `pick`, wired into `_load_adapter_fetch`; `card_fields.py`.
+  2. `provider_name`/`data_as_of` on the Texas adapters; neutral titles; the
+     map and site-constraint checks ask whether the slot answered.
+  3. The state-records slot, the aerials list and the Denver zoning standards file.
+  4. Colorado and Denver modules for every row of 2.6's table, each with a
+     recorded fixture.
+  5. `check_region.sh` per-slot lines; the template, `arcgis.py` helper, Job D,
+     README task text.
 
-  Proof: every Texas lookup shows the same facts, with the same agency names now
-  coming from the data, and old saved lookups still open.
+  Proof: 2.6's proof list.
 - **Phase C3 (after C2): national defaults.** `regions/us/national.yaml` entries
   for:
   - HPMS traffic counts (current only; history `none`) and roads;
@@ -804,7 +921,7 @@ Each phase is reviewed and released on its own, with a release note.
 
 ## 7. Out of scope (on purpose)
 
-- A plugin system, Python per county, a region database, downloading region files
+- A plugin system, Python per county (except source modules, 2.6), a region database, downloading region files
   at runtime, or an in-app "add county" screen.
 - Turning the remaining special Python (Austin zoning city list, entitlement city
   configs, transit, historic) into files. Cities are a later spec if contributors
