@@ -1,5 +1,5 @@
 // PropRisk has no sign-in: every route renders straight away, behind one
-// top bar (PropRisk / History / Settings).
+// top bar (PropRisk / History / Settings / Disclaimer).
 import { useEffect } from 'react'
 import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import NewLookupPage from './pages/publicdata/NewLookupPage'
@@ -11,6 +11,7 @@ import NeedsPage from './pages/settings/NeedsPage'
 import KeysPage from './pages/settings/KeysPage'
 import SpendingPage from './pages/settings/SpendingPage'
 import CoveragePage from './pages/settings/CoveragePage'
+import DisclaimerPage from './pages/DisclaimerPage'
 
 function TopBar() {
   const location = useLocation()
@@ -24,6 +25,7 @@ function TopBar() {
       <nav className="topbar-links">
         <Link to="/public-data/history">History</Link>
         <Link to="/settings">Settings</Link>
+        <Link to="/disclaimer">Disclaimer</Link>
       </nav>
     </header>
   )
@@ -67,6 +69,7 @@ export default function App() {
             <Route path="spending" element={<SpendingPage />} />
             <Route path="coverage" element={<CoveragePage />} />
           </Route>
+          <Route path="/disclaimer" element={<DisclaimerPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/public-data" replace />} />
       </Routes>

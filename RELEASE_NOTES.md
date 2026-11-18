@@ -1,5 +1,12 @@
 # Release notes
 
+## Unreleased: Disclaimer page
+
+- **New "Disclaimer" link in the top bar.** It says plainly that PropRisk is a free,
+  open-source project built to show that NoMoreHappyPath can build commercial-grade
+  software. It comes with no warranty, its makers bear no responsibility for bugs or
+  errors, and you use it at your own risk.
+
 ## Unreleased: Comal County, and how to add counties with NoMoreHappyPath
 
 - **Comal County, Texas (Partial).** Its parcels, school and emergency-service

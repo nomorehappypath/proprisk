@@ -371,7 +371,9 @@ try {
     // Loading: delay the response and catch the busy indicator mid-flight.
     await page.route(screen.route, async (route) => {
       await new Promise((r) => setTimeout(r, 1500))
-      return route.fulfill({ json: screen.empty })
+      // The page may already have moved on (the dev build mounts twice), so a
+      // late reply to an abandoned request is ignored.
+      return route.fulfill({ json: screen.empty }).catch(() => {})
     })
     const loadingNav = page.goto(`${BASE}${screen.path}`, { waitUntil: 'domcontentloaded' })
     await page.waitForSelector(`text=${screen.loadingText}`, { timeout: 5000 })
@@ -397,6 +399,16 @@ try {
     errors.length = errorsBefore
     console.log(`Settings ${screen.path} loading/empty/error states: OK`)
   }
+
+  // ── Disclaimer: reachable from the top bar, says the key things ───────
+  await page.goto(`${BASE}/public-data`, { waitUntil: 'domcontentloaded' })
+  await page.click('header.topbar >> text=Disclaimer')
+  await page.waitForSelector('h1:has-text("Disclaimer")')
+  for (const phrase of ['open-source project', 'NoMoreHappyPath', 'no responsibility for bugs', 'at your own risk']) {
+    if (!(await page.locator(`text=${phrase}`).count())) throw new Error(`Disclaimer is missing "${phrase}"`)
+  }
+  await page.screenshot({ path: `${SHOTS}/disclaimer.png` })
+  console.log('Disclaimer page from the top bar: OK')
 
   if (errors.length) throw new Error(`console errors: ${errors.join(' | ')}`)
   console.log('UI SMOKE PASS — screenshots in', SHOTS)
