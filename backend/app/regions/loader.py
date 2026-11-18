@@ -38,6 +38,7 @@ class StateFile(_Strict):
     search_box: tuple[float, float, float, float]
     census_centroids: str | None = None
     statewide_summary: list[str] = []
+    historical_aerials: list[AerialYear] | None = None
 
 
 class MapLayer(_Strict):
@@ -106,6 +107,17 @@ class Subdivisions(_Strict):
     code_field: str | None = None
 
 
+class AerialYear(_Strict):
+    """One year of historical aerial photos (spec 2.6): an ArcGIS ImageServer
+    that answers exportImage, and the credit its licence asks for."""
+
+    year: int
+    image_service: str = Field(pattern=r"^https://.+/ImageServer$")
+    credit: str
+    licence: str
+    interim: bool = False
+
+
 class CountyFile(_Strict):
     name: str
     level: Literal["Full", "Partial"]
@@ -118,6 +130,7 @@ class CountyFile(_Strict):
     fire_stations: FireStations | None = None
     clerk: Clerk | None = None
     subdivisions: Subdivisions | None = None
+    historical_aerials: list[AerialYear] | None = None
 
 
 class _NoDuplicateKeysLoader(yaml.SafeLoader):

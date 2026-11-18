@@ -1,5 +1,31 @@
 # Release notes
 
+## Unreleased: every card for Denver, from Colorado's own sources (Phase C2)
+
+- **A Denver lookup now fills every card a Texas lookup shows**, from Colorado's and
+  Denver's own public data:
+  - **Roads:** traffic counts (federal highway data for Colorado, and Denver regional
+    counts), traffic history (CDOT, 1997–2025), roads, bridges with CDOT's condition
+    ratings and posted weight limits, and road projects (CDOT).
+  - **Denver:** zoning, zoning standards (written from the Denver Zoning Code),
+    future land use (Blueprint Denver), rezonings, site plans and permits, historic
+    districts and landmarks, and RTD transit stops and stations.
+  - **Colorado:** water (Denver Water), sewer (Metro Water Recovery and the city's
+    sewer mains), water, sanitation and metro districts (DOLA), schools (CDE),
+    property tax levies (DOLA), state storage-tank and cleanup records (OPS and
+    CDPHE), and 2022 aerial photos (DRCOG).
+- **Each card names its own agency** ("Schools (CDE)", "Road Projects (CDOT)"), and
+  says plainly what that agency does not publish, such as project cost (shown as the
+  published range), contract awards, or whether a bridge is weight-posted.
+- **The Edwards Aquifer row says "does not apply in Colorado"**, since that aquifer
+  is in Texas only.
+- **Any state or county can now connect its own sources, card by card.**
+  `docs/EXTENDING.md`, Job D, is the step-by-step recipe, and
+  `scripts/check_region.sh` now prints one line per connected source.
+- **Texas lookups are unchanged**, except one display fix everywhere: years in the
+  traffic and development tables no longer show a comma ("2026", not "2,026").
+- **Updating:** run `scripts/stop.sh`, update, then `scripts/launch.sh`.
+
 ## Unreleased: states (Phase C), with Denver, Colorado
 
 - **PropRisk now knows which state an address is in.** Put the state in the address

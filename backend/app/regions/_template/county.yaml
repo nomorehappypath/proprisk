@@ -75,3 +75,13 @@ sample_address: "100 Main St, Example City, XX 00000"   # a real address inside 
 #   query_url: https://example.gov/arcgis/rest/services/Subdivisions/FeatureServer/0/query
 #   name_field: SUBDIV_NAME
 #   # code_field: SUBDIV_ID              # optional
+
+# Historical aerial photos, outside Texas (docs/EXTENDING.md, Job D, step 6).
+# List only years whose licence allows public use; each is an ArcGIS
+# ImageServer that answers exportImage. A county list wins over the state's.
+# historical_aerials:
+#   - year: 2022
+#     image_service: https://example.gov/arcgis/rest/services/Aerials_2022/ImageServer
+#     credit: "Example Region Aerial Photography 2022, CC BY 3.0"
+#     licence: CC BY 3.0
+#     # interim: true                     # optional: not the final release

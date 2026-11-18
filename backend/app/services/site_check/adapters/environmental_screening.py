@@ -175,6 +175,15 @@ def _fetch_outside_texas(
         sess, identity.lat, identity.lng, radius_m,
     )
     state_name = states.name_of(identity.state)
+    from app.regions import sources as region_sources
+
+    own = region_sources.pick(
+        "state_environmental_records", identity.state, identity.county,
+    )
+    if own is not None:
+        return _with_state_records(
+            identity, sess, radius_m, own, echo_records, echo_error,
+        )
     not_connected = f"State environmental records: Not connected for {state_name} yet."
     if echo_error:
         echo_line = "The federal facility check (EPA ECHO) is temporarily unavailable."
@@ -207,6 +216,98 @@ def _fetch_outside_texas(
             "advisory": advisory,
         },
         errors=[f"EPA ECHO: {echo_error}"] if echo_error else [],
+        identifier_used="lat_lng",
+        fetched_at=datetime.now(UTC),
+        advisories=[advisory],
+    )
+
+
+def _with_state_records(
+    identity: PropertyIdentity,
+    sess: requests.Session,
+    radius_m: int,
+    module: Any,
+    echo_records: list[dict[str, Any]],
+    echo_error: str | None,
+) -> AdapterResult:
+    """EPA ECHO plus a state's own environmental-records source (spec 2.6).
+    The state part keeps the keys its card reads; the part's coverage,
+    agency and version ride in `parts.state_records`."""
+    from app.regions import sources as region_sources
+
+    try:
+        state_result = module.fetch(identity, session=sess)
+        state_facts = dict(state_result.normalized_facts or {})
+        state_errors = list(state_result.errors or [])
+        state_coverage = region_sources.settle_coverage(
+            "state_environmental_records", str(state_result.coverage_status.value),
+            state_facts, state_errors,
+        )
+    except Exception as exc:  # a state source failing never fails the card
+        state_facts, state_errors, state_coverage = {}, [str(exc)], "unknown"
+    provider_short = str(getattr(module, "PROVIDER_SHORT", "") or "")
+    part = {
+        "coverage": state_coverage,
+        "provider_name": getattr(module, "PROVIDER_NAME", ""),
+        "provider_short": provider_short,
+        "source_url": state_facts.get("source_url"),
+        "data_as_of": state_facts.get("data_as_of"),
+        "source_module": module.__name__,
+        "source_version": str(getattr(module, "VERSION", 1)),
+        "not_connected": state_facts.get("not_connected") or [],
+    }
+    if echo_error:
+        echo_line = "The federal facility check (EPA ECHO) is temporarily unavailable."
+    elif echo_records:
+        echo_line = (
+            f"{len(echo_records)} federally regulated facilit"
+            f"{'y' if len(echo_records) == 1 else 'ies'} within {radius_m:,} m (EPA ECHO)."
+        )
+    else:
+        echo_line = f"No federally regulated facilities within {radius_m:,} m (EPA ECHO)."
+    state_line = str(state_facts.get("advisory") or "")
+    if state_coverage not in ("covered", "partial"):
+        state_line = (
+            f"State environmental records ({provider_short}) are temporarily "
+            "unavailable."
+        )
+    advisory = f"{echo_line} {state_line}".strip()
+    any_records = bool(echo_records or state_facts.get("any_records"))
+    errors = ([f"EPA ECHO: {echo_error}"] if echo_error else []) + [
+        f"{provider_short}: {e}" for e in state_errors
+    ]
+    facts = {
+        **{k: v for k, v in state_facts.items() if k not in (
+            "provider_name", "provider_short", "source_url", "data_as_of",
+            "advisory", "status",
+        )},
+        "status": "mixed" if any_records else ("partial" if errors else "clear"),
+        "state": identity.state,
+        "state_records": "connected" if state_coverage in ("covered", "partial") else "unavailable",
+        "echo_records": echo_records,
+        "search_radius_m": radius_m,
+        "source_statuses": {
+            **(state_facts.get("source_statuses") or {}),
+            "epa_echo": _source_status(echo_error),
+        },
+        "parts": {**(state_facts.get("parts") or {}), "state_records": part},
+        "embedded_sources": {
+            "state_environmental_records": {
+                "module": part["source_module"], "version": part["source_version"],
+            },
+        },
+        "advisory": advisory,
+    }
+    return AdapterResult(
+        source_id=SOURCE_ID,
+        source_access_status=(
+            SourceAccessStatus.PROGRAMMATIC_PUBLIC_BUT_FRAGILE if errors
+            else SourceAccessStatus.PROGRAMMATIC_PUBLIC
+        ),
+        data_confidence_status=DataConfidenceStatus.SCREENED_INDICATOR,
+        coverage_status=CoverageStatus.PARTIAL if errors else CoverageStatus.COVERED,
+        normalized_facts=facts,
+        errors=errors or None,
         identifier_used="lat_lng",
         fetched_at=datetime.now(UTC),
         advisories=[advisory],

@@ -299,7 +299,7 @@ REGISTRY: dict[str, AdapterRegistration] = {
     # matrix to confirm no regressions.
     "txdot_extended": AdapterRegistration(
         source_id="txdot_extended",
-        states=("TX",),
+        states=(),  # a synthesis: any state whose road sources answer (spec 2.6)
         legacy_origin="fetch_txdot_all_projects + fetch_txdot_crash_data",
         active_in_v0=True,
         provider="txdot",

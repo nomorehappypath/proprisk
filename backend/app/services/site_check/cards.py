@@ -119,6 +119,34 @@ _CARD_TITLES: dict[str, str] = {
     "tax_intel": "Tax / Debt (HB 1378)",
 }
 
+# Neutral title a state's or county's own source (spec 2.6) is shown under,
+# followed by its short agency name: "Schools (CDE)". A Texas result has no
+# provider_short, so a Texas card keeps its title above exactly.
+_NEUTRAL_TITLES: dict[str, str] = {
+    "austin_zoning": "Zoning",
+    "traffic": "Traffic & Roads",
+    "txdot_roadway": "Roads",
+    "txdot_bridges": "Bridges",
+    "txdot_projects": "Road Projects",
+    "txdot_extended": "Transportation Summary",
+    "transit_intel": "Transit",
+    "twdb_ccn": "Utilities",
+    "schools_intel": "Schools",
+    "tax_intel": "Tax / Levies",
+    "zoning_standards": "Zoning standards",
+    "future_land_use": "Future Land Use",
+    "entitlement_pipeline": "Development Activity",
+    "historic_intel": "Historic Preservation",
+}
+
+
+def _card_title(slot: str, facts: dict[str, Any] | None = None) -> str:
+    short = str((facts or {}).get("provider_short") or "").strip()
+    if short and slot in _NEUTRAL_TITLES:
+        return f"{_NEUTRAL_TITLES[slot]} ({short})"
+    return _CARD_TITLES[slot]
+
+
 # Section glyph, ported from the same panel's SectionShell `icon`. Slots the
 # panel has no section for get the nearest sibling's family glyph.
 _CARD_ICONS: dict[str, str] = {
@@ -510,7 +538,8 @@ _KEEP_UPPER = {
     "LP", "LLP", "US", "TX", "FM", "RM", "CR", "IH",
     "SH", "SL", "BS", "PR", "NE", "NW", "SE", "SW", "N", "S", "E", "W",
     "I", "II", "III", "IV", "HOA", "MSD", "TCEQ", "TXDOT", "EPA", "USGS",
-    "NHD", "NWI", "AADT", "ROW", "PDF", "GIS", "AC", "DC", "KV",
+    "NHD", "NWI", "AADT", "ROW", "PDF", "GIS", "AC", "DC", "KV", "U.S",
+    "CDOT", "RTD", "DOLA", "CDE", "CDPHE",
 }
 
 
@@ -693,7 +722,8 @@ def _format_parcel(facts: dict[str, Any]) -> _Content:
     market_value = _fmt_money(facts.get("market_value"))
     neighbours = _num(facts.get("neighboring_parcel_count"))
     candidates = _dicts(facts.get("nearby_candidates"))
-    county_label = f"{county.title()} County" if county else "the county"
+    county_label = (
+        f"{county.split(':')[-1].title()} County" if county else "the county")
 
     if not parcel_id and candidates:
         takeaway = (
@@ -930,7 +960,8 @@ def _format_site_constraints(facts: dict[str, Any]) -> _Content:
     coverage = [
         row for row in _dicts(facts.get("coverage"))
         if _text(row.get("status")) in _CONSTRAINT_VISIBLE_STATUSES
-        or _text(row.get("status")) == "not_connected"
+        or _text(row.get("status")) in (
+            "not_connected", "not_applicable", "unavailable_this_time")
     ]
     findings = _dicts(facts.get("material_findings"))
     degraded = _dicts(facts.get("degraded_sources"))
@@ -960,7 +991,9 @@ def _format_site_constraints(facts: dict[str, Any]) -> _Content:
         water = next(
             (_title_case(row.get("result")) for row in coverage
              if _text(row.get("key")) == "water_wastewater_authority"
-             and _text(row.get("status")) != "not_connected"), None)
+             and _text(row.get("status")) not in (
+                 "not_connected", "not_applicable", "unavailable_this_time")),
+            None)
         if water:
             parts.append(f"water and sewer authority is {water}")
         if frontages:
@@ -1977,7 +2010,7 @@ def _format_entitlement(facts: dict[str, Any]) -> _Content:
             _cell(item.get("project_number")),
             _cell(item.get("project_name")),
             _cell(item.get("project_status")),
-            _cell(_fmt_int(item.get("project_year"))),
+            _cell(_year(item.get("project_year"))),
             _cell(item.get("primary_signal")),
         ] for item in city_records[:8]],
     ))
@@ -2137,7 +2170,8 @@ def _format_plats(facts: dict[str, Any]) -> _Content:
     probable = _text(facts.get("probable_plat_number"))
     gis_record = _as_dict(facts.get("recorded_plat_gis"))
     county = _text(facts.get("county"))
-    county_label = f"{county.title()} County" if county else "the county"
+    county_label = (
+        f"{county.split(':')[-1].title()} County" if county else "the county")
     legal = _plain(clues.get("legal_description")) or _plain(
         _as_dict(deed.get("lookup_inputs")).get("legal_description"))
 
@@ -2306,7 +2340,7 @@ def _format_traffic(aadt_facts: dict[str, Any],
         _row(rows, "Its latest count", _join([
             _fmt_int(station.get("latest_aadt")) and
             f"{_fmt_int(station.get('latest_aadt'))} vehicles a day",
-            _fmt_int(station.get("latest_year")),
+            _year(station.get("latest_year")),
         ], " in "), source_id="txdot_aadt_history")
     if change is not None:
         direction = "Up" if change > 0 else "Down" if change < 0 else "Flat"
@@ -2333,12 +2367,13 @@ def _format_traffic(aadt_facts: dict[str, Any],
         "Traffic over time at the nearest long-running station",
         ["Year", "Vehicles per day"],
         [[
-            _cell(_fmt_int(point.get("year"))),
+            _cell(_year(point.get("year"))),
             _cell(_fmt_int(point.get("aadt"))),
         ] for point in points[:12]],
     ))
     content.add_link(_link(
-        "TxDOT traffic count data", history_facts.get("source_url")))
+        f"{history_facts.get('provider_short') or 'TxDOT'} traffic count data",
+        history_facts.get("source_url")))
     return content
 
 
@@ -2475,6 +2510,11 @@ def _format_bridges(facts: dict[str, Any]) -> _Content:
     nearest_mi = _num(facts.get("nearest_distance_mi")) or _num(
         nearest.get("distance_mi"))
     posted = [item for item in items if _text(item.get("load_restriction")) == "Y"]
+    # A state that records only posted bridges (spec 2.6): the others are
+    # "posting unknown", never "none posted".
+    unknown_posting = any(
+        _text(item.get("posting_status")) == "unknown" for item in items)
+    agency = _text(facts.get("provider_short")) or "the state"
 
     if items:
         carries = _title_case(nearest.get("carries"))
@@ -2493,6 +2533,8 @@ def _format_bridges(facts: dict[str, Any]) -> _Content:
             + ("is" if len(posted) == 1 else "are")
             + " posted with a weight limit."
             if posted else
+            f" Whether any is weight-posted is not published by {agency}."
+            if unknown_posting else
             " None of them is posted with a weight limit."
         )
     else:
@@ -2504,7 +2546,10 @@ def _format_bridges(facts: dict[str, Any]) -> _Content:
         _row(rows, "Nearest one", f"{nearest_mi:.2f} mi")
     _row(rows, "Nearest bridge carries", _title_case(nearest.get("carries")))
     _row(rows, "It crosses", _title_case(nearest.get("intersects")))
-    _row(rows, "Weight limits posted", f"{len(posted):,}" if posted
+    _row(rows, "Weight limits posted", (
+        f"{len(posted):,}" + (f"; the rest: posting not published by {agency}"
+                              if unknown_posting else "")) if posted
+         else f"Not published by {agency}" if unknown_posting
          else "None posted")
     _row(rows, "Load rating on the nearest",
          _num(nearest.get("inventory_rating_us_tons")) and
@@ -2522,9 +2567,58 @@ def _format_bridges(facts: dict[str, Any]) -> _Content:
             _cell(_fmt_int(item.get("worst_cond_rtg")) and
                   f"{_fmt_int(item.get('worst_cond_rtg'))} of 9"),
             "Posted" if _text(item.get("load_restriction")) == "Y"
+            else "Posting unknown"
+            if _text(item.get("posting_status")) == "unknown"
             else "None posted",
         ] for item in ranked[:8]],
     ))
+    return content
+
+
+def _format_projects_ranged(
+    facts: dict[str, Any], items: list[dict[str, Any]],
+    ranked: list[dict[str, Any]], total: int, agency: str,
+) -> _Content:
+    nearest = ranked[0] if ranked else {}
+    takeaway = (
+        f"{_plural(total, 'state road project')} mapped nearby; the nearest is "
+        f"{_plain(nearest.get('description')) or 'unnamed'}"
+        + (f" ({_fmt_miles(nearest.get('distance_mi'))} away)"
+           if _fmt_miles(nearest.get("distance_mi")) else "") + "."
+    )
+    content = _Content(takeaway)
+    rows = content.facts
+    _row(rows, "Road projects nearby", f"{total:,}")
+    has_phase = any(_text(item.get("phase")) for item in items)
+    _row(rows, "Already under construction", (
+        f"{sum(1 for i in items if 'underway' in (_text(i.get('phase')) or '').lower()):,}"
+        if has_phase else f"Not published by {agency}"))
+    _row(rows, "Nearest project", _plain(nearest.get("description")))
+    _row(rows, "Its published cost range", _plain(nearest.get("cost_range")),
+         hint=f"{agency} publishes cost as a range, not an estimate.")
+    _row(rows, "Contract awards", f"Not published by {agency}")
+    content.add_table(_table(
+        "Road projects nearby",
+        ["Project", "Stage", "Work", "Between", "Cost range", "Distance",
+         "Project number"],
+        [[
+            _cell(item.get("description")),
+            _cell(_join([
+                _plain(item.get("phase")),
+                _plain(item.get("project_stage")),
+                _plain(item.get("project_status")),
+            ])),
+            _cell(item.get("work_type")),
+            _cell(_join([
+                _plain(item.get("limits_from")),
+                _plain(item.get("limits_to")),
+            ], " to ")),
+            _cell(item.get("cost_range")),
+            _cell(_fmt_miles(item.get("distance_mi"))),
+            _cell(item.get("csj") or item.get("project_number")),
+        ] for item in ranked],
+    ))
+    content.add_link(_link(f"{agency} project data", facts.get("source_url")))
     return content
 
 
@@ -2542,6 +2636,12 @@ def _format_projects(facts: dict[str, Any]) -> _Content:
         if "underway" in (_text(item.get("phase")) or "").lower()
     ]
 
+    agency = _text(facts.get("provider_short"))
+    if agency and items and not any(
+            _num(item.get("estimated_cost_usd")) for item in items):
+        # A state that publishes cost only as a range (spec 2.6): never rank
+        # by an invented number; describe the nearest project instead.
+        return _format_projects_ranged(facts, items, ranked, total, agency)
     if items:
         name = _plain(biggest.get("description"))
         cost = _fmt_money(biggest.get("estimated_cost_usd"))
@@ -2698,12 +2798,16 @@ def _format_txdot_extended(facts: dict[str, Any]) -> _Content:
     _row(rows, "Bridge limits", {
         "no_posted_bridge_constraint_in_screened_set":
             "None posted in the bridges nearby",
+        "posting_unknown_in_screened_set":
+            "Weight posting not published for the bridges nearby",
     }.get(_text(bridges.get("constraint_level")) or "",
         _labelize(_text(bridges.get("constraint_level")) or "") or None))
     _row(rows, "Crash records",
          "Not included — the state crash extract needs credentials, so this "
          "is not a no-crash result"
          if _text(crash.get("integration_status")) == "credentials_not_configured"
+         else _plain(crash.get("read"))
+         if _text(crash.get("integration_status")) == "not_connected"
          else _labelize(_text(crash.get("integration_status")) or "") or None)
 
     content.add_table(_table(
@@ -2725,6 +2829,8 @@ def _format_txdot_extended(facts: dict[str, Any]) -> _Content:
             _cell(_fmt_miles(item.get("distance_mi"))),
             _join([
                 "Posted" if _text(item.get("load_restriction")) == "Y"
+                else "Weight posting unknown"
+                if _text(item.get("posting_status")) == "unknown"
                 else "No weight limit posted",
                 _fmt_int(item.get("worst_cond_rtg")) and
                 f"condition {_fmt_int(item.get('worst_cond_rtg'))} of 9",
@@ -2764,8 +2870,38 @@ def _format_transit(facts: dict[str, Any]) -> _Content:
             if bus_buffer and rail_buffer else
             "No public transit stops were found near this site."
         )
+    parts = _as_dict(facts.get("parts"))
+
+    def unchecked(part: str) -> bool:
+        # A part a state's source could not answer (spec 2.6) is unknown.
+        return _text(_as_dict(parts.get(part)).get("coverage")) in (
+            "not_connected", "not_applicable")
+
+    if unchecked("bus_stops") or unchecked("rail_stations"):
+        takeaway = _join([
+            "Bus stops were not checked this time" if unchecked("bus_stops")
+            else _plural(bus_count, "bus stop") + " nearby",
+            "rail stations were not checked this time" if unchecked("rail_stations")
+            else _plural(rail_count, "rail station") + " nearby",
+        ], "; ") + "."
     content = _Content(takeaway)
     rows = content.facts
+    if unchecked("bus_stops"):
+        _row(rows, "Bus stops nearby", "Not checked this time")
+    if unchecked("rail_stations"):
+        _row(rows, "Rail stations nearby", "Not checked this time")
+    if unchecked("bus_stops") or unchecked("rail_stations"):
+        for key, label, near in (
+            ("bus_stops", "Bus stops nearby", nearest_bus),
+            ("rail_stations", "Rail stations nearby", nearest_rail),
+        ):
+            if not unchecked(key):
+                count = bus_count if key == "bus_stops" else rail_count
+                _row(rows, label, f"{count:,}")
+                _row(rows, f"Nearest {'bus stop' if key == 'bus_stops' else 'rail station'}",
+                     _join([_title_case(near.get("name")),
+                            _fmt_miles(near.get("distance_mi"))]))
+        return content
     _row(rows, "Bus stops nearby", f"{bus_count:,}" if bus_count else "None")
     _row(rows, "Nearest bus stop", _join([
         _title_case(nearest_bus.get("name")),
@@ -2845,10 +2981,20 @@ def _format_twdb(facts: dict[str, Any], district_facts: dict[str, Any],
         municipal_candidate = f"City of {city}"
 
     parts: list[str] = []
+    sewer_part = _as_dict(_as_dict(facts.get("parts")).get("sewer"))
+    sewer_unknown = not sewer and _text(sewer_part.get("coverage")) in (
+        "not_connected", "not_applicable")
     if water:
         parts.append(f"Water comes from {water}")
     if sewer:
         parts.append(f"sewer from {sewer}")
+    elif sewer_unknown:
+        # The state's sewer source does not cover this site (spec 2.6): say
+        # so, never "no sewer area covers it".
+        parts.append(
+            "the sewer provider is not connected here"
+            + (f" ({_text(sewer_part.get('note'))})" if _text(sewer_part.get("note")) else "")
+        )
     elif candidates:
         parts.append(
             f"no certificated sewer area covers the site, but it sits inside "
@@ -2871,8 +3017,14 @@ def _format_twdb(facts: dict[str, Any], district_facts: dict[str, Any],
     content = _Content(takeaway)
     rows = content.facts
     _row(rows, "Water provider", ", ".join(water_all) if water_all else water)
-    _row(rows, "Sewer provider", ", ".join(sewer_all) if sewer_all
-         else (sewer or municipal_candidate or "No certificated area covers this site"))
+    if not sewer_all and sewer_unknown:
+        # The sewer source does not cover this site (spec 2.6): unknown,
+        # never "no area covers it".
+        _row(rows, "Sewer provider",
+             f"Not connected here: {_text(sewer_part.get('note')) or 'no sewer source'}")
+    else:
+        _row(rows, "Sewer provider", ", ".join(sewer_all) if sewer_all
+             else (sewer or municipal_candidate or "No certificated area covers this site"))
     _row(rows, "Holds the water certificate", ", ".join(legal))
     _row(rows, "Actually runs the water system", ", ".join(operating))
     if nearest_provider:
@@ -2911,9 +3063,26 @@ def _format_twdb(facts: dict[str, Any], district_facts: dict[str, Any],
         [[
             _cell(_title_case(item.get("provider"))),
             _cell(_title_case(item.get("service"))),
-            _cell(_labelize(_text(item.get("authority")) or "")),
+            _cell(
+                ("Contains the site" if item.get("contains_site") else "Nearby only")
+                if "contains_site" in item
+                else _labelize(_text(item.get("authority")) or "")),
         ] for item in _dicts(facts.get("service_territories"))[:8]],
     ))
+    mains = _dicts(facts.get("sewer_mains"))
+    if mains:
+        content.add_table(_table(
+            f"Sanitary sewer mains near the site ({_title_case(mains[0].get('provider'))})",
+            ["Distance", "Diameter", "Material", "Owner"],
+            [[
+                _cell(f"{_num(m.get('distance_m')):,.0f} m"
+                      if _num(m.get("distance_m")) is not None else None),
+                _cell(f"{_num(m.get('diameter_in')):g} in"
+                      if _num(m.get("diameter_in")) else None),
+                _cell(m.get("material")),
+                _cell(m.get("owner")),
+            ] for m in mains[:8]],
+        ))
     return content
 
 
@@ -3146,7 +3315,7 @@ def _format_schools(facts: dict[str, Any]) -> _Content:
             schools, key=lambda s: _num(s.get("distance_mi")) or 99)[:8]],
     ))
     content.add_link(_link(
-        "School ratings (txschools.gov)",
+        f"School ratings ({_text(facts.get('provider_short')) or 'txschools.gov'})",
         facts.get("report_card_lookup_url")))
     return content
 
@@ -3243,12 +3412,25 @@ def _format_environmental(facts: dict[str, Any]) -> _Content:
         )
     content = _Content(takeaway)
     rows = content.facts
+    closed_releases = facts.get("closed_release_count")
     rows.append(_fact(
         "Fuel & storage tank records",
         "Temporarily unavailable — not an all-clear" if pst_unavailable
+        else (
+            # A state that lists open and closed releases (spec 2.6).
+            (f"{len(psts)} open release(s) nearby" if psts
+             else "No open releases nearby")
+            + f"; {int(_num(closed_releases) or 0)} closed on file"
+        ) if closed_releases is not None
         else "None found nearby" if not psts
         else f"{len(psts)} nearby",
     ))
+    for part_key, part in _as_dict(facts.get("parts")).items():
+        part = _as_dict(part)
+        if part_key != "state_records" and _text(part.get("coverage")) in (
+                "not_connected", "not_applicable"):
+            _row(rows, _labelize(part_key).capitalize() + " records",
+                 _text(part.get("note")) or "Not connected yet")
     rows.append(_fact(
         "Federally regulated facilities",
         "Temporarily unavailable — not an all-clear" if echo_unavailable
@@ -3390,6 +3572,9 @@ def _format_historic(facts: dict[str, Any]) -> _Content:
     ))
     content.add_link(_link(
         "Texas Historical Commission Atlas", facts.get("thc_atlas_url")))
+    content.add_link(_link(
+        _text(facts.get("state_atlas_label")) or "State historic records",
+        facts.get("state_atlas_url")))
     return content
 
 
@@ -3585,8 +3770,55 @@ def _format_osm(facts: dict[str, Any]) -> _Content:
     return content
 
 
+def _format_tax_levies(facts: dict[str, Any]) -> _Content:
+    """A state that publishes property-tax levies per taxing unit (spec 2.6,
+    Colorado's DOLA map). A bond levy is a tax rate that pays bonds — not the
+    amount of debt outstanding."""
+    levies = _dicts(facts.get("levies"))
+    total = _num(facts.get("total_mills"))
+    year = _text(facts.get("tax_year")) or next(
+        (_text(item.get("tax_year")) for item in levies if item.get("tax_year")), None)
+    agency = _text(facts.get("provider_short")) or "the state"
+    if levies:
+        takeaway = (
+            f"{len(levies)} taxing unit(s) levy property tax here"
+            + (f", {total:,.3f} mills in total" if total is not None else "")
+            + (f" for tax year {year}" if year else "") + "."
+        )
+    else:
+        takeaway = f"No taxing units were returned by {agency} for this point."
+    content = _Content(takeaway)
+    rows = content.facts
+    if total is not None:
+        _row(rows, "Total levy", f"{total:,.3f} mills",
+             hint="One mill is $1 of tax per $1,000 of assessed value.")
+    bond_total = sum(_num(item.get("bond_mills")) or 0 for item in levies)
+    if levies:
+        _row(rows, "Of which bond levies", f"{bond_total:,.3f} mills",
+             hint="A bond levy pays for voter-approved bonds; it is a tax "
+                  "rate, not the amount of debt outstanding.")
+    if year:
+        _row(rows, "Tax year", year)
+    content.add_table(_table(
+        "Property tax levies",
+        ["Taxing unit", "Total levy (mills)", "Bond levy (mills)"],
+        [[
+            _cell(_title_case(item.get("name"))),
+            _cell(f"{_num(item.get('total_mills')):,.3f}"
+                  if _num(item.get("total_mills")) is not None else None),
+            _cell(f"{_num(item.get('bond_mills')):,.3f}"
+                  if _num(item.get("bond_mills")) is not None else None),
+        ] for item in levies[:15]],
+    ))
+    content.add_link(_link(
+        f"{agency} property tax data", facts.get("source_url")))
+    return content
+
+
 def _format_tax(facts: dict[str, Any]) -> _Content:
     """Panel: TaxSection."""
+    if "levies" in facts:
+        return _format_tax_levies(facts)
     results = _dicts(facts.get("results"))
     queried = int(_num(facts.get("districts_queried")) or len(results))
     matched = int(_num(facts.get("districts_matched")) or 0)
@@ -4022,6 +4254,18 @@ def _summary_schools(facts: dict[str, Any]) -> str | None:
 
 
 def _summary_transit(facts: dict[str, Any]) -> str | None:
+    if facts.get("provider_short"):
+        # A state's or county's own transit source (spec 2.6): a part that
+        # did not answer is unknown, never zero.
+        def count(key: str, part: str, label: str) -> str:
+            if facts.get(key) is None or (
+                (facts.get("parts") or {}).get(part, {}).get("coverage")
+                in ("not_connected", "not_applicable")
+            ):
+                return f"{label}: not checked"
+            return f"{int(_num(facts.get(key)) or 0)} {label}"
+        return (f"{count('bus_stops_count', 'bus_stops', 'bus stops')} · "
+                f"{count('rail_stations_count', 'rail_stations', 'rail stations')}")
     bus = int(_num(facts.get("bus_stops_count")) or 0)
     rail = int(_num(facts.get("rail_stations_count")) or 0)
     if bus + rail == 0:
@@ -4062,7 +4306,7 @@ def _summary_entitlement(facts: dict[str, Any], coverage: str) -> str | None:
     otherwise the row would say "manual city case check" over a card that
     lists 41 plats and 2,000 lots."""
     del coverage  # what was found decides the subtitle, not how it was found
-    jurisdiction = _text(facts.get("jurisdiction")) or "City"
+    jurisdiction = _title_case(facts.get("jurisdiction")) or "City"
     records = _dicts(facts.get("city_entitlement_records"))
     if records:
         return f"{jurisdiction} · {len(records)} city cases"
@@ -4089,6 +4333,11 @@ def _summary_entitlement(facts: dict[str, Any], coverage: str) -> str | None:
 
 
 def _summary_tax(facts: dict[str, Any]) -> str | None:
+    if "levies" in facts:
+        total = _num(facts.get("total_mills"))
+        count = len(_dicts(facts.get("levies")))
+        return (f"{count} taxing units"
+                + (f" · {total:,.3f} mills" if total is not None else ""))
     matched = int(_num(facts.get("districts_matched")) or 0)
     queried = int(_num(facts.get("districts_queried")) or 0)
     year = _text(facts.get("fiscal_year"))
@@ -4399,6 +4648,24 @@ def _build_card(
     primary_id, primary = present[0]
     status = _card_status(primary, present)
     facts_dict = _facts_of(primary)
+    road_inputs_failed = "did_not_answer" in _as_dict(
+        facts_dict.get("input_status")).values()
+    if (facts_dict.get("source_module") or road_inputs_failed) and str(
+            primary.get("coverage_status") or "") not in ("covered", "partial"):
+        # A state's or county's own source that did not answer (spec 2.6):
+        # nothing on this card was checked, so no formatter may turn the
+        # missing answers into "none" or "0".
+        agency = _text(facts_dict.get("provider_short")) or (
+            "The road sources" if road_inputs_failed else "The source")
+        card = _empty_card(
+            slot, "issue",
+            f"{agency} did not answer this time, so nothing on this card was "
+            "checked. This is not a \"none found\" result; try again later.",
+            [_provenance(sid, result) for sid, result in present],
+        )
+        card["title"] = _card_title(slot, facts_dict)
+        card["retryable"] = any(sid in retry_ids for sid, _ in present)
+        return card
     extras = {
         sid: _facts_of(_as_dict(results.get(sid)))
         for sid in ("txdot_aadt_history", "district_overlays",
@@ -4486,7 +4753,7 @@ def _build_card(
 
     return {
         "card_key": slot,
-        "title": _CARD_TITLES[slot],
+        "title": _card_title(slot, facts_dict),
         "icon": _CARD_ICONS.get(slot, "•"),
         "order": _SECTION_INDEX.get(slot, len(_SECTION_ORDER)),
         "summary": summary,
@@ -4565,7 +4832,8 @@ def _ha_by_severity(signals: list[dict[str, Any]]) -> list[dict[str, Any]]:
     )
 
 
-def _ha_era_images(eras: list[dict[str, Any]]) -> list[dict[str, str]]:
+def _ha_era_images(eras: list[dict[str, Any]],
+                   attribution: str | None = None) -> list[dict[str, str]]:
     """The filmstrip, oldest first — one entry per era that actually
     resolved. An unavailable year contributes no picture (and its absence is
     explained in the advisory, never implied to mean empty land)."""
@@ -4584,9 +4852,10 @@ def _ha_era_images(eras: list[dict[str, Any]]) -> list[dict[str, str]]:
             "url": url,
             "label": year or "",
             "caption": (
-                f"Aerial photo from {year}." if year else "Aerial photo."
+                (f"Aerial photo from {year}" if year else "Aerial photo")
+                + (" (interim release)." if entry.get("interim") else ".")
             ),
-            "attribution": _HA_ATTRIBUTION,
+            "attribution": attribution or _HA_ATTRIBUTION,
         })
     return images
 
@@ -4648,11 +4917,15 @@ def _historical_aerials_card(run: Any, derived: dict[str, Any]) -> dict[str, Any
         )
 
     eras = [_as_dict(era) for era in _as_list(payload.get("eras"))]
-    images = _ha_era_images(eras)
+    images = _ha_era_images(eras, _text(payload.get("attribution")))
     checked_at = _iso(getattr(run, "finished_at", None))
+    in_texas = (getattr(run, "state", None) or "TX").upper() == "TX"
     sources = [{
         "source_id": "historical_aerials",
-        "source_name": _SOURCE_NAMES["historical_aerials"],
+        "source_name": (
+            _SOURCE_NAMES["historical_aerials"] if in_texas
+            else f"{state_names.name_of((run.state or '').upper())} historical aerial photos"
+        ),
         "source_url": None,
         "checked_at": checked_at if images else None,
         "from_cache": str(meta.get("cache") or "") in ("hit", "stale"),

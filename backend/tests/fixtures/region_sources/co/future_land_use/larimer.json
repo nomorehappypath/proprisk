@@ -1,0 +1,26 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PLAN_BPFUTUREPLACES_A/FeatureServer/101|-104.9988,39.7478|None": [
+   {
+    "attributes": {
+     "FUT_NBHD_CONTEXT": "DOWNTOWN",
+     "GLOBALID": "0313c04d-f7fa-4194-9e36-86867fe4738b",
+     "GROWTH_FUTURE": "Regional centers",
+     "OBJECTID": 268861,
+     "PLCTYPE_FUT": "Regional Center",
+     "Shape__Area": 3124.86279296875,
+     "Shape__Length": 299.99281264548625
+    }
+   }
+  ]
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_PLAN_BPFUTUREPLACES_A/FeatureServer/101": {
+   "editingInfo": {
+    "dataLastEditDate": 1786127918889,
+    "lastEditDate": 1786129042404,
+    "schemaLastEditDate": 1786129042404
+   }
+  }
+ }
+}

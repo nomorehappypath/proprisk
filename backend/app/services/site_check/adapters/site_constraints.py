@@ -272,7 +272,10 @@ def fetch(
         "market_context": market,
         "source_links": [
             {"label": "PHMSA NPMS Public Viewer", "url": _NPMS_PUBLIC_VIEWER},
-            {"label": "TCEQ Edwards Aquifer Viewer", "url": _TCEQ_EDWARDS_VIEWER},
+            *(
+                [{"label": "TCEQ Edwards Aquifer Viewer", "url": _TCEQ_EDWARDS_VIEWER}]
+                if (identity.state or "TX") == "TX" else []
+            ),
             {"label": "USFWS IPaC", "url": _USFWS_IPAC},
         ],
         "mapped_feature_count": mapped_count,
@@ -1527,6 +1530,7 @@ def _coverage_ledger(
         len(districts.get(key) or []) for key in (
             "mud_districts", "wcid_districts", "pid_districts",
             "tirz_districts", "esd_districts", "school_districts",
+            "metro_districts",
         )
     )
 
@@ -1671,14 +1675,71 @@ def _coverage_ledger(
             "Refresh later; retained upstream facts remain available.",
         ))
     if state != "TX":
-        # Texas inputs (TWDB/PUC/TCEQ service areas, TxDOT roads and
-        # projects, the Edwards Aquifer map) were not checked here: say so,
-        # never "no mapped feature" or "0 found".
-        not_connected = f"Not connected for {states.name_of(state)} yet"
-        for entry in entries:
-            if entry["key"] in ("water_wastewater_authority", "future_row", "edwards"):
+        _adjust_for_other_state(entries, results, state, driveways, signals)
+    return entries
+
+
+def _adjust_for_other_state(
+    entries: list[dict[str, Any]],
+    results: dict[str, Any],
+    state: str,
+    driveways: list[Any],
+    signals: list[Any],
+) -> None:
+    """Outside Texas a row keeps its finding only when the state's own source
+    for it answered (spec 2.6); otherwise it says not connected, never "no
+    mapped feature" or "0 found". The Edwards Aquifer is in Texas only."""
+    name = states.name_of(state)
+    not_connected = f"Not connected for {name} yet"
+
+    def answered(slot: str) -> dict[str, Any] | None:
+        raw = results.get(slot) if isinstance(results, dict) else None
+        facts = _facts(results, slot)
+        if not facts.get("source_module"):
+            return None
+        if (raw or {}).get("coverage_status") not in ("covered", "partial"):
+            return {"_failed": True, **facts}
+        return facts
+
+    ccn = answered("twdb_ccn")
+    roads = answered("txdot_roadway")
+    projects = answered("txdot_projects")
+    for entry in entries:
+        key = entry["key"]
+        if key == "edwards":
+            entry.update(
+                status="not_applicable",
+                result=f"The Edwards Aquifer is in Texas; it does not apply in {name}.",
+                source="",
+            )
+        elif key == "water_wastewater_authority":
+            if ccn is None:
                 entry.update(status="not_connected", result=not_connected, source="")
-            elif entry["key"] == "access_inventory":
+                continue
+            if ccn.get("_failed"):
+                entry.update(
+                    status="unavailable_this_time",
+                    result=f"{ccn.get('provider_name') or 'The utility source'} did not answer this time",
+                    source=str(ccn.get("provider_name") or ""),
+                )
+                continue
+            entry["source"] = str(ccn.get("provider_name") or "")
+            if not ccn.get("service_territories"):
+                entry["result"] = "No service area containing the site was returned"
+            sewer = (ccn.get("parts") or {}).get("sewer") or {}
+            if sewer.get("coverage") in ("not_connected", "not_applicable"):
+                entry["result"] += f"; sewer provider: {sewer.get('note') or not_connected.lower()}"
+        elif key == "wastewater_mains" and ccn and ccn.get("sewer_mains") is not None:
+            mains = ccn.get("sewer_mains") or []
+            agency = str(
+                (mains[0] if mains else {}).get("provider") or "the city")
+            entry.update(
+                status="mapped_screening_evidence" if mains else entry["status"],
+                result=f"{len(mains)} sanitary main(s) mapped by {agency} near the site; {entry['result']}",
+                source=f"{agency} sanitary mains; OpenStreetMap",
+            )
+        elif key == "access_inventory":
+            if roads is None or roads.get("_failed"):
                 entry.update(
                     result=(
                         f"{len(driveways)} mapped driveway(s), {len(signals)} "
@@ -1686,7 +1747,29 @@ def _coverage_ledger(
                     ),
                     source="OpenStreetMap",
                 )
-    return entries
+            else:
+                short = str(roads.get("provider_short") or "state")
+                entry.update(
+                    result=entry["result"].replace("TxDOT", short),
+                    source=f"{roads.get('provider_name') or short} and OpenStreetMap",
+                )
+        elif key == "future_row":
+            if projects is not None and projects.get("_failed"):
+                entry.update(
+                    status="unavailable_this_time",
+                    result=f"{projects.get('provider_name') or 'The project source'} did not answer this time",
+                    source=str(projects.get("provider_name") or ""),
+                )
+            elif projects is None:
+                entry.update(status="not_connected", result=not_connected, source="")
+            else:
+                entry.update(
+                    result=(
+                        f"{entry['result']}; no planned right-of-way layer is "
+                        f"published in {name}"
+                    ),
+                    source=str(projects.get("provider_name") or ""),
+                )
 
 
 def _no_coordinates() -> AdapterResult:

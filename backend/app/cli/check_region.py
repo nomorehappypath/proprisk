@@ -387,6 +387,46 @@ def check_county(report: Report, state: str, key: str, county: dict[str, Any]) -
     from app.regions import loader
 
     judge_level(report, loader.county_key(state, key), county, results)
+    check_sources(report, state, key, results)
+
+
+def check_sources(report: Report, state: str, county: str, results: dict[str, Any]) -> None:
+    """One line per card a state or county connects with its own source
+    (spec 2.6): connected, or FAIL naming what is missing."""
+    from app.regions import sources
+    from app.services.site_check import card_fields
+
+    modules = {**sources.modules_for(state), **sources.modules_for(state, county)}
+    if not modules:
+        return
+    print("  own sources (one line per card):")
+    for slot, module in sorted(modules.items()):
+        if slot in card_fields.EMBEDDED:
+            parent = _facts(results, card_fields.EMBEDDED[slot])
+            part = (parent.get("parts") or {}).get(card_fields.PART_NAME[slot]) or {}
+            facts = {**parent, **part}
+            coverage = str(part.get("coverage") or "")
+            module_seen = part.get("source_module")
+        else:
+            raw = results.get(slot) if isinstance(results, dict) else None
+            facts = _facts(results, slot)
+            coverage = str((raw or {}).get("coverage_status") or "")
+            module_seen = facts.get("source_module")
+        label = f"{slot} ({getattr(module, 'PROVIDER_SHORT', '') or module.__name__})"
+        if module_seen != module.__name__:
+            report.fail(f"{label}: the lookup did not use this source")
+            continue
+        if coverage not in ("covered", "partial"):
+            report.fail(f"{label}: answered '{coverage or 'nothing'}' at the sample address")
+            continue
+        missing = [
+            field for field in (*card_fields.REQUIRED.get(slot, ()), *card_fields.STANDARD)
+            if facts.get(field) in (None, "")
+        ]
+        if missing:
+            report.fail(f"{label}: missing {', '.join(missing)}")
+            continue
+        report.ok(f"{label}: connected, data as of {facts.get('data_as_of')}")
 
 
 def run_settings_tests(report: Report) -> None:

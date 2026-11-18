@@ -10,3 +10,13 @@ search_box: [-110.0, 30.0, -100.0, 40.0]   # west, south, east, north (longitude
 # census_centroids: bg_centroids_00.json   # optional; the population card is "not connected" without it
 statewide_summary:       # optional; the lines shown on Settings under "Statewide sources"
   - Example statewide source
+
+# Historical aerial photos, outside Texas (docs/EXTENDING.md, Job D, step 6).
+# List only years whose licence allows public use; each is an ArcGIS
+# ImageServer that answers exportImage. A county list wins over the state's.
+# historical_aerials:
+#   - year: 2022
+#     image_service: https://example.gov/arcgis/rest/services/Aerials_2022/ImageServer
+#     credit: "Example Region Aerial Photography 2022, CC BY 3.0"
+#     licence: CC BY 3.0
+#     # interim: true                     # optional: not the final release

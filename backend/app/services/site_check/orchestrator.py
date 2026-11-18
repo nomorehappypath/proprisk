@@ -49,6 +49,7 @@ try:  # pragma: no cover - trivial import guard
     from app.services.site_check.narratives import build_narratives
 except ImportError:  # narratives module not landed yet
     build_narratives = None
+from app.regions import sources as region_sources
 from app.services import audit
 from app.services.site_check import registry, usage
 from app.services.site_check.adapters._base import (
@@ -63,7 +64,10 @@ from app.services.site_check.contract import (
     SourceAccessStatus,
 )
 from app.services.site_check.entitlement_reader import build_entitlement_reads
-from app.services.site_check.historical_aerials import build_historical_aerials
+from app.services.site_check.historical_aerials import (
+    build_historical_aerials,
+    region_has_aerials,
+)
 from app.services.site_check.identity import PropertyIdentity
 
 log = logging.getLogger("propdesk.site_check.orchestrator")
@@ -289,29 +293,55 @@ def _emit_source_progress(
 
 
 def _load_adapter_fetch(source_id: str):
-    """Returns the `fetch` callable for the adapter module
-    `app.services.site_check.adapters.<source_id>`. Inactive
-    adapters' `fetch` raises AdapterInactiveError if invoked —
-    the orchestrator's dispatch path short-circuits to
-    `stub_inactive_result` BEFORE calling, so this is only
-    invoked for active adapters."""
+    """Returns the `fetch` callable for a slot.
+
+    Per lookup it asks `regions.sources.pick` first: a state's or county's
+    own module for this slot answers when one exists (spec 2.6). Otherwise
+    the built-in adapter `app.services.site_check.adapters.<source_id>`
+    answers when it covers the lookup's state; else "Not connected for
+    <State> yet". Inactive adapters' `fetch` raises AdapterInactiveError
+    if invoked — the orchestrator short-circuits those before calling."""
     module = importlib.import_module(
         f"app.services.site_check.adapters.{source_id}",
     )
     fetch = module.fetch
     covered = registry.get(source_id).states if source_id in registry.REGISTRY else ()
-    if not covered:
-        return fetch
 
-    def fetch_if_covered(identity, *args, **kwargs):
-        # A source tied to some states (today: Texas-only sources) is never
-        # called for an address elsewhere — on every path, retries included.
+    def fetch_for_state(identity, *args, **kwargs):
+        # On every path, retries included: a state's own source first; a
+        # source tied to other states (Texas-only today) is never called.
         state = getattr(identity, "state", "TX") or "TX"
-        if state in covered:
+        own = region_sources.pick(
+            source_id, state, getattr(identity, "county", None),
+        )
+        if own is not None:
+            return run_region_source(own, source_id, identity, *args, **kwargs)
+        if not covered or state in covered:
             return fetch(identity, *args, **kwargs)
         return not_connected_result(source_id, state)
 
-    return fetch_if_covered
+    return fetch_for_state
+
+
+def run_region_source(module, source_id: str, identity, *args, **kwargs) -> AdapterResult:
+    """Run a state's or county's source module and stamp where it came from."""
+    result = module.fetch(identity, *args, **kwargs)
+    facts = dict(result.normalized_facts or {})
+    facts.setdefault("provider_name", getattr(module, "PROVIDER_NAME", ""))
+    facts["source_module"] = module.__name__
+    facts["source_version"] = getattr(module, "VERSION", 1)
+    facts.setdefault("state", getattr(identity, "state", "") or "")
+    result.normalized_facts = facts
+    settled = region_sources.settle_coverage(
+        source_id, result.coverage_status.value, facts, result.errors,
+    )
+    if settled != result.coverage_status.value:
+        result.coverage_status = CoverageStatus(settled)
+        if settled == "manual_verification_required":
+            result.data_confidence_status = DataConfidenceStatus.UNKNOWN
+    if result.source_id != source_id:
+        result.source_id = source_id
+    return result
 
 
 def not_connected_result(source_id: str, state: str) -> AdapterResult:
@@ -2193,8 +2223,13 @@ def _collect(
     # lost its lease stops BEFORE the provider calls (§7.4), exactly like
     # every other checkpoint.
     run_state = (getattr(run, "state", None) or "TX").upper()
-    if run_state != "TX" and getattr(settings_obj, "historical_aerials_enabled", True):
-        # The historical photo archive (TxGIO) covers Texas only.
+    if (
+        run_state != "TX"
+        and getattr(settings_obj, "historical_aerials_enabled", True)
+        and not region_has_aerials(run_state, getattr(run, "county", None))
+    ):
+        # The Texas archive (TxGIO) covers Texas only; another state or county
+        # connects its own photo years in its region file (spec 2.6).
         derived["historical_aerials_meta"] = {
             "status": "not_connected", "state": run_state,
         }

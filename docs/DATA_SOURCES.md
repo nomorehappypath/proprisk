@@ -51,6 +51,27 @@ for which counties and cities each one actually covers today.
 | entitlement_reader (AI step) | AI read of city planning pages, every case re-checked | OpenAI web search, city pages | openai | cities with a case portal |
 | narratives (AI step) | plain-English summary per card | OpenAI | openai | every card |
 
+## A state's or county's own sources
+
+Outside Texas, a card's slot can be answered by the state's or the county's own
+source (`backend/app/regions/<state>/sources/`, recipe in `docs/EXTENDING.md`,
+Job D). All need no key. Colorado and Denver today:
+
+| Slot | Colorado / Denver source | Data as of |
+|---|---|---|
+| txdot_aadt | FHWA HPMS Colorado 2025 (geo.dot.gov); DRCOG 2021–2025 counts | 2020–2025 |
+| txdot_aadt_history | CDOT AADT, all years (state highways) | 1997–2025 |
+| txdot_roadway | FHWA HPMS Colorado 2025 | 2025 |
+| txdot_projects | CDOT GoSheet projects and Ten-Year Plan | layer edit date |
+| txdot_bridges | National Bridge Inventory (geo.dot.gov); CDOT condition ratings and weight limits | 2023–2026 |
+| transit_intel (Denver) | RTD bus stops and light-rail stations (CDOT-hosted) | 2021–2022 |
+| austin_zoning, zoning_standards, future_land_use, entitlement_pipeline, historic_intel (Denver) | Denver Open Data: zoning, Denver Zoning Code (curated), Blueprint Denver, rezonings, site plans, permits, landmarks | each layer's edit date |
+| twdb_ccn | EPA water system boundaries; Denver Water; Metro Water Recovery; DOLA districts; Denver sanitary mains | 2022–2026 |
+| schools_intel | Census school districts; CDE school locations; Urban Institute enrollment | 2026 |
+| tax_intel | DOLA property tax map | 2025 |
+| state_environmental_records | Colorado OPS storage tanks and releases; CDPHE Superfund, RCRA corrective action, institutional controls, solid waste, closed landfills, brownfields | 2026 |
+| historical_aerials (Denver) | DRCOG aerial photography, 2022 (CC BY 3.0) | 2022 |
+
 ## When a source is slow or down
 
 Unchanged from the source it was ported from. Values live in

@@ -41,10 +41,11 @@ It runs entirely on your own Mac: there is no sign-in, no other account,
 and nothing leaves your machine except the lookups you ask it to run
 against public data sources (and, optionally, OpenAI, if you add a key).
 
-Today PropRisk understands Texas best, with full coverage in Travis,
-Williamson, Hays and Bastrop counties and partial coverage in a few
-others, plus Denver County, Colorado. Anywhere else in the US, the nationwide
-sources still answer. See Settings → "Where PropRisk works" for the current list.
+Today PropRisk covers Texas, with full coverage in Travis, Williamson, Hays
+and Bastrop counties and partial coverage in a few others, and Denver County,
+Colorado, where every card comes from Colorado's and Denver's own sources.
+Anywhere else in the US, the nationwide sources still answer. See Settings →
+"Where PropRisk works" for the current list.
 
 **Add your county.** Each county is one data file, and NoMoreHappyPath can add it
 for you, with no programming: see
@@ -111,9 +112,11 @@ check ends with PASS, and no Python file was changed.
 
 A lookup reads its state from the address, so put the state in it ("Denver, CO").
 In any state, the nationwide sources run (flood, wetlands, soils, elevation,
-federal environmental records, power lines, nearby places), and each Texas-only
-card says "Not connected for <State> yet". A state folder adds that state's
-counties. Colorado, with Denver County, is the first.
+federal environmental records, power lines, nearby places). Every other card
+(traffic, roads, zoning, water and sewer, schools, tax, environmental records and
+the rest) says "Not connected for <State> yet" until that state's own source is
+connected. Colorado, with Denver County, is the first state with every card
+connected.
 
 Same steps as a county, with this task first:
 
@@ -124,9 +127,26 @@ was changed.
 ```
 
 Then one task per county, following the county steps above with the state's
-code (`scripts/check_region.sh co denver`). A state's own agencies (its roads,
-water and school data) cannot be connected yet; that needs a later release
-(`docs/specs/add_counties_and_states.md`, Phase C2).
+code (`scripts/check_region.sh co denver`).
+
+### Connect a state's or a county's own sources, card by card
+
+Same steps, with this task (one card, or a list of cards):
+
+```text
+Connect Colorado's own sources for the road cards (traffic counts, traffic
+history, roads, bridges, road projects) in PropRisk. Follow docs/EXTENDING.md,
+Job D. For each card, show me the public source you found and its answer for
+the sample address before writing the file. Done means:
+scripts/check_region.sh co denver ends with PASS, each new source prints
+"connected", its recorded test passes, and scripts/test.sh passes.
+```
+
+NMHP finds the state's (or county's) public map service that answers the same
+question as the Texas card, checks it on a real address, writes one small file
+per card, records a test, and runs the check. A county-level card (zoning, future
+land use, development activity, historic sites, transit) names the county:
+"Connect Denver County, Colorado's own zoning source".
 
 ## What it covers
 

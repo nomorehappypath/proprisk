@@ -1,0 +1,33 @@
+{
+ "calls": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ZONE_ZONING_A/FeatureServer/209|-104.9545,39.729|None": [
+   {
+    "attributes": {
+     "ADU": "Yes",
+     "CONDITIONS": null,
+     "HEIGHT_STORIES": null,
+     "NBHD_CONTEXT": "URBAN",
+     "NOTES": null,
+     "ORD_NUM": 1304,
+     "ORD_YEAR": 2024,
+     "OVERLAY_DISTRICT": null,
+     "PUD_NUM": null,
+     "WAIVERS": null,
+     "ZCODE_VERSION": 2010,
+     "ZONE_DESCRIPTION": "Single Unit  (SU)",
+     "ZONE_DISTRICT": "U-SU-C",
+     "ZONE_DIST_TYPE": "Residential"
+    }
+   }
+  ]
+ },
+ "meta": {
+  "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_ZONE_ZONING_A/FeatureServer/209": {
+   "editingInfo": {
+    "dataLastEditDate": 1794486962541,
+    "lastEditDate": 1794486979538,
+    "schemaLastEditDate": 1794486979538
+   }
+  }
+ }
+}

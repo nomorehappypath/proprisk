@@ -1,6 +1,6 @@
 # Colorado. Format: see app/regions/_template/state.yaml.
-# Colorado's own state agencies (roads, water, schools) are not connected yet;
-# lookups here use the nationwide sources plus each county's file.
+# Colorado's own sources for each card are in sources/ (statewide) and
+# sources/<county>/ (one county); see docs/EXTENDING.md, Job D.
 code: CO
 name: Colorado
 fips: "08"
@@ -8,3 +8,8 @@ search_box: [-109.06, 36.99, -102.04, 41.00]   # west, south, east, north
 census_centroids: bg_centroids_08.json
 statewide_summary:
   - Census demographics (Colorado block groups)
+  - CDOT and federal highway data for traffic, roads, bridges and projects
+  - Water, sewer and special districts (EPA, Metro Water Recovery, DOLA)
+  - Colorado schools (CDE) and school districts (Census)
+  - Colorado storage-tank and cleanup records (OPS, CDPHE)
+  - Property tax levies (DOLA)
