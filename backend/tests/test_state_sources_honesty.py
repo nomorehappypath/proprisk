@@ -264,6 +264,16 @@ def test_summary_with_failed_inputs_for_real_says_not_checked(monkeypatch):
     # Path 1: the summary fetches its inputs itself, and all fail.
     alone = txdot_extended.fetch(DENVER, session=_Down(), config={"upstream_results": {}})
     assert alone.coverage_status == CoverageStatus.MANUAL_VERIFICATION_REQUIRED
+    for result in (alone, txdot_extended.fetch(DENVER, session=_Down(), config={
+            "upstream_results": {
+                slot: _payload(orchestrator._load_adapter_fetch(slot)(DENVER, session=_Down()))
+                for slot in ("txdot_aadt", "txdot_projects", "txdot_bridges", "txdot_roadway")
+            }})):
+        card = _card({"txdot_extended": _payload(result)}, "txdot_extended")
+        text = _text(card)
+        assert "did not answer this time" in text
+        assert "0 projects" not in text and "no findings" not in text
+        assert card["facts"] == []
     # Path 2: traffic answered upstream; projects and bridges failed upstream.
     failed = {
         slot: _payload(orchestrator._load_adapter_fetch(slot)(DENVER, session=_Down()))

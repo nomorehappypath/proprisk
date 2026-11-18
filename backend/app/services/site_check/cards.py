@@ -4648,12 +4648,15 @@ def _build_card(
     primary_id, primary = present[0]
     status = _card_status(primary, present)
     facts_dict = _facts_of(primary)
-    if facts_dict.get("source_module") and str(
+    road_inputs_failed = "did_not_answer" in _as_dict(
+        facts_dict.get("input_status")).values()
+    if (facts_dict.get("source_module") or road_inputs_failed) and str(
             primary.get("coverage_status") or "") not in ("covered", "partial"):
         # A state's or county's own source that did not answer (spec 2.6):
         # nothing on this card was checked, so no formatter may turn the
         # missing answers into "none" or "0".
-        agency = _text(facts_dict.get("provider_short")) or "The source"
+        agency = _text(facts_dict.get("provider_short")) or (
+            "The road sources" if road_inputs_failed else "The source")
         card = _empty_card(
             slot, "issue",
             f"{agency} did not answer this time, so nothing on this card was "
